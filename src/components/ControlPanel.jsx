@@ -1,0 +1,43 @@
+function ControlPanel(){
+
+    function onProc() {
+        alert("You have clicked Proc!");
+    }
+
+    function onProcAndPlay() {
+        alert("You have clicked Proc and Play!");
+    }
+
+    function onPlay() {
+        alert("You have clicked Play!");
+    }
+
+    function onStop() {
+        alert("You have clicked Stop!");
+    }
+
+    return (
+        <>
+            <div className="controlPanel bg-dark text-center py-3">
+                <div className="container">
+                    <div className="d-flex justify-content-center flex-wrap gap-3">
+                        <button id="process" className="btn btn-outline-primary px-4" onClick={onProc}>
+                            Preprocess
+                        </button>
+                        <button id="process_play" className="btn btn-outline-primary px-4" onClick={onProcAndPlay}>
+                            Proc & Play
+                        </button>
+                        <button id="play" className="btn btn-outline-primary px-4" onClick={onPlay}>
+                            Play
+                        </button>
+                        <button id="stop" className="btn btn-outline-primary px-4" onClick={onStop}>
+                            Stop
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default ControlPanel
