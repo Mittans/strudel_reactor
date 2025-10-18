@@ -1,14 +1,11 @@
 import { useEffect } from 'react';
 import { stranger_tune } from '../tunes';
-import { useState } from 'react';
 
-function Preprocess(){
-
-    const [code, setCode] = useState('');
+function Preprocess({ code, setCode }){
 
     useEffect(() => {
         setCode(stranger_tune);
-    }, []);
+    }, [setCode]);
     
     return (
         <>
