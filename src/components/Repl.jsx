@@ -3,7 +3,7 @@ import { initStrudel, webaudioOutput, getAudioContext, transpiler, evalScope, re
 import { StrudelMirror } from "@strudel/codemirror";
 import { registerSoundfonts } from "@strudel/soundfonts";
 
-function Repl({ procText }) {
+function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
     const editorContainerRef = useRef(null);
     const editorRef = useRef(null);
     const hasRun = useRef(false);
@@ -13,7 +13,6 @@ function Repl({ procText }) {
         hasRun.current = true;
 
         (async () => {
-            
         await initStrudel();
 
         editorRef.current = new StrudelMirror({
@@ -34,17 +33,36 @@ function Repl({ procText }) {
             },
         });
 
-        // Optional: automatically set the text passed from preprocessor
-        if (procText) {
-            editorRef.current.setCode(procText);
-        }
+        if (procText) editorRef.current.setCode(procText);
         })();
+    }, []);
+
+    useEffect(() => {
+        if (editorRef.current && procText) {
+        editorRef.current.setCode(procText);
+        }
     }, [procText]);
 
+    // Play
+    useEffect(() => {
+        if (shouldPlay && editorRef.current) {
+        editorRef.current.evaluate();
+        onPlayDone?.();
+        }
+    }, [shouldPlay]);
+
+    // Stop
+    useEffect(() => {
+        if (shouldStop && editorRef.current) {
+        editorRef.current.stop();
+        onPlayDone?.();
+        }
+    }, [shouldStop]);
+
     return (
-        <div className="col-md-8" style={{ maxHeight: "50vh", overflowY: "auto", width: "100vh" }}>
-            <label htmlFor="editor" className="form-label">REPL:</label>
-            <div id="editor" ref={editorContainerRef} />
+        <div className="col-md-8" style={{ maxHeight: "60vh", overflowY: "auto", width: "100%", marginTop: "1rem" }}>
+        <label htmlFor="editor" className="form-label fw-bold">REPL:</label>
+        <div id="editor" ref={editorContainerRef} style={{ height: "400px", minHeight: "300px", border: "1px solid #444", borderRadius: "8px",}} />
         </div>
     );
 }

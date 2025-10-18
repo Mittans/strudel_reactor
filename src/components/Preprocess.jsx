@@ -1,17 +1,25 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { stranger_tune } from '../tunes';
 
-function Preprocess({ code, setCode }){
+function Preprocess({ onChange }){
+
+    const [code, setCode] = useState("");
 
     useEffect(() => {
         setCode(stranger_tune);
-    }, [setCode]);
+        onChange?.(stranger_tune);
+    }, []);
     
+    const handleChange = (e) => {
+        setCode(e.target.value);
+        onChange?.(e.target.value);
+    };
+
     return (
         <>
             <div style={{ maxHeight: '80vh', overflowY: 'auto'}}>
-              <label htmlFor="proc" className="form-label">Text to Preprocess:</label>
-              <textarea className="form-control" rows="15" id="proc" value={code} onChange={(e) => setCode(e.target.value)} ></textarea>
+              <label htmlFor="proc" className="form-label fw-bold">Text to Preprocess:</label>
+              <textarea className="form-control" rows="15" id="proc" value={code} onChange={handleChange} ></textarea>
             </div>
         </>
     )
