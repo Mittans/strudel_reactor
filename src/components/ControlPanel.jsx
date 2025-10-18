@@ -1,20 +1,4 @@
-function ControlPanel(){
-
-    function onProc() {
-        alert("You have clicked Proc!");
-    }
-
-    function onProcAndPlay() {
-        alert("You have clicked Proc and Play!");
-    }
-
-    function onPlay() {
-        alert("You have clicked Play!");
-    }
-
-    function onStop() {
-        alert("You have clicked Stop!");
-    }
+function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop }){
 
     return (
         <>
