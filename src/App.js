@@ -5,7 +5,9 @@ import { useEffect, useRef } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import Transport from "./components/Controls"; // Importing the nessesary buttons
+import Transport from "./components/controls"; // Importing the nessesary buttons
+import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
+
 
 
 let globalEditor = null;
@@ -119,18 +121,7 @@ export default function StrudelDemo() {
               <div id="editor" />
             </div>
             <div className="col-md-4">
-              <div className="form-check">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                  p1: ON
-                </label>
-              </div>
-              <div className="form-check">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                  p1: HUSH
-                </label>
-              </div>
+                          <P1Toggle onChange={() => ProcAndPlay()} />
             </div>
           </div>
         </div>
