@@ -7,10 +7,10 @@ export default function Transport({ onProcess, onProcPlay, onPlay, onStop }) {
             <button className="btn btn-outline-primary" onClick={onProcPlay}>
                 Proc & Play
             </button>
-            <button className="btn btn-outline-primary" onClick={onPlay}>
+            <button className="btn btn-outline-success" onClick={onPlay}>
                 Play
             </button>
-            <button className="btn btn-outline-primary" onClick={onStop}>
+            <button className="btn btn-outline-danger" onClick={onStop}>
                 Stop
             </button>
         </nav>

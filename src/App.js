@@ -122,10 +122,30 @@ export default function StrudelDemo() {
             </div>
             <div className="col-md-4">
                           <P1Toggle onChange={() => ProcAndPlay()} />
+                          <div style={{ marginTop: "1rem" }}>
+                              <label htmlFor="gainControl" className="form-label">
+                                  Volume
+                              </label>
+                              <input
+                                  id="gainControl"
+                                  type="range"
+                                  min="0"
+                                  max="1"
+                                  step="0.05"
+                                  defaultValue="0.3"
+                                  className="form-range"
+                                  onChange={(e) => {
+                                      const procArea = document.getElementById("proc");
+                                      // replace the existing .gain() value in stranger_tune in tunes with the new one
+                                      procArea.value = procArea.value.replace(/\.gain\([^)]*\)/, `.gain(${e.target.value})`);
+                                      ProcAndPlay(); // reprocess and play so you hear the change
+                                  }}
+                              />
+                          </div>
+    
             </div>
           </div>
         </div>
-
       </main >
     </div >
   );
