@@ -1,0 +1,18 @@
+export default function Transport({ onProcess, onProcPlay, onPlay, onStop }) {
+    return (
+        <nav style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: '1rem' }}>
+            <button className="btn btn-outline-primary" onClick={onProcess}>
+                Preprocess
+            </button>
+            <button className="btn btn-outline-primary" onClick={onProcPlay}>
+                Proc & Play
+            </button>
+            <button className="btn btn-outline-primary" onClick={onPlay}>
+                Play
+            </button>
+            <button className="btn btn-outline-primary" onClick={onStop}>
+                Stop
+            </button>
+        </nav>
+    );
+}

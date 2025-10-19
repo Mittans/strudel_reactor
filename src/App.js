@@ -87,7 +87,6 @@ export default function StrudelDemo() {
         Proc()
       })();
       document.getElementById('proc').value = stranger_tune
-      SetupButtons()
     }
 
   }, []);
