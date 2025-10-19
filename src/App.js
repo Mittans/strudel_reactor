@@ -5,13 +5,11 @@ import { useEffect, useRef } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
+import {Play, Stop, ProPlay, Process} from './Buttons/Buttons';
 
 let globalEditor = null;
 
-
-
 export function SetupButtons() {
-
   document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
   document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
   document.getElementById('process').addEventListener('click', () => {
@@ -27,8 +25,6 @@ export function SetupButtons() {
   )
 }
 
-
-
 export function ProcAndPlay() {
   if (globalEditor != null && globalEditor.repl.state.started == true) {
     console.log(globalEditor)
@@ -38,20 +34,17 @@ export function ProcAndPlay() {
 }
 
 export function Proc() {
-
-  let proc_text = document.getElementById('proc').value
+  let proc_text = document.getElementById("proc").value;
   let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
   ProcessText(proc_text);
   globalEditor.setCode(proc_text_replaced)
 }
 
 export function ProcessText(match, ...args) {
-
   let replace = ""
   if (document.getElementById('flexRadioDefault2').checked) {
     replace = "_"
   }
-
   return replace
 }
 
@@ -95,51 +88,52 @@ export default function StrudelDemo() {
   return (
     <div>
       <div className="bg-success p-2 mb-2">
-        <h2 className="text-white"> Strudel Demo </h2>
+        <h1 className="text-white"> Strudel Demo </h1>
       </div>
       <main>
 
         <div className="container-fluid">
-            <div>
-              <nav className="d-flex justify-content-end">
-                <div className="p-2">
-                  <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                </div>
-                <div className="p-2">
-                  <button id="process_play" className="btn btn-outline-info">Proc & Play</button>
-                </div>
-                <div className="p-2">
-                  <button id="play" className="btn btn-outline-secondary">Play</button>
-                </div>
-                <div className="p-2">
-                    <button id="stop" className="btn btn-outline-danger">Stop  </button>
-                </div>
-              </nav>
-            </div>
-          <div className="row">
-            <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-              <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
+          <div>
+            <nav className="d-flex justify-content-end">
+              <div className="p-2">
+                <Process id="process"></Process>
+              </div>
+              <div className="p-2">
+                <ProPlay id="process_play"></ProPlay>
+              </div>
+              <div className="p-2">
+                <Play id="play"></Play>
+              </div>
+              <div className="p-2">
+                  <Stop id="stop"></Stop>
+              </div>
+            </nav>
+          </div>
+          <div>
+            <h2 htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess</h2>
+            <div style={{ maxHeight: '50vh', overflowY: 'auto', maxWidth: 'max' }}>
               <textarea className="form-control" rows="15" id="proc" ></textarea>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-              <div id="editor" />
-            </div>
-            <div className="col-md-4">
-              <div className="form-check">
+          <div>
+            <h2 className='mt-2'> Showtime </h2>
+            <div className='d-flex'>
+              <div className="form-check m-2">
                 <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                <label className="form-check-label btn btn-dark" htmlFor="flexRadioDefault1">
                   p1: ON
                 </label>
               </div>
-              <div className="form-check">
+              <div className="form-check m-2">
                 <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                <label className="form-check-label btn btn-dark" htmlFor="flexRadioDefault2">
                   p1: HUSH
                 </label>
               </div>
             </div>
+          </div>
+          <div style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+            <div id="editor" />
           </div>
         </div>
 
