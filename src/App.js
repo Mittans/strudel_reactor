@@ -5,6 +5,8 @@ import { useEffect, useRef } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
+import Transport from "./components/Controls"; // Importing the nessesary buttons
+
 
 let globalEditor = null;
 
@@ -103,15 +105,13 @@ export default function StrudelDemo() {
               <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
               <textarea className="form-control" rows="15" id="proc" ></textarea>
             </div>
-            <div className="col-md-4">
-
-              <nav>
-                <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
-                <br />
-                <button id="play" className="btn btn-outline-primary">Play</button>
-                <button id="stop" className="btn btn-outline-primary">Stop</button>
-              </nav>
+                      <div className="col-md-4">
+                          <Transport
+                              onProcess={() => Proc()}
+                              onProcPlay={() => ProcAndPlay()}
+                              onPlay={() => globalEditor && globalEditor.evaluate()}
+                              onStop={() => globalEditor && globalEditor.stop()}
+                          />
             </div>
           </div>
           <div className="row">
