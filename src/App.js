@@ -1,17 +1,15 @@
 import './cors-redirect';
-import './App.css';
+import './index.css'
 import { initStrudel, note, hush, evalScope, getAudioContext, webaudioOutput, registerSynthSounds, initAudioOnFirstClick, transpiler } from "@strudel/web";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import {Play, Stop, ProPlay, Process} from './Buttons/Buttons';
+import {Save, Play, Stop, ProPlay, Process} from './Buttons/Buttons';
 
 let globalEditor = null;
 
 export function SetupButtons() {
-  document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-  document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
   document.getElementById('process').addEventListener('click', () => {
     Proc()
   }
@@ -51,6 +49,7 @@ export function ProcessText(match, ...args) {
 export default function StrudelDemo() {
 
   const hasRun = useRef(false);
+  const [isPlay,setIsPlay] = useState(false);
 
   useEffect(() => {
 
@@ -81,52 +80,68 @@ export default function StrudelDemo() {
       document.getElementById('proc').value = stranger_tune
       SetupButtons()
     }
-
+  
   }, []);
+
+  const handleIsPlay = () => {
+    setIsPlay(true);
+    globalEditor.evaluate();
+  }
+
+  const handleIsStop = () => {
+    setIsPlay(false);
+    globalEditor.stop()
+  }
 
 
   return (
     <div>
-      <div className="bg-success p-2 mb-2">
-        <h1 className="text-white"> Strudel Demo </h1>
+      <div className="bg-blue-700 p-2 mb-2 flex justify-between">
+        <h1 className="text-3xl font-bold text-white"> Strudel Demo </h1>
+        <div>
+            <nav className="flex justify-end">
+              <div className="p-2">
+                <Save id="save"/>
+              </div>
+              <div className="p-2">
+                <Process id="process"></Process>
+              </div>
+              <div className="p-2">
+                <ProPlay id="process_play" handlePlay={handleIsPlay}></ProPlay>
+              </div>
+              {isPlay ? (
+              <div className="p-2">
+                  <Stop id="stop" handleStop={handleIsStop}></Stop>
+              </div>
+              ) : (
+              <div className="p-2">
+                <Play id="play" handlePlay={handleIsPlay}></Play>
+              </div>
+              )}
+            </nav>
+          </div>
       </div>
       <main>
 
         <div className="container-fluid">
           <div>
-            <nav className="d-flex justify-content-end">
-              <div className="p-2">
-                <Process id="process"></Process>
-              </div>
-              <div className="p-2">
-                <ProPlay id="process_play"></ProPlay>
-              </div>
-              <div className="p-2">
-                <Play id="play"></Play>
-              </div>
-              <div className="p-2">
-                  <Stop id="stop"></Stop>
-              </div>
-            </nav>
-          </div>
-          <div>
-            <h2 htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess</h2>
-            <div style={{ maxHeight: '50vh', overflowY: 'auto', maxWidth: 'max' }}>
-              <textarea className="form-control" rows="15" id="proc" ></textarea>
+            <h2 htmlFor="exampleFormControlTextarea1" className="text-2xl">Text to preprocess</h2>
+            <div>
+              <textarea className="w-full border border-black" rows="15" id="proc" ></textarea>
             </div>
           </div>
           <div>
-            <h2 className='mt-2'> Showtime </h2>
-            <div className='d-flex'>
-              <div className="form-check m-2">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                <label className="form-check-label btn btn-dark" htmlFor="flexRadioDefault1">
+            <h2 className='mt-2 text-2xl'> Showtime </h2>
+            <div className='flex'>
+              <div className="m-2">
+                <input className="" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
+                <label className="" htmlFor="flexRadioDefault1">
                   p1: ON
                 </label>
               </div>
-              <div className="form-check m-2">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                <label className="form-check-label btn btn-dark" htmlFor="flexRadioDefault2">
+              <div className="m-2">
+                <input type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
+                <label htmlFor="flexRadioDefault2">
                   p1: HUSH
                 </label>
               </div>
