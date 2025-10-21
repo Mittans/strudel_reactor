@@ -5,7 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import {Save, Play, Stop, ProPlay, Process} from './Buttons/Buttons';
+import {Save, Play, Stop, ProPlay, Process, Load} from './Buttons/Buttons';
+import { ListComponents } from './components/Input/list_components'
 
 let globalEditor = null;
 
@@ -95,13 +96,19 @@ export default function StrudelDemo() {
 
 
   return (
-    <div>
-      <div className="bg-blue-700 p-2 mb-2 flex justify-between">
-        <h1 className="text-3xl font-bold text-white"> Strudel Demo </h1>
+    <div className="bg-gray-100">
+      <div className="bg-black p-2 mb-2 flex justify-between">
+        <div className='flex'>
+          <span className={`text-3xl font-bold text-yellow-500 px-1 ${isPlay ? "animate-spin" : ""}`}>꩜</span>
+          <h1 className="text-3xl font-bold text-yellow-500">Strudel Demo </h1>
+        </div>
         <div>
             <nav className="flex justify-end">
               <div className="p-2">
                 <Save id="save"/>
+              </div>
+              <div className="p-2">
+                <Load id="load"/>
               </div>
               <div className="p-2">
                 <Process id="process"></Process>
@@ -124,14 +131,18 @@ export default function StrudelDemo() {
       <main>
 
         <div className="container-fluid">
+          <div className='flex'>
+            <ListComponents/>
+          </div>
+
           <div>
-            <h2 htmlFor="exampleFormControlTextarea1" className="text-2xl">Text to preprocess</h2>
+            <h2 htmlFor="exampleFormControlTextarea1" className="text-2xl text-center font-bold">Text to preprocess</h2>
             <div>
               <textarea className="w-full border border-black" rows="15" id="proc" ></textarea>
             </div>
           </div>
           <div>
-            <h2 className='mt-2 text-2xl'> Showtime </h2>
+            <h2 className='mt-2 text-2xl text-center font-bold'> Showtime </h2>
             <div className='flex'>
               <div className="m-2">
                 <input className="" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
