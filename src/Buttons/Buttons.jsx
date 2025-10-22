@@ -47,10 +47,10 @@ export function Stop(props){
     );
 }
 
-export function Save(){
+export function Save(props){
     return (
         <div>
-            <button className="flex p-1 content-center"> 
+            <button className="flex p-1 content-center" onClick={props.handleSave}> 
                 <CiSaveDown2 className="mx-1 self-center text-yellow-500"/>
                 <div className="mx-1 font-bold text-yellow-500"> Save </div>
             </button>
@@ -61,9 +61,19 @@ export function Save(){
 export function Load(props){
     return (
         <div>
-            <button id={props.id} className="flex p-1"> 
+            <button id={props.id} className="flex p-1" onClick={props.handleLoad}> 
                 <FaDownload className="mx-1 self-center text-yellow-500 "></FaDownload>
                 <div className="mx-1 font-bold text-yellow-500"> Load </div>
+            </button>
+        </div>
+    );
+}
+
+export function Delete(props){
+    return (
+        <div>
+            <button id={props.id} className="flex p-1" onClick={props.handleDelete}> 
+                <div className="mx-1 font-bold text-yellow-500"> Delete </div>
             </button>
         </div>
     );

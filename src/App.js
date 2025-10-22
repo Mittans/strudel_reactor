@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import {Save, Play, Stop, ProPlay, Process, Load} from './Buttons/Buttons';
+import {Save, Play, Stop, ProPlay, Process, Load, Delete} from './Buttons/Buttons';
 import { ListComponents } from './components/Input/list_components'
 
 let globalEditor = null;
@@ -94,6 +94,39 @@ export default function StrudelDemo() {
     globalEditor.stop()
   }
 
+  // Variable to save text.
+  const [text, setText] = useState(stranger_tune);
+
+  // Function to save the text song.
+  const handleSave = () => {
+    console.log(JSON.stringify(text))
+    localStorage.setItem("procText", JSON.stringify(text));
+    alert("Saved to local storage");
+  };
+
+  // Function to load the text song from local storage.
+  const handleLoad = () => {
+    const savedItem = localStorage.getItem("procText");
+    if (savedItem) {
+      setText(JSON.parse(savedItem));
+      alert("Loaded from local storage");
+      console.log(JSON.parse(savedItem));
+    } else {
+      alert("No saved text found");
+    }
+  };
+
+  // Function to delete item from the local storage.
+  const handleDelete = () => {
+    const deletedItem = localStorage.getItem("procText");
+    if (deletedItem) {
+      localStorage.removeItem("procText")
+      alert("remove from local storage");
+      console.log(JSON.parse(deletedItem));
+    } else {
+      alert("No deleted item found");
+    }
+  };
 
   return (
     <div className="bg-gray-100">
@@ -105,10 +138,13 @@ export default function StrudelDemo() {
         <div>
             <nav className="flex justify-end">
               <div className="p-2">
-                <Save id="save"/>
+                <Delete id="delete" handleDelete={handleDelete}/>
               </div>
               <div className="p-2">
-                <Load id="load"/>
+                <Save id="save" handleSave={handleSave}/>
+              </div>
+              <div className="p-2">
+                <Load id="load" handleLoad={handleLoad}/>
               </div>
               <div className="p-2">
                 <Process id="process"></Process>
@@ -138,7 +174,13 @@ export default function StrudelDemo() {
           <div>
             <h2 htmlFor="exampleFormControlTextarea1" className="text-2xl text-center font-bold">Text to preprocess</h2>
             <div>
-              <textarea className="w-full border border-black" rows="15" id="proc" ></textarea>
+              <textarea 
+                className="w-full border border-black" 
+                rows="15" 
+                id="proc" 
+                value={text}
+                onChange={(e) => setText(e.target.value)}
+                ></textarea>
             </div>
           </div>
           <div>
