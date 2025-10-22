@@ -13,6 +13,7 @@ import DjControls from './components/DjControls';
 import PlaybackControls from './components/PlaybackControls';
 import PageTitle from './components/PageTitle';
 import TextPreprocessor from './components/TextPreprocesser';
+import EditorArea from './components/EditorArea';
 
 let globalEditor = null;
 
@@ -122,13 +123,7 @@ return (
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                        <DjControls ProcAndPlay={ProcAndPlay}/>
-                    </div>
+                    <EditorArea ProcAndPlay={ProcAndPlay}/>
                 </div>
             </div>
             <canvas id="roll"></canvas>
