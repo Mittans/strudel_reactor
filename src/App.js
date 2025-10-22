@@ -137,7 +137,7 @@ return (
                         <div id="output" />
                     </div>
                     <div className="col-md-4">
-                        <DjControls/>
+                        <DjControls ProcAndPlay={ProcAndPlay}/>
                     </div>
                 </div>
             </div>

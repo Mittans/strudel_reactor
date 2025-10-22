@@ -1,4 +1,4 @@
-function DjControls() {
+function DjControls({ ProcAndPlay }) {
     return (
         <>
             <div className="form-check">
