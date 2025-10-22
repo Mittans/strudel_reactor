@@ -114,7 +114,9 @@ return (
         <main>
             <div className="container-fluid">
                 <div className="row">
-                    <TextPreprocessor/>
+                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                        <TextPreprocessor/>
+                    </div>
                     <div className="col-md-4">
                         <AudioControls/>
                     </div>
