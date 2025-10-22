@@ -1,3 +1,5 @@
+import { strudelActions } from "./strudelSetup";
+
 export function ProcessText(match, ...args) {
   let replace = "";
   if (document.getElementById("flexRadioDefault2").checked) {
@@ -7,21 +9,16 @@ export function ProcessText(match, ...args) {
   return replace;
 }
 
-export function Proc(globalEditor) {
-  if (!globalEditor) {
-    return;
-  }
-
+export function Proc() {
   let proc_text = document.getElementById("proc").value;
   let proc_text_replaced = proc_text.replaceAll("<p1_Radio>", ProcessText);
   ProcessText(proc_text);
-  globalEditor.setCode(proc_text_replaced);
+  strudelActions.setCode(proc_text_replaced);
 }
 
-export function ProcAndPlay(globalEditor) {
-  if (globalEditor != null && globalEditor.repl.state.started === true) {
-    console.log(globalEditor);
-    Proc(globalEditor);
-    globalEditor.evaluate();
+export function ProcAndPlay() {
+  if (strudelActions.setCode && strudelActions.isStarted) {
+    Proc();
+    strudelActions.evaluate();
   }
 }
