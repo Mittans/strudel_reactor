@@ -9,8 +9,7 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
-import DjControls from './components/DjControls';
-import PlaybackControls from './components/PlaybackControls';
+import AudioControls from './components/audio-control/AudioControls';
 import PageTitle from './components/PageTitle';
 import TextPreprocessor from './components/TextPreprocesser';
 import EditorArea from './components/EditorArea';
@@ -37,8 +36,6 @@ export function SetupButtons() {
     }
     )
 }
-
-
 
 export function ProcAndPlay() {
     if (globalEditor != null && globalEditor.repl.state.started == true) {
@@ -119,7 +116,7 @@ return (
                 <div className="row">
                     <TextPreprocessor/>
                     <div className="col-md-4">
-                        <PlaybackControls/>
+                        <AudioControls/>
                     </div>
                 </div>
                 <div className="row">
