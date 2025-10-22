@@ -11,8 +11,7 @@ import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import DjControls from './components/DjControls';
 import PlaybackControls from './components/PlaybackControls';
-
-// Im ready to code, test commit!
+import PageTitle from './components/PageTitle';
 
 let globalEditor = null;
 
@@ -112,7 +111,7 @@ useEffect(() => {
 
 return (
     <div>
-        <h2>Strudel Demo</h2>
+        <PageTitle/>
         <main>
 
             <div className="container-fluid">
