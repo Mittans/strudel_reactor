@@ -5,8 +5,8 @@ import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import {Save, Play, Stop, ProPlay, Process, Load, Delete} from './Buttons/Buttons';
-import { ListComponents } from './components/Input/list_components'
+import { ButtonStyle } from './components/buttons/buttonStyle';
+import { ListComponents } from './components/Input/listComponents'
 
 let globalEditor = null;
 
@@ -94,6 +94,15 @@ export default function StrudelDemo() {
     globalEditor.stop()
   }
 
+  const handleProc = () => {
+    Proc()
+  }
+
+  const handleProcPlay = () => {
+    Proc()
+    globalEditor.evaluate();
+  }
+
   // Variable to save text.
   const [text, setText] = useState(stranger_tune);
 
@@ -135,34 +144,17 @@ export default function StrudelDemo() {
           <span className={`text-3xl font-bold text-yellow-500 px-1 ${isPlay ? "animate-spin" : ""}`}>꩜</span>
           <h1 className="text-3xl font-bold text-yellow-500">Strudel Demo </h1>
         </div>
-        <div>
-            <nav className="flex justify-end">
-              <div className="p-2">
-                <Delete id="delete" handleDelete={handleDelete}/>
-              </div>
-              <div className="p-2">
-                <Save id="save" handleSave={handleSave}/>
-              </div>
-              <div className="p-2">
-                <Load id="load" handleLoad={handleLoad}/>
-              </div>
-              <div className="p-2">
-                <Process id="process"></Process>
-              </div>
-              <div className="p-2">
-                <ProPlay id="process_play" handlePlay={handleIsPlay}></ProPlay>
-              </div>
-              {isPlay ? (
-              <div className="p-2">
-                  <Stop id="stop" handleStop={handleIsStop}></Stop>
-              </div>
-              ) : (
-              <div className="p-2">
-                <Play id="play" handlePlay={handleIsPlay}></Play>
-              </div>
-              )}
-            </nav>
-          </div>
+        
+        <ButtonStyle
+        handleDelete={handleDelete} 
+        handleSave={handleSave} 
+        handleLoad={handleLoad}
+        handleProc={handleProc}
+        handleProcPlay={handleProcPlay}
+        handleStop={handleIsStop}
+        handlePlay={handleIsPlay}
+        isPlay={isPlay}/>
+        
       </div>
       <main>
 
