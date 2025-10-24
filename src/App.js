@@ -34,11 +34,25 @@ export function ProcessText(match, ...args) {
   return replace
 }
 
+export function getAllMusic(){
+  const musicList = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const musicSong = localStorage.key(i);
+    if (musicSong !== "codemirror-settings") {
+      musicList.push(musicSong);
+    }
+    
+  }
+
+  return musicList
+}
+
 export default function StrudelDemo() {
 
   const hasRun = useRef(false);
   const [isPlay,setIsPlay] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [musicList, setMusicList] = useState([]);
 
   useEffect(() => {
 
@@ -67,6 +81,7 @@ export default function StrudelDemo() {
         Proc()
       })();
       document.getElementById('proc').value = stranger_tune
+      setMusicList(getAllMusic())
     }
   
   }, []);
@@ -112,13 +127,6 @@ export default function StrudelDemo() {
   // Variable to save text.
   const [text, setText] = useState(stranger_tune);
 
-  // Function to save the text song.
-  const handleSave = () => {
-    console.log(JSON.stringify(text))
-    localStorage.setItem("procText", JSON.stringify(text));
-    alert("Saved to local storage");
-  };
-
   // Function to load the text song from local storage.
   const handleLoad = () => {
     const savedItem = localStorage.getItem("procText");
@@ -133,9 +141,10 @@ export default function StrudelDemo() {
 
   // Function to delete item from the local storage.
   const handleDelete = () => {
-    const deletedItem = localStorage.getItem("procText");
+    const song = document.getElementById("songName").value;
+    const deletedItem = localStorage.getItem(song);
     if (deletedItem) {
-      localStorage.removeItem("procText")
+      localStorage.removeItem(song);
       alert("remove from local storage");
       console.log(JSON.parse(deletedItem));
     } else {
@@ -154,7 +163,7 @@ export default function StrudelDemo() {
         <div name="buttons">
           <ButtonStyle
           handleDelete={handleDelete} 
-          handleSave={modalOpenControl} 
+          modalOpenControl={modalOpenControl} 
           handleLoad={handleLoad}
           handleProc={handleProc}
           handleProcPlay={handleProcPlay}
@@ -164,7 +173,7 @@ export default function StrudelDemo() {
         </div>
 
         {isOpenModal && (
-        <SaveModal handleClose={modalCloseControl} handleSave={handleSave}/>
+        <SaveModal modalCloseContro={modalCloseControl} text={text}/>
         )}
       </div>
 
@@ -175,8 +184,16 @@ export default function StrudelDemo() {
               <select
               className="text-2xl text-center font-bold bg-gray-200 text-black w-40  rounded-lg" 
               htmlFor="exampleFormControlTextarea1" 
+              id="songName"
               >
-                <option value ="" className="text-sm text-center font-bold bg-black text-yellow-500 w-40 rounded-lg" > Untitled </option>
+                <option value ="" className="text-sm text-center font-bold bg-gray-200 text-black w-40 rounded-lg" > Untitled </option>
+                 {musicList.map((obj) => (
+                    <option 
+                    className="text-sm text-center font-bold bg-gray-200 text-black w-40 rounded-lg"
+                    value={obj}> 
+                    {obj} 
+                    </option>
+                ))}
               </select>
             
             <div className='flex'>

@@ -51,7 +51,7 @@ export function Stop(props){
 export function Save(props){
     return (
         <div>
-            <button className="flex p-1 content-center" onClick={props.handleSave}> 
+            <button className="flex p-1 content-center" onClick={props.modalOpenControl}> 
                 <CiSaveDown2 className="mx-1 self-center text-yellow-500"/>
                 <div className="mx-1 font-bold text-yellow-500"> Save </div>
             </button>

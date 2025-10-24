@@ -8,7 +8,7 @@ export function ButtonStyle(props){
                 <Delete id="delete" handleDelete={props.handleDelete}/>
               </div>
               <div className="p-2">
-                <Save id="save" handleSave={props.handleSave}/>
+                <Save id="save" modalOpenControl={props.modalOpenControl}/>
               </div>
               <div className="p-2">
                 <Load id="load" handleLoad={props.handleLoad}/>
