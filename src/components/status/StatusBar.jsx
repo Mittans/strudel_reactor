@@ -1,12 +1,27 @@
 import Panel from "../ui/Panel";
-import StatusBarItem from "./StatusBarItem";
 
-export default function StatusBar() {
+export default function StatusBar({ isPlaying }) {
+  const statusText = isPlaying ? "Playing" : "Stopped";
+  const statusColor = isPlaying ? "text-green-400" : "text-red-400";
+
   return (
     <Panel className="flex justify-between items-center gap-4">
-      <StatusBarItem label={"BPM"} status={"120"} />
-      <StatusBarItem label={"Status"} status={"Stopped"} />
-      <StatusBarItem label={"Preset"} status={"Default"} />
+      <div className="flex items-center gap-3">
+        <div className="opacity-80 text-md">BPM:</div>
+        <div className="font-lilita text-3xl">120</div>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <div className="opacity-80 text-md">Status:</div>
+        <div className={`font-lilita text-3xl ${statusColor}`}>
+          {statusText}
+        </div>
+      </div>
+
+      <div className="flex items-center gap-3">
+        <div className="opacity-80 text-md">Preset:</div>
+        <div className="font-lilita text-3xl">Default</div>
+      </div>
     </Panel>
   );
 }

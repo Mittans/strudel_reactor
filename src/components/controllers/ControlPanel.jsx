@@ -8,8 +8,18 @@ import { IoSettings } from "react-icons/io5";
 import { strudelActions } from "../../strudel/strudelSetup";
 import { Proc } from "../../strudel/procLogic";
 
-export default function ControlPanel() {
+export default function ControlPanel({ isPlaying, setIsPlaying }) {
   const [open, setOpen] = useState(false);
+
+  const handlePlay = () => {
+    setIsPlaying(true);
+    strudelActions.evaluate();
+  };
+
+  const handleStop = () => {
+    setIsPlaying(false);
+    strudelActions.stop();
+  };
 
   const handleProcess = () => {
     Proc();
@@ -18,7 +28,7 @@ export default function ControlPanel() {
 
   const handleProcessAndPlay = () => {
     Proc();
-    strudelActions.evaluate();
+    handlePlay();
     setOpen(false);
   };
 
@@ -26,13 +36,13 @@ export default function ControlPanel() {
     <div className="relative flex items-center justify-center gap-4 mt-5">
       <button
         className="p-5 rounded-full bg-red-500 hover:bg-red-400 text-white shadow-lg shadow-green-500/40 hover:shadow-green-400/60 hover:scale-105 transition"
-        onClick={strudelActions.stop}
+        onClick={handleStop}
       >
         <FaStop className="text-3xl" />
       </button>
       <button
         className="p-5 rounded-full bg-green-500 hover:bg-green-400 text-white shadow-lg shadow-green-500/40 hover:shadow-green-400/60 hover:scale-105 transition"
-        onClick={strudelActions.evaluate}
+        onClick={handlePlay}
       >
         <FaPlay className="text-6xl" />
       </button>

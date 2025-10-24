@@ -15,6 +15,7 @@ import IOAccordion from "./components/IOAccordion/IOAccordion";
 export default function App() {
   const hasRun = useRef(false);
   const [procValue, setProcValue] = useState(stranger_tune);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     if (!hasRun.current) {
@@ -36,8 +37,8 @@ export default function App() {
   return (
     <div className="bg-gradient-to-br from-[#1e3a8a] via-[#3b82f6] to-[#06b6d4] min-h-screen text-white p-3">
       <Header />
-      <StatusBar />
-      <ControlPanel />
+      <StatusBar isPlaying={isPlaying} />
+      <ControlPanel isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
       <ToggleControls />
 
       <IOAccordion procValue={procValue} handleProcChange={handleProcChange} />
