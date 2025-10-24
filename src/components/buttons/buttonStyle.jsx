@@ -21,11 +21,11 @@ export function ButtonStyle(props){
               </div>
               {props.isPlay ? (
               <div className="p-2">
-                  <Stop id="stop" handleStop={props.handleIsStop}></Stop>
+                  <Stop id="stop" handleStop={props.handleStop}></Stop>
               </div>
               ) : (
               <div className="p-2">
-                <Play id="play" handlePlay={props.handleIsPlay}></Play>
+                <Play id="play" handlePlay={props.handlePlay}></Play>
               </div>
               )}
             </nav>

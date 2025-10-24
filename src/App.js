@@ -6,23 +6,10 @@ import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import { ButtonStyle } from './components/buttons/buttonStyle';
-import { ListComponents } from './components/Input/listComponents'
+import { ListComponents } from './components/Input/listComponents';
+import SaveModal from './components/modal/saveModal'
 
 let globalEditor = null;
-
-export function SetupButtons() {
-  document.getElementById('process').addEventListener('click', () => {
-    Proc()
-  }
-  )
-  document.getElementById('process_play').addEventListener('click', () => {
-    if (globalEditor != null) {
-      Proc()
-      globalEditor.evaluate()
-    }
-  }
-  )
-}
 
 export function ProcAndPlay() {
   if (globalEditor != null && globalEditor.repl.state.started == true) {
@@ -51,6 +38,7 @@ export default function StrudelDemo() {
 
   const hasRun = useRef(false);
   const [isPlay,setIsPlay] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
 
   useEffect(() => {
 
@@ -79,17 +67,21 @@ export default function StrudelDemo() {
         Proc()
       })();
       document.getElementById('proc').value = stranger_tune
-      SetupButtons()
     }
   
   }, []);
 
-  const handleIsPlay = () => {
-    setIsPlay(true);
-    globalEditor.evaluate();
+  const handlePlay = () => {
+    const editorValue = document.getElementById("proc").value;
+    if (globalEditor != null && editorValue != "") {
+      setIsPlay(true);
+      globalEditor.evaluate();
+    } else{
+      alert("You should write the code in the box to play the music")
+    }
   }
 
-  const handleIsStop = () => {
+  const handleStop = () => {
     setIsPlay(false);
     globalEditor.stop()
   }
@@ -99,10 +91,24 @@ export default function StrudelDemo() {
   }
 
   const handleProcPlay = () => {
-    Proc()
-    globalEditor.evaluate();
+    const editorValue = document.getElementById("proc").value;
+    if (globalEditor != null && editorValue != "") {
+      setIsPlay(true)
+      Proc()
+      globalEditor.evaluate()
+    }
+    else{
+      alert("You should write the code in the box to play the music")
+    }
   }
 
+  const modalOpenControl = () => {
+    setIsOpenModal(true);
+  }
+
+  const modalCloseControl = () => {
+    setIsOpenModal(false);
+  }
   // Variable to save text.
   const [text, setText] = useState(stranger_tune);
 
@@ -139,40 +145,53 @@ export default function StrudelDemo() {
 
   return (
     <div className="bg-gray-100">
-      <div className="bg-black p-2 mb-2 flex justify-between">
+      <div name="components-bar" className="bg-black p-2 mb-2 flex justify-between">
         <div className='flex'>
           <span className={`text-3xl font-bold text-yellow-500 px-1 ${isPlay ? "animate-spin" : ""}`}>꩜</span>
           <h1 className="text-3xl font-bold text-yellow-500">Strudel Demo </h1>
         </div>
         
-        <ButtonStyle
-        handleDelete={handleDelete} 
-        handleSave={handleSave} 
-        handleLoad={handleLoad}
-        handleProc={handleProc}
-        handleProcPlay={handleProcPlay}
-        handleStop={handleIsStop}
-        handlePlay={handleIsPlay}
-        isPlay={isPlay}/>
-        
+        <div name="buttons">
+          <ButtonStyle
+          handleDelete={handleDelete} 
+          handleSave={modalOpenControl} 
+          handleLoad={handleLoad}
+          handleProc={handleProc}
+          handleProcPlay={handleProcPlay}
+          handleStop={handleStop}
+          handlePlay={handlePlay}
+          isPlay={isPlay}/>
+        </div>
+
+        {isOpenModal && (
+        <SaveModal handleClose={modalCloseControl} handleSave={handleSave}/>
+        )}
       </div>
+
       <main>
-
         <div className="container-fluid">
-          <div className='flex'>
-            <ListComponents/>
-          </div>
-
           <div>
-            <h2 htmlFor="exampleFormControlTextarea1" className="text-2xl text-center font-bold">Text to preprocess</h2>
+            <div className='flex justify-between mb-2'>
+              <select
+              className="text-2xl text-center font-bold bg-gray-200 text-black w-40  rounded-lg" 
+              htmlFor="exampleFormControlTextarea1" 
+              >
+                <option value ="" className="text-sm text-center font-bold bg-black text-yellow-500 w-40 rounded-lg" > Untitled </option>
+              </select>
+            
+            <div className='flex'>
+              <ListComponents/>
+            </div>
+            </div>
+
             <div>
-              <textarea 
-                className="w-full border border-black" 
-                rows="15" 
-                id="proc" 
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                ></textarea>
+                <textarea 
+                  className="w-full border border-black" 
+                  rows="15" 
+                  id="proc" 
+                  value={text}
+                  onChange={(e) => setText(e.target.value)}
+                  ></textarea>
             </div>
           </div>
           <div>

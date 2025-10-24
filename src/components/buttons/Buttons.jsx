@@ -2,6 +2,7 @@ import { FaCircleStop } from "react-icons/fa6";
 import { CiSaveDown2 } from "react-icons/ci";
 import { FaRecycle, FaPlay, FaDownload } from "react-icons/fa";
 import { BiReset } from "react-icons/bi";
+import { RiDeleteBin7Fill } from "react-icons/ri";
 
 export function Play(props){
     return (
@@ -17,7 +18,7 @@ export function Play(props){
 export function Process(props){
     return (
         <div>
-            <button id={props.id} className="flex p-1">
+            <button id={props.id} className="flex p-1" onClick={props.handleProc}>
                 <FaRecycle  className="mx-1 self-center text-yellow-500" />
                 <div className="mx-1 text-yellow-500 font-bold">Preprocess</div>
             </button>
@@ -28,7 +29,7 @@ export function Process(props){
 export function ProPlay(props){
     return (
         <div>
-            <button id={props.id} className="flex p-1" onClick={props.handlePlay}>
+            <button id={props.id} className="flex p-1" onClick={props.handleProcPlay}>
                 <BiReset className="mx-1 self-center text-yellow-500"/>
                  <div className="mx-1 font-bold text-yellow-500">Proc & Play</div>
             </button>
@@ -62,7 +63,7 @@ export function Load(props){
     return (
         <div>
             <button id={props.id} className="flex p-1" onClick={props.handleLoad}> 
-                <FaDownload className="mx-1 self-center text-yellow-500 "></FaDownload>
+                <FaDownload className="mx-1 self-center text-yellow-500 "/>
                 <div className="mx-1 font-bold text-yellow-500"> Load </div>
             </button>
         </div>
@@ -73,6 +74,7 @@ export function Delete(props){
     return (
         <div>
             <button id={props.id} className="flex p-1" onClick={props.handleDelete}> 
+                <RiDeleteBin7Fill className="mx-1 self-center text-yellow-500 "/>
                 <div className="mx-1 font-bold text-yellow-500"> Delete </div>
             </button>
         </div>
