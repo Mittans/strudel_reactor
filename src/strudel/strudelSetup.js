@@ -17,7 +17,7 @@ const handleD3Data = (event) => {
   console.log(event.detail);
 };
 
-export async function intializeStrudel(intialCode) {
+export async function initializeStrudel(intialCode) {
   if (globalEditor) return;
 
   document.addEventListener("d3Data", handleD3Data);
