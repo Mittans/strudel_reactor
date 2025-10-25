@@ -1,8 +1,8 @@
-function ProcessControls() {
+function ProcessControls({handlePreprocess, handleProcPlay}) {
     return (
         <>
-            <button id="process" className="btn btn-outline-primary">Preprocess</button>
-            <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
+            <button id="process" className="btn btn-outline-primary" onClick={handlePreprocess}>Preprocess</button>
+            <button id="process_play" className="btn btn-outline-primary" onClick={handleProcPlay}>Proc & Play</button>
         </>
     )
 }

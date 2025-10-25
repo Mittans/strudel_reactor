@@ -1,6 +1,6 @@
 import DjControls from "./DjControls";
 
-function EditorArea({ ProcAndPlay }) {
+function EditorArea({ onProc }) {
     return (
         <>
             <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
@@ -8,7 +8,7 @@ function EditorArea({ ProcAndPlay }) {
                 <div id="output" />
             </div>
             <div className="col-md-4">
-                <DjControls ProcAndPlay={ProcAndPlay}/>
+                <DjControls onProc={onProc}/>
             </div>
         </>
     )

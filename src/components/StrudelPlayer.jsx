@@ -8,12 +8,13 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from "@strudel/w
 import { registerSoundfonts } from "@strudel/soundfonts";
 import console_monkey_patch from "../console-monkey-patch";
 
-function StrudelPlayer({strudelCode}) {
+function StrudelPlayer({strudelCode, strudelRef}) {
 
     const handleD3Data = (event) => {
         console.log(event.detail);
     }
 
+    const editorDiv = useRef(null);
     const hasRun = useRef(false);
 
     useEffect(() => {
@@ -48,6 +49,7 @@ function StrudelPlayer({strudelCode}) {
                 },
             });
             strudelMirror.setCode(strudelCode);
+            strudelRef.current = strudelMirror;
         }
     }, [strudelCode]);
 
