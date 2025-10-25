@@ -1,8 +1,8 @@
 function AUX_Controls() {
   return (
     <>
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="basic-addon1">
+      <div className="input-group mb-3">
+        <span className="input-group-text" id="basic-addon1">
           Set CPM
         </span>
         <input
@@ -35,7 +35,7 @@ function AUX_Controls() {
           value=""
           id="s1"
         />
-        <label className="form-check-label" for="s1">
+        <label className="form-check-label" forHtml="s1">
           s1
         </label>
       </div>
@@ -47,7 +47,7 @@ function AUX_Controls() {
           value=""
           id="d1"
         />
-        <label className="form-check-label" for="d1">
+        <label className="form-check-label" forHtml="d1">
           d1
         </label>
       </div>
@@ -59,7 +59,7 @@ function AUX_Controls() {
           value=""
           id="d2"
         />
-        <label className="form-check-label" for="d2">
+        <label className="form-check-label" forHtml="d2">
           d2
         </label>
       </div>
