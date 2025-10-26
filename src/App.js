@@ -65,28 +65,33 @@ export default function StrudelDemo() {
 // );
 
 return (
-  <div className="container py-1">
+  <div className="container-fluid main-container py-4 px-4">
     <PageTitle />
     <br/>
-    <div className="row g-4">
-      <div className="col-6">
+    <div className="row g-4 justify-content-center">
+      <div className="col-md-5 col-sm-10">
         <div className="square-box d-flex align-items-center justify-content-center">
-          <p>Square 1</p>
+          <TextPreprocessor defaultText={stranger_tune} onchange={e => setStrudelCode(e.target.value)}/>
         </div>
       </div>
-      <div className="col-6">
+      <div className="col-md-5 col-sm-10">
         <div className="square-box d-flex align-items-center justify-content-center">
-          <p>Square 2</p>
+          <AudioControls
+          handlePlay={handlePlay}
+          handleStop={handleStop}
+          handlePreprocess={handlePreprocess}
+          handleProcPlay={handleProcPlay}
+          />
         </div>
       </div>
-      <div className="col-6">
+      <div className="col-md-5 col-sm-10">
         <div className="square-box d-flex align-items-center justify-content-center">
-          <p>Square 3</p>
+          <StrudelPlayer strudelCode={stranger_tune} strudelRef={strudelRef}/>
         </div>
       </div>
-      <div className="col-6">
+      <div className="col-md-5 col-sm-10">
         <div className="square-box d-flex align-items-center justify-content-center">
-          <p>Square 4</p>
+          <EditorArea onProc={handleProc}/>
         </div>
       </div>
     </div>
