@@ -150,6 +150,7 @@ return (
                         <div id="output" />
                     </div>
                     <div className="col-md-4">
+                        {/* need code for changing volume, cpm, etc */}
                         <DJControls />
                     </div>
                 </div>

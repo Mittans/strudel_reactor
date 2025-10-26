@@ -1,10 +1,11 @@
+
 export const stranger_tune = `setcps(140/60/4)
 
 samples('github:algorave-dave/samples')
 samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
 samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')
 
-//setcpm({CPM})
+//setcpm({CPM}) // TODO: replace using JS... when I get it working
 
 const gain_patterns = [
   "2",
@@ -99,6 +100,6 @@ stack(
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())
 
-all(x => x.gain(VOLUME))
+//all(x => x.gain({songVolume})) // TODO: replace using JS... when I get it working
 
 // @version 1.2`;
