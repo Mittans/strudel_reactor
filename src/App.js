@@ -116,8 +116,8 @@ useEffect(() => {
         // SetupButtons()
         // Proc()
     }
-
-}, []);
+    globalEditor.setCode(songText);
+}, [songText]);
 
 
 return (
@@ -128,7 +128,7 @@ return (
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <PreProcTextArea />
+                        <PreProcTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
                     </div>
                     <div className="col-md-4">
 
