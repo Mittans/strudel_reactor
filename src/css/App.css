@@ -1,38 +1,98 @@
-.App {
-  text-align: center;
+/* === Color Palette & Variables === */
+:root {
+  --bg-base: #f6f9f6;            /* light natural background */
+  --bg-panel: #ffffff;           /* clean panel white */
+  --border-soft: #d7e5db;        /* subtle green-gray border */
+  --accent-green: #7bbf8e;       /* soft leafy green */
+  --accent-green-dark: #5ba373;  /* natural medium green */
+  --shadow-soft: 0 3px 10px rgba(0, 0, 0, 0.05);
+  --font-main: "Inter", "Segoe UI", sans-serif;
+  --text-main: #2a3b30;
+  --text-muted: #556b5e;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* === Base page === */
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  background-color: var(--bg-base);
+  color: var(--text-main);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* === Main content layout  === */
+.main-content {
+  background: var(--bg-base);
+  padding: 1.5rem;
+  min-height: calc(100vh - 80px);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.col {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-soft);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.App-link {
-  color: #61dafb;
+.col:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(91, 163, 115, 0.15);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* === Divider === */
+.vr {
+  background: var(--border-soft);
+  width: 2px;
+  margin: 0 1rem;
+}
+
+/* ===== Labels Styling ===== */
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.6rem;
+  color: #3a5847; /* natural dark green */
+  position: relative;
+  padding-bottom: 0.3rem;
+}
+
+/* subtle green underline */
+.form-label::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  height: 2px;
+  background: linear-gradient(90deg, #7bbf8e, #a7c7e7);
+  border-radius: 2px;
+  opacity: 0.8;
+}
+
+.form-label:hover {
+  color: #5ba373;
+  transition: color 0.3s ease;
+}
+
+
+/* === Scrollbar (light natural tone) === */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #eef3ef;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-green);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-green-dark);
 }
