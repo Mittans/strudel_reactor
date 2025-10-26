@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { stranger_tune } from '../tunes';
+import { stranger_tune } from '../assets/tunes';
 
 function Preprocess({ onChange }){
 

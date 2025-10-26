@@ -60,9 +60,9 @@ function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
     }, [shouldStop]);
 
     return (
-        <div className="col-md-8" style={{ maxHeight: "60vh", overflowY: "auto", width: "100%", marginTop: "1rem" }}>
+        <div className="col-md-8" style={{ width: "100%", marginTop: "1rem" }}>
         <label htmlFor="editor" className="form-label fw-bold">REPL:</label>
-        <div id="editor" ref={editorContainerRef} style={{ height: "400px", minHeight: "300px", border: "1px solid #444", borderRadius: "8px",}} />
+        <div id="editor" ref={editorContainerRef} style={{ minHeight: "300px", maxWidth: "99%", border: "1px solid #444", borderRadius: "8px",}} />
         </div>
     );
 }

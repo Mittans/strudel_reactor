@@ -20,7 +20,7 @@ function App() {
     const handleProcTextChange = (text) => setCode(text);
 
     const handleProc = () => {
-        const replaced = code.replaceAll("<p1_Radio>", radioValue === "hush" ? "_" : "");
+        const replaced = code.replace("<p1_Radio>", radioValue === "hush" ? "_" : "");
         setProcessedCode(replaced);
         // send to REPL
         replRef.current?.setCode(replaced);
