@@ -2,7 +2,8 @@ function ProcButtons() {
     return (
         <>
             <div className="btn-group" role="group" aria-label="Basic buttons">
-                <button id="process" className="btn btn-outline-primary">Preprocess</button>
+                {/* CTRL+ENTER & CTRL+.  to stop if these break */}
+                <button id="process" className="btn btn-outline-info">Preprocess</button>
                 <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
             </div>
         </>
