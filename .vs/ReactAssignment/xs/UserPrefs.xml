@@ -1,11 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/App.test.js">
+    <Files>
+      <File FileName="public/index.html" Line="1" Column="1" />
+      <File FileName="src/App.test.js" Line="9" Column="1" />
+    </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="ReactAssignment">
-            <Node name="ReactAssignment" selected="True" />
-          </Node>
+          <Node name="ReactAssignment" expanded="True" selected="True" />
         </State>
       </Pad>
     </Pads>
