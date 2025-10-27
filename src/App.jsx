@@ -41,15 +41,7 @@ export default function App() {
               onTempoChange={changeTempo}
             />
           </div>
-          <div className="col-4">
-            <MixerPanel
-              volume={volume}
-              bpm={bpm}
-              onVolumeChange={changeVolume}
-              onTempoChange={changeTempo}
-            />
-          </div>
-          <div className="col-4">
+          <div className="col-8">
             <MixerPanel
               volume={volume}
               bpm={bpm}

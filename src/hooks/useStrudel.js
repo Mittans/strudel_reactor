@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import {
   initStrudel,
   playTune,
@@ -28,15 +28,31 @@ export function useStrudel(intitalTune) {
     }
   }, [intitalTune]);
 
-  const changeTempo = (newBpm) => {
-    setBpm(newBpm);
-    setTempo(newBpm);
-  };
+  // Only immediate changing the value of tempo when the music is playing
+  useEffect(() => {
+    if (!isReady || !isPlaying) {
+      return;
+    }
 
-  const changeVolume = (v) => {
+    setTempo(bpm);
+  }, [bpm, isReady, isPlaying]);
+
+  // Only immediate changing the value of volume when the music is playing
+  useEffect(() => {
+    if (!isReady || !isPlaying) {
+      return;
+    }
+
+    setVolume(volume);
+  }, [volume, isReady, isPlaying]);
+
+  function changeTempo(newBpm) {
+    setBpm(newBpm);
+  }
+
+  function changeVolume(v) {
     setVol(v);
-    setVolume(v);
-  };
+  }
 
   const handleProcChange = (e) => {
     const newCode = e.target.value;

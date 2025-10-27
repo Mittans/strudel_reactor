@@ -1,8 +1,6 @@
 import Panel from "../ui/Panel";
 import Slider from "../ui/Slider";
 
-// TODO: Create a slider component with good design the the volume ad tempo
-
 export default function MixerPanel({
   volume,
   bpm,
@@ -11,11 +9,11 @@ export default function MixerPanel({
 }) {
   return (
     <Panel>
-      <h2 className="text-lg">Mixer Panel</h2>
+      <h2 className="text-3xl font-lilita">Mixer Panel</h2>
 
       {/* ------------Volume------------ */}
       <Slider
-        label={`Volume: ${Math.round(volume * 100)}%`}
+        label={`Volume`}
         min={0}
         max={1}
         step={0.01}
@@ -25,7 +23,7 @@ export default function MixerPanel({
 
       {/* ------------Tempo------------ */}
       <Slider
-        label={`Tempo: ${bpm} BPM`}
+        label={`Tempo`}
         min={40}
         max={240}
         step={1}
