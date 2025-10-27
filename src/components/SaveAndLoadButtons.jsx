@@ -1,28 +1,28 @@
-function PlayButtons({ globalEditor }) {
+function SaveAndLoadButtons({ globalEditor }) {
     return (
-        <div className="d-flex w-100 mb-3">
-            <div className="col-6 text-center me-1">
+        <div className="d-flex mb-3 pt-2">
+            <div className="col-6 text-center pe-2">
                 <button
-                    id="play"
+                    id="save"
                     className="btn btn-outline-primary"
                     style={{ width: "97.5%" }}
                     onClick={() => globalEditor.evaluate()}
                 >
-                    Play
+                    Save
                 </button>
             </div>
             <div className="col-6 text-center">
                 <button
-                    id="stop"
+                    id="load"
                     className="btn btn-outline-primary"
                     style={{ width: "97.5%" }}
                     onClick={() => globalEditor.stop()}
                 >
-                    Stop
+                    Load
                 </button>
             </div>
         </div>
     );
 }
 
-export default PlayButtons;
+export default SaveAndLoadButtons;

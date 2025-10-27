@@ -1,30 +1,29 @@
-function VolumeControl() {
+function VolumeControl({ ProcAndPlay }) {
     return (
-        <div className="col-md-4">
-            <div className="form-check">
+        <div className="col-12">
+            <div className="form-check form-switch">
                 <input
                     className="form-check-input"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault1"
-                    //   onChange={ProcAndPlay}
-                    defaultChecked
+                    type="checkbox"
+                    role="switch"
+                    name="MuteSwitch"
+                    id="MuteSwitch"
+                    onChange={() => ProcAndPlay()}
                 />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                    p1: ON
+                <label className="form-check-label mb-3" htmlFor="MuteSwitch">
+                    Mute
                 </label>
             </div>
-            <div className="form-check">
-                <input
-                    className="form-check-input"
-                    type="radio"
-                    name="flexRadioDefault"
-                    id="flexRadioDefault2"
-                    // onChange={ProcAndPlay}
-                />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                    p1: HUSH
+            <div>
+                <label htmlFor="Volume" className="form-label">
+                    Volume:
                 </label>
+                <input
+                    type="range"
+                    className="form-range"
+                    id="VolumeControl"
+                    onChange={VolumeControl}
+                ></input>
             </div>
         </div>
     );

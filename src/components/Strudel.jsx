@@ -1,6 +1,15 @@
 function Strudel() {
     return (
-        <div className="col-md-8" style={{ maxHeight: "50vh", overflowY: "auto" }}>
+        <div
+            className="mt-3"
+            style={{
+                maxHeight: "50vh",
+                overflowY: "auto",
+                border: "2px solid yellow",
+                width: "98.55%",
+                padding: "0",
+            }}
+        >
             <div id="editor" />
             <div id="output" />
         </div>

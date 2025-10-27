@@ -1,130 +1,94 @@
 import "./App.css";
-import { useEffect, useRef } from "react";
-import { StrudelMirror } from "@strudel/codemirror";
-import { evalScope } from "@strudel/core";
-import { drawPianoroll } from "@strudel/draw";
-import { initAudioOnFirstClick } from "@strudel/webaudio";
-import { transpiler } from "@strudel/transpiler";
-import { getAudioContext, webaudioOutput, registerSynthSounds } from "@strudel/webaudio";
-import { registerSoundfonts } from "@strudel/soundfonts";
-import { stranger_tune } from "./tunes";
-import console_monkey_patch, { getD3Data } from "./console-monkey-patch";
+import { useEffect, useRef, useState } from "react";
 import VolumeControl from "./components/VolumeControl";
 import ProcessingButtons from "./components/ProcessingButtons";
 import PlayButtons from "./components/PlayButtons";
 import Processor from "./components/Processor";
 import Strudel from "./components/Strudel";
+import SaveAndLoadButtons from "./components/SaveAndLoadButtons";
 
-let globalEditor = null;
+export default function StrudelDemo() {
+    const [globalEditor, setGlobalEditor] = useState(null);
 
-const handleD3Data = (event) => {
-    console.log(event.detail);
-};
+    useEffect(() => {
+        if (globalEditor) {
+            Proc();
+        }
+    }, [globalEditor]);
 
-export function SetupButtons() {
-    document.getElementById("play").addEventListener("click", () => globalEditor.evaluate());
-    document.getElementById("stop").addEventListener("click", () => globalEditor.stop());
-    document.getElementById("process").addEventListener("click", () => {
-        Proc();
-    });
-    document.getElementById("process_play").addEventListener("click", () => {
+    const Proc = () => {
+        console.log(document.getElementById("proc"));
+        let proc_text = document.getElementById("proc").value;
+        let proc_text_replaced = proc_text.replaceAll("<main_arp_mute>", ProcessText);
+        ProcessText(proc_text);
+        globalEditor.setCode(proc_text_replaced);
+    };
+
+    const ProcessText = (match, ...args) => {
+        let replace = "";
+        console.log(document.getElementById("MuteSwitch").checked);
+        if (document.getElementById("MuteSwitch").checked) {
+            replace = "_";
+        }
+
+        return replace;
+    };
+
+    const ProcAndPlay = () => {
+        console.log(globalEditor.repl.state.started);
+        // if (globalEditor != null && globalEditor.repl.state.started == true) {
         if (globalEditor != null) {
+            console.log(globalEditor);
             Proc();
             globalEditor.evaluate();
         }
-    });
-}
-
-export function ProcAndPlay() {
-    if (globalEditor != null && globalEditor.repl.state.started == true) {
-        console.log(globalEditor);
-        Proc();
-        globalEditor.evaluate();
-    }
-}
-
-export function Proc() {
-    let proc_text = document.getElementById("proc").value;
-    let proc_text_replaced = proc_text.replaceAll("<p1_Radio>", ProcessText);
-    ProcessText(proc_text);
-    globalEditor.setCode(proc_text_replaced);
-}
-
-export function ProcessText(match, ...args) {
-    let replace = "";
-    if (document.getElementById("flexRadioDefault2").checked) {
-        replace = "_";
-    }
-
-    return replace;
-}
-
-export default function StrudelDemo() {
-    const hasRun = useRef(false);
-
-    useEffect(() => {
-        if (!hasRun.current) {
-            document.addEventListener("d3Data", handleD3Data);
-            console_monkey_patch();
-            hasRun.current = true;
-            //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
-            //init canvas
-            const canvas = document.getElementById("roll");
-            canvas.width = canvas.width * 2;
-            canvas.height = canvas.height * 2;
-            const drawContext = canvas.getContext("2d");
-            const drawTime = [-2, 2]; // time window of drawn haps
-            globalEditor = new StrudelMirror({
-                defaultOutput: webaudioOutput,
-                getTime: () => getAudioContext().currentTime,
-                transpiler,
-                root: document.getElementById("editor"),
-                drawTime,
-                onDraw: (haps, time) =>
-                    drawPianoroll({
-                        haps,
-                        time,
-                        ctx: drawContext,
-                        drawTime,
-                        fold: 0,
-                    }),
-                prebake: async () => {
-                    initAudioOnFirstClick(); // needed to make the browser happy (don't await this here..)
-                    const loadModules = evalScope(
-                        import("@strudel/core"),
-                        import("@strudel/draw"),
-                        import("@strudel/mini"),
-                        import("@strudel/tonal"),
-                        import("@strudel/webaudio")
-                    );
-                    await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
-                },
-            });
-
-            document.getElementById("proc").value = stranger_tune;
-            SetupButtons();
-            Proc();
-        }
-    }, []);
+    };
 
     return (
-        <div>
-            <h2>Strudel Demo</h2>
+        <div style={{ backgroundColor: "#020a4aff" }}>
+            <div className="row">
+                <div className="col-md-9">
+                    <h2 className="ps-2" style={{ color: "#fcef8fff" }}>
+                        Strudel Demo
+                    </h2>
+                    <label
+                        htmlFor="exampleFormControlTextarea1"
+                        className="form-label ps-2"
+                        style={{ color: "#faa255ff" }}
+                    >
+                        Text to preprocess:
+                    </label>
+                </div>
+                <div className="col-md-3">
+                    <SaveAndLoadButtons globalEditor={globalEditor} />
+                </div>
+            </div>
             <main>
                 <div className="container-fluid">
                     <div className="row">
-                        <Processor />
-                        <div className="col-md-4">
-                            <nav>
-                                <ProcessingButtons />
+                        <div style={{ width: "66.3%" }}>
+                            <div className="row">
+                                <Processor Proc={Proc} setGlobalEditor={setGlobalEditor} />
+                            </div>
+                            <div className="row ps-3 pt-2">
+                                <Strudel />
+                            </div>
+                        </div>
+                        <div
+                            style={{
+                                width: "33%",
+                                backgroundColor: "white",
+                                border: "2px solid yellow",
+                            }}
+                        >
+                            <nav className="row w-100 ">
+                                <ProcessingButtons globalEditor={globalEditor} Proc={Proc} />
                                 <br />
-                                <PlayButtons />
+                                <PlayButtons globalEditor={globalEditor} />
+                                <br />
+                                <VolumeControl ProcAndPlay={ProcAndPlay} />
                             </nav>
                         </div>
-                    </div>
-                    <div className="row">
-                        <Strudel />
-                        <VolumeControl />
                     </div>
                 </div>
                 <canvas id="roll"></canvas>
