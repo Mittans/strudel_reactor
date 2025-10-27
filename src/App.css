@@ -43,7 +43,7 @@
   background-color: #1e1e1e !important;
 }
 
-.icon-btn {
+.icon-btn{
   background: none;
   border: none;
   padding: 0;
@@ -53,23 +53,46 @@
   outline: none;
 }
 
-.control-icon {
+.control-icon{
   font-size: 3rem;
-  color: #fe9b23;
+  color: #b9ff66;
   cursor: pointer;
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
-.control-icon:hover {
+.control-icon:hover{
   transform: scale(1.1);
-  color: #ffae42;
+  color: #d4ff99;
 }
 
 .status-pill {
   background-color: #2a2a2a;
   border-radius: 20px;
-  padding: 6px 14px;
+  padding: 6px 18px;
   font-weight: 500;
   font-size: 1rem;
-  color: #fe9b23;
+  color: #b9ff66;
+}
+
+.proc-btn {
+  background-color: #2a2a2a;
+  border: 2px solid #b9ff66;
+  border-radius: 12px;
+  padding: 10px 20px;
+  color: #b9ff66;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.proc-btn:hover {
+  border-color: #d4ff99;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(173, 255, 47, 0.35);
+}
+
+.proc-icon {
+  font-size: 1.2rem;
 }
