@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+body {
+  background-color: #0d0d0d !important;
+  color: #fff
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -40,17 +45,8 @@
 /* play buttons */
 
 .card.bg-dark {
-  background-color: #1e1e1e !important;
-}
-
-.icon-btn{
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-.icon-btn:focus {
-  outline: none;
+  background-color: #262626 !important;
+  color: #fff !important;
 }
 
 .control-icon{
@@ -74,6 +70,7 @@
   color: #b9ff66;
 }
 
+/* process buttons */
 .proc-btn {
   background-color: #2a2a2a;
   border: 2px solid #b9ff66;
@@ -95,4 +92,11 @@
 
 .proc-icon {
   font-size: 1.2rem;
+}
+
+/* temperary - for testing layout */
+#roll {
+  width: 100%;
+  height: 200px;
+  background-color: pink;
 }
