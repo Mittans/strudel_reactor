@@ -129,7 +129,9 @@ export default function StrudelDemo() {
 
   // Function to load the text song from local storage.
   const handleLoad = () => {
-    const savedItem = localStorage.getItem("procText");
+    const song = document.getElementById("songName").value
+    const savedItem = localStorage.getItem(song);
+
     if (savedItem) {
       setText(JSON.parse(savedItem));
       alert("Loaded from local storage");
@@ -150,6 +152,8 @@ export default function StrudelDemo() {
     } else {
       alert("No deleted item found");
     }
+
+    window.location.reload(); 
   };
 
   return (
