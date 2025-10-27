@@ -36,3 +36,30 @@
     transform: rotate(360deg);
   }
 }
+
+/* play buttons */
+
+.card.bg-dark {
+  background-color: #1e1e1e !important;
+}
+
+.control-icon {
+  font-size: 3rem;
+  color: #fe9b23;
+  cursor: pointer;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.control-icon:hover {
+  transform: scale(1.1);
+  color: #ffae42;
+}
+
+.status-pill {
+  background-color: #2a2a2a;
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-weight: 500;
+  font-size: 1rem;
+  color: #fe9b23;
+}
