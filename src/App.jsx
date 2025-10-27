@@ -46,15 +46,15 @@ function App() {
     return (
         <>
             <ControlPanel onProc={handleProc} onProcAndPlay={handleProcAndPlay} onPlay={handlePlay} onStop={handleStop}/>
-            <main className='main-content'>
-                <div className='row me-0'>
-                    <div className='col ms-3'>
+            <main className='main-content' style={{ overflowX: "hidden" }}>
+                <div className='row me-0 flex-nowrap'>
+                    <div className='col-8 ms-3'>
                         <Preprocess onChange={handleProcTextChange} />
                         <Repl procText={processedCode} shouldPlay={shouldPlay} shouldStop={shouldStop} onPlayDone={handlePlayDone} />
                     </div>
                     <div className='vr p-0' style={{ minHeight: '100vh'}}>
                     </div>
-                    <div className='col'>
+                    <div className='col-4 me-0'>
                         <Strudel onModeChange={setRadioValue}/>
                     </div>
                 </div>

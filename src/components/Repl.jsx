@@ -88,23 +88,58 @@ function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
     }, [shouldStop]);
 
     return (
-        <div className="col-md-8" style={{ width: "100%", marginTop: "1rem" }}>
-        <label htmlFor="editor" className="form-label fw-bold">REPL:</label>
-        <div id="editor" ref={editorContainerRef} style={{ minHeight: "300px", maxWidth: "95%", border: "1px solid #444", borderRadius: "8px",}} />
-        <canvas
-            id="roll"
-            ref={canvasRef}
-            width={600}
-            height={200}
-            style={{
-            marginTop: "1rem",
-            width: "95%",
-            background: "linear-gradient(180deg, #1f5f45ff, #48746aff, #1c5a42ff)",
-            borderRadius: "8px",
-            }}
-        />
-        </div>
+        <>
+            <label htmlFor="roll" className="form-label fw-bold mt-3">Strudel Visualisation:</label>
+            <canvas
+                id="roll"
+                ref={canvasRef}
+                height={100}
+                style={{
+                    width: "100%",
+                    background:
+                        "linear-gradient(180deg, #1f5f45ff, #48746aff, #1c5a42ff)",
+                    borderRadius: "8px",
+                }}
+            />
+            <div style={{ marginTop: "1rem" }} className="accordion mt-3" id="replAccordion">
+                <div className="accordion-item border-0 shadow-sm">
+                    <h3 className="accordion-header" id="headingRepl">
+                        <button
+                            className="accordion-button bg-success bg-opacity-75 text-white fw-bold"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#collapseRepl"
+                            aria-expanded="true"
+                            aria-controls="collapseRepl"
+                        >
+                            Strudel REPL
+                        </button>
+                    </h3>
+
+                    <div
+                        id="collapseRepl"
+                        className="accordion-collapse collapse"
+                        aria-labelledby="headingRepl"
+                        data-bs-parent="#replAccordion"
+                    >
+                        <div className="accordion-body">
+                            <div
+                                id="editor"
+                                ref={editorContainerRef}
+                                style={{
+                                    minHeight: "300px",
+                                    maxWidth: "100%",
+                                    border: "1px solid #444",
+                                    borderRadius: "8px",
+                                }}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </>
     );
+
 }
 
 export default Repl;
