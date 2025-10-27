@@ -6,8 +6,12 @@ function PlayButtons(){
   return (
       <div className="card bg-dark text-light border-0 rounded-4 p-4">
         <div className="d-flex justify-content-between align-items-center">
-          <FaRegCircleStop className="control-icon" />
-          <FaRegCirclePlay className="control-icon" />
+          <button className="icon-btn" id="stop">
+            <FaRegCircleStop className="control-icon" />
+          </button>
+          <button className="icon-btn" id="play">
+            <FaRegCirclePlay className="control-icon" />
+          </button>
           <span className="status-pill"><IoMusicalNotes /> Live</span>
         </div>
       </div>
