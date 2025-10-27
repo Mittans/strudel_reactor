@@ -11,6 +11,8 @@ import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import PlayControl from './Components/PlayControl';
 import PlayButtons from './Components/PlayButtons';
+import ProcessButtons from './Components/ProcessButtons';
+import Preprocess from './Components/Preprocess';
 
 
 let globalEditor = null;
@@ -117,14 +119,12 @@ export default function StrudelDemo() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                            <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
-                            <textarea className="form-control" rows="15" id="proc" ></textarea>
+                            <Preprocess />{/* calls the Preprocess class*/}
                         </div>
                         <div className="col-md-4">
 
                             <nav>
-                                <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                                <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
+                                <ProcessButtons /> {/* calls the ProcessButtons class*/}
                                 <br />
                                 <PlayButtons />  {/* calls the button class*/}
                             </nav>
