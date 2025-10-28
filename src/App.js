@@ -5,7 +5,7 @@ import PageTitle from './components/PageTitle';
 import TextPreprocessor from './components/TextPreprocesser';
 import EditorArea from './components/EditorArea';
 import StrudelPlayer from "./components/StrudelPlayer";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function StrudelDemo() {
 
@@ -36,6 +36,12 @@ export default function StrudelDemo() {
         strudelRef.current?.setCode(processed);
         strudelRef.current?.evaluate();
     }
+
+      useEffect(() => {
+        if (strudelRef.current) {
+        strudelRef.current.setCode(strudelCode);
+        }
+    }, [strudelCode]);
 
     return (
         <div className="container-fluid main-container py-4 px-4">
