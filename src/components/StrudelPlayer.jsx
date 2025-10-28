@@ -51,13 +51,25 @@ function StrudelPlayer({strudelCode, strudelRef}) {
             strudelMirror.setCode(strudelCode);
             strudelRef.current = strudelMirror;
         }
-    }, [strudelCode]);
+    }, []);
+
+    useEffect(() => {
+        if (strudelRef.current) {
+            strudelRef.current.setCode(strudelCode);
+        }
+    }, [strudelCode])
+
+    // return (
+    //     <>
+    //         <div id="editor"></div>
+    //     </>
+    // );
 
     return (
-        <>
+        <div className="col-md-12" style={{maxHeight: '45vh', overflowY: 'auto'}}>
+            <p style={{color: "white"}}>Strudel REPL</p>
             <div id="editor"></div>
-            <canvas id="roll"></canvas>
-        </>
+        </div>
     );
 }
 

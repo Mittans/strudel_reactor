@@ -42,7 +42,7 @@ return (
     <PageTitle />
     <br/>
     <div className="row g-4 justify-content-center">
-      <div className="col-md-5 col-sm-10">
+      <div className="col-md-7 col-sm-10">
         <div className="square-box d-flex align-items-center justify-content-center">
           <TextPreprocessor defaultText={stranger_tune} onchange={e => setStrudelCode(e.target.value)}/>
         </div>
@@ -57,7 +57,7 @@ return (
           />
         </div>
       </div>
-      <div className="col-md-5 col-sm-10">
+      <div className="col-md-7 col-sm-10">
         <div className="square-box d-flex align-items-center justify-content-center">
           <StrudelPlayer strudelCode={stranger_tune} strudelRef={strudelRef}/>
         </div>
@@ -67,6 +67,7 @@ return (
           <EditorArea onProc={handleProc}/>
         </div>
       </div>
+      <canvas id="roll"></canvas>
     </div>
   </div>
 );
