@@ -1,5 +1,6 @@
 import ControlPanel from './components/ControlPanel'
 import Preprocess from './components/Preprocess'
+import Presets from './components/Presets'
 import Repl from './components/Repl'
 import Strudel from './components/Strudel'
 import './css/App.css'
@@ -49,12 +50,13 @@ function App() {
             <main className='main-content' style={{ overflowX: "hidden" }}>
                 <div className='row me-0 flex-nowrap'>
                     <div className='col-8 ms-3'>
-                        <Preprocess onChange={handleProcTextChange} />
+                        <Preprocess onChange={handleProcTextChange} value={code} />
                         <Repl procText={processedCode} shouldPlay={shouldPlay} shouldStop={shouldStop} onPlayDone={handlePlayDone} />
                     </div>
                     <div className='vr p-0' style={{ minHeight: '100vh'}}>
                     </div>
                     <div className='col-4 me-0'>
+                        <Presets onPresetLoad={setCode} />
                         <Strudel onModeChange={setRadioValue}/>
                     </div>
                 </div>

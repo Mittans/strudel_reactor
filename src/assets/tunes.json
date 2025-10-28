@@ -1,0 +1,14 @@
+{
+  "presets": [
+    {
+      "id": "stranger_tune",
+      "name": "Stranger Tune",
+      "code": "setcps(140/60/4)\n\nsamples('github:algorave-dave/samples')\nsamples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')\nsamples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')\n\nconst gain_patterns = [\n  \"2\",\n  \"{0.75 2.5}*4\",\n  \"{0.75 2.5!9 0.75 2.5!5 0.75 2.5 0.75 2.5!7 0.75 2.5!3 <2.5 0.75> 2.5}%16\"\n]\n\nconst drum_structure = [\n  \"~\",\n  \"x*4\",\n  \"{x ~!9 x ~!5 x ~ x ~!7 x ~!3 < ~ x > ~}%16\"\n]\n\nconst basslines = [\n  \"[[eb1, eb2]!16 [f2, f1]!16 [g2, g1]!16 [f2, f1]!8 [bb2, bb1]!8]/8\",\n  \"[[eb1, eb2]!16 [bb2, bb1]!16 [g2, g1]!16 [f2, f1]!4 [bb1, bb2]!4 [eb1, eb2]!4 [f1, f2]!4]/8\"\n]\n\nconst arpeggiator1 = [\n  \"{d4 bb3 eb3 d3 bb2 eb2}%16\",\n  \"{c4 bb3 f3 c3 bb2 f2}%16\",\n  \"{d4 bb3 g3 d3 bb2 g2}%16\",\n  \"{c4 bb3 f3 c3 bb2 f2}%16\"\n]\n\nconst arpeggiator2 = [\n  \"{d4 bb3 eb3 d3 bb2 eb2}%16\",\n  \"{c4 bb3 f3 c3 bb2 f2}%16\",\n  \"{d4 bb3 g3 d3 bb2 g2}%16\",\n  \"{d5 bb4 g4 d4 bb3 g3 d4 bb3 eb3 d3 bb2 eb2}%16\"\n]\n\nconst pattern = 0\nconst bass = 0\n\nbassline:\nnote(pick(basslines, bass))\n.sound(\"supersaw\")\n.postgain(2)\n.room(0.6)\n.lpf(700)\n.room(0.4)\n.postgain(pick(gain_patterns, pattern))\n\n<p1_Radio>main_arp:\nnote(pick(arpeggiator1, \"<0 1 2 3>/2\"))\n.sound(\"supersaw\")\n.lpf(300)\n.adsr(\"0:0:.5:.1\")\n.room(0.6)\n.lpenv(3.3)\n.postgain(pick(gain_patterns, pattern))\n\ndrums:\nstack(\n  s(\"tech:5\")\n  .postgain(6)\n  .pcurve(2)\n  .pdec(1)\n  .struct(pick(drum_structure, pattern)),\n\n  s(\"sh\").struct(\"[x!3 ~!2 x!10 ~]\")\n  .postgain(0.5).lpf(7000)\n  .bank(\"RolandTR808\")\n  .speed(0.8).jux(rev).room(sine.range(0.1,0.4)).gain(0.6),\n\n  s(\"{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2\")\n  .bank(\"[KorgDDM110, OberheimDmx]\").speed(1.2)\n  .postgain(.25),\n)\n\ndrums2: \nstack(\n  s(\"[~ hh]*4\").bank(\"RolandTR808\").room(0.3).speed(0.75).gain(1.2),\n  s(\"hh\").struct(\"x*16\").bank(\"RolandTR808\")\n  .gain(0.6)\n  .jux(rev)\n  .room(sine.range(0.1,0.4))\n  .postgain(0.5),\n  \n  s(\"[psr:[2|5|6|7|8|9|12|24|25]*16]?0.1\")\n  .gain(0.1)\n  .postgain(pick(gain_patterns, pattern))\n  .hpf(1000)\n  .speed(0.5)\n  .rarely(jux(rev)),\n)\n"
+    },
+    {
+      "id": "lo_fi_chill",
+      "name": "Lo-Fi Chill",
+      "code": "setcps(90/60/4)\n...\n"
+    }
+  ]
+}
