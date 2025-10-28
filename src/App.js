@@ -12,6 +12,8 @@ import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 
 let globalEditor = null;
 
+
+//test comment 1
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
