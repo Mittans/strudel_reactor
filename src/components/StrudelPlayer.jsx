@@ -59,15 +59,8 @@ function StrudelPlayer({strudelCode, strudelRef}) {
         }
     }, [strudelCode])
 
-    // return (
-    //     <>
-    //         <div id="editor"></div>
-    //     </>
-    // );
-
     return (
         <div className="col-md-12" style={{maxHeight: '45vh', overflowY: 'auto'}}>
-            <p style={{color: "white"}}>Strudel REPL</p>
             <div id="editor"></div>
         </div>
     );

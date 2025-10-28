@@ -37,38 +37,64 @@ export default function StrudelDemo() {
         strudelRef.current?.evaluate();
     }
 
-return (
-  <div className="container-fluid main-container py-4 px-4">
-    <PageTitle />
-    <br/>
-    <div className="row g-4 justify-content-center">
-      <div className="col-md-7 col-sm-10">
-        <div className="square-box d-flex align-items-center justify-content-center">
-          <TextPreprocessor defaultText={stranger_tune} onchange={e => setStrudelCode(e.target.value)}/>
+    return (
+        <div className="container-fluid main-container py-4 px-4">
+            <PageTitle />
+            <br />
+            <div className="row g-4 justify-content-center">
+                <div className="col-md-7 col-sm-10">
+                    <div className="card h-100">
+                        <div className="card-header text-white">
+                            Code Preprocessor
+                        </div>
+                        <div className="card-body d-flex align-items-center justify-content-center">
+                            <TextPreprocessor 
+                                defaultText={strudelCode} 
+                                onchange={e => setStrudelCode(e.target.value)} 
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-5 col-sm-10">
+                    <div className="card h-100">
+                        <div className="card-header text-white">
+                            Audio Controls
+                        </div>
+                        <div className="card-body d-flex align-items-center justify-content-center">
+                            <AudioControls
+                                handlePlay={handlePlay}
+                                handleStop={handleStop}
+                                handlePreprocess={handlePreprocess}
+                                handleProcPlay={handleProcPlay}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-7 col-sm-10">
+                    <div className="card h-100">
+                        <div className="card-header text-white">
+                            Strudel Player
+                        </div>
+                        <div className="card-body">
+                            <StrudelPlayer 
+                                strudelCode={strudelCode} 
+                                strudelRef={strudelRef} 
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-5 col-sm-10">
+                    <div className="card h-100">
+                        <div className="card-header text-white">
+                            Editor Area
+                        </div>
+                        <div className="card-body d-flex align-items-center justify-content-center">
+                            <EditorArea onProc={handleProc}/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <canvas id="roll"></canvas>
         </div>
-      </div>
-      <div className="col-md-5 col-sm-10">
-        <div className="square-box d-flex align-items-center justify-content-center">
-          <AudioControls
-          handlePlay={handlePlay}
-          handleStop={handleStop}
-          handlePreprocess={handlePreprocess}
-          handleProcPlay={handleProcPlay}
-          />
-        </div>
-      </div>
-      <div className="col-md-7 col-sm-10">
-        <div className="square-box d-flex align-items-center justify-content-center">
-          <StrudelPlayer strudelCode={stranger_tune} strudelRef={strudelRef}/>
-        </div>
-      </div>
-      <div className="col-md-5 col-sm-10">
-        <div className="square-box d-flex align-items-center justify-content-center">
-          <EditorArea onProc={handleProc}/>
-        </div>
-      </div>
-      <canvas id="roll"></canvas>
-    </div>
-  </div>
-);
+    );
 }
