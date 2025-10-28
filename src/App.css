@@ -73,3 +73,20 @@
   transform: translateY(-4px);
   box-shadow: 0 0 20px #0ff, 0 0 40px #00ffff;
 }
+
+/* CSS for button controls */
+
+.audio-controls {
+  width: 100%;
+  padding: 10px;
+}
+
+.btn-stop {
+  background-color: red !important;
+  border-color: red !important;
+}
+
+.btn-play {
+  background-color: green !important;
+  border-color: green! important;
+}

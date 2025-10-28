@@ -1,10 +1,14 @@
-function PlaybackControls({handlePlay, handleStop}) {
+function PlaybackControls({ handlePlay, handleStop }) {
     return (
         <>
-            <button id="play" className="btn btn-outline-primary" onClick={handlePlay}>Play</button>
-            <button id="stop" className="btn btn-outline-primary" onClick={handleStop}>Stop</button>
+            <div className="col-6">
+                <button className="btn btn-primary btn-lg btn-play w-100" onClick={handlePlay}>Play</button>
+            </div>
+            <div className="col-6">
+                <button className="btn btn-primary btn-lg btn-stop w-100" onClick={handleStop}>Stop</button>
+            </div>
         </>
-    )
+    );
 }
 
 export default PlaybackControls;
