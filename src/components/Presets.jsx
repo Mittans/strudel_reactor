@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import tunes from '../assets/tunes.json';
+import '../css/Presets.css';
 
 function Presets({ onPresetLoad }) {
 
@@ -27,7 +28,7 @@ function Presets({ onPresetLoad }) {
     }
 
     return (
-        <select value={selectedPreset} onChange={(e) => loadPreset(e.target.value)}>
+        <select value={selectedPreset} onChange={(e) => loadPreset(e.target.value)} className="preset-select mb-3 w-50">
             <option value="" disabled>Select a preset</option>
             {presetsData.map((preset) => (
                 <option key={preset.id} value={preset.id}>

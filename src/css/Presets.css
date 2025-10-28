@@ -1,0 +1,22 @@
+.preset-select {
+    color: #2a3b30;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
+    width: 100%;
+    max-width: 250px;
+}
+
+.preset-select:focus {
+    background-color: #5ba373;
+    color: white;
+}
+
+.preset-select option {
+    background-color: #7bbf8e;
+    border-radius: 50%;
+}

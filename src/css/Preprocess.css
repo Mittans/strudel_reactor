@@ -1,0 +1,10 @@
+
+#preProcContainer :focus {
+    border-color: #5ba373;
+    box-shadow: 0 0 8px rgba(91, 163, 115, 0.6);
+}
+
+textarea::selection {
+    background-color: #5ba373;
+    color: white;
+}
