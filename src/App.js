@@ -7,10 +7,11 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import { stranger_tune } from './tunes';
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import { stranger_tune } from './assets/tunes';
+import console_monkey_patch, { getD3Data } from './assets/console-monkey-patch';
 
 let globalEditor = null;
+
 
 const handleD3Data = (event) => {
     console.log(event.detail);
