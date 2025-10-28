@@ -43,27 +43,16 @@
   padding: 40px 20px 80px 20px; 
 }
 
-/* .square-box {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border: 2px solid #0ff;
-  border-radius: 12px;
-  background-color: #1a1a1a;
-  color: #0ff;
-  box-shadow: 0 0 10px #0ff, 0 0 20px #00ffff50;
-  transition: transform 0.2s ease, box-shadow 0.3s ease;
-} */
-
 .square-box {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
   background-color: #111;
   border: 2px solid #0ff;
   border-radius: 20px;
   padding: 10px; 
   overflow: hidden; 
   box-shadow: 0 0 10px #0ff, 0 0 20px #00ffff50;
+  aspect-ratio: 1/1;
 }
 
 #editor {

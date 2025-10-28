@@ -37,33 +37,6 @@ export default function StrudelDemo() {
         strudelRef.current?.evaluate();
     }
 
-// return (
-//     <div>
-//         <PageTitle/>
-//         <main>
-//             <div className="container-fluid">
-//                 <div className="row">
-//                     <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-//                         <TextPreprocessor defaultText={stranger_tune} onchange={e => setStrudelCode(e.target.value)}/>
-//                     </div>
-//                     <div className="col-md-4">
-//                         <AudioControls
-//                         handlePlay={handlePlay}
-//                         handleStop={handleStop}
-//                         handlePreprocess={handlePreprocess}
-//                         handleProcPlay={handleProcPlay}
-//                         />
-//                     </div>
-//                 </div>
-//                 <div className="row">
-//                     <EditorArea onProc={handleProc}/>
-//                 </div>
-//             </div>
-//             <StrudelPlayer strudelCode={stranger_tune} strudelRef={strudelRef}/>
-//         </main >
-//     </div >
-// );
-
 return (
   <div className="container-fluid main-container py-4 px-4">
     <PageTitle />
