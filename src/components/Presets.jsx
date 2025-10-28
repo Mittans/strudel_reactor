@@ -28,14 +28,18 @@ function Presets({ onPresetLoad }) {
     }
 
     return (
-        <select value={selectedPreset} onChange={(e) => loadPreset(e.target.value)} className="preset-select mb-3 w-50">
-            <option value="" disabled>Select a preset</option>
-            {presetsData.map((preset) => (
-                <option key={preset.id} value={preset.id}>
-                    {preset.displayName}
-                </option>
-            ))}
-        </select>
+        <>
+            <label  id='presetLabel' htmlFor="presetSelect" className="form-label fw-bold">Load Presets?</label>
+            <select value={selectedPreset} onChange={(e) => loadPreset(e.target.value)} id='presetSelect' className="preset-select mb-3 w-50">
+                <option value="" disabled>Select a preset</option>
+                {presetsData.map((preset) => (
+                    <option key={preset.id} value={preset.id}>
+                        {preset.displayName}
+                    </option>
+                ))}
+            </select>
+            {/* <input type='file' ></input> */}
+        </>
     );
 }
 

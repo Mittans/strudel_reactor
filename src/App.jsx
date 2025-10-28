@@ -3,6 +3,7 @@ import Preprocess from './components/Preprocess'
 import Presets from './components/Presets'
 import Repl from './components/Repl'
 import Strudel from './components/Strudel'
+import Graph from './components/Graph'
 import './css/App.css'
 import { useState, useRef } from 'react';
 
@@ -12,6 +13,7 @@ function App() {
     const [processedCode, setProcessedCode] = useState("");
     const [shouldPlay, setShouldPlay] = useState(false);
     const [shouldStop, setShouldStop] = useState(false);
+    const [showGraph, setShowGraph] = useState(false);
     const [radioValue, setRadioValue] = useState("on");
 
     const replRef = useRef(null);
@@ -40,13 +42,16 @@ function App() {
         setShouldStop(false);
     };
 
+    const handleGraphToggle = () => setShowGraph(!showGraph);
+
     // Handle Strudel REPL
 
     // Handle preproc controls
 
     return (
         <>
-            <ControlPanel onProc={handleProc} onProcAndPlay={handleProcAndPlay} onPlay={handlePlay} onStop={handleStop}/>
+            <ControlPanel onProc={handleProc} onProcAndPlay={handleProcAndPlay} onPlay={handlePlay} onStop={handleStop} onGraphToggle={handleGraphToggle}/>
+            <Graph showGraph={showGraph} onClose={() => setShowGraph(false)}/>
             <main className='main-content' style={{ overflowX: "hidden" }}>
                 <div className='row me-0 flex-nowrap'>
                     <div className='col-8 ms-3'>

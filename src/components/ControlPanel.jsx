@@ -1,6 +1,6 @@
 import '../css/ControlPanel.css';
 
-function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop }){
+function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop, onGraphToggle }){
 
     return (
         <>
@@ -31,6 +31,10 @@ function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop }){
                             Stop
                         </button>
                     </div>
+                </div>
+                <div>
+                    <button className="mt-3" onClick={onGraphToggle}>View Graph</button>
+                    
                 </div>
             </div>
         </>
