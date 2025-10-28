@@ -1,9 +1,15 @@
 {
   "ExpandedNodes": [
+<<<<<<< HEAD
     "",
     "\\src",
     "\\src\\components"
   ],
   "SelectedNode": "\\src\\App.js",
+=======
+    ""
+  ],
+  "SelectedNode": "\\ReactAssignment.sln",
+>>>>>>> 5389eaff2082efec00d3a53a14ab35bef58f6b48
   "PreviewInSolutionExplorer": false
 }
