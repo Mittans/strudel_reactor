@@ -1,19 +1,12 @@
-function DJControls(){
+
+function DJControls() {
+
   return (
-    <>
-      <div className="form-check">
-          <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" defaultChecked />
-          <label className="form-check-label" htmlFor="flexRadioDefault1">
-              p1: ON
-          </label>
-      </div>
-      <div className="form-check">
-          <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-          <label className="form-check-label" htmlFor="flexRadioDefault2">
-              p1: HUSH
-          </label>
-      </div>
-    </>
-  )
+    <div className="card bg-dark text-light border-0 rounded-4 p-3">
+      <h5 className="card-title mb-3">DJ Controls</h5>
+
+    </div>
+  );
 }
+
 export default DJControls;
