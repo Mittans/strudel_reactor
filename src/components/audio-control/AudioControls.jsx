@@ -3,7 +3,7 @@ import ProcessControls from "./ProcessControls";
 import TempoInput from "./TempoInput";
 import VolumeSlider from "./VolumeSlider";
 
-function AudioControls({ handlePlay, handleStop, handlePreprocess, handleProcPlay }) {
+function AudioControls({ handlePlay, handleStop, handlePreprocess, handleProcPlay, cpm, setCpm}) {
     return (
         <div className="container-fluid audio-controls">
             <div className="row g-3 mb-4">
@@ -11,7 +11,7 @@ function AudioControls({ handlePlay, handleStop, handlePreprocess, handleProcPla
                 <ProcessControls handlePreprocess={handlePreprocess} handleProcPlay={handleProcPlay}/>
             </div>
             <div className="row g-3 mb-4">
-                <TempoInput/>    
+                <TempoInput cpm={cpm} setCpm={setCpm}/>    
             </div>
             <div className="row g-3">
                 <VolumeSlider/>

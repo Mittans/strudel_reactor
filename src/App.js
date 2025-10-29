@@ -10,7 +10,10 @@ import { useState, useRef, useEffect } from "react";
 export default function StrudelDemo() {
 
     let strudelRef = useRef();
-    const [strudelCode, setStrudelCode] = useState(stranger_tune);
+    let [strudelCode, setStrudelCode] = useState(stranger_tune);
+
+    // CPM Tempo Edit
+    const [cpm, setCpm] = useState(120);
 
     function handlePreprocess() {
         const processed = strudelCode.replaceAll("<p1_Radio>", "_");
@@ -37,11 +40,19 @@ export default function StrudelDemo() {
         strudelRef.current?.evaluate();
     }
 
-      useEffect(() => {
+    // Updates the REPL when changes in the text preprocessor are entered
+    // Updates the CPM in the REPL
+    useEffect(() => {
         if (strudelRef.current) {
+        
+        strudelCode = strudelCode.replace(/setcpm\(.*?\)/, `setcpm(${cpm})`)        
         strudelRef.current.setCode(strudelCode);
+
+        if (strudelRef.current && strudelRef.current.repl.state.started) {
+            strudelRef.current.evaluate();
         }
-    }, [strudelCode]);
+    }
+    }, [strudelCode, cpm]);
 
     return (
         <div className="container-fluid main-container py-4 px-4">
@@ -72,6 +83,8 @@ export default function StrudelDemo() {
                                 handleStop={handleStop}
                                 handlePreprocess={handlePreprocess}
                                 handleProcPlay={handleProcPlay}
+                                cpm={cpm}
+                                setCpm={setCpm}
                             />
                         </div>
                     </div>
