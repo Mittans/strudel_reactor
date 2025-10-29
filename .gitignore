@@ -26,3 +26,4 @@ yarn-error.log*
 *.suo
 /.vs/ReactAssignment/v17
 /.vs
+/ReactAssignment.esproj
