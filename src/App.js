@@ -1,7 +1,7 @@
 import './App.css';
 import { stranger_tune } from './tunes';
 import AudioControls from './components/audio-control/AudioControls';
-import PageTitle from './components/PageTitle';
+import PageHeader from './components/PageHeader';
 import TextPreprocessor from './components/TextPreprocesser';
 import EditorArea from './components/EditorArea';
 import StrudelPlayer from "./components/StrudelPlayer";
@@ -59,7 +59,7 @@ export default function StrudelDemo() {
 
     return (
         <div className="container-fluid main-container py-4 px-4">
-            <PageTitle />
+            <PageHeader />
             <br />
             <div className="row g-4 justify-content-center">
                 <div className="col-md-7 col-sm-10">
