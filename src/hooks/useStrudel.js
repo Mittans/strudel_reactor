@@ -50,6 +50,15 @@ export function useStrudel(intitalTune) {
     return applyUpdatedCode(/setcps\([^)]*\)/g, `setcps(${newBpm}/60/4)`);
   }
 
+  function changeVolume(newVolume) {
+    setVol(newVolume);
+
+    return applyUpdatedCode(
+      /const volume = [0-9.]+/,
+      `const volume = ${newVolume.toFixed(1)}`
+    );
+  }
+
   function changeGainPattern(newGainPattern) {
     setPattern(newGainPattern);
 
@@ -73,10 +82,6 @@ export function useStrudel(intitalTune) {
     );
   }
 
-  function changeVolume(v) {
-    setVol(v);
-  }
-
   const handleProcChange = (e) => {
     const newCode = e.target.value;
     setProcValue(newCode);
@@ -89,10 +94,10 @@ export function useStrudel(intitalTune) {
     setIsPlaying,
     bpm,
     volume,
-    changeTempo,
-    changeVolume,
     procValue,
     handleProcChange,
+    changeTempo,
+    changeVolume,
     changeGainPattern,
     changeBass,
   };

@@ -16,8 +16,8 @@ export default function MixerPanel({
         id="volume-slider"
         label={`Volume`}
         min={0}
-        max={1}
-        step={0.01}
+        max={3}
+        step={0.1}
         value={volume}
         onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
       />

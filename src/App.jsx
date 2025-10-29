@@ -21,10 +21,10 @@ export default function App() {
     setIsPlaying,
     bpm,
     volume,
-    changeTempo,
-    changeVolume,
     procValue,
     handleProcChange,
+    changeTempo,
+    changeVolume,
     changeGainPattern,
     changeBass,
   } = useStrudel(stranger_tune);
@@ -32,7 +32,7 @@ export default function App() {
   return (
     <div className="bg-gradient-to-br from-[#1e3a8a] via-[#3b82f6] to-[#06b6d4] min-h-screen text-white p-3">
       <Header />
-      <StatusBar isPlaying={isPlaying} />
+      <StatusBar isPlaying={isPlaying} bpm={bpm} volume={volume} />
       <ControlPanel isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 
       {isReady && (

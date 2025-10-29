@@ -35,9 +35,9 @@ const arpeggiator2 = [
 "{d5 bb4 g4 d4 bb3 g3 d4 bb3 eb3 d3 bb2 eb2}%16",
 ]
 
-
 const pattern = 0
 const bass = 0
+const volume = 0.80
 
 bassline:
 note(pick(basslines, bass))
@@ -47,16 +47,18 @@ note(pick(basslines, bass))
 .lpf(700)
 .room(0.4)
 .postgain(pick(gain_patterns, pattern))
+.gain(volume)
 
 
 main_arp: 
-note(pick(arpeggiator1, "<0 1 2 3>/2"))
+note(pick(arpeggiator2, "<0 1 2 3>/2"))
 .sound("supersaw")
 .lpf(300)
 .adsr("0:0:.5:.1")
 .room(0.6)
 .lpenv(3.3)
 .postgain(pick(gain_patterns, pattern))
+.gain(volume)
 
 
 drums:
@@ -75,7 +77,7 @@ stack(
   s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2")
   .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
   .postgain(.25),
-)
+).gain(volume)
 
 drums2: 
 stack(
@@ -92,7 +94,8 @@ stack(
   .hpf(1000)
   .speed(0.5)
   .rarely(jux(rev)),
-)
+).postgain(volume)
+  
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())
