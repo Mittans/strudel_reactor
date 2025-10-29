@@ -1,6 +1,4 @@
 
-import 'bootstrap-icons/font/bootstrap-icons.css';
-
 
 function PlayControl() {
     return (
@@ -12,9 +10,6 @@ function PlayControl() {
                     <i className="bi bi-file-earmark-music me-2"></i>
                     Play Control Panel
                 </h5>
-
-
-
 
 
                 <div className="input-group mb-3">
@@ -46,29 +41,40 @@ function PlayControl() {
                 </div>
 
 
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="s1" />
-                    <label className="form-check-label" htmlFor="s1">s1</label>
+                <div className="p-3 rounded-3 bg-white shadow-sm fw-semibold mb-3">
+                    <p className="fw-semibold mb-2">Tracks</p>
+                    <div className="d-flex flex-wrap gap-3">
+                        <div className="form-check form-check-inline">
+                            <input className="form-check-input" type="checkbox" id="s1" />
+                            <label className="form-check-label" htmlFor="s1">S1</label>
+                        </div>
+                        <div className="form-check form-check-inline">
+                            <input className="form-check-input" type="checkbox" id="d1" />
+                            <label className="form-check-label" htmlFor="d1">D1</label>
+                        </div>
+                        <div className="form-check form-check-inline">
+                            <input className="form-check-input" type="checkbox" id="d2" />
+                            <label className="form-check-label" htmlFor="d2">D2</label>
+                        </div>
+                    </div>
                 </div>
 
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="d1" />
-                    <label className="form-check-label" htmlFor="d1">d1</label>
+
+                <div className="d-flex gap-2 mt-2 my-3">
+                    <button className="btn btn-secondary">
+                        <i class="bi bi-mic-mute-fill"> Mute</i>
+                    </button>
+
+                    <button className="btn btn-primary">
+                        <i class="bi bi-mic-fill"></i>Unmute
+                    </button>
+
+                    <button className="btn btn-warning">
+                        <i class="bi bi-shuffle"></i> Shuffle
+                    </button>
                 </div>
 
-                <div className="form-check mb-3">
-                    <input className="form-check-input" type="checkbox" id="d2" />
-                    <label className="form-check-label" htmlFor="d2">d2</label>
-                </div>
-
-
-                <div className="d-flex gap-2 mt-2">
-                    <button className="btn btn-secondary">Mute</button>
-                    <button className="btn btn-primary">Unmute</button>
-                    <button className="btn btn-warning">Randomise Music</button>
-                </div>
-
-            </div>
+            </div >
 
         </>
     );

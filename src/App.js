@@ -14,6 +14,8 @@ import PlayButtons from './Components/PlayButtons';
 import ProcessButtons from './Components/ProcessButtons';
 import Preprocess from './Components/Preprocess';
 
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 
 let globalEditor = null;
 
