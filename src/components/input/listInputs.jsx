@@ -6,7 +6,7 @@ import { Effects } from './effects'
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 
-export function ListComponents(){
+export function ListInputs(){
     const [isOpen, setIsOpen] = useState(false)
 
     const handleOpen = () => {
@@ -42,7 +42,7 @@ export function ListComponents(){
                 </button>
             </div>
             ) : (
-            <button className="flex p-1 w-10 mx-2" onClick={handleOpen}> 
+            <button className="flex p-1 w-10 mx-2 w-500" onClick={handleOpen}> 
                 <BsList className="text-red-500 text-3xl"/>
             </button>
             )}

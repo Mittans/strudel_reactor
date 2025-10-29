@@ -5,8 +5,9 @@ import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import { ButtonStyle } from './components/buttons/buttonStyle';
-import { ListComponents } from './components/Input/listComponents';
+import { ControlButtons } from './components/buttons/ControlButtons';
+import { CRUDManager } from './components/buttons/CRUDManager';
+import { ListInputs } from './components/input/listInputs';
 import SaveModal from './components/modal/saveModal'
 
 let globalEditor = null;
@@ -159,16 +160,16 @@ export default function StrudelDemo() {
   return (
     <div className="bg-gray-100">
       <div name="components-bar" className="bg-black p-2 mb-2 flex justify-between">
+
+        {/* The title */}
         <div className='flex'>
           <span className={`text-3xl font-bold text-yellow-500 px-1 ${isPlay ? "animate-spin" : ""}`}>꩜</span>
           <h1 className="text-3xl font-bold text-yellow-500">Strudel Demo </h1>
         </div>
         
+        {/* The control buttons */}
         <div name="buttons">
-          <ButtonStyle
-          handleDelete={handleDelete} 
-          modalOpenControl={modalOpenControl} 
-          handleLoad={handleLoad}
+          <ControlButtons
           handleProc={handleProc}
           handleProcPlay={handleProcPlay}
           handleStop={handleStop}
@@ -176,8 +177,9 @@ export default function StrudelDemo() {
           isPlay={isPlay}/>
         </div>
 
+        {/* The Saving Modal appears after clicking save button */}
         {isOpenModal && (
-        <SaveModal modalCloseContro={modalCloseControl} text={text}/>
+        <SaveModal modalCloseControl={modalCloseControl} text={text}/>
         )}
       </div>
 
@@ -185,27 +187,46 @@ export default function StrudelDemo() {
         <div className="container-fluid">
           <div>
             <div className='flex justify-between mb-2'>
-              <select
-              className="text-2xl text-center font-bold bg-gray-200 text-black w-40  rounded-lg" 
-              htmlFor="exampleFormControlTextarea1" 
-              id="songName"
-              >
-                <option value ="" className="text-sm text-center font-bold bg-gray-200 text-black w-40 rounded-lg" > Untitled </option>
-                 {musicList.map((obj) => (
-                    <option 
-                    className="text-sm text-center font-bold bg-gray-200 text-black w-40 rounded-lg"
-                    value={obj}> 
-                    {obj} 
-                    </option>
-                ))}
-              </select>
-            
+              <div className='flex'>
+                <select
+                className="text-2xl text-center font-bold bg-gray-200 text-black w-40  rounded-lg" 
+                htmlFor="exampleFormControlTextarea1" 
+                id="songName"
+                >
+                  <option value ="" className="text-sm text-center font-bold bg-gray-200 text-black w-40 rounded-lg" > Untitled </option>
+                  {musicList.map((obj) => (
+                      <option 
+                      className="text-sm text-center font-bold bg-gray-200 text-black w-40 rounded-lg"
+                      value={obj}> 
+                      {obj} 
+                      </option>
+                  ))}
+                </select>
+              
+                <CRUDManager  
+                handleDelete={handleDelete} 
+                modalOpenControl={modalOpenControl} 
+                handleLoad={handleLoad}
+                />
+              </div>
+              
+              <ListInputs/>
+            </div>
             <div className='flex'>
-              <ListComponents/>
+              <div className="m-2 p-2">
+                <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
+                <label className="peer-checked:bg-gray-500 bg-gray-400 text-white rounded-md px-5 py-2 font-bold" htmlFor="flexRadioDefault1">
+                  p1: ON
+                </label>
+              </div>
+              <div className="m-2 p-2">
+                <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
+                <label className="peer-checked:bg-gray-500 bg-gray-400 text-white rounded-md px-5 py-2 font-bold" htmlFor="flexRadioDefault2">
+                  p1: HUSH
+                </label>
+              </div>
             </div>
-            </div>
-
-            <div>
+            <div className='flex justify-between'>
                 <textarea 
                   className="w-full border border-black" 
                   rows="15" 
@@ -215,25 +236,14 @@ export default function StrudelDemo() {
                   ></textarea>
             </div>
           </div>
+
           <div>
             <h2 className='mt-2 text-2xl text-center font-bold'> Showtime </h2>
-            <div className='flex'>
-              <div className="m-2">
-                <input className="" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                <label className="" htmlFor="flexRadioDefault1">
-                  p1: ON
-                </label>
-              </div>
-              <div className="m-2">
-                <input type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                <label htmlFor="flexRadioDefault2">
-                  p1: HUSH
-                </label>
-              </div>
-            </div>
           </div>
-          <div style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-            <div id="editor" />
+          <div className=''>
+            <div className="h-500" style={{ maxHeight: '500', overflowY: 'auto' }}>
+              <div id="editor" />
+            </div>
           </div>
         </div>
 

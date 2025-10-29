@@ -51,9 +51,8 @@ export function Stop(props){
 export function Save(props){
     return (
         <div>
-            <button className="flex p-1 content-center" onClick={props.modalOpenControl}> 
-                <CiSaveDown2 className="mx-1 self-center text-yellow-500"/>
-                <div className="mx-1 font-bold text-yellow-500"> Save </div>
+            <button className="flex content-center" onClick={props.modalOpenControl}> 
+                <CiSaveDown2 className="mx-1 self-center text-[28px] text-green-500"/>
             </button>
         </div>
     );
@@ -62,9 +61,8 @@ export function Save(props){
 export function Load(props){
     return (
         <div>
-            <button id={props.id} className="flex p-1" onClick={props.handleLoad}> 
-                <FaDownload className="mx-1 self-center text-yellow-500 "/>
-                <div className="mx-1 font-bold text-yellow-500"> Load </div>
+            <button id={props.id} className="flex" onClick={props.handleLoad}> 
+                <FaDownload className="mx-1 self-center text-[25px] text-yellow-500"/>
             </button>
         </div>
     );
@@ -73,9 +71,8 @@ export function Load(props){
 export function Delete(props){
     return (
         <div>
-            <button id={props.id} className="flex p-1" onClick={props.handleDelete}> 
-                <RiDeleteBin7Fill className="mx-1 self-center text-yellow-500 "/>
-                <div className="mx-1 font-bold text-yellow-500"> Delete </div>
+            <button id={props.id} className="flex" onClick={props.handleDelete}> 
+                <RiDeleteBin7Fill className="mx-1 text-[25px] self-center text-red-500"/>
             </button>
         </div>
     );
