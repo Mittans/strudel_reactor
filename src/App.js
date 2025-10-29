@@ -138,6 +138,8 @@ export default function StrudelDemo() {
                         <div className="col-md-4">
                             <PlayControl /> {/* calls the play control class*/}
                         </div>
+
+
                     </div>
                 </div>
                 <canvas id="roll"></canvas>
