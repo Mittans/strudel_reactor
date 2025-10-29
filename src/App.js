@@ -6,15 +6,32 @@ import PlayButtons from "./components/PlayButtons";
 import Processor from "./components/Processor";
 import Strudel from "./components/Strudel";
 import SaveAndLoadButtons from "./components/SaveAndLoadButtons";
+import LowPassFilter from "./components/LowPassFilter";
+import MediumPassFilter from "./components/MediumPassFilter";
+import HighPassFilter from "./components/HighPassFilter";
+import Track from "./components/Track";
 
 export default function StrudelDemo() {
     const [globalEditor, setGlobalEditor] = useState(null);
+    const [Tracks, setTracks] = useState([]);
 
     useEffect(() => {
         if (globalEditor) {
             Proc();
+            getTrack();
         }
     }, [globalEditor]);
+
+    const getTrack = () => {
+        let code = globalEditor.code;
+        code = code.split("\n");
+        for (const line of code) {
+            let match = line.match(/^\s*(\w+):/);
+            if (match) {
+                setTracks((currentTracks) => [...currentTracks, match[1]]);
+            }
+        }
+    };
 
     const Proc = () => {
         console.log(document.getElementById("proc"));
@@ -46,14 +63,14 @@ export default function StrudelDemo() {
 
     return (
         <div style={{ backgroundColor: "#020a4aff" }}>
-            <div className="row">
+            <div className="row" style={{ maxWidth: "100vw", marginRight: "0" }}>
                 <div className="col-md-9">
-                    <h2 className="ps-2" style={{ color: "#fcef8fff" }}>
+                    <h2 className="ps-3" style={{ color: "#fcef8fff" }}>
                         Strudel Demo
                     </h2>
                     <label
                         htmlFor="exampleFormControlTextarea1"
-                        className="form-label ps-2"
+                        className="form-label ps-3"
                         style={{ color: "#faa255ff" }}
                     >
                         Text to preprocess:
@@ -79,19 +96,51 @@ export default function StrudelDemo() {
                                 width: "33%",
                                 backgroundColor: "white",
                                 border: "2px solid yellow",
+                                overflowY: "auto",
                             }}
                         >
-                            <nav className="row w-100 ">
+                            <nav className="row w-100 " style={{ maxHeight: "100vh" }}>
                                 <ProcessingButtons globalEditor={globalEditor} Proc={Proc} />
                                 <br />
                                 <PlayButtons globalEditor={globalEditor} />
                                 <br />
+                                <h6 className="text-center">Volume Controls:</h6>
                                 <VolumeControl ProcAndPlay={ProcAndPlay} />
+                                <br />
+                                <h6 className="text-center">Track Volume Control:</h6>
+                                {Array.from(
+                                    { length: Tracks.length },
+                                    (_, i) => (
+                                        <Track trackName={Tracks[i]} />
+                                        // <p>{Tracks[i]}</p>
+                                    ),
+                                    <br />
+                                )}
+                                <h6 className="text-center">Filters:</h6>
+                                <LowPassFilter />
+                                <br />
+                                <MediumPassFilter />
+                                <br />
+                                <HighPassFilter />
                             </nav>
                         </div>
                     </div>
+                    <div className="row mt-3 pb-3">
+                        <div style={{ width: "66.3%" }}></div>
+                        <div
+                            style={{
+                                width: "33%",
+                                backgroundColor: "white",
+                                border: "2px solid yellow",
+                            }}
+                        >
+                            <div style={{ height: "25vw" }}>
+                                <h6 className="text-center mt-2">Reverb:</h6>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <canvas id="roll"></canvas>
+                {/* <canvas id="roll"></canvas> */}
             </main>
         </div>
     );

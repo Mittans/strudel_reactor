@@ -1,6 +1,6 @@
 function VolumeControl({ ProcAndPlay }) {
     return (
-        <div className="col-12">
+        <div className="col-12 mb-3">
             <div className="form-check form-switch">
                 <input
                     className="form-check-input"
