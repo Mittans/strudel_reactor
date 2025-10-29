@@ -24,3 +24,5 @@ yarn-error.log*
 *.vsidx
 *.wsuo
 *.suo
+/.vs/ReactAssignment/v17
+/.vs
