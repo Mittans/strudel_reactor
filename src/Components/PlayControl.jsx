@@ -11,6 +11,12 @@ function PlayControl() {
             </div>
 
 
+            <div className="p-3 rounded-3 bg-light shadow-sm fw-semibold">
+                <label for="volume" className="form-label">Volume Slider</label>
+                <input type="range" className="form-range" min="0" max="100" step="10" id="volume_range"></input>
+            </div >
+
+
             <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="s1" />
                 <label className="form-check-label" for="s1">
@@ -30,7 +36,15 @@ function PlayControl() {
                 <label className="form-check-label" for="d2">
                     d2
                 </label>
+
             </div>
+
+
+            <div className="d-flex gap-2 mt-2">
+                <button className="btn btn-secondary"> Mute </button>
+                <button className="btn btn-primary"> Unmute </button>
+            </div>
+
 
 
 
