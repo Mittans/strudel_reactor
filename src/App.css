@@ -86,12 +86,17 @@ body {
 .proc-btn:hover {
   border-color: #d4ff99;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(173, 255, 47, 0.35);
 }
 
 .proc-icon {
   font-size: 1.2rem;
 }
+
+/* track controls */
+.form-check-input:checked {
+        background-color: #ffa733 !important;
+        border-color: #ffa733 !important;
+      }
 
 /* temperary - for testing layout */
 #roll {
