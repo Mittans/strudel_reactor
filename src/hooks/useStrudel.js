@@ -9,6 +9,7 @@ export function useStrudel(intitalTune) {
   const [bpm, setBpm] = useState(140);
   const [volume, setVol] = useState(0.8);
   const [pattern, setPattern] = useState("0");
+  const [bass, setBass] = useState("0");
 
   const hasInit = useRef(false);
 
@@ -73,6 +74,32 @@ export function useStrudel(intitalTune) {
     });
   }
 
+  function changeBass(newBass) {
+    setBass(newBass);
+
+    // Convert to integer
+    const bassIndex = parseInt(newBass);
+
+    // TODO: Explain the replace method and refactor the changeTempo and changePattern
+    setProcValue((prevCode) => {
+      let updatedCode = prevCode.replace(
+        /const\s+bass\s*=\s*\d+/,
+        `const bass = ${bassIndex}`
+      );
+
+      // update the code
+      strudelActions.setCode(updatedCode);
+
+      // re-play the song if the song is currently playing
+      if (isPlaying) {
+        strudelActions.evaluate();
+      }
+
+      // update the textarea
+      return updatedCode;
+    });
+  }
+
   function changeVolume(v) {
     setVol(v);
   }
@@ -94,5 +121,6 @@ export function useStrudel(intitalTune) {
     procValue,
     handleProcChange,
     changeGainPattern,
+    changeBass,
   };
 }
