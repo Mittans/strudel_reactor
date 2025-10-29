@@ -1,12 +1,25 @@
-
 function ProcessButtons() {
     return (
         <>
-            <div className="btn-group" role="group" aria-label="Processing controls">
-                <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
+            <div className="container p-4 rounded-4 shadow-sm bg-light mt-4">
+                <h5 className="text-center mb-4 fw-bold">
+                    Processing Controls
+                </h5>
+
+                <div className="d-flex justify-content-center gap-3">
+                    <button id="process" className="btn btn-info px-4">
+                        <i className="bi bi-gear-fill"></i>
+                        Preprocess
+                    </button>
+
+                    <button id="process_play" className="btn btn-success px-4">
+                        <i class="bi bi-play-circle-fill"></i>
+                        Proc & Play
+                    </button>
+                </div>
             </div>
         </>
     );
 }
+
 export default ProcessButtons;

@@ -60,9 +60,9 @@ function PlayControl() {
                 </div>
 
 
-                <div className="d-flex gap-2 mt-2 my-3">
+                <div className="d-flex gap-2 mt-3 my-5">
                     <button className="btn btn-secondary">
-                        <i class="bi bi-mic-mute-fill"> Mute</i>
+                        <i class="bi bi-mic-mute-fill"></i> Mute
                     </button>
 
                     <button className="btn btn-primary">
@@ -72,7 +72,7 @@ function PlayControl() {
                     <button className="btn btn-warning">
                         <i class="bi bi-shuffle"></i> Shuffle
                     </button>
-                </div>
+                </div >
 
             </div >
 
