@@ -14,6 +14,8 @@ export default function StrudelDemo() {
 
     // CPM Tempo Edit
     const [cpm, setCpm] = useState(120);
+    // Volume (Gain) Edit
+    const [volume, setVolume] = useState(0.5);
 
     function handlePreprocess() {
         const processed = strudelCode.replaceAll("<p1_Radio>", "_");
@@ -45,14 +47,15 @@ export default function StrudelDemo() {
     useEffect(() => {
         if (strudelRef.current) {
         
-        strudelCode = strudelCode.replace(/setcpm\(.*?\)/, `setcpm(${cpm})`)        
+        strudelCode = strudelCode.replace(/setcpm\(.*?\)/, `setcpm(${cpm})`)
+        strudelCode = strudelCode.replace(/.gain\(.*?\)/, `.gain(${volume})`)        
         strudelRef.current.setCode(strudelCode);
 
         if (strudelRef.current && strudelRef.current.repl.state.started) {
             strudelRef.current.evaluate();
         }
     }
-    }, [strudelCode, cpm]);
+    }, [strudelCode, cpm, volume]);
 
     return (
         <div className="container-fluid main-container py-4 px-4">
@@ -85,6 +88,8 @@ export default function StrudelDemo() {
                                 handleProcPlay={handleProcPlay}
                                 cpm={cpm}
                                 setCpm={setCpm}
+                                volume={volume}
+                                setVolume={setVolume}
                             />
                         </div>
                     </div>
