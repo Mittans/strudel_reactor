@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  initStrudel,
-  playTune,
-  setTempo,
-  setVolume,
-  stopTune,
-} from "../strudel/strudelController";
+import { initStrudel, playTune, stopTune } from "../strudel/strudelController";
 import { strudelActions } from "../strudel/strudelSetup";
 
 export function useStrudel(intitalTune) {
@@ -14,6 +8,8 @@ export function useStrudel(intitalTune) {
 
   const [bpm, setBpm] = useState(140);
   const [volume, setVol] = useState(0.8);
+  const [pattern, setPattern] = useState("0");
+
   const hasInit = useRef(false);
 
   const [procValue, setProcValue] = useState(intitalTune);
@@ -51,6 +47,32 @@ export function useStrudel(intitalTune) {
     });
   }
 
+  function changeGainPattern(newGainPattern) {
+    setPattern(newGainPattern);
+
+    // Convert to integer
+    const patternIndex = parseInt(newGainPattern);
+
+    // TODO: Explain the replace method and refactor the changeTempo and changePattern
+    setProcValue((prevCode) => {
+      let updatedCode = prevCode.replace(
+        /const\s+pattern\s*=\s*\d+/,
+        `const pattern = ${patternIndex}`
+      );
+
+      // update the code
+      strudelActions.setCode(updatedCode);
+
+      // re-play the song if the song is currently playing
+      if (isPlaying) {
+        strudelActions.evaluate();
+      }
+
+      // update the textarea
+      return updatedCode;
+    });
+  }
+
   function changeVolume(v) {
     setVol(v);
   }
@@ -71,5 +93,6 @@ export function useStrudel(intitalTune) {
     changeVolume,
     procValue,
     handleProcChange,
+    changeGainPattern,
   };
 }

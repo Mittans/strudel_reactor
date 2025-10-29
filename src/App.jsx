@@ -11,6 +11,7 @@ import StatusBar from "./components/status/StatusBar";
 import ControlPanel from "./components/controllers/ControlPanel";
 import IOAccordion from "./components/IOAccordion/IOAccordion";
 import MixerPanel from "./components/controllers/MixerPanel";
+import PatternPanel from "./components/controllers/PatternPanel";
 
 export default function App() {
   const {
@@ -23,6 +24,7 @@ export default function App() {
     changeVolume,
     procValue,
     handleProcChange,
+    changeGainPattern,
   } = useStrudel(stranger_tune);
 
   return (
@@ -33,14 +35,6 @@ export default function App() {
 
       {isReady && (
         <div className="row">
-          <div className="col-4">
-            <MixerPanel
-              volume={volume}
-              bpm={bpm}
-              onVolumeChange={changeVolume}
-              onTempoChange={changeTempo}
-            />
-          </div>
           <div className="col-8">
             <MixerPanel
               volume={volume}
@@ -48,6 +42,9 @@ export default function App() {
               onVolumeChange={changeVolume}
               onTempoChange={changeTempo}
             />
+          </div>
+          <div className="col-4">
+            <PatternPanel changeGainPattern={changeGainPattern} />
           </div>
         </div>
       )}
