@@ -17,8 +17,17 @@ export function stopTune() {
 
 // set tempo of the song (BPM)
 export function setTempo(bpm) {
-  if (window.setcps) {
-    window.setcps(bpm / 60 / 4);
+  let proc_text = document.getElementById("proc").value;
+  let proc_text_replaced = proc_text.replace(
+    /setcps\([^)]*\)/g,
+    `setcps(${bpm}/60/4)`
+  );
+
+  strudelActions.setCode(proc_text_replaced);
+
+  // re-run the song with new tempo
+  if (strudelActions.evaluate) {
+    strudelActions.evaluate();
   }
 }
 

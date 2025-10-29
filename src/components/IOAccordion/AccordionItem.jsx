@@ -45,9 +45,9 @@ export default function AccordionItem({
           {section.id === "input" && (
             <div className="w-full max-h-[300px] overflow-y-auto bg-white rounded-b-lg">
               <textarea
+                id="proc"
                 className="w-full form-control text-gray-900 bg-white p-2 shadow-inner focus:ring-2  focus:ring-blue-400"
                 rows="15"
-                id="proc"
                 value={procValue}
                 onChange={handleProcChange}
                 style={{ resize: "none" }}

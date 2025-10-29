@@ -1,4 +1,4 @@
-export default function Slider({ label, min, max, step, value, onChange }) {
+export default function Slider({ id, label, min, max, step, value, onChange }) {
   return (
     <div className="w-full mt-3">
       <div className="flex justify-between items-center mb-1">
@@ -8,6 +8,7 @@ export default function Slider({ label, min, max, step, value, onChange }) {
         </span>
       </div>
       <input
+        id={id}
         type="range"
         min={min}
         max={max}

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   initStrudel,
   playTune,
@@ -28,26 +28,27 @@ export function useStrudel(intitalTune) {
     }
   }, [intitalTune]);
 
-  // Only immediate changing the value of tempo when the music is playing
-  useEffect(() => {
-    if (!isReady || !isPlaying) {
-      return;
-    }
-
-    setTempo(bpm);
-  }, [bpm, isReady, isPlaying]);
-
-  // Only immediate changing the value of volume when the music is playing
-  useEffect(() => {
-    if (!isReady || !isPlaying) {
-      return;
-    }
-
-    setVolume(volume);
-  }, [volume, isReady, isPlaying]);
-
   function changeTempo(newBpm) {
     setBpm(newBpm);
+
+    setProcValue((prevCode) => {
+      // replace the current tempo with the new one
+      let updatedCode = prevCode.replace(
+        /setcps\([^)]*\)/g, // look for setcps\n + [^)] match everything except + "*" repeat that any number of times + \) matching the closing parentheses + /g means find all matches)
+        `setcps(${newBpm}/60/4)`
+      );
+
+      // update the code
+      strudelActions.setCode(updatedCode);
+
+      // re-play the song if the song is currently playing
+      if (isPlaying) {
+        strudelActions.evaluate();
+      }
+
+      // update the textarea
+      return updatedCode;
+    });
   }
 
   function changeVolume(v) {

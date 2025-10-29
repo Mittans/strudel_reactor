@@ -13,6 +13,7 @@ export default function MixerPanel({
 
       {/* ------------Volume------------ */}
       <Slider
+        id="volume-slider"
         label={`Volume`}
         min={0}
         max={1}
@@ -23,6 +24,7 @@ export default function MixerPanel({
 
       {/* ------------Tempo------------ */}
       <Slider
+        id="tempo-slider"
         label={`Tempo`}
         min={40}
         max={240}
