@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { BsList } from "react-icons/bs";
-import { Speed } from './speed'
 import {Instrument} from './instrument'
-import { Effects } from './effects'
 import { IoIosCheckmarkCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 
@@ -21,12 +19,9 @@ export function ListInputs(){
         <div>
             {isOpen ? (
             <div className="flex">
-               
                 <div className="flex border border-black rounded-lg bg-black">
                     <div className="flex self-center">
-                        <Speed className="text-yellow-500 font-bold mx-2"/>
                         <Instrument className="text-yellow-500 font-bold mx-2"/>
-                        <Effects className="text-yellow-500 font-bold mx-2"/>
                         <div className="flex">
                             <button>
                                 <IoIosCheckmarkCircle className="text-green-500 text-3xl mx-2" />

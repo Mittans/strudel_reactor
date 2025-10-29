@@ -7,7 +7,9 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import { ControlButtons } from './components/buttons/ControlButtons';
 import { CRUDManager } from './components/buttons/CRUDManager';
-import { ListInputs } from './components/input/listInputs';
+import { ListInputs } from './components/input/ListInputs';
+import { SlideInputs } from './components/input/SlideInputs';
+import {Effects} from './components/input/Effects';
 import SaveModal from './components/modal/saveModal'
 
 let globalEditor = null;
@@ -225,6 +227,9 @@ export default function StrudelDemo() {
                   p1: HUSH
                 </label>
               </div>
+              
+              <SlideInputs/>
+              <Effects/>
             </div>
             <div className='flex justify-between'>
                 <textarea 
