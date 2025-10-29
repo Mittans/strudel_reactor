@@ -45,7 +45,7 @@ body {
 /* play buttons */
 
 .card.bg-dark {
-  background-color: #262626 !important;
+  background-color: #262626;
 }
 
 .control-icon{
@@ -94,9 +94,23 @@ body {
 
 /* track controls */
 .form-check-input:checked {
-        background-color: #ffa733 !important;
-        border-color: #ffa733 !important;
+        background-color: #ff9900;
+        border-color: #ff9900;
       }
+
+/* sliders */
+.form-range::-webkit-slider-thumb {
+  background-color: #ff9900;
+}
+
+.form-range::-webkit-slider-thumb:active {
+  background-color: #ffa733;
+}
+
+.form-range:focus::-webkit-slider-thumb {
+  background-color: #ffa733;
+  box-shadow: none;
+}
 
 /* temperary - for testing layout */
 #roll {
