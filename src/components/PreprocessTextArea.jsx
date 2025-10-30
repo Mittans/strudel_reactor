@@ -5,7 +5,7 @@ function PreprocessTextArea({ defaultValue, onChange }) {
         
         {/* TODO: what is this label? */}
             {/* <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label> */}
-            <textarea className="form-control" rows="15" defaultValue={defaultValue} onBeforeInput={onChange} onChange={onChange} id="proc" ></textarea>
+            <textarea className="form-control" rows="15" defaultValue={defaultValue} style={{ resize: 'none' }} onBeforeInput={onChange} onChange={onChange} id="proc" ></textarea>
         </>
     )
 }

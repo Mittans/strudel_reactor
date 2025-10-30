@@ -6,8 +6,8 @@ function ConsolePanel({  }) {
     return (
         <>
             <div className="btn-group" role="group" id="menuPanelStuff3" aria-label="Console panel">
+                <br />
                 console panel
-                
             </div>
         </>
     )

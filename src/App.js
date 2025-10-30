@@ -239,7 +239,7 @@ return (
                            
                         </div>
                         <div>
-                            <br />
+                            
                             {/* this is essentially a big if-if-if rn */}
                             { (activeBtn == "helpBtn") ? < HelpPanel /> : null }
                             { (activeBtn == "controlBtn") ? < ControlPanel /> : null }

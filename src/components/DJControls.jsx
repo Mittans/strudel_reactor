@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import console_monkey_patch from '../console-monkey-patch';
 
 function updateProcSetting(changeData){
-    console.log(changeData["data"]);
+    //console.log(changeData["data"]);
     let targetId = changeData["data"]["targetId"].split("_")[0];
     let oldValue = changeData["data"]["oldValue"];
     let newValue = changeData["data"]["newValue"];
@@ -17,16 +17,16 @@ export function DJControls({ jsonSettings }) {
     /* figure out how to save these settings both into a JSON and when swapping between menus
      *
      */
-
     const [ volume, setVolume ] = useState(0.5);
     const [ cpm, setCPM ] = useState(120);
     
     return (
         <>
-            <div className="" onChange={(e) => console.log("should update - " + e["target"].id + " : " + (e.target.value))}>
+            <div className="" onChange={(e) => {
+                //console.log("should update - " + e["target"].id + " : " + (e.target.value))
+            }}>
                 <div className="input-group mb-3">
                     <span className="input-group-text" id="cpm_label" >SetCPM</span>
-                    
                     <input type="number" className="form-control" id="cpm_text_input" placeholder="120" min="0" defaultValue="120" 
                     aria-label="cpm" aria-describedby="cpm_label" value={cpm} onChange={(e) => { 
                         let newValue = parseInt(e.target.value);
@@ -36,14 +36,10 @@ export function DJControls({ jsonSettings }) {
                         }
                         setCPM(newValue);
                         let targetId = e.target.id;
-                        //newValue = Math.max(0, parseInt(newValue));
                         updateProcSetting({ data:{targetId, oldValue, newValue} });
                     }}/>
                 </div>
 
-                {/* TODO: this does nothing!
-                * it should show a numerical display next to the bar (and it should also, you know, work!) 
-                */}
                 <label htmlFor="volume_range" className="form-label">
                     <div className="row">
                         <div className="col">Volume</div>
@@ -59,7 +55,6 @@ export function DJControls({ jsonSettings }) {
                     updateProcSetting({ data:{targetId, oldValue, newValue} });
                 }}/>
                 
-                <p>aaaa</p>
                 {/* TODO: this does nothing! */}
                 <div className="form-check">
                     <input className="form-check-input" type="checkBox" name="aa" value="" id="checkBox1" defaultChecked /> {/*onChange={ProcAndPlay} */}
