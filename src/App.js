@@ -19,84 +19,94 @@ const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-// export function SetupButtons() {
+export function ProcessText(index, toggles) {
+    const instrumentals = ['baseline', 'main_arp', 'drums', 'drum_set_2'];
+    const name = instrumentals[index];
 
-//     document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-//     document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-//     document.getElementById('process').addEventListener('click', () => {
-//         Proc()
-//     }
-//     )
-//     document.getElementById('process_play').addEventListener('click', () => {
-//         if (globalEditor != null) {
-//             Proc()
-//             globalEditor.evaluate()
-//         }
-//     }
-//     )
-// }
+    // Map index to the toggle key
+    const keys = Object.keys(toggles);
+    const key = keys[index];
 
-
-
-// export function ProcAndPlay() {
-//     if (globalEditor != null && globalEditor.repl.state.started == true) {
-//         console.log(globalEditor)
-//         Proc()
-//         globalEditor.evaluate();
-//     }
-// }
-
-// export function Proc() {
-
-//     let proc_text = document.getElementById('proc').value
-//     let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-//     ProcessText(proc_text);
-//     globalEditor.setCode(proc_text_replaced)
-// }
-
-// export function ProcessText(match, ...args) {
-
-//     let replace = ""
-//     // if (document.getElementById('flexRadioDefault2').checked) {
-//     //     replace = "_"
-//     // }
-
-//     return replace
-// }
+    if (toggles[key] === false) {
+        return `_${name}`;
+    } else {
+        return name;
+    }
+}
 
 
 
 export default function StrudelDemo() {
-
     const hasRun = useRef(false);
-    
-    const [songText, setSongText] = useState(stranger_tune)
-
-    
-    
-    const handlePlay = () => {
-        globalEditor.evaluate()
-    }
-    
-    const handleStop = () => {
-        globalEditor.stop()
-    }
-    
+    const [songText, setSongText] = useState(stranger_tune);
     const [toggles, setToggles] = useState({ 
         Baseline: true, 
         MainArp: true, 
         Drums: true,
         Drums2: true
     });
+    const originalSongTextRef = useRef(stranger_tune);
 
-        const handleToggleChange = (newToggles) => {
-        console.log('received toggles:', newToggles);
-        setToggles(newToggles);
+    const handlePlay = () => {
+        globalEditor.evaluate();
     };
-    
-    
-    useEffect(() => {
+
+    const handleStop = () => {
+        globalEditor.stop();
+    };
+
+    const applyToggles = (text, toggles) => {
+        // Map UI toggle names to actual instrument names in the code
+        const instrumentMap = {
+            'Baseline': 'bassline',
+            'MainArp': 'main_arp',
+            'Drums': 'drums',
+            'Drums2': 'drums2'
+        };
         
+        let processed = text;
+        
+        Object.keys(instrumentMap).forEach((toggleKey) => {
+            const instrument = instrumentMap[toggleKey];
+            
+            // Create regex patterns for both versions
+            const normalPattern = new RegExp(`\\b${instrument}:`, 'g');
+            const underscorePattern = new RegExp(`\\b_${instrument}:`, 'g');
+            
+            if (toggles[toggleKey] === false) {
+                // Replace "instrument:" with "_instrument:"
+                processed = processed.replace(normalPattern, `_${instrument}:`);
+            } else {
+                // Replace "_instrument:" with "instrument:"
+                processed = processed.replace(underscorePattern, `${instrument}:`);
+            }
+        });
+        
+        return processed;
+    };
+
+    const handleToggleChange = (newToggles) => {
+        setToggles(newToggles);
+        // Apply toggles to the current song text
+        const processedText = applyToggles(songText, newToggles);
+        globalEditor.setCode(processedText);
+        
+        // If already playing, re-evaluate to apply changes immediately
+        if (globalEditor.repl.state.started) {
+            globalEditor.evaluate();
+        }
+    };
+
+    const handleSongTextChange = (e) => {
+        const newText = e.target.value;
+        setSongText(newText);
+        originalSongTextRef.current = newText;
+    };
+
+
+
+    useEffect(() => {
+
         if (!hasRun.current) {
             document.addEventListener("d3Data", handleD3Data);
             console_monkey_patch();
@@ -145,7 +155,7 @@ export default function StrudelDemo() {
                         <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
                         <div className="col-md-4">
                             <nav>
-                                <ProcessButtons />
+                                {/* <ProcessButtons /> */}
                                 <br />
                                 <PlayButtons onPlay={handlePlay} onStop={handleStop} />
                             </nav>
