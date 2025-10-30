@@ -5,7 +5,7 @@ export function SlideInputs(props){
 
     return (
         <div className='flex'>
-            <Speed/>
+            <Speed onSpeedChange={props.onSpeedChange}/>
             <Volume onVolumeChange={props.onVolumeChange} />
         </div>
     );

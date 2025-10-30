@@ -33,6 +33,17 @@ export function updateGainInCode(newGain) {
   ProcAndPlay();
 }
 
+export function updateSpeedInCode(newSpeed) {
+  const procText = document.getElementById("proc").value;
+
+  // Replace all existing setcps(speed number)
+  const updatedText = procText.replace(/setcps\(\s*[\d.]+\s*\)/g, `setcps(${newSpeed})`);
+
+  document.getElementById("proc").value = updatedText;
+  globalEditor.setCode(updatedText);
+  ProcAndPlay();
+}
+
 
 export function Proc() {
   let proc_text = document.getElementById("proc").value;
@@ -238,7 +249,7 @@ export default function StrudelDemo() {
                 </label>
               </div>
               
-              <SlideInputs onVolumeChange={updateGainInCode}  />
+              <SlideInputs onVolumeChange={updateGainInCode} onSpeedChange={updateSpeedInCode} />
               <Effects/>
             </div>
             <div className='flex justify-between'>

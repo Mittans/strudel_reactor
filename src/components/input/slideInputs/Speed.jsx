@@ -6,6 +6,10 @@ export function Speed(props){
     const handleSpeedChange = (e) => {
         const newSpeed = parseFloat(e.target.value);
         setSpeed(newSpeed);
+        if (props.onSpeedChange) {
+            // updates the speed in the text to process.
+            props.onSpeedChange(newSpeed); 
+        }
     };
 
     return (
