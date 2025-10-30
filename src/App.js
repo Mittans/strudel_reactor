@@ -13,6 +13,8 @@ import DJControls from './components/dj-controls';
 import PlayButtons from './components/play-buttons';
 import ProcessingButtons from './components/processing-buttons';
 import PreprocessText from './components/PreprocessText';
+import PageHeader from './components/page-header';
+import Accordion from './components/accordion';
 
 let globalEditor = null;
 
@@ -121,25 +123,28 @@ useEffect(() => {
 
 
 return (
-    <div>
-        <h2>Strudel Demo</h2>
+    <div className='bg-dark'>
+        <PageHeader />
         <main>
 
             <div className="container-fluid">
-                <div className="row">
+                <div className="row px-2 py-2">
                     <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <PreprocessText defaultValue={songText} onChange={(e) => setSongText(e.target.value)}/>
+                        {/* <PreprocessText defaultValue={songText} onChange={(e) => setSongText(e.target.value)}/> */}
+
+                        <Accordion component={ <PreprocessText defaultValue={songText} onChange={(e) => setSongText(e.target.value)}/>} text={"Preprocess text input"}/>
                     </div>
                     <div className="col-md-4">
 
                         <nav>
-                            <ProcessingButtons/>
-                            <br />
-                            <PlayButtons onPlay={handlePlay} onPause={handlePause}/>
+                            <div>
+                                <PlayButtons onPlay={handlePlay} onPause={handlePause}/>
+                                <ProcessingButtons/>
+                            </div>
                         </nav>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row px-2 py-2">
                     <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                         <div id="editor" />
                         <div id="output" />
