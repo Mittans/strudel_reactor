@@ -2,6 +2,7 @@ import DJControls from './DJControls';
 //import { handlePlay, handleStop } from '../App.js';
 import globalEditor from '../App';
 
+// through state?
 // works but it doesn't save state when switching from control and back again :(
 function ControlPanel({  }) {
     
@@ -11,7 +12,7 @@ function ControlPanel({  }) {
                 <div className="" id="menuPanel">
                     <nav>
                         
-                        <br />
+                        
                         
                     </nav>
                 </div>

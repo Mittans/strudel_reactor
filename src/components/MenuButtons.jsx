@@ -6,6 +6,7 @@ function MenuButtons({ activeBtn, onClick }) {
             <div className="btn-group" role="group" id="menuBtns" aria-label="Menu buttons">
                 <button className="btn" id="helpBtn" onClick={(e) => onClick(e["target"].id)}>Help</button>
                 <button className="btn" id="controlBtn" onClick={(e) => onClick(e["target"].id)}>Control</button>
+                <button className="btn" id="consoleBtn" onClick={(e) => onClick(e["target"].id)}>Console</button>
                 <button className="btn" id="testBtn" onClick={(e) => console.log(e["target"].id)}>test</button>
                 
                 {/* {this.state.buttons.map((menuBtn, i) =>

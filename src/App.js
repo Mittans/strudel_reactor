@@ -18,14 +18,24 @@ import PreprocessTextArea from './components/PreprocessTextArea';
 import ErrorTextArea from './components/ErrorTextArea';
 import HelpPanel from './components/HelpPanel';
 import ControlPanel from './components/ControlPanel';
+import ConsolePanel from './components/ConsolePanel';
 
 let globalEditor = null;
+let defaultTune = stranger_tune;
 
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-
+/* So:
+ * play         - processes & plays
+ * stop         - stops
+ * pre-processs - updates the code with text area(?)
+ * process      - processees text; applies changes (originally for a radio box that replaces certain text in the code)
+ * 
+ * I'm thinking that I have a play/stop/process system, where play plays whatever is there and process is needed to update
+ * maybe have a feature that plays it, but does not process any control-menu changes, just the code from text area?
+ */
 
 // replaced with react
 // export function SetupButtons() {
@@ -55,36 +65,40 @@ const handleD3Data = (event) => {
 // }
 
 // replaced with react
-// export function Proc() {
+//  export function Proc() {
 
-//     let proc_text = document.getElementById('proc').value
-//     let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-//     ProcessText(proc_text);
-//     globalEditor.setCode(proc_text_replaced)
-// }
+//      let proc_text = document.getElementById('proc').value
+//      ProcessText(stranger_tune);
+//      globalEditor.setCode(stranger_tune)
+//  }
 
-// replaced with react
-// export function ProcessText(match, ...args) {
+// // replaced with react
+//  export function ProcessText(match, ...args) {
 
-//     let replace = ""
-//     if (document.getElementById('flexRadioDefault2').checked) {
-//         replace = "_"
-//     }
+//      let replace = stranger_tune;
 
-//     return replace
-// }
+//      return replace
+//  }
+
 
 export default function StrudelDemo() {
 
 const hasRun = useRef(false);
 
 const handlePlay = () => {
+    //Proc();
+    globalEditor.evaluate();
+    //globalEditor.setCode(songText);
     //setShowErrText(true);
     //console.log("eventDetail : " + eventDetail);
-    globalEditor.evaluate() // evaluate == play? wacks
+    
 }
 const handleStop = () => {
-    globalEditor.stop()
+    if (hasRun){
+        globalEditor.stop();
+    } else {
+
+    }
 }
 
 const [ songText, setSongText ] = useState(stranger_tune)
@@ -101,7 +115,11 @@ useEffect(() => {
     if (!hasRun.current) {
         
         document.addEventListener("d3Data", handleD3Data);
-        console_monkey_patch();
+        try {
+            console_monkey_patch();
+        } catch {
+            console.log("aa");
+        }
         hasRun.current = true;
         //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
             //init canvas
@@ -171,8 +189,11 @@ return (
                            
                         </div>
                         <div>
+                            <br />
+                            {/* this is essentially a big if-if-if rn */}
                             { (activeBtn == "helpBtn") ? < HelpPanel /> : null }
                             { (activeBtn == "controlBtn") ? < ControlPanel /> : null }
+                            { (activeBtn == "consoleBtn") ? < ConsolePanel /> : null }
                         </div>
                         
                     </div>
