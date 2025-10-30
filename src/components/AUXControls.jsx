@@ -47,17 +47,29 @@ function AUXControls({ onToggleChange }) {
     }
   };
 
+  const activeCount = Object.values(toggles).filter(Boolean).length;
+  const allMuted = activeCount === 0;
+
+  const handleToggleAll = () => {
+    if (allMuted) {
+      handleUnmuteAll();
+    } else {
+      handleMuteAll();
+    }
+  };
+
 
 
 
   return (
     <>
       <div className="mb-3">
-        <button className="btn btn-danger btn-sm me-2" onClick={handleMuteAll}>
-          Mute
-        </button>
-        <button className="btn btn-success btn-sm" onClick={handleUnmuteAll}>
-          Unmute
+       <button 
+          className={`btn btn-sm ${allMuted ? 'btn-success' : 'btn-danger'}`}
+          onClick={handleToggleAll}
+        >
+          <i className={`bi ${allMuted ? 'bi-volume-up-fill' : 'bi-volume-mute-fill'} me-1`}></i>
+          {allMuted ? 'Unmute All' : 'Mute All'}
         </button>
       </div>
       {["Baseline", "MainArp", "Drums", "Drums2"].map((id) => (
