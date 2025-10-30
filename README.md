@@ -1,6 +1,11 @@
 ### readme.md
 
 stuff
+features: 
+- volume slider
+-  
+
+TODO: clear this
 
 # Getting Started with Create React App
 

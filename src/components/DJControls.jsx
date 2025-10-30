@@ -14,13 +14,8 @@ function updateProcSetting(changeData){
 }
 
 export function DJControls({ jsonSettings }) {
-    //let VOLUME = document.getElementById('volume_range').value;
-    /* not only does this need to update, and actually change the code,
-     * it also needs to be saved in JSON format
+    /* figure out how to save these settings both into a JSON and when swapping between menus
      *
-     * i'm thinking... I use this to save to JSON, and then call an updateSettings which then quickly
-     * reads the changes in the JSON to then apply to the actual text/code? might work.
-     * or just try and use states from React
      */
 
     const [ volume, setVolume ] = useState(0.5);

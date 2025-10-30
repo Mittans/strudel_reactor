@@ -97,14 +97,23 @@ const handleStop = () => {
 }
 
 const handleProc = () => {
+    handleStop();
     //console.log("handleProc triggered");
     globalEditor.setCode(document.getElementById('proc').value);
 }
 
 const handleProcPlay = () => {
+    handleStop();
     //console.log("handleProcPlay triggered");
     globalEditor.setCode(document.getElementById('proc').value);
     globalEditor.evaluate();
+}
+
+const handleReset = () => {
+    handleStop();
+    //console.log("handleReset triggered");
+    document.getElementById('proc').value = defaultTune;
+    globalEditor.setCode(defaultTune);
 }
 
 const [ songText, setSongText ] = useState(stranger_tune)
@@ -204,7 +213,7 @@ return (
             <div className="col">Strudel Demo</div>
             <div className="col-lg-auto">
                 <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-                <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} />
+                <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} onReset={handleReset} />
             </div>
         </h2>
         <main>
