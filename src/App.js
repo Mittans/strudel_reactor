@@ -12,8 +12,8 @@ import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 
 import DJControls from './components/DJControls';
 import MenuButtons from './components/MenuButtons';
-//import PlayButtons from './components/PlayButtons';
-//import ProcButtons from './components/ProcButtons';
+import PlayButtons from './components/PlayButtons';
+import ProcButtons from './components/ProcButtons';
 import PreprocessTextArea from './components/PreprocessTextArea';
 import ErrorTextArea from './components/ErrorTextArea';
 import HelpPanel from './components/HelpPanel';
@@ -78,14 +78,14 @@ export default function StrudelDemo() {
 
 const hasRun = useRef(false);
 
-// const handlePlay = () => {
-//     //setShowErrText(true);
-//     //console.log("eventDetail : " + eventDetail);
-//     globalEditor.evaluate() // evaluate == play? wacks
-// }
-// const handleStop = () => {
-//     globalEditor.stop()
-// }
+const handlePlay = () => {
+    //setShowErrText(true);
+    //console.log("eventDetail : " + eventDetail);
+    globalEditor.evaluate() // evaluate == play? wacks
+}
+const handleStop = () => {
+    globalEditor.stop()
+}
 
 const [ songText, setSongText ] = useState(stranger_tune)
 const [ showErrText, setShowErrText ] = useState(false) // for later use
@@ -141,7 +141,13 @@ useEffect(() => {
 
 return (
     <div>
-        <h2>Strudel Demo</h2>
+        <h2 className="row">
+            <div className="col">Strudel Demo</div>
+            <div className="col-lg-auto">
+                <PlayButtons onPlay={handlePlay} onStop={handleStop} />
+                <ProcButtons />
+            </div>
+        </h2>
         <main>
             <div className="container-fluid">
                 <div className="row">
