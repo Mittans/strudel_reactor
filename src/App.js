@@ -23,6 +23,8 @@ export function SetupButtons() {
     document.getElementById('process').addEventListener('click', () => {
         Proc()
     }
+
+    <p>Hello World</p>
     )
     document.getElementById('process_play').addEventListener('click', () => {
         if (globalEditor != null) {
