@@ -1,8 +1,8 @@
 function PlayButtons({ onPlay, onStop }) {
     return (
-        <div>
-            <button id="play" className="btn btn-outline-primary" onClick={onPlay}>Play</button>
-            <button id="stop" className="btn btn-outline-primary" onClick={onStop}>Stop</button>
+        <div className="d-flex gap-2"> 
+            <button id="play" className="btn btn-primary bi bi-play-circle-fill" onClick={onPlay}></button>
+            <button id="stop" className="btn btn-primary bi bi-pause-circle-fill" onClick={onStop}></button>
         </div>
     );
 }
