@@ -1,7 +1,6 @@
 let originalLog = null;
 const logArray = [];
 
-
 export default function console_monkey_patch() {
 
     //If react multicalls this, do nothing
@@ -25,7 +24,6 @@ export default function console_monkey_patch() {
             //Dispatch a customevent we can listen to in App.js
             const event = new CustomEvent("d3Data", { detail: [...logArray] });
             document.dispatchEvent(event);
-
         }
         originalLog.apply(console, args);
     };

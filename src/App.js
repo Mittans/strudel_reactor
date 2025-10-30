@@ -14,12 +14,14 @@ import DJControls from './components/DJControls';
 import PlayButtons from './components/PlayButtons';
 import ProcButtons from './components/ProcButtons';
 import PreprocessTextArea from './components/PreprocessTextArea';
+import ErrorTextArea from './components/ErrorTextArea';
 
 let globalEditor = null;
 
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
+
 
 
 // replaced with react
@@ -74,6 +76,8 @@ export default function StrudelDemo() {
 const hasRun = useRef(false);
 
 const handlePlay = () => {
+    //setShowErrText(true);
+    //console.log("eventDetail : " + eventDetail);
     globalEditor.evaluate() // evaluate == play? wack
 }
 const handleStop = () => {
@@ -81,10 +85,18 @@ const handleStop = () => {
 }
 
 const [ songText, setSongText ] = useState(stranger_tune)
+const [ showErrText, setShowErrText ] = useState(true)
+
+// const handleErrText = (event) => {
+//     console.log("handling error text uwu - " + event);
+//     console.log("uwu : " + eventDetail);
+
+// };
 
 useEffect(() => {
-
+    
     if (!hasRun.current) {
+        
         document.addEventListener("d3Data", handleD3Data);
         console_monkey_patch();
         hasRun.current = true;
@@ -115,10 +127,11 @@ useEffect(() => {
                 },
             });
             
-        document.getElementById('proc').value = stranger_tune
+        document.getElementById('proc').value = stranger_tune;
         //SetupButtons()
-        //Proc()
+        //Proc()/
     }
+    
     globalEditor.setCode(songText);
 }, [songText]);
 
@@ -155,6 +168,8 @@ return (
                     </div>
                 </div>
             </div>
+            {/* this should only appear when errors detected -- relies on a conditionals state to show */}
+            { showErrText ? < ErrorTextArea defaultValue={showErrText} /> : null }
             <canvas id="roll"></canvas>
         </main >
     </div >
