@@ -7,6 +7,7 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import Transport from "./components/controls"; // Importing the nessesary buttons
 import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 
@@ -35,7 +36,7 @@ let globalEditor = null;
 
 
 export function ProcAndPlay() {
-  if (globalEditor != null && globalEditor.repl.state.started == true) {
+  if (globalEditor != null && globalEditor.repl.state.started === true) {
     console.log(globalEditor)
     Proc()
     globalEditor.evaluate();

@@ -1,4 +1,4 @@
-export default function Transport({ onProcess, onProcPlay, onPlay, onStop }) {
+export default function Controls({ onProcess, onProcPlay, onPlay, onStop }) {
     return (
         <nav style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: '1rem' }}>
             <button className="btn btn-outline-primary" onClick={onProcess}>
@@ -13,6 +13,13 @@ export default function Transport({ onProcess, onProcPlay, onPlay, onStop }) {
             <button className="btn btn-outline-danger" onClick={onStop}>
                 Stop
             </button>
+            <button
+                className="btn btn-outline-primary"
+                onClick={onProcPlay}
+            >
+                <i className="bi bi-arrow-repeat"></i>  {/* replay icon */}
+            </button>
+
         </nav>
     );
 }
