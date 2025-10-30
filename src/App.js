@@ -1,4 +1,4 @@
-import './cors-redirect';
+﻿import './cors-redirect';
 import './App.css';
 import { initStrudel, note, hush, evalScope, getAudioContext, webaudioOutput, registerSynthSounds, initAudioOnFirstClick, transpiler } from "@strudel/web";
 import { useEffect, useRef } from "react";
@@ -7,7 +7,6 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import Transport from "./components/controls"; // Importing the nessesary buttons
 import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 
@@ -143,6 +142,37 @@ export default function StrudelDemo() {
                                   }}
                               />
                           </div>
+                          <div style={{ marginTop: "1rem" }}>
+                              <button
+                                  onClick={() => {
+                                      const slider = document.getElementById("gainControl");
+                                      slider.style.display =
+                                          slider.style.display === "none" ? "block" : "none";
+                                  }}
+                              >
+                                  🔊
+                              </button>
+
+                              <input
+                                  id="gainControl"
+                                  type="range"
+                                  min="0"
+                                  max="1"
+                                  step="0.05"
+                                  defaultValue="0.3"
+                                  className="form-range"
+                                  style={{ display: "none" }}
+                                  onChange={(e) => {
+                                      const procArea = document.getElementById("proc");
+                                      procArea.value = procArea.value.replace(
+                                          /\.gain\([^)]*\)/,
+                                          `.gain(${e.target.value})`
+                                      );
+                                      ProcAndPlay();
+                                  }}
+                              />
+                          </div>
+
     
             </div>
           </div>
