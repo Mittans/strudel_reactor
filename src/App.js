@@ -13,7 +13,7 @@ import console_monkey_patch from './console-monkey-patch';
 
 //import components
 import PreprocessorControl from './components/PreprocessorControl';
-import TransportControl from './components/TransportControl';
+import TransportControl from './components/TrackControl';
 import InstrumentControl from './components/InstrumentControl';
 
 export default function App() {
