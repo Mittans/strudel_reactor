@@ -11,10 +11,13 @@ import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 
 import DJControls from './components/DJControls';
-import PlayButtons from './components/PlayButtons';
-import ProcButtons from './components/ProcButtons';
+import MenuButtons from './components/MenuButtons';
+//import PlayButtons from './components/PlayButtons';
+//import ProcButtons from './components/ProcButtons';
 import PreprocessTextArea from './components/PreprocessTextArea';
 import ErrorTextArea from './components/ErrorTextArea';
+import HelpPanel from './components/HelpPanel';
+import ControlPanel from './components/ControlPanel';
 
 let globalEditor = null;
 
@@ -75,23 +78,23 @@ export default function StrudelDemo() {
 
 const hasRun = useRef(false);
 
-const handlePlay = () => {
-    //setShowErrText(true);
-    //console.log("eventDetail : " + eventDetail);
-    globalEditor.evaluate() // evaluate == play? wack
-}
-const handleStop = () => {
-    globalEditor.stop()
-}
+// const handlePlay = () => {
+//     //setShowErrText(true);
+//     //console.log("eventDetail : " + eventDetail);
+//     globalEditor.evaluate() // evaluate == play? wacks
+// }
+// const handleStop = () => {
+//     globalEditor.stop()
+// }
 
 const [ songText, setSongText ] = useState(stranger_tune)
-const [ showErrText, setShowErrText ] = useState(true)
+const [ showErrText, setShowErrText ] = useState(false) // for later use
+const [ activeBtn, setActiveBtn ] = useState("control")
 
-// const handleErrText = (event) => {
-//     console.log("handling error text uwu - " + event);
-//     console.log("uwu : " + eventDetail);
-
-// };
+// const handleMenu = (e) => {
+//     console.log(e);
+//     currentMenu = e;
+// }
 
 useEffect(() => {
     
@@ -140,32 +143,34 @@ return (
     <div>
         <h2>Strudel Demo</h2>
         <main>
-
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        {/* e knows where it is because it knows where it isn't.
-                        ... not really, i'm assuming e just has a reference to self or smth */}
-                        <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                    <div className="col-md-8" id="leftPanel">
+                        
+                        <div className="" id="editorPanel" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                            {/* e knows where it is because it knows where it isn't.
+                            ... not really, i'm assuming e just has a reference to self or smth */}
+                            <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                        </div>
+                        <div className="" id="codePanel" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                            <div id="editor" />
+                            <div id="output" />
+                        </div>
                     </div>
-                    <div className="col-md-4">
 
-                        <nav>
-                            <ProcButtons />
-                            <br />
-                            <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-                        </nav>
+                    <div className="col-md-4" id="rightPanel">
+                        {/* the nav menu for right panel -- should control whats in box below on page and be highlighted when active */}
+                        <div className="menuNavBar">
+                            <MenuButtons defaultValue={activeBtn} onClick={(e) => setActiveBtn(e)} />
+                           
+                        </div>
+                        <div>
+                            { (activeBtn == "helpBtn") ? < HelpPanel /> : null }
+                            { (activeBtn == "controlBtn") ? < ControlPanel /> : null }
+                        </div>
+                        
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                        {/* need code for changing volume, cpm, etc */}
-                        <DJControls />
-                    </div>
+                    
                 </div>
             </div>
             {/* this should only appear when errors detected -- relies on a conditionals state to show */}
