@@ -5,7 +5,7 @@ samples('github:algorave-dave/samples')
 samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
 samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')
 
-//setcpm({CPM}) // TODO: replace using JS... when I get it working
+setcpm(CPM)
 
 const gain_patterns = [
   "2",
@@ -100,6 +100,6 @@ stack(
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())
 
-//all(x => x.gain({songVolume})) // TODO: replace using JS... when I get it working
+all(x => x.gain(VOLUME)
 
 // @version 1.2`;

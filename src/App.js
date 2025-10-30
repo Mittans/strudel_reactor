@@ -101,13 +101,27 @@ const handleStop = () => {
     }
 }
 
+const handleProc = () => {
+    console.log("handleProc triggered");
+    
+}
+
+const handleProcPlay = () => {
+    console.log("handleProcPlay triggered");
+}
+
 const [ songText, setSongText ] = useState(stranger_tune)
 const [ showErrText, setShowErrText ] = useState(false) // for later use
 const [ activeBtn, setActiveBtn ] = useState("control")
+const [ settings, setSetting ] = useState()
+
+
 //const [ volume, setVolume ] = useState(1)
 
-const handleSettings = (id, newValue) => {
-    console.log("handle settings id, newValue : " + id + " | " + newValue);
+function handleSettings(codeString) {
+    globalEditor.setCode(codeString);
+
+    //console.log("handle settings id, newValue : " + id + " | " + newValue);
     // let proc_text = document.getElementById({id}).value
     // let proc_text_replaced = proc_text.replaceAll('{VOLUME}', {volume});
     // globalEditor.setCode(proc_text_replaced)
@@ -123,11 +137,7 @@ useEffect(() => {
     if (!hasRun.current) {
         
         document.addEventListener("d3Data", handleD3Data);
-        try {
-            console_monkey_patch();
-        } catch {
-            console.log("aa");
-        }
+        console_monkey_patch();
         hasRun.current = true;
         //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
             //init canvas
@@ -171,7 +181,7 @@ return (
             <div className="col">Strudel Demo</div>
             <div className="col-lg-auto">
                 <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-                <ProcButtons />
+                <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} />
             </div>
         </h2>
         <main>
@@ -202,7 +212,6 @@ return (
                             { (activeBtn == "helpBtn") ? < HelpPanel /> : null }
                             { (activeBtn == "controlBtn") ? < ControlPanel /> : null }
                             { (activeBtn == "consoleBtn") ? < ConsolePanel /> : null }
-                            
                         </div>
                         
                     </div>
