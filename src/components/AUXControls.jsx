@@ -1,70 +1,29 @@
 function AUX_Controls() {
   return (
     <>
-      <div className="input-group mb-3">
-        <span className="input-group-text" id="basic-addon1">
-          Set CPM
-        </span>
-        <input
-          type="text"
-          className="form-control"
-          placeholder="120"
-          id="cpm_text_input"
-          aria-label="cpm"
-          aria-describedby="cpm_label"
-        />
+      <div className="mb-3">
+        <button className="btn btn-danger btn-sm me-2">
+          Mute All
+        </button>
+        <button className="btn btn-success btn-sm">
+          Unmute All
+        </button>
       </div>
-
-      <label for="volume_range" className="form-label">
-        Volume
-      </label>
-
-      <input
-        type="range"
-        className="form-range"
-        min="0"
-        max="1"
-        step="0.01"
-        id="volume_range"
-      />
-
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          value=""
-          id="s1"
-        />
-        <label className="form-check-label" forHtml="s1">
-          s1
-        </label>
-      </div>
-
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          value=""
-          id="d1"
-        />
-        <label className="form-check-label" forHtml="d1">
-          d1
-        </label>
-      </div>
-
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          value=""
-          id="d2"
-        />
-        <label className="form-check-label" forHtml="d2">
-          d2
-        </label>
-      </div>
+      {["Baseline", "MainArp", "Drums", "Drums2"].map((id) => (
+        <div className="form-check" key={id}>
+          <input
+            className="form-check-input"
+            type="checkbox"
+            id={id}
+          />
+          <label className="form-check-label" htmlFor={id}>
+            {id}
+          </label>
+        </div>
+      ))}
     </>
   );
 }
 
 export default AUX_Controls;
+
