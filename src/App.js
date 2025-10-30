@@ -10,7 +10,7 @@ import { CRUDManager } from './components/buttons/CRUDManager';
 import { ListInputs } from './components/input/ListInputs';
 import { SlideInputs } from './components/input/SlideInputs';
 import {Effects} from './components/input/Effects';
-import SaveModal from './components/modal/saveModal'
+import SaveModal from './components/modal/saveModal';
 
 let globalEditor = null;
 
@@ -21,6 +21,18 @@ export function ProcAndPlay() {
     globalEditor.evaluate();
   }
 }
+
+export function updateGainInCode(newGain) {
+  const procText = document.getElementById("proc").value;
+
+  // Replace all existing .gain(number)
+  const updatedText = procText.replace(/\.gain\(\s*[\d.]+\s*\)/g, `.gain(${newGain})`);
+
+  document.getElementById("proc").value = updatedText;
+  globalEditor.setCode(updatedText);
+  ProcAndPlay();
+}
+
 
 export function Proc() {
   let proc_text = document.getElementById("proc").value;
@@ -138,7 +150,6 @@ export default function StrudelDemo() {
     if (savedItem) {
       setText(JSON.parse(savedItem));
       alert("Loaded from local storage");
-      console.log(JSON.parse(savedItem));
     } else {
       alert("No saved text found");
     }
@@ -151,7 +162,6 @@ export default function StrudelDemo() {
     if (deletedItem) {
       localStorage.removeItem(song);
       alert("remove from local storage");
-      console.log(JSON.parse(deletedItem));
     } else {
       alert("No deleted item found");
     }
@@ -228,7 +238,7 @@ export default function StrudelDemo() {
                 </label>
               </div>
               
-              <SlideInputs/>
+              <SlideInputs onVolumeChange={updateGainInCode}  />
               <Effects/>
             </div>
             <div className='flex justify-between'>

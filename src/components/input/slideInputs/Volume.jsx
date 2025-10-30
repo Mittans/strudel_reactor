@@ -1,11 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export function Volume() {
-    const [volume, setVolume] = useState(0.5); 
+export function Volume(props) {
+    const [volume, setVolumeState] = useState(0.5); 
 
     const handleVolumeChange = (e) => {
         const newVolume = parseFloat(e.target.value);
-        setVolume(newVolume);
+        setVolumeState(newVolume);
+        if (props.onVolumeChange) {
+            props.onVolumeChange(newVolume); // updates the gain in the Strudel text
+        }
     };
 
     return (
