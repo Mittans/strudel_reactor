@@ -1,12 +1,16 @@
-import React from 'react'
+import { useState } from 'react';
 
 function SoundControls() {
+  const [volume, setVolume] = useState(60);
+  const [speed, setSpeed] = useState(1);
+
   return (
     <>
       {/* Volume slider */}
       <div className="my-2">
-        <label htmlFor="volumeRange" className="form-label fw-semibold">
-          Volume
+        <label htmlFor="volumeRange" className="form-label fw-semibold d-flex">
+          <span className="me-3">Volume:</span>
+          <span>{volume}</span>
         </label>
         <input
           type="range"
@@ -16,13 +20,15 @@ function SoundControls() {
           max="100"
           step="1"
           defaultValue="60"
+          onChange={(e) => setVolume(e.target.value)}
         />
       </div>
 
       {/* Speed slider */}
       <div>
-        <label htmlFor="speedRange" className="form-label fw-semibold">
-          Speed
+        <label htmlFor="speedRange" className="form-label fw-semibold d-flex">
+          <span className="me-3">Speed:</span>
+          <span>{speed}x</span>
         </label>
         <input
           type="range"
@@ -32,6 +38,7 @@ function SoundControls() {
           max="2"
           step="0.25"
           defaultValue="1"
+          onChange={(e) => setSpeed(e.target.value)}
         />
       </div>
     </>
