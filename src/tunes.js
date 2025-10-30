@@ -5,7 +5,8 @@ samples('github:algorave-dave/samples')
 samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
 samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')
 
-setcpm(CPM)
+let cpm = 120
+let volume = 0.5
 
 const gain_patterns = [
   "2",
@@ -100,6 +101,6 @@ stack(
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())
 
-all(x => x.gain(VOLUME)
+// all(x => x.gain(volume)
 
 // @version 1.2`;

@@ -4,36 +4,13 @@ import console_monkey_patch from '../console-monkey-patch';
 
 function updateProcSetting(changeData){
     console.log(changeData["data"]);
-    let targetId = changeData["data"]["targetId"];
+    let targetId = changeData["data"]["targetId"].split("_")[0];
     let oldValue = changeData["data"]["oldValue"];
     let newValue = changeData["data"]["newValue"];
 
-    // this is gonna get very long if not improved
     let codeString = document.getElementById('proc').value;
-    switch(targetId) {
-        case "cpm_text_input":
-            console.log("match1" + targetId + "oldValue : " + oldValue + " | " + "newValue : " + newValue);
-            codeString = codeString.replace(`setcpm(CPM`, `setcpm(${newValue}`);
-            codeString = codeString.replace(`setcpm(${oldValue}`, `setcpm(${newValue}`);
-            break;
-        case "volume_range":
-            console.log("match2" + targetId + "oldValue : " + oldValue + " | " + "newValue : " + newValue);
-            codeString = codeString.replace(`all(x => x.gain(VOLUME)`, `all(x => x.gain(${newValue})`);
-            codeString = codeString.replace(`all(x => x.gain(${oldValue}`, `all(x => x.gain(${newValue}`);
-            break;
-        default:
-            console.log("oi : " + String(targetId));
-            break;
-    }
+    codeString = codeString.replace(`let ${targetId} = ${oldValue}`, `let ${targetId} = ${newValue}`);
     document.getElementById("proc").value = codeString;
-    /*
-    let codeString = document.getElementById('proc').value;
-    console.log("codeString : " + (codeString = codeString.replace("CPM", `${cpm}`)));
-    codeString = codeString.replace(`setCPM(${codeString.}`, `${volume}`)
-    codeString = codeString.replace("CPM", `${cpm}`)
-    console.log("codeString : " + codeString);
-    document.getElementById("proc").value = codeString;
-    */
 }
 
 export function DJControls({ jsonSettings }) {
@@ -49,11 +26,6 @@ export function DJControls({ jsonSettings }) {
     const [ volume, setVolume ] = useState(0.5);
     const [ cpm, setCPM ] = useState(120);
     
-    {/* how do i get volume and CPM to change?? */}
-    
-    //document.getElementById('proc').value.replace("VOLUME", `${volume}`);
-    //document.getElementById('proc').value.replace("CPM", `${cpm}`);
-
     return (
         <>
             <div className="" onChange={(e) => console.log("should update - " + e["target"].id + " : " + (e.target.value))}>
@@ -62,11 +34,14 @@ export function DJControls({ jsonSettings }) {
                     
                     <input type="number" className="form-control" id="cpm_text_input" placeholder="120" min="0" defaultValue="120" 
                     aria-label="cpm" aria-describedby="cpm_label" value={cpm} onChange={(e) => { 
-                        setCPM(e.target.value);
-                        let targetId = e.target.id;
+                        let newValue = parseInt(e.target.value);
                         let oldValue = cpm;
-                        let newValue = e.target.value;
-                        newValue = parseInt(newValue)
+                        if (isNaN(newValue) || newValue < 0) {
+                            e.target.newValue = 0; // Reset to 0 if invalid or negative
+                        }
+                        setCPM(newValue);
+                        let targetId = e.target.id;
+                        //newValue = Math.max(0, parseInt(newValue));
                         updateProcSetting({ data:{targetId, oldValue, newValue} });
                     }}/>
                 </div>

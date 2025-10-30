@@ -86,12 +86,7 @@ export default function StrudelDemo() {
 const hasRun = useRef(false);
 
 const handlePlay = () => {
-    //Proc();
     globalEditor.evaluate();
-    //globalEditor.setCode(songText);
-    //setShowErrText(true);
-    //console.log("eventDetail : " + eventDetail);
-    
 }
 const handleStop = () => {
     if (hasRun){
@@ -102,12 +97,14 @@ const handleStop = () => {
 }
 
 const handleProc = () => {
-    console.log("handleProc triggered");
-    
+    //console.log("handleProc triggered");
+    globalEditor.setCode(document.getElementById('proc').value);
 }
 
 const handleProcPlay = () => {
-    console.log("handleProcPlay triggered");
+    //console.log("handleProcPlay triggered");
+    globalEditor.setCode(document.getElementById('proc').value);
+    globalEditor.evaluate();
 }
 
 const [ songText, setSongText ] = useState(stranger_tune)
@@ -115,6 +112,32 @@ const [ showErrText, setShowErrText ] = useState(false) // for later use
 const [ activeBtn, setActiveBtn ] = useState("control")
 const [ settings, setSetting ] = useState()
 
+function globalEditorInit() {
+    const canvas = document.getElementById('roll');
+    canvas.width = canvas.width * 2;
+    canvas.height = canvas.height * 2;
+    const drawContext = canvas.getContext('2d');
+    const drawTime = [-2, 2]; // time window of drawn haps
+    globalEditor = new StrudelMirror({
+        defaultOutput: webaudioOutput,
+        getTime: () => getAudioContext().currentTime,
+        transpiler,
+        root: document.getElementById('editor'),
+        drawTime,
+        onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
+        prebake: async () => {
+            initAudioOnFirstClick(); // needed to make the browser happy (don't await this here..)
+            const loadModules = evalScope(
+                import('@strudel/core'),
+                import('@strudel/draw'),
+                import('@strudel/mini'),
+                import('@strudel/tonal'),
+                import('@strudel/webaudio'),
+            );
+            await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+        },
+    });
+}
 
 //const [ volume, setVolume ] = useState(1)
 
@@ -133,7 +156,7 @@ function handleSettings(codeString) {
 // }
 
 useEffect(() => {
-    
+    //hasRun.current = false;
     if (!hasRun.current) {
         
         document.addEventListener("d3Data", handleD3Data);
