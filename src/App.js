@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -64,23 +64,39 @@ const handleD3Data = (event) => {
 //     return replace
 // }
 
+
+
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
+    
+    const [songText, setSongText] = useState(stranger_tune)
 
+    
+    
     const handlePlay = () => {
         globalEditor.evaluate()
     }
-
+    
     const handleStop = () => {
         globalEditor.stop()
     }
+    
+    const [toggles, setToggles] = useState({ 
+        Baseline: true, 
+        MainArp: true, 
+        Drums: true,
+        Drums2: true
+    });
 
-    const [songText, setSongText] = useState(stranger_tune)
-
-
+        const handleToggleChange = (newToggles) => {
+        console.log('received toggles:', newToggles);
+        setToggles(newToggles);
+    };
+    
+    
     useEffect(() => {
-
+        
         if (!hasRun.current) {
             document.addEventListener("d3Data", handleD3Data);
             console_monkey_patch();
@@ -141,7 +157,7 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <AUXControls />
+                            <AUXControls onToggleChange={handleToggleChange} />
                         </div>
                     </div>
                 </div>
