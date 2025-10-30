@@ -105,7 +105,7 @@ export default function StrudelDemo() {
                                 <PlayButtons globalEditor={globalEditor} />
                                 <br />
                                 <h6 className="text-center">Volume Controls:</h6>
-                                <VolumeControl ProcAndPlay={ProcAndPlay} />
+                                <VolumeControl Proc={Proc} />
                                 <br />
                                 <h6 className="text-center">Track Volume Control:</h6>
                                 {Array.from(

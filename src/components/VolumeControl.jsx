@@ -1,4 +1,4 @@
-function VolumeControl({ ProcAndPlay }) {
+function VolumeControl({ Proc }) {
     return (
         <div className="col-12 mb-3">
             <div className="form-check form-switch">
@@ -8,7 +8,7 @@ function VolumeControl({ ProcAndPlay }) {
                     role="switch"
                     name="MuteSwitch"
                     id="MuteSwitch"
-                    onChange={() => ProcAndPlay()}
+                    onChange={() => Proc()}
                 />
                 <label className="form-check-label mb-3" htmlFor="MuteSwitch">
                     Mute
