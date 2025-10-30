@@ -1,4 +1,4 @@
-﻿export default function Controls({ onProcess, onProcPlay, onPlay, onStop }) {
+﻿export default function Controls({ onProcess, onProcPlay, onPlay, onStop , replay}) {
     return (
         <nav style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: '1rem' }}>
             <button className="btn btn-outline-primary" onClick={onProcess}>
@@ -13,8 +13,8 @@
             <button className="btn btn-outline-danger" onClick={onStop}>
                 Stop
             </button>
-            <button
-                onClick={onProcPlay}
+            <button className="no-outline-button"
+                onClick={replay}
             >
                 🔄
             </button>

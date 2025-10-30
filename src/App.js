@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import Transport from "./components/controls"; // Importing the nessesary buttons
+import Controls from "./components/controls"; // Importing the nessesary buttons
 import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
 
 
@@ -60,6 +60,31 @@ export function ProcessText(match, ...args) {
   return replace
 }
 
+// Replays the tune: stop current playback, then restart from the beginning
+export async function Replay() {
+    if (!globalEditor) return;
+
+    try { initAudioOnFirstClick(); } catch (e) { }
+
+    // Stop any current playback cleanly
+    if (globalEditor.repl?.state?.started && globalEditor.stop) {
+        console.log("Stopping current playback...");
+        await globalEditor.stop();
+    }
+
+    // Wait briefly to ensure the stop finishes
+    await new Promise((resolve) => setTimeout(resolve, 250));
+
+    // Reprocess the code (in case user changed tune text)
+    Proc();
+
+    // Restart playback
+    console.log("Restarting playback...");
+    globalEditor.evaluate();
+}
+
+
+
 export default function StrudelDemo() {
 
   const hasRun = useRef(false);
@@ -108,9 +133,10 @@ export default function StrudelDemo() {
               <textarea className="form-control" rows="15" id="proc" ></textarea>
             </div>
                       <div className="col-md-4">
-                          <Transport
+                          <Controls
                               onProcess={() => Proc()}
                               onProcPlay={() => ProcAndPlay()}
+                              replay={() => Replay()}
                               onPlay={() => globalEditor && globalEditor.evaluate()}
                               onStop={() => globalEditor && globalEditor.stop()}
                           />
