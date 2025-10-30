@@ -5,7 +5,6 @@ import globalEditor from '../App';
 // through state?
 // works but it doesn't save state when switching from control and back again :(
 function ControlPanel({  }) {
-    
     return (
         <>
             <div className="" role="group" id="menuPanelStuff1" aria-label="Control panel">
@@ -19,6 +18,7 @@ function ControlPanel({  }) {
                 <div className="" id="unnamedPanel" >
                     {/* need code for changing volume, cpm, etc */}
                     <DJControls />
+                    
                 </div>
             </div>
         </>
