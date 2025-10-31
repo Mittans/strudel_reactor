@@ -118,7 +118,7 @@ const handleReset = () => {
 
 const [ songText, setSongText ] = useState(stranger_tune)
 const [ showErrText, setShowErrText ] = useState(false) // for later use
-const [ activeBtn, setActiveBtn ] = useState("control")
+const [ activeBtn, setActiveBtn ] = useState("controlBtn")
 const [ settings, setSetting ] = useState()
 
 function globalEditorInit() {
