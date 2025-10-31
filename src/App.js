@@ -7,7 +7,6 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import { stranger_tune } from './tunes';
 import console_monkey_patch from './console-monkey-patch';
 // import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 
@@ -15,7 +14,8 @@ import console_monkey_patch from './console-monkey-patch';
 import PreprocessorControl from './components/PreprocessorControl';
 import TrackControl from './components/TrackControl';
 import InstrumentControl from './components/InstrumentControl';
-import { tunes2 } from './tunes2';
+import { stranger_tune } from './Tune/tunes';
+import { tunes2 } from './Tune/tunes2';
 
 export default function App() {
     //react state
@@ -136,7 +136,7 @@ export default function App() {
                                     onPlay={handlePlay}
                                     onStop={handleStop}
                                 />
-                                <div style={{ display: "flex", marginTop: "8px", gap: "8px", justifyContent: "center", marginTop: "0 auto", alignItems: "center" }}>
+                                <div style={{ display: "flex", gap: "8px", justifyContent: "center", marginTop: "0 auto", alignItems: "center" }}>
                                     <button className="btn btn-outline-warning"
                                         onClick={nextTune}
                                         title="Next Tune"
