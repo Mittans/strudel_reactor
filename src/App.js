@@ -210,7 +210,7 @@ useEffect(() => {
 return (
     <div>
         <h2 className="row">
-            <div className="col">Strudel Demo</div>
+            <div className="col">Strudel</div>
             <div className="col-lg-auto">
                 <PlayButtons onPlay={handlePlay} onStop={handleStop} />
                 <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} onReset={handleReset} />
