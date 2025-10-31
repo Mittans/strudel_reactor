@@ -15,6 +15,7 @@ import ProcessingButtons from './components/processing-buttons';
 import PreprocessText from './components/PreprocessText';
 import PageHeader from './components/page-header';
 import Accordion from './components/accordion';
+import CodeOutput from './components/code-output';
 
 let globalEditor = null;
 
@@ -129,10 +130,8 @@ return (
 
             <div className="container-fluid">
                 <div className="row px-2 py-2">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        {/* <PreprocessText defaultValue={songText} onChange={(e) => setSongText(e.target.value)}/> */}
-
-                        <Accordion component={ <PreprocessText defaultValue={songText} onChange={(e) => setSongText(e.target.value)}/>} text={"Preprocess text input"}/>
+                    <div className="col-md-8 pt-3" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                        <Accordion component={ <PreprocessText defaultValue={songText} onChange={(e) => setSongText(e.target.value)}/>} text={"Preprocess Text Input"}/>
                     </div>
                     <div className="col-md-4">
 
@@ -146,8 +145,8 @@ return (
                 </div>
                 <div className="row px-2 py-2">
                     <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
+                        {/* this is broken */}
+                        <Accordion component={<CodeOutput/>} text={'Code Output'}/>
                     </div>
                     <div className="col-md-4">
                         <DJControls/>
