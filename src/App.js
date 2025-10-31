@@ -9,6 +9,9 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import DJControls from './components/DJControls';
+import Buttons from './components/Buttons';
+import ProcButtons from './components/ProcButtons';
 
 let globalEditor = null;
 
@@ -120,11 +123,9 @@ return (
                     <div className="col-md-4">
 
                         <nav>
-                            <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                            <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
+                            <ProcButtons />
                             <br />
-                            <button id="play" className="btn btn-outline-primary">Play</button>
-                            <button id="stop" className="btn btn-outline-primary">Stop</button>
+                            <Buttons />
                         </nav>
                     </div>
                 </div>
@@ -134,18 +135,7 @@ return (
                         <div id="output" />
                     </div>
                     <div className="col-md-4">
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                            <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                p1: ON
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                            <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                p1: HUSH
-                            </label>
-                        </div>
+                        <DJControls />
                     </div>
                 </div>
             </div>
