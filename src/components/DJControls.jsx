@@ -17,7 +17,11 @@ function updateProcSetting(changeData){
     document.getElementById("proc").value = codeString;
 }
 
-export function DJControls({ jsonSettings }) {
+function handleChange() {
+    console.log("change detected");
+}
+
+export function DJControls({  }) {
     /* figure out how to save these settings both into a JSON and when swapping between menus
      *
      */
@@ -25,18 +29,18 @@ export function DJControls({ jsonSettings }) {
     const [ cpm, setCPM ] = useState(120);
     const [ dropdown1, setDropdown1] = useState("dropdown1"); // placeholder
     //let toolTips = ["a", "b"]; // use [ data-bs-toggle="tooltip" title={toolTips[1]}  ] to get a dropdown -- this is just here for if I want to use it, probably wont
-    
+
     return (
         <>
             <div className="" onChange={(e) => {
-                //console.log("should update - " + e["target"].id + " : " + (e.target.value)) 
-                // LHS labels should be matching in width!  (css menu_label)
+                handleChange()
             }}>
 
                 <div className="input-group mb-4">
                     <span className="input-group-text menu_label" id="cpm_label">CPM</span>
                     <input type="number" className="form-control" id="cpm_text_input" placeholder="120" min="0" defaultValue="120" 
                     aria-label="cpm" aria-describedby="cpm_label" value={cpm} onChange={(e) => { 
+                        
                         let newValue = parseInt(e.target.value);
                         let oldValue = cpm;
                         if (isNaN(newValue) || newValue < 0) {
@@ -81,23 +85,24 @@ export function DJControls({ jsonSettings }) {
                 {/* replaced with list group; could reuse later */}
                 <div className="btn-group input-group mb-4 flex-auto">
                     <span className="input-group-text menu_label" aria-expanded="false">Dropdown</span>
-                    <button className="form-control" style={{ textAlign: "left" }} id="dropdown1" data-bs-toggle="dropdown">Action1</button>
-                    <ul class="dropdown-menu" onClick={(e) => {
+                    <button className="form-control" style={{ textAlign: "left" }} id="dropdown1" data-bs-toggle="dropdown">Option1</button>
+                    <ul className="dropdown-menu" onClick={(e) => {
                         // because of how this is catching them all, this technically counts the dropdown box itself when expanded
                         if (e.target.id != ""){
+                            handleChange();
                             document.getElementById("dropdown1").innerHTML = e.target.innerHTML; // setting text of above to specific dropdown item
                             setDropdown1(e.target.id);
-                            console.log("selected : " + document.getElementById("dropdown1").innerHTML);
+                            //console.log("selected : " + document.getElementById("dropdown1").innerHTML);
                         }
                     }}>
                         {/* <li><h6 class="dropdown-header">Dropdown explanation here</h6></li> */}
-                        <li><button class="dropdown-item" id="dropdown1-1">Action1</button></li>
-                        <li><button class="dropdown-item" id="dropdown1-2">Action2</button></li>
+                        <li><button className="dropdown-item" id="dropdown1-1">Option1</button></li>
+                        <li><button className="dropdown-item" id="dropdown1-2">Option2</button></li>
                     </ul>
                 </div>
             
                 
-            </div>
+            </div> {/* on update */}
         </>
     )
 };

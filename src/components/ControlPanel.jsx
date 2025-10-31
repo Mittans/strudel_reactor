@@ -17,18 +17,20 @@ function ControlPanel({  }) {
         <>
             <div className="" role="group" id="menuPanelStuff1" aria-label="Control panel">
                 <div className="" id="menuPanel">
-                    <div className="btn-group" role="group" id="menuBtns" aria-label="Menu buttons">
-                        <button disabled href="#" id="link" className="btn" onClick={(e) => {
+                    <div className="btn-group btn-light" role="group" id="menuBtns" aria-label="Menu buttons">
+                        <button href="#" id="link" className="btn" onClick={(e) => {
                             exportJSON();
                         }}>Export JSON</button>
-                        <button className="btn" disabled id="testBtn" onClick={(e) => console.log(e["target"].id)}>Import JSON</button>
+                        <button className="btn" id="testBtn" onClick={(e) => console.log(e["target"].id)}>Import JSON</button>
 
                     </div>
                     <br /><br />
                 </div>
                 <div className="" id="unnamedPanel" >
                     {/* need code for changing volume, cpm, etc */}
-                    <DJControls />
+                    <DJControls onUpdate={(e) => {
+                        console.log("DJControls onCLick behaviour triggered for JSX.Element in ControlPanel");
+                    }} />
                     
                 </div>
             </div>

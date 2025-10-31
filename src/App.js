@@ -8,6 +8,7 @@ import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
+import jsonSettings from './strudelSettings';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 
 import DJControls from './components/DJControls';
@@ -88,12 +89,9 @@ const hasRun = useRef(false);
 const handlePlay = () => {
     globalEditor.evaluate();
 }
-const handleStop = () => {
-    if (hasRun){
-        globalEditor.stop();
-    } else {
 
-    }
+const handleStop = () => {
+    globalEditor.stop();
 }
 
 const handleProc = () => {
@@ -120,33 +118,6 @@ const [ songText, setSongText ] = useState(stranger_tune)
 const [ showErrText, setShowErrText ] = useState(false) // for later use
 const [ activeBtn, setActiveBtn ] = useState("controlBtn")
 const [ settings, setSetting ] = useState()
-
-function globalEditorInit() {
-    const canvas = document.getElementById('roll');
-    canvas.width = canvas.width * 2;
-    canvas.height = canvas.height * 2;
-    const drawContext = canvas.getContext('2d');
-    const drawTime = [-2, 2]; // time window of drawn haps
-    globalEditor = new StrudelMirror({
-        defaultOutput: webaudioOutput,
-        getTime: () => getAudioContext().currentTime,
-        transpiler,
-        root: document.getElementById('editor'),
-        drawTime,
-        onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
-        prebake: async () => {
-            initAudioOnFirstClick(); // needed to make the browser happy (don't await this here..)
-            const loadModules = evalScope(
-                import('@strudel/core'),
-                import('@strudel/draw'),
-                import('@strudel/mini'),
-                import('@strudel/tonal'),
-                import('@strudel/webaudio'),
-            );
-            await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
-        },
-    });
-}
 
 //const [ volume, setVolume ] = useState(1)
 
@@ -232,15 +203,20 @@ return (
                         </div>
                     </div>
 
-                    <div className="col-md-4" id="rightPanel">
+                    <div className="col-md-4 bg-white" id="rightPanel">
                         {/* the nav menu for right panel -- should control whats in box below on page and be highlighted when active */}
-                        <div className="menuNavBar">
-                            <MenuButtons defaultValue={activeBtn} onClick={(e) => setActiveBtn(e)} />
-                           
+                        <div className="menuNavBar bg-light">
+                            <MenuButtons defaultValue={activeBtn} onClick={(e) => {
+                                setActiveBtn(e)
+                                //console.log("activeBtn : " + e);
+                            }}/>
                         </div>
                         <div>
                             
                             {/* this is essentially a big if-if-if rn */}
+                            {/* { (activeBtn == "helpBtn") ? menu[0] : null }
+                            { (activeBtn == "controlBtn") ? menu[1] : null }
+                            { (activeBtn == "consoleBtn") ? menu[2] : null } */}
                             { (activeBtn == "helpBtn") ? < HelpPanel /> : null }
                             { (activeBtn == "controlBtn") ? < ControlPanel /> : null }
                             { (activeBtn == "consoleBtn") ? < ConsolePanel /> : null }

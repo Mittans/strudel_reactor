@@ -1,25 +1,33 @@
 
+const defaultBtn = "controlBtn"; // this adds... almost nothing except for very minor and rare debug cases but I like it
+let lastBtnId = defaultBtn;
+let targetBtnId = null;
+
 function MenuButtons({ activeBtn, onClick }) {
-    
+    function handleMenuButton(e) {
+        targetBtnId = e["target"].id;
+        lastBtnId = (lastBtnId == null) ? e["target"].id : lastBtnId;
+        document.getElementById(lastBtnId).className = "btn btn-light";
+        document.getElementById(targetBtnId).className = "btn btn-secondary";
+        onClick(e["target"].id)
+        lastBtnId = e["target"].id;
+    }
+
     return (
         <>
-            <div className="btn-group" role="group" id="menuBtns" aria-label="Menu buttons">
-                <button className="btn" id="helpBtn" onClick={(e) => onClick(e["target"].id)}>Help</button>
-                <button className="btn" id="controlBtn" onClick={(e) => onClick(e["target"].id)}>Control</button>
-                <button className="btn" id="consoleBtn" onClick={(e) => onClick(e["target"].id)}>Console</button>
-                <button className="btn" id="testBtn" onClick={(e) => console.log(e["target"].id)}>test</button>
-                
-                {/* {this.state.buttons.map((menuBtn, i) =>
-                    <li className='list-group-item' key={i} data-id={menuBtn.id}>{menuBtn.name}
-                        <button onClick={() => this.setMenu(menuBtn.id)}>Control</button>
-                        <button onClick={() => this.setMenu(menuBtn.id)}>Help</button>
-                    </li>
-                )} */}
-                {/* <nav className="nav">
-                    {/* <button className="btn btn-lg nav-link" id={"control"} onClick={() => this.setMenu({id})}>Control</button>
-                    <button className="btn btn-lg nav-link" id={"help"} onClick={() => this.setMenu({id})}>Help</button>
-                    <button className="btn nav-link">aaa</button>
-                </nav> */}
+            <div className="btn-group menu_buttons" role="group" id="menuBtns" aria-label="Menu buttons">
+                <button className={`btn btn-${(defaultBtn == "helpBtn") ? "secondary" : "light" }`} id="helpBtn" onClick={(e) => {
+                    handleMenuButton(e);
+                    }}>Help</button>
+                <button className={`btn btn-${(defaultBtn == "controlBtn") ? "secondary" : "light" }`} id="controlBtn" onClick={(e) => {
+                    handleMenuButton(e);
+                    }}>Control</button>
+                <button className={`btn btn-${(defaultBtn == "consoleBtn") ? "secondary" : "light" }`} id="consoleBtn" onClick={(e) => {
+                    handleMenuButton(e);
+                    }}>Console</button>
+                <button className={`btn btn-${(defaultBtn == "testBtn") ? "secondary" : "light" }`} id="testBtn" onClick={(e) => {
+                    handleMenuButton(e);
+                    }}>test</button>
             </div>
         </>
     )

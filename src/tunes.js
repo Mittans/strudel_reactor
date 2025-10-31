@@ -6,6 +6,7 @@ samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strud
 samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')
 
 let cpm = 120
+setcpm(cpm/4)
 let volume = 0.5
 
 const gain_patterns = [
