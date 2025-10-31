@@ -89,7 +89,8 @@ export default function StrudelDemo() {
     //created a varible called song text and used setSongText as a setter and songText as getter
     //used it like that so that all react hooks are fired when we call the function
     //use empty string as initial value
-    const [songText, setSongText] = useState('stranger_tune')
+    const [songText, setSongText] = useState(stranger_tune)
+
 
 
 
