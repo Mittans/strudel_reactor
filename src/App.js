@@ -13,8 +13,9 @@ import console_monkey_patch from './console-monkey-patch';
 
 //import components
 import PreprocessorControl from './components/PreprocessorControl';
-import TransportControl from './components/TrackControl';
+import TrackControl from './components/TrackControl';
 import InstrumentControl from './components/InstrumentControl';
+import { tunes2 } from './tunes2';
 
 export default function App() {
     //react state
@@ -22,6 +23,7 @@ export default function App() {
     const [radioValue, setRadioValue] = useState("ON");
     const editorRef = useRef(null);
     const hasRun = useRef(false);
+    const [tuneIndex, setTuneIndex] = useState(0);
 
     //helper and handler functions
     function processText(text, radioState) {
@@ -53,6 +55,28 @@ export default function App() {
             handleProcess();
             if (editorRef.current.repl.state.started) editorRef.current.evaluate();
         }
+    }
+
+    // next and previous tune functions
+    function loadTune(index) {
+        const tune = tunes2[index];
+        setProcText(tune.code);
+        if (editorRef.current) {
+            editorRef.current.setCode(tune.code);
+            editorRef.current.evaluate();
+        }
+    }
+
+    function nextTune() {
+        const nextIndex = (tuneIndex + 1) % tunes2.length;
+        setTuneIndex(nextIndex);
+        loadTune(nextIndex);
+    }
+
+    function prevTune() {
+        const prevIndex = (tuneIndex - 1 + tunes2.length) % tunes2.length;
+        setTuneIndex(prevIndex);
+        loadTune(prevIndex);
     }
 
     useEffect(() => {
@@ -106,12 +130,22 @@ export default function App() {
                         </div>
                         <div className="col-md-4">
                             <div className="card" style={{ display: "flex", alignItems: "start" }}>
-                                <TransportControl
+                                <TrackControl
                                     onProcess={handleProcess}
                                     onProcessPlay={handleProcessPlay}
                                     onPlay={handlePlay}
                                     onStop={handleStop}
                                 />
+                                <div style={{ display: "flex", marginTop: "8px", gap: "8px", justifyContent: "center", marginTop: "0 auto", alignItems: "center" }}>
+                                    <button className="btn btn-outline-warning"
+                                        onClick={nextTune}
+                                        title="Next Tune"
+                                        style={{ fontSize: "18px", padding: "6px 12px", borderRadius: "6px", width: "120px", alignItems: "center" }} > Prev </button>
+                                    <button className="btn btn-outline-success"
+                                        onClick={prevTune}
+                                        title="Previous Tune"
+                                        style={{ fontSize: "18px", padding: "6px 12px", width: "120px", alignItems: "center" }} > Next </button>
+                                </div>
                             </div>
                         </div>
                     </div>
