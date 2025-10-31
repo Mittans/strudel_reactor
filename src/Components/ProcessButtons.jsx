@@ -15,7 +15,7 @@ function ProcessButtons({ onPreprocess, onPreprocessPlay }) {
                     </button>
 
                     <button id="process_play" className="btn btn-success px-4" onClick={onPreprocessPlay}>
-                        <i class="bi bi-play-circle-fill"></i>
+                        <i className="bi bi-play-circle-fill"></i>
                         Proc & Play
                     </button>
                 </div>
