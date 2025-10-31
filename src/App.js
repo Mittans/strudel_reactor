@@ -122,13 +122,9 @@ return (
                     </div>
                     <div className="col-md-4">
                         <nav>
-
                             <ProcButtons />
-
                             <br />
-
                             <Buttons />
-
                         </nav>
                     </div>
                 </div>

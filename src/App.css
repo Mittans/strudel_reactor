@@ -36,3 +36,42 @@
     transform: rotate(360deg);
   }
 }
+
+/*Play & Stop Buttons Styling*/
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+#play.btn-outline-primary {
+    border-color: #28a745; 
+    color: #28a745;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.2s ease-in-out;
+}
+
+#play.btn-outline-primary:hover {
+    background-color: #28a745;
+    color: #fff;
+    box-shadow: 0px 0px 40px #28a745;
+}
+
+#stop.btn-outline-primary {
+    border-color: #dc3545; 
+    color: #dc3545;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1.2rem;
+    transition: all 0.2s ease-in-out;
+}
+
+#stop.btn-outline-primary:hover {
+    background-color: #dc3545;
+    color: #fff;
+    box-shadow: 0px 0px 40px #dc3545;
+}
+
