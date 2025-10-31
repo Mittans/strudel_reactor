@@ -1,6 +1,4 @@
-
-import React, { useEffect, useRef } from 'react';
-import './App.css';
+import '../App.css';
 import { useEffect, useRef } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
@@ -9,14 +7,70 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import { stranger_tune } from './tunes';
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import { stranger_tune } from '../tunes';
+import console_monkey_patch, { getD3Data } from '../console-monkey-patch';
+
+//Components
+import PlayControl from '../Components/PlayControl';
+import PlayButtons from '../Components/PlayButtons';
+import ProcessButtons from '../Components/ProcessButtons';
+import Preprocess from '../Components/Preprocess';
+
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
+let globalEditor = null;
+
+const handleD3Data = (event) => {
+    console.log(event.detail);
+};
+
+export function SetupButtons() {
+
+    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
+    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
+    document.getElementById('process').addEventListener('click', () => {
+        Proc()
+    }
+    )
+    document.getElementById('process_play').addEventListener('click', () => {
+        if (globalEditor != null) {
+            Proc()
+            globalEditor.evaluate()
+        }
+    }
+    )
+}
 
 
-function StrudelDemo() {
+
+export function ProcAndPlay() {
+    if (globalEditor != null && globalEditor.repl.state.started == true) {
+        console.log(globalEditor)
+        Proc()
+        globalEditor.evaluate();
+    }
+}
+
+export function Proc() {
+
+    let proc_text = document.getElementById('proc').value
+    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
+    ProcessText(proc_text);
+    globalEditor.setCode(proc_text_replaced)
+}
+
+export function ProcessText(match, ...args) {
+
+    let replace = ""
+    // if (document.getElementById('flexRadioDefault2').checked) {
+    //     replace = "_"
+    // }
+
+    return replace
+}
+
+export default function StrudelDemo() {
 
     const hasRun = useRef(false);
 
@@ -54,7 +108,7 @@ function StrudelDemo() {
             });
 
             document.getElementById('proc').value = stranger_tune
-            // SetupButtons()
+            SetupButtons()
             Proc()
         }
 
@@ -99,5 +153,3 @@ function StrudelDemo() {
 
 
 }
-
-export default StrudelDemo
