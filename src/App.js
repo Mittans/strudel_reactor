@@ -111,6 +111,7 @@ const handleReset = () => {
     handleStop();
     //console.log("handleReset triggered");
     document.getElementById('proc').value = defaultTune;
+    // @TODO: this needs to reset settings, too! otherwise we're allowing for errors 
     globalEditor.setCode(defaultTune);
 }
 
@@ -212,14 +213,10 @@ return (
                             }}/>
                         </div>
                         <div>
-                            
                             {/* this is essentially a big if-if-if rn */}
-                            {/* { (activeBtn == "helpBtn") ? menu[0] : null }
-                            { (activeBtn == "controlBtn") ? menu[1] : null }
-                            { (activeBtn == "consoleBtn") ? menu[2] : null } */}
-                            { (activeBtn == "helpBtn") ? < HelpPanel /> : null }
-                            { (activeBtn == "controlBtn") ? < ControlPanel /> : null }
-                            { (activeBtn == "consoleBtn") ? < ConsolePanel /> : null }
+                            { (activeBtn === "helpBtn") ? < HelpPanel /> : null }
+                            { (activeBtn === "controlBtn") ? < ControlPanel /> : null }
+                            { (activeBtn === "consoleBtn") ? < ConsolePanel /> : null }
                         </div>
                         
                     </div>

@@ -16,16 +16,16 @@ function MenuButtons({ activeBtn, onClick }) {
     return (
         <>
             <div className="btn-group menu_buttons" role="group" id="menuBtns" aria-label="Menu buttons">
-                <button className={`btn btn-${(defaultBtn == "helpBtn") ? "secondary" : "light" }`} id="helpBtn" onClick={(e) => {
+                <button className={`btn btn-${(defaultBtn === "helpBtn") ? "secondary" : "light" }`} id="helpBtn" onClick={(e) => {
                     handleMenuButton(e);
                     }}>Help</button>
-                <button className={`btn btn-${(defaultBtn == "controlBtn") ? "secondary" : "light" }`} id="controlBtn" onClick={(e) => {
+                <button className={`btn btn-${(defaultBtn === "controlBtn") ? "secondary" : "light" }`} id="controlBtn" onClick={(e) => {
                     handleMenuButton(e);
                     }}>Control</button>
-                <button className={`btn btn-${(defaultBtn == "consoleBtn") ? "secondary" : "light" }`} id="consoleBtn" onClick={(e) => {
+                <button className={`btn btn-${(defaultBtn === "consoleBtn") ? "secondary" : "light" }`} id="consoleBtn" onClick={(e) => {
                     handleMenuButton(e);
                     }}>Console</button>
-                <button className={`btn btn-${(defaultBtn == "testBtn") ? "secondary" : "light" }`} id="testBtn" onClick={(e) => {
+                <button className={`btn btn-${(defaultBtn === "testBtn") ? "secondary" : "light" }`} id="testBtn" onClick={(e) => {
                     handleMenuButton(e);
                     }}>test</button>
             </div>

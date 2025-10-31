@@ -13,27 +13,29 @@ function updateProcSetting(changeData){
     let newValue = changeData["data"]["newValue"];
 
     let codeString = document.getElementById('proc').value;
+    codeString.replace('NaN', "0");
     codeString = codeString.replace(`let ${targetId} = ${oldValue}`, `let ${targetId} = ${newValue}`);
     document.getElementById("proc").value = codeString;
 }
 
-function handleChange() {
-    console.log("change detected");
-}
-
-export function DJControls({  }) {
+export function DJControls({ djSettings, setDJSettings }) {
     /* figure out how to save these settings both into a JSON and when swapping between menus
      *
      */
     const [ volume, setVolume ] = useState(0.5);
     const [ cpm, setCPM ] = useState(120);
     const [ dropdown1, setDropdown1] = useState("dropdown1"); // placeholder
-    //let toolTips = ["a", "b"]; // use [ data-bs-toggle="tooltip" title={toolTips[1]}  ] to get a dropdown -- this is just here for if I want to use it, probably wont
+
+    // if an element doesn't use "onChange", use its on(...) to invoke this
+    function handleChange() {
+        console.log("change detected");
+        setDJSettings("a");
+    }
 
     return (
         <>
             <div className="" onChange={(e) => {
-                handleChange()
+                handleChange();
             }}>
 
                 <div className="input-group mb-4">
@@ -44,7 +46,8 @@ export function DJControls({  }) {
                         let newValue = parseInt(e.target.value);
                         let oldValue = cpm;
                         if (isNaN(newValue) || newValue < 0) {
-                            e.target.newValue = 0; // Reset to 0 if invalid or negative
+                            //e.target.newValue = 0; // Reset to 0 if invalid or negative
+                            document.getElementById("cpm_text_input").value = 10; // setting text of above to specific dropdown item
                         }
                         setCPM(newValue);
                         let targetId = e.target.id;
@@ -88,7 +91,7 @@ export function DJControls({  }) {
                     <button className="form-control" style={{ textAlign: "left" }} id="dropdown1" data-bs-toggle="dropdown">Option1</button>
                     <ul className="dropdown-menu" onClick={(e) => {
                         // because of how this is catching them all, this technically counts the dropdown box itself when expanded
-                        if (e.target.id != ""){
+                        if (e.target.id !== ""){
                             handleChange();
                             document.getElementById("dropdown1").innerHTML = e.target.innerHTML; // setting text of above to specific dropdown item
                             setDropdown1(e.target.id);
