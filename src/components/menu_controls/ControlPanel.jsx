@@ -1,4 +1,4 @@
-import DJControls from './dj_controls/DJControls';
+import DJControls from '../dj_controls/DJControls';
 //import { handlePlay, handleStop } from '../App.js';
 
 let djSettingsString = "";

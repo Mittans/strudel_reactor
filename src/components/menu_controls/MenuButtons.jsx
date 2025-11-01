@@ -25,9 +25,15 @@ function MenuButtons({ activeBtn, onClick }) {
                 <button className={`btn btn-${(defaultBtn === "consoleBtn") ? "secondary" : "light" }`} id="consoleBtn" onClick={(e) => {
                     handleMenuButton(e);
                     }}>Console</button>
-                <button className={`btn btn-${(defaultBtn === "testBtn") ? "secondary" : "light" }`} id="testBtn" onClick={(e) => {
+                <button className={`btn btn-${(defaultBtn === "sourceBtn") ? "secondary" : "light" }`} id="sourceBtn" onClick={(e) => {
                     handleMenuButton(e);
-                    }}>test</button>
+                    }}>Source</button>
+                <button className={`btn btn-${(defaultBtn === "unusedBtn") ? "secondary" : "light" }`} disabled id="unusedBtn" onClick={(e) => {
+                    handleMenuButton(e);
+                    }}>Placeholder</button>
+                <button className={`btn btn-${(defaultBtn === "unusedBtn") ? "secondary" : "light" }`} disabled id="unusedBtn" onClick={(e) => {
+                    handleMenuButton(e);
+                    }}>Placeholder</button>
             </div>
         </>
     )

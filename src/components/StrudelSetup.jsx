@@ -10,7 +10,7 @@ import { stranger_tune } from '../tunes';
 import console_monkey_patch from '../console-monkey-patch';
 
 let strudelEditor = null;
-//let strudelRef = globalEditor;
+let bigVolume = null;
 
 let volumeControlRef = null;
 
@@ -21,12 +21,12 @@ export const Proc = () => {
         strudelEditor.setCode(stranger_tune);
         return;
     } else {
-        console.log("working");
-        strudelEditor.setCode(procText);
+        let volumeToUse = parseFloat(bigVolume);
+        strudelEditor.setCode((procText += "\n" + "all(x => x.gain("+volumeToUse+"));"));
     }
 };
 
-export const StrudelSetup = ( stranger_tune, setSongText) => {
+export const StrudelSetup = async ( stranger_tune, setSongText) => {
     //const hasRun = useRef(false);
     //document.addEventListener("d3Data", handleD3Data);
             console_monkey_patch();
@@ -73,13 +73,15 @@ export const StrudelSetup = ( stranger_tune, setSongText) => {
 //export default StrudelSetup;
 
 export const setGlobalVolume = (value) => {
-    //gainNode.gain.setValueAtTime(value, audioCtx.currentTime);
+    console.log("setting bigVolume to : " + parseFloat(value));
+    bigVolume = value;
     // const ctx = getAudioContext();
     // if (!volumeControlRef) {
     //     volumeControlRef = ctx.createGain();
     //     volumeControlRef.connect(ctx.destination);
     // }
     // volumeControlRef.gain.value = value;
+    // console.log("volumeControlRef : " + volumeControlRef);
     //const ctx = getAudioContext();
     // if (volumeControlRef){
     //     volumeControlRef = getAudioContext().createGain(); // volume based on gain, have to create it like so
@@ -96,7 +98,14 @@ export const handlePlay = () => {
     if (strudelEditor) {
         strudelEditor.evaluate();
         if (volumeControlRef) {
-            console.log("Playing with volume : " + volumeControlRef.gain.value); // proving volume saved in state (will need to update controlPanel tho)
+            //console.log("Playing with volume : " + volumeControlRef.gain.value); // proving volume saved in state (will need to update controlPanel tho)
+            let procText = document.getElementById("proc").value;
+            let volumeToUse = parseFloat(bigVolume);
+            console.log("working");
+            console.log("so it should be using : " + (procText += "\n" + "all(x => x.gain("+volumeToUse+"));"));
+            strudelEditor.setCode((procText += "\n" + "all(x => x.gain("+volumeToUse+"));"));
+            strudelEditor.evaluate();
+            strudelEditor.setCode(procText);
         }
     } else {
         console.log("Failed condition checker in handlePlay");
@@ -121,14 +130,22 @@ export const handleProc = () => {
     }
 }
 
-export const handleProcPlay = () => {
+export const handleProcPlay = async () => {
+    await initAudioOnFirstClick();
+    
     console.log("Called handleProcPlay");
     if (strudelEditor) {
         handleStop();
         //console.log("handleProcPlay triggered");
         Proc();
         //strudelEditor.setCode(document.getElementById('proc').value);
+        let procText = document.getElementById("proc").value;
+        let volumeToUse = parseFloat(bigVolume);
+        console.log("working");
+        console.log("so it should be using : " + (procText += "\n" + "all(x => x.gain("+volumeToUse+"));"));
+        strudelEditor.setCode((procText += "\n" + "all(x => x.gain("+volumeToUse+"));"));
         strudelEditor.evaluate();
+        strudelEditor.setCode(procText);
     } else {
         console.log("Failed condition checker in handleProcPlay");
     }

@@ -11,14 +11,15 @@ import console_monkey_patch from '../console-monkey-patch';
 
 import AudioControls from './audio_controls/AudioControls';
 import DJControls from './dj_controls/DJControls';
-import MenuButtons from './MenuButtons';
+import MenuButtons from './menu_controls/MenuButtons';
 import PlayButtons from './PlayButtons';
 import ProcButtons from './ProcButtons';
 import PreprocessTextArea from './PreprocessTextArea';
 import ErrorTextArea from './ErrorTextArea';
-import HelpPanel from './HelpPanel';
-import ControlPanel from './ControlPanel';
-import ConsolePanel from './ConsolePanel';
+import HelpPanel from './menu_controls/HelpPanel';
+//import ControlPanel from './panels/ControlPanel';
+import SourcePanel from './menu_controls/SourcePanel';
+import ConsolePanel from './menu_controls/ConsolePanel';
 import { StrudelSetup } from './StrudelSetup';
 import { handlePlay, handleStop, handleProc, handleProcPlay, handleReset, Proc, setGlobalVolume} from './StrudelSetup';
 import userEvent from "@testing-library/user-event";
@@ -244,6 +245,9 @@ function StrudelPlayer() {
                                 </div>
                                 <div className="ConsolePanel" style={{ display: (activeBtn === "consoleBtn") ? 'block' : 'none' }}>
                                     < ConsolePanel />
+                                </div>
+                                <div className="SourcePanel" style={{ display: (activeBtn === "sourceBtn") ? 'block' : 'none' }}>
+                                    < SourcePanel />
                                 </div>
                             </div>
                             

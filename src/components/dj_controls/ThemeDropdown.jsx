@@ -21,7 +21,7 @@ function ThemeDropdown ({ themeDropdown, setThemeDropdown, onHandleTheme}) {
                     }}>
                         {/* <li><h6 class="dropdown-header">Dropdown explanation here</h6></li> */}
                         <li><button className="dropdown-item" id="theme1" name={themes[0]}>{themes[0]}</button></li>
-                        <li><button className="dropdown-item" id="theme2" name={themes[1]}>{themes[1]}</button></li>
+                        <li><button className="dropdown-item" id="theme2" disabled name={themes[1]}>{themes[1]}</button></li>
                     </ul>
             </div>
         </>
