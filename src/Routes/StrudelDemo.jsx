@@ -25,52 +25,8 @@ const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-// export function SetupButtons() {
-
-//     document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-//     document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-//     document.getElementById('process').addEventListener('click', () => {
-//         Proc()
-//     }
-//     )
-//     document.getElementById('process_play').addEventListener('click', () => {
-//         if (globalEditor != null) {
-//             Proc()
-//             globalEditor.evaluate()
-//         }
-//     }
-//     )
-// }
 
 
-
-
-
-// export function ProcAndPlay() {
-//     if (globalEditor != null && globalEditor.repl.state.started == true) {
-//         console.log(globalEditor)
-//         Proc()
-//         globalEditor.evaluate();
-//     }
-// }
-
-// export function Proc() {
-
-//     let proc_text = document.getElementById('proc').value
-//     let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-//     ProcessText(proc_text);
-//     globalEditor.setCode(proc_text_replaced)
-// }
-
-// export function ProcessText(match, ...args) {
-
-//     let replace = ""
-//     // if (document.getElementById('flexRadioDefault2').checked) {
-//     //     replace = "_"
-//     // }
-
-//     return replace
-// }
 
 export default function StrudelDemo() {
 
@@ -86,10 +42,25 @@ export default function StrudelDemo() {
         globalEditor.stop()
     }
 
+
+    // preprocess copies current songData into the editor
+    const handlePreprocess = () => {
+        if (!globalEditor) return;
+        globalEditor.setCode(songData);
+    };
+
+    // preprocess then play
+    const handlePreprocessPlay = () => {
+        handlePreprocess();
+        handlePlay();
+    };
+
+
     //created a varible called song text and used setSongText as a setter and songText as getter
     //used it like that so that all react hooks are fired when we call the function
     //use empty string as initial value
-    const [songText, setSongText] = useState(stranger_tune)
+    const [songData, setSongData] = useState(stranger_tune)
+
 
 
 
@@ -132,9 +103,11 @@ export default function StrudelDemo() {
             // SetupButtons()
             // Proc()
         }
-        globalEditor.setCode(songText)
+        globalEditor.setCode(songData)
 
-    }, [songText]); // Added setSongText as a dependency to ensure the effect runs when songText changes hook
+    }, [songData]); // Added setSongText as a dependency to ensure the effect runs when songText changes hook
+
+
 
 
     return (
@@ -146,12 +119,18 @@ export default function StrudelDemo() {
                     <div className="row">
                         <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                             {/*onChange={(e) => setSongText(e.target.value) as there are two preprocess component, using (e) specifies the target  */}
-                            <Preprocess defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />{/* calls the Preprocess class*/}
+                            <Preprocess defaultValue={songData} onChange={(e) => setSongData(e.target.value)} />{/* calls the Preprocess class*/}
                         </div>
                         <div className="col-md-4">
 
+
+
+
                             <nav>
-                                <ProcessButtons /> {/* calls the ProcessButtons class*/}
+                                {/* calls the ProcessButtons class*/}
+
+                                <ProcessButtons onPreprocess={handlePreprocess} onPreprocessPlay={handlePreprocessPlay} />
+
                                 <br />
                                 <PlayButtons onPlay={handlePlay} onStop={handleStop} />  {/* calls the button class and the handle stop and handlePlay function created eariler*/}
                             </nav>
