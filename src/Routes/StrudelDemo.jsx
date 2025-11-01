@@ -18,35 +18,42 @@ import Preprocess from '../Components/Preprocess';
 
 import 'bootstrap-icons/font/bootstrap-icons.css';
 
+//need to use ref, cannot use global variable, react re-renders components and manages state internally.
+//let globalEditor = null;
 
-let globalEditor = null;
+
+
+
 
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
 
-
-
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
 
+    const editorRef = useRef(null);
+
     // Function runs when the Play button is clicked
     const handlePlay = () => {
         // Plays the current Strudel code in the editor
-        globalEditor.evaluate()
+        editorRef.current.evaluate();
+
     };
 
     const handleStop = () => {
-        globalEditor.stop()
+        editorRef.current.stop()
     }
+
+
 
 
     // preprocess copies current songData into the editor
     const handlePreprocess = () => {
-        if (!globalEditor) return;
-        globalEditor.setCode(songData);
+        if (!editorRef.current) return;
+        editorRef.current.setCode(songData);
     };
 
     // preprocess then play
@@ -79,7 +86,7 @@ export default function StrudelDemo() {
             canvas.height = canvas.height * 2;
             const drawContext = canvas.getContext('2d');
             const drawTime = [-2, 2]; // time window of drawn haps
-            globalEditor = new StrudelMirror({
+            editorRef.current = new StrudelMirror({
                 defaultOutput: webaudioOutput,
                 getTime: () => getAudioContext().currentTime,
                 transpiler,
@@ -103,7 +110,7 @@ export default function StrudelDemo() {
             // SetupButtons()
             // Proc()
         }
-        globalEditor.setCode(songData)
+        editorRef.current.setCode(songData)
 
     }, [songData]); // Added setSongText as a dependency to ensure the effect runs when songText changes hook
 
@@ -122,9 +129,6 @@ export default function StrudelDemo() {
                             <Preprocess defaultValue={songData} onChange={(e) => setSongData(e.target.value)} />{/* calls the Preprocess class*/}
                         </div>
                         <div className="col-md-4">
-
-
-
 
                             <nav>
                                 {/* calls the ProcessButtons class*/}
