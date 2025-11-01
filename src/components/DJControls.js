@@ -1,5 +1,6 @@
 import TrackControls from "./TrackControls";
 import SoundControls from "./SoundControls";
+import EffectsControls from "./EffectsControls";
 
 function DJControls() {
 
@@ -8,6 +9,7 @@ function DJControls() {
       <h5 className="card-title mb-3">DJ Controls</h5>
       <TrackControls />
       <SoundControls />
+      <EffectsControls />
     </div>
   );
 }
