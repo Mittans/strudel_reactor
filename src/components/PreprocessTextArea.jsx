@@ -1,11 +1,11 @@
 
-function PreprocessTextArea({ defaultValue, onChange }) {
+function PreprocessTextArea({ songText, setSongText }) {
     return (
         <>
-        
-        {/* TODO: what is this label? */}
-            {/* <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label> */}
-            <textarea className="form-control" rows="15" defaultValue={defaultValue} style={{ resize: 'none' }} onBeforeInput={onChange} onChange={onChange} id="proc" ></textarea>
+            <textarea className="form-control" rows="15" value={songText} onChange={(e) => {
+                console.log("textarea detected a change");
+                setSongText(e.target.value);
+            }} style={{ resize: 'none' }} id="proc" ></textarea>
         </>
     )
 }

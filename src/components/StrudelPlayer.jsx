@@ -19,7 +19,8 @@ import HelpPanel from './HelpPanel';
 import ControlPanel from './ControlPanel';
 import ConsolePanel from './ConsolePanel';
 import { StrudelSetup } from './StrudelSetup';
-import { handlePlay, handleStop, handleProc, handleProcPlay, handleReset } from './StrudelSetup';
+import { handlePlay, handleStop, handleProc, handleProcPlay, handleReset, Proc } from './StrudelSetup';
+import userEvent from "@testing-library/user-event";
 
 let defaultTune = stranger_tune;
 
@@ -44,76 +45,55 @@ let StrudelDemoThingo = null;
 
 // strudelRef references the strudel/globaleditor 
 // this is basically the new StrudelDemo from App.js
-function StrudelPlayer({ strudelRef }) {
+function StrudelPlayer() {
     //TODO: fix the fact that proc&play can play multiple overlapping strudels, lol
 
     //let strudelRef = useRef();
     const hasRun = useRef(false);
-    const [songText, setSongText] = useState(stranger_tune);
+    const [ songText, setSongText ] = useState("");
+    const [ volume, setVolume ] = useState(0.5);
+    const [ cpm, setCPM ] = useState(120);
 
     // on load the player needs to setup the strudel
     useEffect(() => {
         console.log("StrudelPlayer useEffect called");
 
         if (!hasRun.current) {
+            console.log("hasRun is false; setting up Strudel");
             hasRun.current = true;
-            // strudelRef
-            StrudelSetup(songText, setSongText, strudelRef);
+            StrudelSetup(stranger_tune, setSongText);
         }
-        //console.log("a : " + a);
     }, []);
 
-    // const handlePlay = () => {
-    //     //console.log("volumeControlRef.gain.value - " + volumeControlRef.gain.value); // proving volume saved in state (will need to update controlPanel tho)
-    //     strudelRef.current.evaluate();
-    // }
+    // handles setting changes
+    useEffect((e) => {
+        console.log("second useEffect in StrudelPlayer called - " + e);
+    });
 
-    // const handleStop = () => {
-    //     strudelRef.current.stop();
-    // }
-
-    // const handleProc = () => {
-    //     handleStop();
-    //     //console.log("handleProc triggered");
-    //     strudelRef.current.setCode(document.getElementById('proc').value);
-    // }
-
-    // const handleProcPlay = () => {
-    //     handleStop();
-    //     //console.log("handleProcPlay triggered");
-    //     strudelRef.current.setCode(document.getElementById('proc').value);
-    //     strudelRef.current.evaluate();
-    // }
-
-    // const handleReset = () => {
-    //     handleStop();
-    //     //console.log("handleReset triggered");
-    //     document.getElementById('proc').value = defaultTune;
-    //     // @TODO: this needs to reset settings, too! otherwise we're allowing for errors 
-    //     strudelRef.current.setCode(defaultTune);
-    // }
-
-    //const [ songText, setSongText ] = useState(stranger_tune)
     const [ showErrText, setShowErrText ] = useState(false) // for later use
     const [ activeBtn, setActiveBtn ] = useState("controlBtn")
     const [ settings, setSetting ] = useState()
 
-    //const [ volume, setVolume ] = useState(1)
-
-    function handleSettings(codeString) {
-        strudelRef.current.setCode(codeString);
-
-        //console.log("handle settings id, newValue : " + id + " | " + newValue);
-        // let proc_text = document.getElementById({id}).value
-        // let proc_text_replaced = proc_text.replaceAll('{VOLUME}', {volume});
-        // strudelRef.setCode(proc_text_replaced)
+    function handleThisChange(e) {
+        console.log("Handling change - " + e);
     }
 
-    // const handleMenu = (e) => {
-    //     console.log(e);
-    //     currentMenu = e;
-    // }
+    function handleSettings(codeString) {
+        console.log("handleSettings is being called in StrudelPlayer???");
+        strudelRef.current.setCode(codeString);
+    }
 
+    const onHandleChangeRequest = (e) => {
+        console.log("onHandleChangeRequest called in StrudelPlayer - " + e.target.value);
+    }
+
+    const handleVolumeChange = (e) => {
+        console.log("handleVolume (DJControls.jsx) called");
+        let newVolume = parseFloat(e.target.value); // if only we could initialise variables as a type line in other languages :(
+        // does this need both?
+        setVolume(newVolume); // DJControls state
+        //setGlobalVolume(newVolume); // strudel player volume
+    };
 
     return (
         <div>
@@ -135,7 +115,7 @@ function StrudelPlayer({ strudelRef }) {
                             <div className="" id="editorPanel" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                                 {/* e knows where it is because it knows where it isn't.
                                 ... not really, i'm assuming e just has a reference to self or smth */}
-                                <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                                <PreprocessTextArea songText={songText} setSongText={setSongText}/>
                             </div>
                             <div className="" id="codePanel" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                                 <div id="editor" />
@@ -154,7 +134,14 @@ function StrudelPlayer({ strudelRef }) {
                             <div>
                                 {/* this is essentially a big if-if-if rn */}
                                 { (activeBtn === "helpBtn") ? < HelpPanel /> : null }
-                                { (activeBtn === "controlBtn") ? < ControlPanel /> : null }
+                                { (activeBtn === "controlBtn") ? < ControlPanel 
+                                    volume={volume}
+                                    setVolume={setVolume}
+                                    cpm={cpm}
+                                    setCPM={setCPM}
+                                    onUpdate={handleThisChange}
+                                    onHandleChangeRequest={onHandleChangeRequest}
+                                /> : null }
                                 { (activeBtn === "consoleBtn") ? < ConsolePanel /> : null }
                             </div>
                             
@@ -169,68 +156,5 @@ function StrudelPlayer({ strudelRef }) {
         </div >
     );
 }
-// function StrudelPlayer( {songText, strudelRef} ) {
-//     const handleD3Data = (event) => {
-//         console.log(event.detail);
-//     };
-
-//     const hasRun = useRef(false);
-
-//     // first useEffect is on mount/load
-//     useEffect(() => {
-//         //hasRun.current = false;
-//         if (!hasRun.current) {
-            
-//             document.addEventListener("d3Data", handleD3Data);
-//             console_monkey_patch();
-//             hasRun.current = true;
-//             //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
-//                 //init canvas
-//                 const canvas = document.getElementById('roll');
-//                 canvas.width = canvas.width * 2;
-//                 canvas.height = canvas.height * 2;
-//                 const drawContext = canvas.getContext('2d');
-//                 const drawTime = [-2, 2]; // time window of drawn haps
-//                 globalEditor = new StrudelMirror({
-//                     defaultOutput: webaudioOutput,
-//                     getTime: () => getAudioContext().currentTime,
-//                     transpiler,
-//                     root: document.getElementById('editor'),
-//                     drawTime,
-//                     onDraw: (haps, time) => 
-//                         drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
-//                     prebake: async () => {
-//                         initAudioOnFirstClick(); // needed to make the browser happy (don't await this here..)
-//                         const loadModules = evalScope(
-//                             import('@strudel/core'),
-//                             import('@strudel/draw'),
-//                             import('@strudel/mini'),
-//                             import('@strudel/tonal'),
-//                             import('@strudel/webaudio'),
-//                         );
-//                         await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
-//                     },
-//                 });
-            
-//             globalEditor.setCode(songText);
-//             strudelRef.current = globalEditor;
-            
-                
-//             document.getElementById('proc').value = stranger_tune;
-//             //SetupButtons()
-//             //Proc()/
-//         }
-        
-//         //globalEditor.setCode(songText);
-//     }, []); // empty on initial load
-
-//     // second useEffect should handle changes, since first is mount
-//     useEffect(() => {
-//         if (strudelRef.current) {
-//             strudelRef.current.setCode(songText);
-//         }
-//     }, [songText]) // these are accessible
-
-// }
 
 export default StrudelPlayer;

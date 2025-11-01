@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { setGlobalVolume } from "./StrudelSetup";
+import CPMInput from "./audio_controls/CPMInput";
+import VolumeSlider from "./audio_controls/VolumeSlider";
 //import { setGlobalVolume } from "./StrudelPlayer";
 
 //import { createRoot } from 'react-dom/client';
@@ -20,58 +22,36 @@ function updateProcSetting(changeData){
     document.getElementById("proc").value = codeString;
 }
 
-export function DJControls({ djSettings, setDJSettings }) {
+export function DJControls({ volume, setVolume, cpm, setCPM, onHandleChangeRequest, onUpdate}) {
     /* figure out how to save these settings both into a JSON and when swapping between menus
      *
      */
-    const [ volume, setVolume ] = useState(0.5);
-    const [ cpm, setCPM ] = useState(120);
+    
     const [ dropdown1, setDropdown1] = useState("dropdown1"); // placeholder
 
     // if an element doesn't use "onChange", use its on(...) to invoke this
     // separated into multiple
-    function handleChange() {
-        console.log("change detected");
-        setDJSettings("a");
-    };
+    // function onHandleChangeRequest(e) {
+    //     console.log("change detected : " + e);
+    //     return e;
+    //     //setDJSettings("a");
+    // };
 
-    const handleVolumeChange = (e) => {
-        console.log("handleVolume (DJControls.jsx) called");
-        let newVolume = parseFloat(e.target.value); // if only we could initialise variables as a type line in other languages :(
-        // does this need both?
-        setVolume(newVolume); // DJControls state
-        setGlobalVolume(newVolume); // strudel player volume
-    };
+    // const handleVolumeChange = (e) => {
+    //     console.log("handleVolume (DJControls.jsx) called");
+    //     let newVolume = parseFloat(e.target.value); // if only we could initialise variables as a type line in other languages :(
+    //     // does this need both?
+    //     setVolume(newVolume); // DJControls state
+    //     setGlobalVolume(newVolume); // strudel player volume
+    // };
 
     return (
         <>
-            <div className="" onChange={(e) => {
-                handleChange();
-            }}>
+            <div className="" onChange={onHandleChangeRequest}>
 
-                <div className="input-group mb-4">
-                    <span className="input-group-text menu_label" id="cpm_label">CPM</span>
-                    <input type="number" className="form-control" id="cpm_text_input" placeholder="120" min="0" defaultValue="120" 
-                    aria-label="cpm" aria-describedby="cpm_label" value={cpm} onChange={(e) => { 
-                        
-                        let newValue = parseInt(e.target.value);
-                        let oldValue = cpm;
-                        if (isNaN(newValue) || newValue < 0) {
-                            //e.target.newValue = 0; // Reset to 0 if invalid or negative
-                            document.getElementById("cpm_text_input").value = 10; // setting text of above to specific dropdown item
-                        }
-                        setCPM(newValue);
-                        let targetId = e.target.id;
-                        updateProcSetting({ data:{targetId, oldValue, newValue} });
-                    }}/>
-                </div>
+                <CPMInput cpm={cpm} setCPM={setCPM} />
 
-                <div className="input-group mb-4">
-                    <span className="input-group-text menu_label" id="volume_label">Volume</span>
-                    {/* if nothing additional is added, e is passed directly (think self and python functions) */}
-                    <input type="range" className="form-control" min="0" max="1" value={volume} step="0.01" defaultValue="0.5" id="volume_range" onChange={handleVolumeChange}/>
-                    <span className="input-group-text" id="volume_label" style={{ width: 70 }}>{(volume*100).toFixed(0)}%</span>
-                </div>
+                <VolumeSlider volume={volume} setVolume={setVolume} />
                 
                 <div className="row mb-4">
                     {/* TODO: this does nothing! */}
@@ -97,7 +77,7 @@ export function DJControls({ djSettings, setDJSettings }) {
                     <ul className="dropdown-menu" onClick={(e) => {
                         // because of how this is catching them all, this technically counts the dropdown box itself when expanded
                         if (e.target.id !== ""){
-                            handleChange();
+                            //onHandleChangeRequest(e);
                             document.getElementById("dropdown1").innerHTML = e.target.innerHTML; // setting text of above to specific dropdown item
                             setDropdown1(e.target.id);
                             //console.log("selected : " + document.getElementById("dropdown1").innerHTML);

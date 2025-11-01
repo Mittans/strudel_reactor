@@ -26,7 +26,8 @@ const handleSetDJSettings = (variable) => {
 // }
 
 // works but it doesn't save state when switching from control and back again :(
-function ControlPanel({ }) {
+function ControlPanel({ volume, setVolume, cpm, setCPM, onHandleChangeRequest, onUpdate }) {
+
     // this should not download everything... right?
     // i mean... it could be one big JSON with each line as an element? lol
     function exportJSON() {
@@ -57,9 +58,22 @@ function ControlPanel({ }) {
                 </div>
                 <div className="" id="unnamedPanel" >
                     {/* need code for changing volume, cpm, etc */}
-                    <DJControls djSettings={handleGetDJSettings} setDJSettings={handleSetDJSettings} onUpdate={(e) => {
-                        console.log("DJControls onCLick behaviour triggered for JSX.Element in ControlPanel");
-                    }} />
+                    <DJControls 
+                        volume={volume}
+                        setVolume={setVolume}
+                        cpm={cpm}
+                        setCPM={setCPM}
+                        onUpdate={onUpdate}
+                        onHandleChangeRequest={onHandleChangeRequest}
+
+                        // volume={volume}
+                        // setVolume={setVolume}
+                        // cpm={cpm}
+                        // setCPM={setCPM}
+                        // onUpdate={(e) => {
+                        //     console.log("DJControls onCLick behaviour triggered for JSX.Element in ControlPanel");
+                        // }}
+                    />
                     
                 </div>
             </div>
