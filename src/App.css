@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -35,4 +36,36 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* custom for menu labels to sync their widths  */
+.menu_label {
+  width: 110px;
+  height: 38px;
+}
+
+.proc {
+  resize: none;
+  font-size: 18px;
+  
+}
+
+.editor {
+  display: block;
+  background-color: var(--background); 
+  font-size: 18px; 
+  font-family: monospace;
+}
+/* .cm-line {
+  font-size: 4px;
+} */
+
+.centerAligned {
+  text-align: center;
+}
+
+.header {
+  color: black;
+  height: 60px;
+  
 }

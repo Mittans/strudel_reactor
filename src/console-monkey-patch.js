@@ -1,9 +1,8 @@
 let originalLog = null;
 const logArray = [];
 
-
+// side effect of this is that everything is printed twice (it prints a msg for each console.log I use)
 export default function console_monkey_patch() {
-
     //If react multicalls this, do nothing
     if (originalLog) return;
 
@@ -25,7 +24,6 @@ export default function console_monkey_patch() {
             //Dispatch a customevent we can listen to in App.js
             const event = new CustomEvent("d3Data", { detail: [...logArray] });
             document.dispatchEvent(event);
-
         }
         originalLog.apply(console, args);
     };
