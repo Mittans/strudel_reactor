@@ -1,15 +1,15 @@
 import './App.css';
-import { useEffect, useRef, useState } from "react";
-import { StrudelMirror } from '@strudel/codemirror';
-import { evalScope } from '@strudel/core';
-import { drawPianoroll } from '@strudel/draw';
-import { initAudioOnFirstClick } from '@strudel/webaudio';
-import { transpiler } from '@strudel/transpiler';
-import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
-import { registerSoundfonts } from '@strudel/soundfonts';
+import { useState, useRef, useEffect } from "react";
+// import { StrudelMirror } from '@strudel/codemirror';
+// import { evalScope } from '@strudel/core';
+// import { drawPianoroll } from '@strudel/draw';
+// import { initAudioOnFirstClick } from '@strudel/webaudio';
+// import { transpiler } from '@strudel/transpiler';
+// import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
+// import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import jsonSettings from './strudelSettings';
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import StrudelPlayer from './components/StrudelPlayer';
+import console_monkey_patch from './console-monkey-patch';
 
 import DJControls from './components/DJControls';
 import MenuButtons from './components/MenuButtons';
@@ -84,151 +84,119 @@ const handleD3Data = (event) => {
 
 export default function StrudelDemo() {
 
-const hasRun = useRef(false);
+    let strudelRef = useRef();
+    let [songText, setSongText] = useState(stranger_tune);
 
-const handlePlay = () => {
-    globalEditor.evaluate();
-}
+    const hasRun = useRef(false);
 
-const handleStop = () => {
-    globalEditor.stop();
-}
+    useEffect(() => {
+        console.log("aaa");
+    }, [songText]);
 
-const handleProc = () => {
-    handleStop();
-    //console.log("handleProc triggered");
-    globalEditor.setCode(document.getElementById('proc').value);
-}
-
-const handleProcPlay = () => {
-    handleStop();
-    //console.log("handleProcPlay triggered");
-    globalEditor.setCode(document.getElementById('proc').value);
-    globalEditor.evaluate();
-}
-
-const handleReset = () => {
-    handleStop();
-    //console.log("handleReset triggered");
-    document.getElementById('proc').value = defaultTune;
-    // @TODO: this needs to reset settings, too! otherwise we're allowing for errors 
-    globalEditor.setCode(defaultTune);
-}
-
-const [ songText, setSongText ] = useState(stranger_tune)
-const [ showErrText, setShowErrText ] = useState(false) // for later use
-const [ activeBtn, setActiveBtn ] = useState("controlBtn")
-const [ settings, setSetting ] = useState()
-
-//const [ volume, setVolume ] = useState(1)
-
-function handleSettings(codeString) {
-    globalEditor.setCode(codeString);
-
-    //console.log("handle settings id, newValue : " + id + " | " + newValue);
-    // let proc_text = document.getElementById({id}).value
-    // let proc_text_replaced = proc_text.replaceAll('{VOLUME}', {volume});
-    // globalEditor.setCode(proc_text_replaced)
-}
-
-// const handleMenu = (e) => {
-//     console.log(e);
-//     currentMenu = e;
-// }
-
-useEffect(() => {
-    //hasRun.current = false;
-    if (!hasRun.current) {
-        
-        document.addEventListener("d3Data", handleD3Data);
-        console_monkey_patch();
-        hasRun.current = true;
-        //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
-            //init canvas
-            const canvas = document.getElementById('roll');
-            canvas.width = canvas.width * 2;
-            canvas.height = canvas.height * 2;
-            const drawContext = canvas.getContext('2d');
-            const drawTime = [-2, 2]; // time window of drawn haps
-            globalEditor = new StrudelMirror({
-                defaultOutput: webaudioOutput,
-                getTime: () => getAudioContext().currentTime,
-                transpiler,
-                root: document.getElementById('editor'),
-                drawTime,
-                onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
-                prebake: async () => {
-                    initAudioOnFirstClick(); // needed to make the browser happy (don't await this here..)
-                    const loadModules = evalScope(
-                        import('@strudel/core'),
-                        import('@strudel/draw'),
-                        import('@strudel/mini'),
-                        import('@strudel/tonal'),
-                        import('@strudel/webaudio'),
-                    );
-                    await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
-                },
-            });
-            
-        document.getElementById('proc').value = stranger_tune;
-        //SetupButtons()
-        //Proc()/
+    const handlePlay = () => {
+        globalEditor.evaluate();
     }
-    
-    globalEditor.setCode(songText);
-}, [songText]);
+
+    const handleStop = () => {
+        globalEditor.stop();
+    }
+
+    const handleProc = () => {
+        handleStop();
+        //console.log("handleProc triggered");
+        globalEditor.setCode(document.getElementById('proc').value);
+    }
+
+    const handleProcPlay = () => {
+        handleStop();
+        //console.log("handleProcPlay triggered");
+        globalEditor.setCode(document.getElementById('proc').value);
+        globalEditor.evaluate();
+    }
+
+    const handleReset = () => {
+        handleStop();
+        //console.log("handleReset triggered");
+        document.getElementById('proc').value = defaultTune;
+        // @TODO: this needs to reset settings, too! otherwise we're allowing for errors 
+        globalEditor.setCode(defaultTune);
+    }
+
+    //const [ songText, setSongText ] = useState(stranger_tune)
+    const [ showErrText, setShowErrText ] = useState(false) // for later use
+    const [ activeBtn, setActiveBtn ] = useState("controlBtn")
+    const [ settings, setSetting ] = useState()
+
+    //const [ volume, setVolume ] = useState(1)
+
+    function handleSettings(codeString) {
+        globalEditor.setCode(codeString);
+
+        //console.log("handle settings id, newValue : " + id + " | " + newValue);
+        // let proc_text = document.getElementById({id}).value
+        // let proc_text_replaced = proc_text.replaceAll('{VOLUME}', {volume});
+        // globalEditor.setCode(proc_text_replaced)
+    }
+
+    // const handleMenu = (e) => {
+    //     console.log(e);
+    //     currentMenu = e;
+    // }
 
 
-return (
-    <div>
-        <h2 className="row">
-            <div className="col">Strudel</div>
-            <div className="col-lg-auto">
-                <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-                <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} onReset={handleReset} />
-            </div>
-        </h2>
-        <main>
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-8" id="leftPanel">
-                        
-                        <div className="" id="editorPanel" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                            {/* e knows where it is because it knows where it isn't.
-                            ... not really, i'm assuming e just has a reference to self or smth */}
-                            <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
-                        </div>
-                        <div className="" id="codePanel" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                            <div id="editor" />
-                            <div id="output" />
-                        </div>
-                    </div>
-
-                    <div className="col-md-4 bg-white" id="rightPanel">
-                        {/* the nav menu for right panel -- should control whats in box below on page and be highlighted when active */}
-                        <div className="menuNavBar bg-light">
-                            <MenuButtons defaultValue={activeBtn} onClick={(e) => {
-                                setActiveBtn(e)
-                                //console.log("activeBtn : " + e);
-                            }}/>
-                        </div>
-                        <div>
-                            {/* this is essentially a big if-if-if rn */}
-                            { (activeBtn === "helpBtn") ? < HelpPanel /> : null }
-                            { (activeBtn === "controlBtn") ? < ControlPanel /> : null }
-                            { (activeBtn === "consoleBtn") ? < ConsolePanel /> : null }
-                        </div>
-                        
-                    </div>
-                    
+    return (
+        <div>
+            <h2 className="row">
+                <div className="col">Strudel</div>
+                <div className="col-lg-auto">
+                    <PlayButtons onPlay={handlePlay} onStop={handleStop} />
+                    <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} onReset={handleReset} />
                 </div>
-            </div>
-            {/* this should only appear when errors detected -- relies on a conditionals state to show */}
-            { showErrText ? < ErrorTextArea defaultValue={showErrText} /> : null }
-            <canvas id="roll"></canvas>
-        </main >
-    </div >
-);
+            </h2>
+            <main>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-md-8" id="leftPanel">
+                            <StrudelPlayer 
+                                    songText={songText} 
+                                    strudelRef={strudelRef} 
+                            />
+                            <div className="" id="editorPanel" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                                {/* e knows where it is because it knows where it isn't.
+                                ... not really, i'm assuming e just has a reference to self or smth */}
+                                <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                            </div>
+                            <div className="" id="codePanel" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                                <div id="editor" />
+                                <div id="output" />
+                            </div>
+                        </div>
+
+                        <div className="col-md-4 bg-white" id="rightPanel">
+                            {/* the nav menu for right panel -- should control whats in box below on page and be highlighted when active */}
+                            <div className="menuNavBar bg-light">
+                                <MenuButtons defaultValue={activeBtn} onClick={(e) => {
+                                    setActiveBtn(e)
+                                    //console.log("activeBtn : " + e);
+                                }}/>
+                            </div>
+                            <div>
+                                {/* this is essentially a big if-if-if rn */}
+                                { (activeBtn === "helpBtn") ? < HelpPanel /> : null }
+                                { (activeBtn === "controlBtn") ? < ControlPanel /> : null }
+                                { (activeBtn === "consoleBtn") ? < ConsolePanel /> : null }
+                            </div>
+                            
+                        </div>
+                        
+                    </div>
+                </div>
+                {/* this should only appear when errors detected -- relies on a conditionals state to show */}
+                { showErrText ? < ErrorTextArea defaultValue={showErrText} /> : null }
+                <canvas id="roll"></canvas>
+            </main >
+        </div >
+    );
 
 
 }
