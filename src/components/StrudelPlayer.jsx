@@ -132,8 +132,25 @@ function StrudelPlayer() {
                                 }}/>
                             </div>
                             <div>
+                                {/* rather than selectively loading them, menu panel will just show and hide them respectively */}
+                                <div className="HelpPanel" style={{ display: (activeBtn === "helpBtn") ? 'block' : 'none' }}>
+                                    < HelpPanel />
+                                </div>
+                                <div className="ControlPanel" style={{ display: (activeBtn === "controlBtn") ? 'block' : 'none' }}>
+                                    < ControlPanel 
+                                        volume={volume}
+                                        setVolume={setVolume}
+                                        cpm={cpm}
+                                        setCPM={setCPM}
+                                        onUpdate={handleThisChange}
+                                        onHandleChangeRequest={onHandleChangeRequest}
+                                    />
+                                </div>
+                                <div className="ConsolePanel" style={{ display: (activeBtn === "consoleBtn") ? 'block' : 'none' }}>
+                                    < ConsolePanel />
+                                </div>
                                 {/* this is essentially a big if-if-if rn */}
-                                { (activeBtn === "helpBtn") ? < HelpPanel /> : null }
+                                {/* { (activeBtn === "helpBtn") ? < HelpPanel /> : null }
                                 { (activeBtn === "controlBtn") ? < ControlPanel 
                                     volume={volume}
                                     setVolume={setVolume}
@@ -142,7 +159,7 @@ function StrudelPlayer() {
                                     onUpdate={handleThisChange}
                                     onHandleChangeRequest={onHandleChangeRequest}
                                 /> : null }
-                                { (activeBtn === "consoleBtn") ? < ConsolePanel /> : null }
+                                { (activeBtn === "consoleBtn") ? < ConsolePanel /> : null } */}
                             </div>
                             
                         </div>
