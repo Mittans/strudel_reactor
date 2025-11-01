@@ -21,7 +21,7 @@ function MenuButtons({ activeBtn, onClick }) {
                     }}>Help</button>
                 <button className={`btn btn-${(defaultBtn === "controlBtn") ? "secondary" : "light" }`} id="controlBtn" onClick={(e) => {
                     handleMenuButton(e);
-                    }}>Control</button>
+                    }}>Controls</button>
                 <button className={`btn btn-${(defaultBtn === "consoleBtn") ? "secondary" : "light" }`} id="consoleBtn" onClick={(e) => {
                     handleMenuButton(e);
                     }}>Console</button>

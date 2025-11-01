@@ -6,7 +6,7 @@ function ThemeDropdown ({ themeDropdown, setThemeDropdown, onHandleTheme}) {
     return (
         <>
             <div className="btn-group input-group mb-4 flex-auto">
-                    <span className="input-group-text menu_label" aria-expanded="false">Dropdown</span>
+                    <span className="input-group-text menu_label" aria-expanded="false">Theme</span>
                     <button className="form-control" style={{ textAlign: "left" }} id="theme_dropdown" data-bs-toggle="dropdown">{themeDropdown}</button>
                     <ul className="dropdown-menu" onClick={(e) => {
                         // because of how this is catching them all, this technically counts the dropdown box itself when expanded

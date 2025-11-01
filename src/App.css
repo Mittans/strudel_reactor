@@ -63,3 +63,9 @@
 .centerAligned {
   text-align: center;
 }
+
+.header {
+  color: black;
+  height: 60px;
+  
+}

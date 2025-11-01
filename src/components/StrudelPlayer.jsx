@@ -106,6 +106,10 @@ function StrudelPlayer() {
         document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`;
     }
 
+    function handleResetCode() {
+        setSongText(stranger_tune);
+    }
+
     function onHandleResetControls() {
         console.log("onHandleResetControls called");
         setCodeFontSize(18);
@@ -155,11 +159,13 @@ function StrudelPlayer() {
 
     return (
         <div>
-            <h2 className="row">
-                <div className="col">Strudel Demo</div>
-                <div className="col-lg-auto">
-                    <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-                    <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} onReset={handleReset} />
+            <h2 className="header container-fluid">
+                <div className="mt-2 row">
+                    <b className="col" style={{ maxWidth:'85%' }}>Strudel Demo</b>
+                    <div className="col-auto">
+                        <PlayButtons onPlay={handlePlay} onStop={handleStop} />
+                        <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} onReset={handleReset} />
+                    </div>
                 </div>
             </h2>
             <main>
@@ -203,15 +209,16 @@ function StrudelPlayer() {
                                         onHandleGeneric={onHandleGeneric}
                                     /> */}
                                     <div className="importExportBtns mb-4" role="group" id="menuPanelStuff1" aria-label="Control panel">
-                                        <div className="" id="menuPanel">
+                                        <div className="row" id="menuPanel">
                                             <div className="btn-group btn-light" role="group" id="menuBtns" aria-label="Menu buttons">
-                                                <button href="#" id="exportJSON" className="btn" onClick={(e) => {
+                                                <button href="#" style={{ textAlign:'center', maxWidth:'25%' }} id="exportJSON" className="btn container" onClick={(e) => {
                                                     //exportJSON();
                                                 }}>Export JSON</button>
-                                                <button className="btn" id="importJSON" onClick={(e) => {
+                                                <button className="btn container" style={{ textAlign:'center', maxWidth:'25%' }} id="importJSON" onClick={(e) => {
                                                     //importJSON();
                                                 }}>Import JSON</button>
-
+                                                <div className="container" disabled style={{ textAlign:'center', Width:'25%' }} ></div>
+                                                <button id="reset" className="btn container" onClick={handleResetCode} style={{ textAlign:'center', Width:'25%' }} >Restore Default</button>
                                             </div>
                                         </div>
                                     </div>
