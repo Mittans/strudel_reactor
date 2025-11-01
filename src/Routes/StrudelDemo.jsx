@@ -22,9 +22,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 //let globalEditor = null;
 
 
-
-
-
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
@@ -34,7 +31,12 @@ export default function StrudelDemo() {
 
     const hasRun = useRef(false);
 
+    //React refs instead of getElementById
     const editorRef = useRef(null);
+
+    //avoid using document.getElementById, thus useRef to reference the canvas
+    const canvasRef = useRef(null);
+
 
     // Function runs when the Play button is clicked
     const handlePlay = () => {
@@ -79,10 +81,15 @@ export default function StrudelDemo() {
             hasRun.current = true;
             //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
             //init canvas
-            const canvas = document.getElementById('roll');
+            //const canvas = document.getElementById('roll');
+            const canvas = canvasRef.current;
+
+
+            const drawContext = canvas.getContext('2d');
+
             canvas.width = canvas.width * 2;
             canvas.height = canvas.height * 2;
-            const drawContext = canvas.getContext('2d');
+
             const drawTime = [-2, 2]; // time window of drawn haps
             editorRef.current = new StrudelMirror({
 
@@ -108,6 +115,7 @@ export default function StrudelDemo() {
             document.getElementById('proc').value = stranger_tune
             // SetupButtons()
             // Proc()
+
         }
         editorRef.current.setCode(songData)
 
@@ -151,7 +159,7 @@ export default function StrudelDemo() {
 
                     </div>
                 </div>
-                <canvas id="roll"></canvas>
+                <canvas id="roll" ref={canvasRef}></canvas>
             </main >
         </div >
     );
