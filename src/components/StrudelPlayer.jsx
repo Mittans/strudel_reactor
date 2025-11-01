@@ -20,7 +20,7 @@ import HelpPanel from './menu_controls/HelpPanel';
 //import ControlPanel from './panels/ControlPanel';
 import SourcePanel from './menu_controls/SourcePanel';
 import ConsolePanel from './menu_controls/ConsolePanel';
-import { StrudelSetup } from './StrudelSetup';
+import { setGlobalCPM, StrudelSetup } from './StrudelSetup';
 import { handlePlay, handleStop, handleProc, handleProcPlay, handleReset, Proc, setGlobalVolume} from './StrudelSetup';
 import userEvent from "@testing-library/user-event";
 
@@ -71,8 +71,10 @@ function StrudelPlayer() {
         if (!hasRun.current) {
             console.log("hasRun is false; setting up Strudel");
             hasRun.current = true;
-            StrudelSetup(stranger_tune, setSongText);
+            StrudelSetup(stranger_tune, setSongText, volume, cpm);
         }
+        setGlobalVolume(volume);
+        setGlobalCPM(cpm);
     }, []);
 
     // handles setting changes
@@ -117,7 +119,8 @@ function StrudelPlayer() {
         setCPM(120);
         setVolume(0.5);
         setThemeDropdown("Light");
-        setGlobalVolume(setVolume);
+        setGlobalVolume(0.5);
+        setGlobalCPM(120);
         document.getElementById("checkbox_1").checked = document.getElementById("checkbox_1").defaultChecked;
         document.getElementById("checkbox_2").checked = document.getElementById("checkbox_2").defaultChecked;
 
@@ -146,6 +149,13 @@ function StrudelPlayer() {
         // does this need both?
         setVolume(newVolume); // DJControls state
         setGlobalVolume(newVolume); // strudel player volume
+    };
+
+    const onHandleCPM = (e) => {
+        console.log("onHandleCPM (DJControls.jsx) called");
+        let newCPM = parseFloat(e.target.value);
+        setCPM(newCPM); // DJControls state
+        setGlobalCPM(newCPM); // strudel player volume
     };
 
     function exportJSON() {
@@ -230,6 +240,7 @@ function StrudelPlayer() {
                                         setCPM={setCPM}
                                         onHandleGeneric={onHandleGeneric}
                                         onHandleVolume={onHandleVolume}
+                                        onHandleCPM={onHandleCPM}
                                     />
                                     
                                     < DJControls

@@ -11,18 +11,24 @@ import console_monkey_patch from '../console-monkey-patch';
 
 let strudelEditor = null;
 let bigVolume = null;
+let bigCPM = null;
+
+let isProccessed = false;
 
 let volumeControlRef = null;
 
 export const Proc = () => {
     console.log("Proc() triggered");
+    isProccessed = true;
     let procText = document.getElementById("proc").value;
     if (!procText || !strudelEditor) {
         strudelEditor.setCode(stranger_tune);
         return;
     } else {
         let volumeToUse = parseFloat(bigVolume);
-        strudelEditor.setCode((procText += "\n" + "all(x => x.gain("+volumeToUse+"));"));
+        let cpmToUse = parseInt(bigCPM);
+        console.log("this is: " + (procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
+        strudelEditor.setCode((procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
     }
 };
 
@@ -94,6 +100,28 @@ export const setGlobalVolume = (value) => {
 
 }
 
+export const setGlobalCPM = (value) => {
+    console.log("setting bigCPM to : " + parseInt(value));
+    bigCPM = parseInt(value);
+    // const ctx = getAudioContext();
+    // if (!volumeControlRef) {
+    //     volumeControlRef = ctx.createGain();
+    //     volumeControlRef.connect(ctx.destination);
+    // }
+    // volumeControlRef.gain.value = value;
+    // console.log("volumeControlRef : " + volumeControlRef);
+    //const ctx = getAudioContext();
+    // if (volumeControlRef){
+    //     volumeControlRef = getAudioContext().createGain(); // volume based on gain, have to create it like so
+    //     volumeControlRef.connect(getAudioContext().destination);
+    //     volumeControlRef.gain.value = value;
+    // } else {
+    //     console.log("volumeControlRef : " + volumeControlRef);
+    //     console.log("Failed condition checker in setGlobalVolume");
+    // }
+
+}
+
 export const handlePlay = () => {
     if (strudelEditor) {
         strudelEditor.evaluate();
@@ -101,9 +129,9 @@ export const handlePlay = () => {
             //console.log("Playing with volume : " + volumeControlRef.gain.value); // proving volume saved in state (will need to update controlPanel tho)
             let procText = document.getElementById("proc").value;
             let volumeToUse = parseFloat(bigVolume);
-            console.log("working");
+            let cpmToUse = parseInt(bigCPM);
             console.log("so it should be using : " + (procText += "\n" + "all(x => x.gain("+volumeToUse+"));"));
-            strudelEditor.setCode((procText += "\n" + "all(x => x.gain("+volumeToUse+"));"));
+            strudelEditor.setCode((procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
             strudelEditor.evaluate();
             strudelEditor.setCode(procText);
         }
@@ -141,9 +169,10 @@ export const handleProcPlay = async () => {
         //strudelEditor.setCode(document.getElementById('proc').value);
         let procText = document.getElementById("proc").value;
         let volumeToUse = parseFloat(bigVolume);
+        let cpmToUse = parseInt(bigCPM);
         console.log("working");
         console.log("so it should be using : " + (procText += "\n" + "all(x => x.gain("+volumeToUse+"));"));
-        strudelEditor.setCode((procText += "\n" + "all(x => x.gain("+volumeToUse+"));"));
+        strudelEditor.setCode((procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
         strudelEditor.evaluate();
         strudelEditor.setCode(procText);
     } else {

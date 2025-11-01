@@ -5,8 +5,8 @@ samples('github:algorave-dave/samples')
 samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
 samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')
 
-let cpm = 120
-setcpm(cpm/4)
+//let cpm = 120
+//setcpm(cpm/4)
 
 const gain_patterns = [
   "2",
