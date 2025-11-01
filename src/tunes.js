@@ -46,7 +46,7 @@ note(pick(basslines, bass))
 .room(0.6)
 .lpf(700)
 .room(0.4)
-.postgain(pick(gain_patterns, pattern))
+.postgain(pick(gain_patterns, pattern))<bassline_Volume>
 
 
 <main_arp_mute> main_arp: 
@@ -56,7 +56,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .adsr("0:0:.5:.1")
 .room(0.6)
 .lpenv(3.3)
-.postgain(pick(gain_patterns, pattern))
+.postgain(pick(gain_patterns, pattern))<main_arp_Volume>
 
 
 <main_arp_mute> drums:
@@ -75,7 +75,7 @@ stack(
   s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2")
   .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
   .postgain(.25),
-)
+)<drums_Volume>
 
 <main_arp_mute> drums2: 
 stack(
@@ -92,7 +92,9 @@ stack(
   .hpf(1000)
   .speed(0.5)
   .rarely(jux(rev)),
-)
+)<drums2_Volume>
+
+<Volume_Control>
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())

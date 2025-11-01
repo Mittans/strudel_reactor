@@ -1,8 +1,9 @@
-function SaveAndLoadButtons({ globalEditor }) {
+function SaveAndLoadButtons({ MuteState, setMuteState }) {
     const saveState = () => {
         let State = {};
         let value = document.getElementById("proc").value;
         State["music"] = value;
+        State["Mute"] = MuteState;
         State = JSON.stringify(State);
         const blob = new Blob([State], { type: "application/json" });
         const url = URL.createObjectURL(blob);
@@ -25,6 +26,9 @@ function SaveAndLoadButtons({ globalEditor }) {
                 let json = JSON.parse(result);
                 if (json.music) {
                     document.getElementById("proc").value = json.music;
+                }
+                if (json.Mute) {
+                    setMuteState(json.Mute);
                 }
             };
             reader.readAsText(file);

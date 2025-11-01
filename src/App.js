@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import VolumeControl from "./components/VolumeControl";
 import ProcessingButtons from "./components/ProcessingButtons";
 import PlayButtons from "./components/PlayButtons";
@@ -10,15 +10,21 @@ import LowPassFilter from "./components/LowPassFilter";
 import MediumPassFilter from "./components/MediumPassFilter";
 import HighPassFilter from "./components/HighPassFilter";
 import Track from "./components/Track";
+import Reverb from "./components/Reverb";
 
 export default function StrudelDemo() {
     const [globalEditor, setGlobalEditor] = useState(null);
     const [Tracks, setTracks] = useState([]);
+    const [MuteState, setMuteState] = useState(false);
+    const [volumeState, setVolumeState] = useState({});
 
     useEffect(() => {
         if (globalEditor) {
             Proc();
             getTrack();
+            for (const track in Tracks) {
+                Volume(track, 0.5);
+            }
         }
     }, [globalEditor]);
 
@@ -26,9 +32,9 @@ export default function StrudelDemo() {
         let code = globalEditor.code;
         code = code.split("\n");
         for (const line of code) {
-            let match = line.match(/^\s*(\w+):/);
+            let match = line.match(/[A-Za-z][_0-9A-Za-z]*:\s?$/);
             if (match) {
-                setTracks((currentTracks) => [...currentTracks, match[1]]);
+                setTracks((currentTracks) => [...currentTracks, match[0].replace(":", "").trim()]);
             }
         }
     };
@@ -36,29 +42,64 @@ export default function StrudelDemo() {
     const Proc = () => {
         console.log(document.getElementById("proc"));
         let proc_text = document.getElementById("proc").value;
-        let proc_text_replaced = proc_text.replaceAll("<main_arp_mute>", ProcessText);
+        let proc_text_replaced = proc_text.replaceAll("<main_arp_mute>", ProcessText("Mute", ""));
+        proc_text_replaced = proc_text_replaced.replaceAll(
+            "<Volume_Control>",
+            ProcessText("Volume", "")
+        );
+        if (Tracks.length == 0) {
+            proc_text_replaced = proc_text_replaced.replaceAll(
+                /<([A-Za-z][_0-9A-Za-z]*\s?)_Volume>/g,
+                ProcessText("Volume", "")
+            );
+        } else {
+            for (let track of Tracks) {
+                console.log(track);
+                console.log(`<${track.replace(":", "").trim()}_Volume>`);
+                track = track.replace(":", "").trim();
+                proc_text_replaced = proc_text_replaced.replace(
+                    `<${track}_Volume>`,
+                    ProcessText("Volume", `${track}`)
+                );
+            }
+        }
+
         ProcessText(proc_text);
         globalEditor.setCode(proc_text_replaced);
     };
 
-    const ProcessText = (match, ...args) => {
+    const ProcessText = (match, track) => {
+        console.log(track);
         let replace = "";
-        console.log(document.getElementById("MuteSwitch").checked);
-        if (document.getElementById("MuteSwitch").checked) {
+        if (MuteState && match === "Mute") {
             replace = "_";
         }
+        if (volumeState["AllTrackVolume"] && match === "Volume") {
+            replace = `all(x => x.postgain(${volumeState["AllTrackVolume"]}))`;
+        }
+        if (volumeState[track] && match === "Volume") {
+            replace = `.postgain(${volumeState[track]})`;
+        }
+        console.log(track);
 
         return replace;
     };
 
-    const ProcAndPlay = () => {
-        console.log(globalEditor.repl.state.started);
-        // if (globalEditor != null && globalEditor.repl.state.started == true) {
-        if (globalEditor != null) {
-            console.log(globalEditor);
-            Proc();
-            globalEditor.evaluate();
-        }
+    // const ProcAndPlay = () => {
+    //     console.log(globalEditor.repl.state.started);
+    //     if (globalEditor != null) {
+    //         console.log(globalEditor);
+    //         Proc();
+    //         globalEditor.evaluate();
+    //     }
+    // };
+
+    const Volume = (track, value) => {
+        setVolumeState((prevState) => ({
+            ...prevState,
+            [track]: value,
+        }));
+        Proc();
     };
 
     return (
@@ -77,7 +118,7 @@ export default function StrudelDemo() {
                     </label>
                 </div>
                 <div className="col-md-3">
-                    <SaveAndLoadButtons globalEditor={globalEditor} />
+                    <SaveAndLoadButtons MuteState={MuteState} setMuteState={setMuteState} />
                 </div>
             </div>
             <main>
@@ -105,14 +146,18 @@ export default function StrudelDemo() {
                                 <PlayButtons globalEditor={globalEditor} />
                                 <br />
                                 <h6 className="text-center">Volume Controls:</h6>
-                                <VolumeControl Proc={Proc} />
+                                <VolumeControl
+                                    Proc={Proc}
+                                    MuteState={MuteState}
+                                    setMuteState={setMuteState}
+                                    Volume={Volume}
+                                />
                                 <br />
                                 <h6 className="text-center">Track Volume Control:</h6>
                                 {Array.from(
                                     { length: Tracks.length },
                                     (_, i) => (
-                                        <Track trackName={Tracks[i]} />
-                                        // <p>{Tracks[i]}</p>
+                                        <Track trackName={Tracks[i]} Volume={Volume} />
                                     ),
                                     <br />
                                 )}
@@ -134,8 +179,9 @@ export default function StrudelDemo() {
                                 border: "2px solid yellow",
                             }}
                         >
-                            <div style={{ height: "25vw" }}>
+                            <div style={{ height: "26vw" }}>
                                 <h6 className="text-center mt-2">Reverb:</h6>
+                                <Reverb />
                             </div>
                         </div>
                     </div>

@@ -1,14 +1,18 @@
-function VolumeControl({ Proc }) {
+function VolumeControl({ Proc, MuteState, setMuteState, Volume }) {
+    const MuteStateSetter = () => {
+        setMuteState(!MuteState);
+        Proc();
+    };
+
     return (
         <div className="col-12 mb-3">
             <div className="form-check form-switch">
                 <input
                     className="form-check-input"
                     type="checkbox"
-                    role="switch"
-                    name="MuteSwitch"
                     id="MuteSwitch"
-                    onChange={() => Proc()}
+                    switch={`${MuteState}`}
+                    onChange={() => MuteStateSetter()}
                 />
                 <label className="form-check-label mb-3" htmlFor="MuteSwitch">
                     Mute
@@ -22,7 +26,10 @@ function VolumeControl({ Proc }) {
                     type="range"
                     className="form-range"
                     id="VolumeControl"
-                    onChange={VolumeControl}
+                    min={0}
+                    max={1}
+                    step={0.05}
+                    onChange={(event) => Volume("AllTrackVolume", event.target.value)}
                 ></input>
             </div>
         </div>
