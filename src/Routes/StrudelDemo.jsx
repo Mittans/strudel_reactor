@@ -32,7 +32,10 @@ export default function StrudelDemo() {
     const hasRun = useRef(false);
 
     //React refs instead of getElementById
+    //references the StrudelMirror instance itself (used to play, stop, or update code)
     const editorRef = useRef(null);
+
+
 
     //avoid using document.getElementById, thus useRef to reference the canvas
     const canvasRef = useRef(null);
@@ -40,18 +43,19 @@ export default function StrudelDemo() {
 
     // Function runs when the Play button is clicked
     const handlePlay = () => {
-
         // Plays the current Strudel code in the editor
         editorRef.current?.evaluate();
-
     };
 
-    // Safely play only if editor exists, avoid errors by checking if editorRef.current is not null
+    //Safely play only if editor exists, avoid errors by checking if editorRef.current is not null
     //works even without the null check but just to be safe
     const handleStop = () => {
         editorRef.current?.stop();
-
     }
+
+    //Ref for the editor root element
+    // Ref for the Strudel editor container div where the editor will appear
+    const editorRootRef = useRef(null);
 
     // preprocess copies current songData into the editor
     const handlePreprocess = () => {
@@ -96,7 +100,7 @@ export default function StrudelDemo() {
                 defaultOutput: webaudioOutput,
                 getTime: () => getAudioContext().currentTime,
                 transpiler,
-                root: document.getElementById('editor'),
+                root: editorRootRef.current, // root element to mount the editor
                 drawTime,
                 onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
                 prebake: async () => {
@@ -112,9 +116,9 @@ export default function StrudelDemo() {
                 },
             });
 
-            document.getElementById('proc').value = stranger_tune
-            // SetupButtons()
-            // Proc()
+            // Removed document.getElementById('proc').value = stranger_tune because the textarea is now controlled by React state (songData)
+            // so its value updates automatically without direct DOM manipulation.
+
 
         }
         editorRef.current.setCode(songData)
@@ -133,7 +137,10 @@ export default function StrudelDemo() {
                     <div className="row">
                         <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                             {/*onChange={(e) => setSongText(e.target.value) as there are two preprocess component, using (e) specifies the target  */}
-                            <Preprocess defaultValue={songData} onChange={(e) => setSongData(e.target.value)} />{/* calls the Preprocess class*/}
+                            <Preprocess defaultValue={songData} onChange={(e) => setSongData(e.target.value)} />
+
+
+                            {/* calls the Preprocess class*/}
                         </div>
                         <div className="col-md-4">
 
@@ -149,7 +156,8 @@ export default function StrudelDemo() {
                     </div>
                     <div className="row">
                         <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                            <div id="editor" />
+
+                            <div ref={editorRootRef} />
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
@@ -159,6 +167,7 @@ export default function StrudelDemo() {
 
                     </div>
                 </div>
+                {/*by using ref={canvasRef}, we link the canvas element to the canvasRef defined earlier*/}
                 <canvas id="roll" ref={canvasRef}></canvas>
             </main >
         </div >
