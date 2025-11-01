@@ -106,6 +106,18 @@ function StrudelPlayer() {
         document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`;
     }
 
+    function onHandleResetControls() {
+        console.log("onHandleResetControls called");
+        setCodeFontSize(18);
+        setCPM(120);
+        setVolume(0.5);
+        setThemeDropdown("Light");
+        setGlobalVolume(setVolume);
+        document.getElementById("checkbox_1").checked = document.getElementById("checkbox_1").defaultChecked;
+        document.getElementById("checkbox_2").checked = document.getElementById("checkbox_2").defaultChecked;
+
+    }
+
     // TODO: this is messy
     const onHandleGeneric = (e) => {
         let idString = e.target.id;
@@ -129,7 +141,17 @@ function StrudelPlayer() {
         // does this need both?
         setVolume(newVolume); // DJControls state
         setGlobalVolume(newVolume); // strudel player volume
-        };
+    };
+
+    function exportJSON() {
+        console.log("exportJSON() called");
+        let docString = document.getElementById('proc').value;
+        alert(docString); //this needs to write to a file or smth, and then download
+    }
+
+    function importJSON() {
+        console.log("importJSON() called");
+    }
 
     return (
         <div>
@@ -164,7 +186,7 @@ function StrudelPlayer() {
 
                         <div className="col-md-4 bg-white" id="rightPanel">
                             {/* the nav menu for right panel -- should control whats in box below on page and be highlighted when active */}
-                            <div className="menuNavBar bg-light">
+                            <div className="menuNavBar row bg-light">
                                 <MenuButtons defaultValue={activeBtn} onClick={(e) => {
                                     setActiveBtn(e)
                                     //console.log("activeBtn : " + e);
@@ -176,10 +198,23 @@ function StrudelPlayer() {
                                     < HelpPanel />
                                 </div>
                                 <div className="ControlPanel" style={{ display: (activeBtn === "controlBtn") ? 'block' : 'none' }}>
-                                    < ControlPanel 
+                                    {/* < ControlPanel 
                                         onUpdate={handleThisChange}
                                         onHandleGeneric={onHandleGeneric}
-                                    />
+                                    /> */}
+                                    <div className="importExportBtns mb-4" role="group" id="menuPanelStuff1" aria-label="Control panel">
+                                        <div className="" id="menuPanel">
+                                            <div className="btn-group btn-light" role="group" id="menuBtns" aria-label="Menu buttons">
+                                                <button href="#" id="exportJSON" className="btn" onClick={(e) => {
+                                                    //exportJSON();
+                                                }}>Export JSON</button>
+                                                <button className="btn" id="importJSON" onClick={(e) => {
+                                                    //importJSON();
+                                                }}>Import JSON</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                     < AudioControls
                                         volume={volume}
                                         setVolume={setVolume}
@@ -188,6 +223,7 @@ function StrudelPlayer() {
                                         onHandleGeneric={onHandleGeneric}
                                         onHandleVolume={onHandleVolume}
                                     />
+                                    
                                     < DJControls
                                         codeFontSize={codeFontSize}
                                         setCodeFontSize={setCodeFontSize}
@@ -196,6 +232,7 @@ function StrudelPlayer() {
                                         onHandleGeneric={onHandleGeneric}
                                         onHandleTheme={onHandleTheme}
                                         onHandleFontSize={onHandleFontSize}
+                                        onHandleResetControls={onHandleResetControls}
                                     />
                                 </div>
                                 <div className="ConsolePanel" style={{ display: (activeBtn === "consoleBtn") ? 'block' : 'none' }}>

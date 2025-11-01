@@ -10,9 +10,9 @@ export function AudioControls({ volume, setVolume, cpm, setCPM, onHandleGeneric,
     return (
         <>
             <div className="container audio-controls" onChange={onHandleGeneric}>
-
+                <h6 className="mt-5 mb-4">Audio Controls</h6>
                 <CPMInput cpm={cpm} setCPM={setCPM} />
-
+                <br/>
                 <VolumeSlider volume={volume} setVolume={setVolume} onHandleVolume={onHandleVolume} />
                 
             </div> {/* on update */}

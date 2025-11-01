@@ -56,26 +56,6 @@ function ControlPanel({ volume, setVolume, cpm, setCPM, onHandleGeneric, onUpdat
                     </div>
                     <br /><br />
                 </div>
-                <div className="" id="unnamedPanel" >
-                    {/* need code for changing volume, cpm, etc */}
-                    {/* <DJControls 
-                        volume={volume}
-                        setVolume={setVolume}
-                        cpm={cpm}
-                        setCPM={setCPM}
-                        onUpdate={onUpdate}
-                        onHandleChangeRequest={onHandleChangeRequest}
-
-                        // volume={volume}
-                        // setVolume={setVolume}
-                        // cpm={cpm}
-                        // setCPM={setCPM}
-                        // onUpdate={(e) => {
-                        //     console.log("DJControls onCLick behaviour triggered for JSX.Element in ControlPanel");
-                        // }}
-                    /> */}
-                    
-                </div>
             </div>
         </>
     )
