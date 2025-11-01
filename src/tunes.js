@@ -7,7 +7,7 @@ samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/mach
 
 let cpm = 120
 setcpm(cpm/4)
-let volume = 0.5
+//let volume = 0.5
 
 const gain_patterns = [
   "2",
@@ -102,6 +102,6 @@ stack(
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())
 
-all(x => x.gain(volume))
+//all(x => x.gain(volume))
 
 // @version 1.2`;
