@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { setGlobalVolume } from "../App";
 
 //import { createRoot } from 'react-dom/client';
 //import console_monkey_patch from '../console-monkey-patch';
@@ -27,10 +28,19 @@ export function DJControls({ djSettings, setDJSettings }) {
     const [ dropdown1, setDropdown1] = useState("dropdown1"); // placeholder
 
     // if an element doesn't use "onChange", use its on(...) to invoke this
+    // separated into multiple
     function handleChange() {
         console.log("change detected");
         setDJSettings("a");
-    }
+    };
+
+    const handleVolumeChange = (e) => {
+        console.log("handleVolume (DJControls.jsx) called");
+        let newVolume = parseFloat(e.target.value); // if only we could initialise variables as a type line in other languages :(
+        // does this need both?
+        setVolume(newVolume); // DJControls state
+        setGlobalVolume(newVolume); // strudel player volume
+    };
 
     return (
         <>
@@ -57,14 +67,8 @@ export function DJControls({ djSettings, setDJSettings }) {
 
                 <div className="input-group mb-4">
                     <span className="input-group-text menu_label" id="volume_label">Volume</span>
-                    <input type="range" className="form-control" min="0" max="1" value={volume} step="0.01" defaultValue="0.5" id="volume_range" 
-                    onChange={(e) => { 
-                        setVolume(e.target.value);
-                        let targetId = e.target.id;
-                        let oldValue = (volume*100).toFixed(0)/100;
-                        let newValue = (parseFloat(e.target.value)*100).toFixed(0)/100;
-                        updateProcSetting({ data:{targetId, oldValue, newValue} });
-                    }}/>
+                    {/* if nothing additional is added, e is passed directly (think self and python functions) */}
+                    <input type="range" className="form-control" min="0" max="1" value={volume} step="0.01" defaultValue="0.5" id="volume_range" onChange={handleVolumeChange}/>
                     <span className="input-group-text" id="volume_label" style={{ width: 70 }}>{(volume*100).toFixed(0)}%</span>
                 </div>
                 

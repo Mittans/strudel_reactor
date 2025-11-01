@@ -5,7 +5,7 @@ import { useState, useRef, useEffect } from "react";
 // import { drawPianoroll } from '@strudel/draw';
 // import { initAudioOnFirstClick } from '@strudel/webaudio';
 // import { transpiler } from '@strudel/transpiler';
-// import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
+import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 // import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import StrudelPlayer from './components/StrudelPlayer';
@@ -23,6 +23,7 @@ import ConsolePanel from './components/ConsolePanel';
 
 let strudelRef = null;
 let defaultTune = stranger_tune;
+let volumeControlRef = null;
 
 const handleD3Data = (event) => {
     console.log(event.detail);
@@ -82,7 +83,23 @@ const handleD3Data = (event) => {
 //  }
 
 
+// TODO: yk, if i'm exporting this, I could likely separate App.js and StrudelDemo
+export const setGlobalVolume = (volume) => {
+    console.log("new setVolume used");
+    const ctx = getAudioContext();
+    if (volumeControlRef != null){
+        volumeControlRef = ctx.createGain(); // volume based on gain, have to create it like so
+        volumeControlRef.connect(ctx.destination);
+        
+    volumeControlRef.gain.value = volume;
+    console.log("volumeControlRef.gain.value - " + volumeControlRef.gain.value);
+    } else {
+        console.log("failed condition checker in setGlobalVolume");
+    }
+}
+
 export default function StrudelDemo() {
+    //TODO: fix the fact that proc&play can play multiple overlapping strudels, lol
 
     let strudelRef = useRef();
     let [songText, setSongText] = useState(stranger_tune);
