@@ -1,4 +1,4 @@
-import DJControls from './DJControls';
+import DJControls from './dj_controls/DJControls';
 //import { handlePlay, handleStop } from '../App.js';
 
 let djSettingsString = "";
@@ -58,7 +58,7 @@ function ControlPanel({ volume, setVolume, cpm, setCPM, onHandleChangeRequest, o
                 </div>
                 <div className="" id="unnamedPanel" >
                     {/* need code for changing volume, cpm, etc */}
-                    <DJControls 
+                    {/* <DJControls 
                         volume={volume}
                         setVolume={setVolume}
                         cpm={cpm}
@@ -73,7 +73,7 @@ function ControlPanel({ volume, setVolume, cpm, setCPM, onHandleChangeRequest, o
                         // onUpdate={(e) => {
                         //     console.log("DJControls onCLick behaviour triggered for JSX.Element in ControlPanel");
                         // }}
-                    />
+                    /> */}
                     
                 </div>
             </div>

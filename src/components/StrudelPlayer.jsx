@@ -9,7 +9,8 @@ import { useEffect, useRef, useState } from "react";
 import { stranger_tune } from '../tunes';
 import console_monkey_patch from '../console-monkey-patch';
 
-import DJControls from './DJControls';
+import AudioControls from './audio_controls/AudioControls';
+import DJControls from './dj_controls/DJControls';
 import MenuButtons from './MenuButtons';
 import PlayButtons from './PlayButtons';
 import ProcButtons from './ProcButtons';
@@ -51,12 +52,17 @@ function StrudelPlayer() {
     //let strudelRef = useRef();
     const hasRun = useRef(false);
     const [ songText, setSongText ] = useState("");
+
+    // audio_controls
     const [ volume, setVolume ] = useState(0.5);
     const [ cpm, setCPM ] = useState(120);
 
+    // dj_controls
+    const [ dropdown1, setDropdown1] = useState("dropdown1"); // placeholder
+
     // on load the player needs to setup the strudel
-    useEffect(() => {
-        console.log("StrudelPlayer useEffect called");
+    useEffect((e) => {
+        console.log("First useEffect in StrudelPlayer called");
 
         if (!hasRun.current) {
             console.log("hasRun is false; setting up Strudel");
@@ -67,7 +73,7 @@ function StrudelPlayer() {
 
     // handles setting changes
     useEffect((e) => {
-        console.log("second useEffect in StrudelPlayer called - " + e);
+        console.log("Second useEffect in StrudelPlayer called");
     });
 
     const [ showErrText, setShowErrText ] = useState(false) // for later use
@@ -84,7 +90,10 @@ function StrudelPlayer() {
     }
 
     const onHandleChangeRequest = (e) => {
-        console.log("onHandleChangeRequest called in StrudelPlayer - " + e.target.value);
+        console.log("onHandleChangeRequest called in StrudelPlayer - " + e.target.id + " : " + e.target.value);
+        // if (e.target.id == "volume") {
+        //     handleVolumeChange(e);
+        // }
     }
 
     const handleVolumeChange = (e) => {
@@ -131,18 +140,26 @@ function StrudelPlayer() {
                                     //console.log("activeBtn : " + e);
                                 }}/>
                             </div>
-                            <div>
+                            <div className="mb-4">
                                 {/* rather than selectively loading them, menu panel will just show and hide them respectively */}
                                 <div className="HelpPanel" style={{ display: (activeBtn === "helpBtn") ? 'block' : 'none' }}>
                                     < HelpPanel />
                                 </div>
                                 <div className="ControlPanel" style={{ display: (activeBtn === "controlBtn") ? 'block' : 'none' }}>
                                     < ControlPanel 
+                                        onUpdate={handleThisChange}
+                                        onHandleChangeRequest={onHandleChangeRequest}
+                                    />
+                                    < AudioControls
                                         volume={volume}
                                         setVolume={setVolume}
                                         cpm={cpm}
                                         setCPM={setCPM}
-                                        onUpdate={handleThisChange}
+                                        onHandleChangeRequest={onHandleChangeRequest}
+                                    />
+                                    < DJControls
+                                        dropdown1={dropdown1}
+                                        setDropdown1={setDropdown1}
                                         onHandleChangeRequest={onHandleChangeRequest}
                                     />
                                 </div>
