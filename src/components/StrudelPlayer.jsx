@@ -77,6 +77,8 @@ function StrudelPlayer() {
     // handles setting changes
     useEffect((e) => {
         console.log("Second useEffect in StrudelPlayer called");
+        document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
+        document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`;
         
     });
 
@@ -101,6 +103,7 @@ function StrudelPlayer() {
         // font size
         console.log("onHandleFontSize called");
         document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
+        document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`;
     }
 
     // TODO: this is messy
@@ -151,11 +154,11 @@ function StrudelPlayer() {
                                 <PreprocessTextArea songText={songText} setSongText={setSongText}/>
                             </div>
                             <div className="processedCodePanel" id="codePanel" style={{ 
-                                maxHeight: '50vh', 
+                                maxHeight: '50vh',
                                 overflowY: 'auto',
                                 }}>
                                 <div className="editor" id="editor"/>
-                                <div id="output" />
+                                <div className="output" id="output" />
                             </div>
                         </div>
 

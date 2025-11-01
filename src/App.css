@@ -43,10 +43,15 @@
   width: 120px;
 }
 
+.proc {
+  resize: none;
+  font-size: 18px;
+}
+
 .editor {
   display: block;
   background-color: var(--background); 
-  font-size: 17px; 
+  font-size: 18px; 
   font-family: monospace;
 }
 /* .cm-line {
