@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { setGlobalVolume } from "../StrudelSetup";
+import ThemDropdown, { default as FirstDropdown } from "./ThemeDropdown";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import CodeFontSizeSlider from "./CodeFontSizeSlider";
 
 function updateProcSetting(changeData){
     //console.log(changeData["data"]);
@@ -17,7 +19,7 @@ function updateProcSetting(changeData){
 }
 
 // this handles controls for the editor (i.e., fontsize or whatever i do here)
-export function DJControls({ dropdown1, setDropdown1, onHandleChangeRequest }) {
+export function DJControls({ codeFontSize, setCodeFontSize, themeDropdown, setThemeDropdown, onHandleGeneric, onHandleTheme, onHandleFontSize }) {
     /* figure out how to save these settings both into a JSON and when swapping between menus
      *
      */
@@ -42,43 +44,30 @@ export function DJControls({ dropdown1, setDropdown1, onHandleChangeRequest }) {
 
     return (
         <>
-            <div className="container dj-controls" onChange={onHandleChangeRequest}>
+            <div className="container dj-controls" onChange={onHandleGeneric}>
                 {/* change this out for component files (maybe just 1 dropdown thats reused repeatedly, for example) */}
                 <div className="row mb-4">
                     {/* TODO: this does nothing! */}
                 <div className="col">
-                    <input className="form-check-input" type="checkBox" name="aa" value="" id="checkBox1" defaultChecked onChange={onHandleChangeRequest} /> {/*onChange={ProcAndPlay} */}
-                    <label className="form-check-label" htmlFor="checkBox1">
+                    <input className="form-check-input" type="checkBox" name="aa" value="" defaultChecked id="checkbox_1" onClick={(e) => {
+                        // something
+                    }} onChange={onHandleGeneric} /> {/*onChange={ProcAndPlay} */}
+                    <label className="form-check-label" htmlFor="checkbox_1">
                         check1: a {/* p1 ON */}
                     </label>
                 </div>
                 <div className="col">
-                    <input className="form-check-input" type="checkBox" name="bb" value="" id="checkBox2" onChange={onHandleChangeRequest} /> {/*onChange={ProcAndPlay} */}
-                    <label className="form-check-label" htmlFor="checkBox2">
+                    <input className="form-check-input" type="checkBox" name="bb" value="" id="checkbox_2" onChange={onHandleGeneric} /> {/*onChange={ProcAndPlay} */}
+                    <label className="form-check-label" htmlFor="checkbox_2">
                         check2: a {/* p1 HUSH */}
                     </label>
                 </div>
 
                 </div>
 
-                {/* replaced with list group; could reuse later */}
-                <div className="btn-group input-group mb-4 flex-auto">
-                    <span className="input-group-text menu_label" aria-expanded="false">Dropdown</span>
-                    <button className="form-control" style={{ textAlign: "left" }} id="dropdown1" data-bs-toggle="dropdown">Option1</button>
-                    <ul className="dropdown-menu" onClick={(e) => {
-                        // because of how this is catching them all, this technically counts the dropdown box itself when expanded
-                        if (e.target.id !== ""){
-                            onHandleChangeRequest(e);
-                            document.getElementById("dropdown1").innerHTML = e.target.innerHTML; // setting text of above to specific dropdown item
-                            setDropdown1(e.target.id);
-                            //console.log("selected : " + document.getElementById("dropdown1").innerHTML);
-                        }
-                    }}>
-                        {/* <li><h6 class="dropdown-header">Dropdown explanation here</h6></li> */}
-                        <li><button className="dropdown-item" id="dropdown1-1">Option1</button></li>
-                        <li><button className="dropdown-item" id="dropdown1-2">Option2</button></li>
-                    </ul>
-                </div>
+                <ThemDropdown themeDropdown={themeDropdown} setThemeDropdown={setThemeDropdown} onHandleGeneric={onHandleGeneric} onHandleTheme={onHandleTheme} />
+
+                <CodeFontSizeSlider codeFontSize={codeFontSize} setCodeFontSize={setCodeFontSize} onHandleGeneric={onHandleGeneric} onHandleFontSize={onHandleFontSize} />
                 
             </div> {/* on update */}
         </>

@@ -27,11 +27,6 @@ export const Proc = () => {
 };
 
 export const StrudelSetup = ( stranger_tune, setSongText) => {
-    // const handleD3Data = (event) => {
-    //     console.log(event.detail);
-    // };
-
-
     //const hasRun = useRef(false);
     //document.addEventListener("d3Data", handleD3Data);
             console_monkey_patch();
@@ -65,12 +60,12 @@ export const StrudelSetup = ( stranger_tune, setSongText) => {
                     },
                 });
             
-            
             //strudelRef = globalEditor;
             
             //strudelEditor.setCode(document.getElementById('proc').value);
             //document.getElementById("proc").value = stranger_tune;
             setSongText(stranger_tune);
+            
             //SetupButtons()
             Proc(); // welcome back, Proc()   lol
 };
@@ -78,23 +73,23 @@ export const StrudelSetup = ( stranger_tune, setSongText) => {
 //export default StrudelSetup;
 
 export const setGlobalVolume = (value) => {
-    const ctx = getAudioContext();
-    if (!volumeControlRef) {
-        volumeControlRef = ctx.createGain();
-        volumeControlRef.connect(ctx.destination);
-    }
-    volumeControlRef.gain.value = value;
-    // console.log("new setVolume used");
+    //gainNode.gain.setValueAtTime(value, audioCtx.currentTime);
     // const ctx = getAudioContext();
-    // if (volumeControlRef){
-    //     volumeControlRef = ctx.createGain(); // volume based on gain, have to create it like so
+    // if (!volumeControlRef) {
+    //     volumeControlRef = ctx.createGain();
     //     volumeControlRef.connect(ctx.destination);
+    // }
+    // volumeControlRef.gain.value = value;
+    //const ctx = getAudioContext();
+    // if (volumeControlRef){
+    //     volumeControlRef = getAudioContext().createGain(); // volume based on gain, have to create it like so
+    //     volumeControlRef.connect(getAudioContext().destination);
+    //     volumeControlRef.gain.value = value;
     // } else {
     //     console.log("volumeControlRef : " + volumeControlRef);
     //     console.log("Failed condition checker in setGlobalVolume");
     // }
-    // volumeControlRef.gain.value = value;
-    // console.log("volumeControlRef.gain.value - " + volumeControlRef.gain.value);
+
 }
 
 export const handlePlay = () => {

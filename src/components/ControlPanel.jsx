@@ -26,7 +26,7 @@ const handleSetDJSettings = (variable) => {
 // }
 
 // works but it doesn't save state when switching from control and back again :(
-function ControlPanel({ volume, setVolume, cpm, setCPM, onHandleChangeRequest, onUpdate }) {
+function ControlPanel({ volume, setVolume, cpm, setCPM, onHandleGeneric, onUpdate }) {
 
     // this should not download everything... right?
     // i mean... it could be one big JSON with each line as an element? lol

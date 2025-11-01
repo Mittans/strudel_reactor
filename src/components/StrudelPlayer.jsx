@@ -20,7 +20,7 @@ import HelpPanel from './HelpPanel';
 import ControlPanel from './ControlPanel';
 import ConsolePanel from './ConsolePanel';
 import { StrudelSetup } from './StrudelSetup';
-import { handlePlay, handleStop, handleProc, handleProcPlay, handleReset, Proc } from './StrudelSetup';
+import { handlePlay, handleStop, handleProc, handleProcPlay, handleReset, Proc, setGlobalVolume} from './StrudelSetup';
 import userEvent from "@testing-library/user-event";
 
 let defaultTune = stranger_tune;
@@ -52,13 +52,16 @@ function StrudelPlayer() {
     //let strudelRef = useRef();
     const hasRun = useRef(false);
     const [ songText, setSongText ] = useState("");
+    const [ activeBtn, setActiveBtn ] = useState("controlBtn")
+    const [ errorText, setErrorText ] = useState("");
 
     // audio_controls
     const [ volume, setVolume ] = useState(0.5);
     const [ cpm, setCPM ] = useState(120);
 
     // dj_controls
-    const [ dropdown1, setDropdown1] = useState("dropdown1"); // placeholder
+    const [ themeDropdown, setThemeDropdown] = useState("Light"); // light is default for maximum effect
+    const [ codeFontSize, setCodeFontSize ] = useState(18);
 
     // on load the player needs to setup the strudel
     useEffect((e) => {
@@ -74,14 +77,19 @@ function StrudelPlayer() {
     // handles setting changes
     useEffect((e) => {
         console.log("Second useEffect in StrudelPlayer called");
+        
     });
 
     const [ showErrText, setShowErrText ] = useState(false) // for later use
-    const [ activeBtn, setActiveBtn ] = useState("controlBtn")
-    const [ settings, setSetting ] = useState()
+    const [ settings, setSetting ] = useState() // unused
 
     function handleThisChange(e) {
         console.log("Handling change - " + e);
+    }
+    
+    // func being referenced from inside component function can't be a "function ..." it has to be a const
+    const onHandleTheme = (e) => {
+        console.log("handleTheme is being called in StrudelPlayer?");
     }
 
     function handleSettings(codeString) {
@@ -89,20 +97,36 @@ function StrudelPlayer() {
         strudelRef.current.setCode(codeString);
     }
 
-    const onHandleChangeRequest = (e) => {
-        console.log("onHandleChangeRequest called in StrudelPlayer - " + e.target.id + " : " + e.target.value);
-        // if (e.target.id == "volume") {
-        //     handleVolumeChange(e);
-        // }
+    function onHandleFontSize() {
+        // font size
+        console.log("onHandleFontSize called");
+        document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
     }
 
-    const handleVolumeChange = (e) => {
+    // TODO: this is messy
+    const onHandleGeneric = (e) => {
+        let idString = e.target.id;
+        // debug prints
+        if (idString.startsWith("dropdown_")) {
+            console.log("onHandleChangeRequest called in StrudelPlayer - " + e.target.id + " : " + document.getElementById(e.target.id).innerHTML);
+        } else if (idString.startsWith("checkbox_")) {
+            console.log("onHandleChangeRequest called in StrudelPlayer - " + e.target.id + " : " + e.target.checked);
+        }  else {
+            console.log("onHandleChangeRequest called in StrudelPlayer - " + e.target.id + " : " + e.target.value);
+            if (idString.startsWith("volume")) {
+                console.log("volume related change ");
+            }
+        }
+    }
+
+    const onHandleVolume = (e) => {
         console.log("handleVolume (DJControls.jsx) called");
+        //document.getElementById("cm_line").setProperty('cm_line', `${10}px`);
         let newVolume = parseFloat(e.target.value); // if only we could initialise variables as a type line in other languages :(
         // does this need both?
         setVolume(newVolume); // DJControls state
-        //setGlobalVolume(newVolume); // strudel player volume
-    };
+        setGlobalVolume(newVolume); // strudel player volume
+        };
 
     return (
         <div>
@@ -121,13 +145,16 @@ function StrudelPlayer() {
                                     songText={songText} 
                                     strudelRef={strudelRef} 
                             /> */}
-                            <div className="" id="editorPanel" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                            <div className="unprocessedTextPanel" id="editorPanel" style={{ maxHeight: '50vh', overflowY: 'auto'}}>
                                 {/* e knows where it is because it knows where it isn't.
                                 ... not really, i'm assuming e just has a reference to self or smth */}
                                 <PreprocessTextArea songText={songText} setSongText={setSongText}/>
                             </div>
-                            <div className="" id="codePanel" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                                <div id="editor" />
+                            <div className="processedCodePanel" id="codePanel" style={{ 
+                                maxHeight: '50vh', 
+                                overflowY: 'auto',
+                                }}>
+                                <div className="editor" id="editor"/>
                                 <div id="output" />
                             </div>
                         </div>
@@ -148,35 +175,29 @@ function StrudelPlayer() {
                                 <div className="ControlPanel" style={{ display: (activeBtn === "controlBtn") ? 'block' : 'none' }}>
                                     < ControlPanel 
                                         onUpdate={handleThisChange}
-                                        onHandleChangeRequest={onHandleChangeRequest}
+                                        onHandleGeneric={onHandleGeneric}
                                     />
                                     < AudioControls
                                         volume={volume}
                                         setVolume={setVolume}
                                         cpm={cpm}
                                         setCPM={setCPM}
-                                        onHandleChangeRequest={onHandleChangeRequest}
+                                        onHandleGeneric={onHandleGeneric}
+                                        onHandleVolume={onHandleVolume}
                                     />
                                     < DJControls
-                                        dropdown1={dropdown1}
-                                        setDropdown1={setDropdown1}
-                                        onHandleChangeRequest={onHandleChangeRequest}
+                                        codeFontSize={codeFontSize}
+                                        setCodeFontSize={setCodeFontSize}
+                                        themeDropdown={themeDropdown}
+                                        setThemeDropdown={setThemeDropdown}
+                                        onHandleGeneric={onHandleGeneric}
+                                        onHandleTheme={onHandleTheme}
+                                        onHandleFontSize={onHandleFontSize}
                                     />
                                 </div>
                                 <div className="ConsolePanel" style={{ display: (activeBtn === "consoleBtn") ? 'block' : 'none' }}>
                                     < ConsolePanel />
                                 </div>
-                                {/* this is essentially a big if-if-if rn */}
-                                {/* { (activeBtn === "helpBtn") ? < HelpPanel /> : null }
-                                { (activeBtn === "controlBtn") ? < ControlPanel 
-                                    volume={volume}
-                                    setVolume={setVolume}
-                                    cpm={cpm}
-                                    setCPM={setCPM}
-                                    onUpdate={handleThisChange}
-                                    onHandleChangeRequest={onHandleChangeRequest}
-                                /> : null }
-                                { (activeBtn === "consoleBtn") ? < ConsolePanel /> : null } */}
                             </div>
                             
                         </div>
@@ -184,7 +205,8 @@ function StrudelPlayer() {
                     </div>
                 </div>
                 {/* this should only appear when errors detected -- relies on a conditionals state to show */}
-                { showErrText ? < ErrorTextArea defaultValue={showErrText} /> : null }
+                < ErrorTextArea errorText={errorText} setErrorText={setErrorText} />
+                {/* { showErrText ? < ErrorTextArea defaultValue={showErrText} /> : null } */}
                 <canvas id="roll"></canvas>
             </main >
         </div >

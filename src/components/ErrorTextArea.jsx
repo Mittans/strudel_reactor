@@ -1,8 +1,10 @@
 
-function ErrorTextArea({ defaultValue, onChange }) {
+function ErrorTextArea({ errorText, setErrorText }) {
+
+    
     return (
         <>
-            <textarea className="form-control" rows="10" readOnly={true} style={{ resize: 'none' }} defaultValue={"Error : "+defaultValue} onChange={onChange} id="err" ></textarea>
+            <textarea className="form-control errorTextBox" rows="10" readOnly={true} style={{ resize: 'none', display: 'none'}} value={"Error : "+errorText} id="err" ></textarea>
         </>
     )
 }

@@ -1,8 +1,8 @@
 let originalLog = null;
 const logArray = [];
 
+// side effect of this is that everything is printed twice (it prints a msg for each console.log I use)
 export default function console_monkey_patch() {
-
     //If react multicalls this, do nothing
     if (originalLog) return;
 

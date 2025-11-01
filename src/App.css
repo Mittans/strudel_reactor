@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -41,3 +42,13 @@
 .menu_label {
   width: 120px;
 }
+
+.editor {
+  display: block;
+  background-color: var(--background); 
+  font-size: 17px; 
+  font-family: monospace;
+}
+/* .cm-line {
+  font-size: 4px;
+} */
