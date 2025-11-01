@@ -20,6 +20,7 @@ export const StrudelSetup = ( stranger_tune, setSongText, strudelRef) => {
     //     console.log(event.detail);
     // };
 
+
     //const hasRun = useRef(false);
     //document.addEventListener("d3Data", handleD3Data);
             console_monkey_patch();
@@ -122,7 +123,6 @@ export const StrudelSetup = ( stranger_tune, setSongText, strudelRef) => {
     */
     //return strudelRef.current;
 }
-
 //export default StrudelSetup;
 
 export const setGlobalVolume = (volume) => {
@@ -137,4 +137,39 @@ export const setGlobalVolume = (volume) => {
     } else {
         console.log("failed condition checker in setGlobalVolume");
     }
+    //console.log("volumeControlRef.gain.value - " + volumeControlRef.gain.value);
+}
+
+export const handlePlay = () => {
+    if (strudelRef.current) {
+        strudelRef.current.evaluate();
+    }
+    console.log("volumeControlRef.gain.value - " + volumeControlRef.gain.value); // proving volume saved in state (will need to update controlPanel tho)
+}
+
+export const handleStop = () => {
+    if (strudelRef.current) {
+        strudelRef.current.stop();
+    }
+}
+
+export const handleProc = () => {
+    handleStop();
+    //console.log("handleProc triggered");
+    strudelRef.current.setCode(document.getElementById('proc').value);
+}
+
+export const handleProcPlay = () => {
+    handleStop();
+    //console.log("handleProcPlay triggered");
+    strudelRef.current.setCode(document.getElementById('proc').value);
+    strudelRef.current.evaluate();
+}
+
+export const handleReset = () => {
+    handleStop();
+    console.log("handleReset triggered");
+    //document.getElementById('proc').value = defaultTune;
+    // @TODO: this needs to reset settings, too! otherwise we're allowing for errors 
+    //strudelRef.current.setCode(defaultTune);
 }

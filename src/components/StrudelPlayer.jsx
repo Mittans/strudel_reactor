@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { StrudelMirror } from '@strudel/codemirror';
-import { evalScope } from '@strudel/core';
-import { drawPianoroll } from '@strudel/draw';
-import { initAudioOnFirstClick } from '@strudel/webaudio';
-import { transpiler } from '@strudel/transpiler';
-import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
-import { registerSoundfonts } from '@strudel/soundfonts';
+// import { StrudelMirror } from '@strudel/codemirror';
+// import { evalScope } from '@strudel/core';
+// import { drawPianoroll } from '@strudel/draw';
+// import { initAudioOnFirstClick } from '@strudel/webaudio';
+// import { transpiler } from '@strudel/transpiler';
+// import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
+// import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from '../tunes';
 import console_monkey_patch from '../console-monkey-patch';
 
@@ -18,7 +18,8 @@ import ErrorTextArea from './ErrorTextArea';
 import HelpPanel from './HelpPanel';
 import ControlPanel from './ControlPanel';
 import ConsolePanel from './ConsolePanel';
-import { StrudelSetup } from "./StrudelSetup";
+import { StrudelSetup } from './StrudelSetup';
+import { handlePlay, handleStop, handleProc, handleProcPlay, handleReset } from './StrudelSetup';
 
 let defaultTune = stranger_tune;
 
@@ -26,20 +27,20 @@ let strudelRef = null;
 let globalEditor = null;
 let StrudelDemoThingo = null;
 
-let volumeControlRef = null;
+//let volumeControlRef = null;
 
-export const setGlobalVolume = (volume) => {
-    console.log("new setVolume used");
-    const ctx = getAudioContext();
-    if (volumeControlRef == null){
-        volumeControlRef = ctx.createGain(); // volume based on gain, have to create it like so
-        volumeControlRef.connect(ctx.destination);
-    } else {
-        console.log("failed condition checker in setGlobalVolume");
-    }
-    volumeControlRef.gain.value = volume;
-    console.log("volumeControlRef.gain.value - " + volumeControlRef.gain.value);
-}
+// export const setGlobalVolume = (volume) => {
+//     console.log("new setVolume used");
+//     const ctx = getAudioContext();
+//     if (volumeControlRef == null){
+//         volumeControlRef = ctx.createGain(); // volume based on gain, have to create it like so
+//         volumeControlRef.connect(ctx.destination);
+//     } else {
+//         console.log("failed condition checker in setGlobalVolume");
+//     }
+//     volumeControlRef.gain.value = volume;
+//     console.log("volumeControlRef.gain.value - " + volumeControlRef.gain.value);
+// }
 
 // strudelRef references the strudel/globaleditor 
 // this is basically the new StrudelDemo from App.js
@@ -52,7 +53,7 @@ function StrudelPlayer({ strudelRef }) {
 
     // on load the player needs to setup the strudel
     useEffect(() => {
-        console.log("aaa");
+        console.log("StrudelPlayer useEffect called");
 
         if (!hasRun.current) {
             hasRun.current = true;
@@ -62,34 +63,35 @@ function StrudelPlayer({ strudelRef }) {
         //console.log("a : " + a);
     }, []);
 
-    const handlePlay = () => {
-        strudelRef.current.evaluate();
-    }
+    // const handlePlay = () => {
+    //     //console.log("volumeControlRef.gain.value - " + volumeControlRef.gain.value); // proving volume saved in state (will need to update controlPanel tho)
+    //     strudelRef.current.evaluate();
+    // }
 
-    const handleStop = () => {
-        strudelRef.current.stop();
-    }
+    // const handleStop = () => {
+    //     strudelRef.current.stop();
+    // }
 
-    const handleProc = () => {
-        handleStop();
-        //console.log("handleProc triggered");
-        strudelRef.current.setCode(document.getElementById('proc').value);
-    }
+    // const handleProc = () => {
+    //     handleStop();
+    //     //console.log("handleProc triggered");
+    //     strudelRef.current.setCode(document.getElementById('proc').value);
+    // }
 
-    const handleProcPlay = () => {
-        handleStop();
-        //console.log("handleProcPlay triggered");
-        strudelRef.current.setCode(document.getElementById('proc').value);
-        strudelRef.current.evaluate();
-    }
+    // const handleProcPlay = () => {
+    //     handleStop();
+    //     //console.log("handleProcPlay triggered");
+    //     strudelRef.current.setCode(document.getElementById('proc').value);
+    //     strudelRef.current.evaluate();
+    // }
 
-    const handleReset = () => {
-        handleStop();
-        //console.log("handleReset triggered");
-        document.getElementById('proc').value = defaultTune;
-        // @TODO: this needs to reset settings, too! otherwise we're allowing for errors 
-        strudelRef.current.setCode(defaultTune);
-    }
+    // const handleReset = () => {
+    //     handleStop();
+    //     //console.log("handleReset triggered");
+    //     document.getElementById('proc').value = defaultTune;
+    //     // @TODO: this needs to reset settings, too! otherwise we're allowing for errors 
+    //     strudelRef.current.setCode(defaultTune);
+    // }
 
     //const [ songText, setSongText ] = useState(stranger_tune)
     const [ showErrText, setShowErrText ] = useState(false) // for later use

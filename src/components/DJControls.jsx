@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { setGlobalVolume } from "./StrudelPlayer";
+import { setGlobalVolume } from "./StrudelSetup";
+//import { setGlobalVolume } from "./StrudelPlayer";
 
 //import { createRoot } from 'react-dom/client';
 //import console_monkey_patch from '../console-monkey-patch';
