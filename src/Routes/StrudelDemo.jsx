@@ -38,17 +38,18 @@ export default function StrudelDemo() {
 
     // Function runs when the Play button is clicked
     const handlePlay = () => {
+
         // Plays the current Strudel code in the editor
-        editorRef.current.evaluate();
+        editorRef.current?.evaluate();
 
     };
 
+    // Safely play only if editor exists, avoid errors by checking if editorRef.current is not null
+    //works even without the null check but just to be safe
     const handleStop = () => {
-        editorRef.current.stop()
+        editorRef.current?.stop();
+
     }
-
-
-
 
     // preprocess copies current songData into the editor
     const handlePreprocess = () => {
@@ -70,9 +71,6 @@ export default function StrudelDemo() {
 
 
 
-
-
-
     useEffect(() => {
 
         if (!hasRun.current) {
@@ -87,6 +85,7 @@ export default function StrudelDemo() {
             const drawContext = canvas.getContext('2d');
             const drawTime = [-2, 2]; // time window of drawn haps
             editorRef.current = new StrudelMirror({
+
                 defaultOutput: webaudioOutput,
                 getTime: () => getAudioContext().currentTime,
                 transpiler,
