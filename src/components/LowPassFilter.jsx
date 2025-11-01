@@ -1,4 +1,9 @@
-function LowPassFilter() {
+function LowPassFilter({ setLowPassState, Proc }) {
+    const AllLowPassFilter = (value) => {
+        setLowPassState(value);
+        Proc();
+    };
+
     return (
         <div>
             <div>
@@ -9,7 +14,10 @@ function LowPassFilter() {
                     type="range"
                     className="form-range"
                     id="LowPassFilter"
-                    onChange={LowPassFilter}
+                    min={0}
+                    max={20000}
+                    step={100}
+                    onChange={(event) => AllLowPassFilter(event.target.value)}
                 ></input>
             </div>
         </div>

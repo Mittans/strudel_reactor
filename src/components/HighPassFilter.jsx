@@ -1,4 +1,8 @@
-function HighPassFilter() {
+function HighPassFilter({ setHighPassState, Proc }) {
+    const AllHighPassFilter = (value) => {
+        setHighPassState(value);
+        Proc();
+    };
     return (
         <div>
             <div>
@@ -9,7 +13,10 @@ function HighPassFilter() {
                     type="range"
                     className="form-range"
                     id="HighPassFilter"
-                    onChange={HighPassFilter}
+                    min={0}
+                    max={20000}
+                    step={100}
+                    onChange={(event) => AllHighPassFilter(event.target.value)}
                 ></input>
             </div>
         </div>

@@ -17,6 +17,9 @@ export default function StrudelDemo() {
     const [Tracks, setTracks] = useState([]);
     const [MuteState, setMuteState] = useState(false);
     const [volumeState, setVolumeState] = useState({});
+    const [LowPassState, setLowPassState] = useState(0);
+    const [MediumPassState, setMediumPassState] = useState(0);
+    const [HighPassState, setHighPassState] = useState(0);
 
     useEffect(() => {
         if (globalEditor) {
@@ -42,12 +45,24 @@ export default function StrudelDemo() {
     const Proc = () => {
         console.log(document.getElementById("proc"));
         let proc_text = document.getElementById("proc").value;
-        let proc_text_replaced = proc_text.replaceAll("<main_arp_mute>", ProcessText("Mute", ""));
+        let proc_text_replaced = proc_text.replaceAll("<Mute>", ProcessText("Mute", ""));
         proc_text_replaced = proc_text_replaced.replaceAll(
             "<Volume_Control>",
             ProcessText("Volume", "")
         );
-        if (Tracks.length == 0) {
+        proc_text_replaced = proc_text_replaced.replaceAll(
+            "<Low_Pass_Filter>",
+            ProcessText("lpf", "")
+        );
+        proc_text_replaced = proc_text_replaced.replaceAll(
+            "<Medium_Pass_Filter>",
+            ProcessText("mpf", "")
+        );
+        proc_text_replaced = proc_text_replaced.replaceAll(
+            "<High_Pass_Filter>",
+            ProcessText("hpf", "")
+        );
+        if (Tracks.length === 0) {
             proc_text_replaced = proc_text_replaced.replaceAll(
                 /<([A-Za-z][_0-9A-Za-z]*\s?)_Volume>/g,
                 ProcessText("Volume", "")
@@ -74,13 +89,21 @@ export default function StrudelDemo() {
         if (MuteState && match === "Mute") {
             replace = "_";
         }
-        if (volumeState["AllTrackVolume"] && match === "Volume") {
+        if (volumeState["AllTrackVolume"] && match === "Volume" && track === "") {
             replace = `all(x => x.postgain(${volumeState["AllTrackVolume"]}))`;
         }
         if (volumeState[track] && match === "Volume") {
             replace = `.postgain(${volumeState[track]})`;
         }
-        console.log(track);
+        if (LowPassState && match === "lpf") {
+            replace = `all(x => x.lpf(${LowPassState}))`;
+        }
+        if (MediumPassState && match === "mpf") {
+            replace = `all(x => x.bpf(${MediumPassState}))`;
+        }
+        if (HighPassState && match === "hpf") {
+            replace = `all(x => x.hpf(${HighPassState}))`;
+        }
 
         return replace;
     };
@@ -162,11 +185,14 @@ export default function StrudelDemo() {
                                     <br />
                                 )}
                                 <h6 className="text-center">Filters:</h6>
-                                <LowPassFilter />
+                                <LowPassFilter setLowPassState={setLowPassState} Proc={Proc} />
                                 <br />
-                                <MediumPassFilter />
+                                <MediumPassFilter
+                                    setMediumPassState={setMediumPassState}
+                                    Proc={Proc}
+                                />
                                 <br />
-                                <HighPassFilter />
+                                <HighPassFilter setHighPassState={setHighPassState} Proc={Proc} />
                             </nav>
                         </div>
                     </div>

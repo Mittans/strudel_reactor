@@ -1,4 +1,8 @@
-function MediumPassFilter() {
+function MediumPassFilter({ setMediumPassState, Proc }) {
+    const AllMediumPassFilter = (value) => {
+        setMediumPassState(value);
+        Proc();
+    };
     return (
         <div>
             <div>
@@ -9,7 +13,10 @@ function MediumPassFilter() {
                     type="range"
                     className="form-range"
                     id="MediumPassFilter"
-                    onChange={MediumPassFilter}
+                    min={0}
+                    max={20000}
+                    step={100}
+                    onChange={(event) => AllMediumPassFilter(event.target.value)}
                 ></input>
             </div>
         </div>
