@@ -21,7 +21,7 @@ import HelpPanel from './components/HelpPanel';
 import ControlPanel from './components/ControlPanel';
 import ConsolePanel from './components/ConsolePanel';
 
-let globalEditor = null;
+let strudelRef = null;
 let defaultTune = stranger_tune;
 
 const handleD3Data = (event) => {
@@ -41,16 +41,16 @@ const handleD3Data = (event) => {
 // replaced with react
 // export function SetupButtons() {
 
-//     document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-//     document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
+//     document.getElementById('play').addEventListener('click', () => strudelRef.evaluate());
+//     document.getElementById('stop').addEventListener('click', () => strudelRef.stop());
 //     document.getElementById('process').addEventListener('click', () => {
 //         Proc()
 //     }
 //     )
 //     document.getElementById('process_play').addEventListener('click', () => {
-//         if (globalEditor != null) {
+//         if (strudelRef != null) {
 //             Proc()
-//             globalEditor.evaluate()
+//             strudelRef.evaluate()
 //         }
 //     }
 //     )
@@ -58,10 +58,10 @@ const handleD3Data = (event) => {
 
 // replaced with react
 // export function ProcAndPlay() {
-//     if (globalEditor != null && globalEditor.repl.state.started == true) {
-//         console.log(globalEditor)
+//     if (strudelRef != null && strudelRef.repl.state.started == true) {
+//         console.log(strudelRef)
 //         Proc()
-//         globalEditor.evaluate();
+//         strudelRef.evaluate();
 //     }
 // }
 
@@ -70,7 +70,7 @@ const handleD3Data = (event) => {
 
 //      let proc_text = document.getElementById('proc').value
 //      ProcessText(stranger_tune);
-//      globalEditor.setCode(stranger_tune)
+//      strudelRef.setCode(stranger_tune)
 //  }
 
 // // replaced with react
@@ -94,24 +94,24 @@ export default function StrudelDemo() {
     }, [songText]);
 
     const handlePlay = () => {
-        globalEditor.evaluate();
+        strudelRef.current.evaluate();
     }
 
     const handleStop = () => {
-        globalEditor.stop();
+        strudelRef.current.stop();
     }
 
     const handleProc = () => {
         handleStop();
         //console.log("handleProc triggered");
-        globalEditor.setCode(document.getElementById('proc').value);
+        strudelRef.current.setCode(document.getElementById('proc').value);
     }
 
     const handleProcPlay = () => {
         handleStop();
         //console.log("handleProcPlay triggered");
-        globalEditor.setCode(document.getElementById('proc').value);
-        globalEditor.evaluate();
+        strudelRef.current.setCode(document.getElementById('proc').value);
+        strudelRef.current.evaluate();
     }
 
     const handleReset = () => {
@@ -119,7 +119,7 @@ export default function StrudelDemo() {
         //console.log("handleReset triggered");
         document.getElementById('proc').value = defaultTune;
         // @TODO: this needs to reset settings, too! otherwise we're allowing for errors 
-        globalEditor.setCode(defaultTune);
+        strudelRef.current.setCode(defaultTune);
     }
 
     //const [ songText, setSongText ] = useState(stranger_tune)
@@ -130,12 +130,12 @@ export default function StrudelDemo() {
     //const [ volume, setVolume ] = useState(1)
 
     function handleSettings(codeString) {
-        globalEditor.setCode(codeString);
+        strudelRef.current.setCode(codeString);
 
         //console.log("handle settings id, newValue : " + id + " | " + newValue);
         // let proc_text = document.getElementById({id}).value
         // let proc_text_replaced = proc_text.replaceAll('{VOLUME}', {volume});
-        // globalEditor.setCode(proc_text_replaced)
+        // strudelRef.setCode(proc_text_replaced)
     }
 
     // const handleMenu = (e) => {
