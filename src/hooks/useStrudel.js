@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { initializeStrudel, strudelActions } from "../strudel/strudelSetup";
+import { getComboOrDefault } from "../config/instrumentCombos";
 
 export function useStrudel(intitalTune) {
   const [isReady, setIsReady] = useState(false);
@@ -91,6 +92,41 @@ export function useStrudel(intitalTune) {
     );
   }
 
+  function changeInstrumentsCombination(preset) {
+    const currentCombination = getComboOrDefault(preset);
+
+    setProcValue((prevCode) => {
+      let code = prevCode;
+
+      for (const [name, isOn] of Object.entries(currentCombination)) {
+        const noUnderscore = `${name}:`;
+        const withUnderscore = `_${name}:`;
+
+        if (isOn) {
+          // remove underscore (ON)
+          while (code.includes(withUnderscore)) {
+            code = code.replaceAll(withUnderscore, noUnderscore);
+          }
+        } else {
+          // Remove all the underscore from the previous setting first
+          while (code.includes(withUnderscore)) {
+            code = code.replaceAll(withUnderscore, noUnderscore);
+          }
+
+          // Add underscore for the new settings
+          code = code.replaceAll(noUnderscore, withUnderscore);
+        }
+      }
+
+      strudelActions.setCode(code);
+      if (isPlaying) {
+        strudelActions.evaluate();
+      }
+
+      return code;
+    });
+  }
+
   const handleProcChange = (e) => {
     const newCode = e.target.value;
     setProcValue(newCode);
@@ -111,5 +147,6 @@ export function useStrudel(intitalTune) {
     changeBass,
     changeReverb,
     reverb,
+    changeInstrumentsCombination,
   };
 }

@@ -13,6 +13,7 @@ import IOAccordion from "./components/IOAccordion/IOAccordion";
 import MixerPanel from "./components/controllers/MixerPanel";
 import PatternPanel from "./components/controllers/PatternPanel";
 import BassPanel from "./components/controllers/BassPanel";
+import InstrumentsPanel from "./components/controllers/InstrumentsPanel";
 
 export default function App() {
   const {
@@ -29,37 +30,56 @@ export default function App() {
     changeBass,
     changeReverb,
     reverb,
+    changeInstrumentsCombination,
   } = useStrudel(stranger_tune);
 
   return (
     <div className="bg-gradient-to-br from-[#1e3a8a] via-[#3b82f6] to-[#06b6d4] min-h-screen text-white p-3">
-      <Header />
-      <StatusBar isPlaying={isPlaying} bpm={bpm} volume={volume} />
-      <ControlPanel isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
+      <div className="w-full max-w-7xl mx-auto">
+        <Header />
+        <StatusBar isPlaying={isPlaying} bpm={bpm} volume={volume} />
+        <ControlPanel isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 
-      {isReady && (
-        <div className="row">
-          <div className="col-4">
-            <MixerPanel
-              volume={volume}
-              bpm={bpm}
-              reverb={reverb}
-              onVolumeChange={changeVolume}
-              onTempoChange={changeTempo}
-              onReverbChange={changeReverb}
-            />
-          </div>
-          <div className="col-4">
-            <PatternPanel changeGainPattern={changeGainPattern} />
-          </div>
-          <div className="col-4">
-            <BassPanel changeBass={changeBass} />
-          </div>
-        </div>
-      )}
-      {/* <ToggleControls /> */}
-      <IOAccordion procValue={procValue} handleProcChange={handleProcChange} />
-      <canvas id="roll"></canvas>
+        {isReady && (
+          <>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <MixerPanel
+                  volume={volume}
+                  bpm={bpm}
+                  reverb={reverb}
+                  onVolumeChange={changeVolume}
+                  onTempoChange={changeTempo}
+                  onReverbChange={changeReverb}
+                />
+              </div>
+              <div>
+                <PatternPanel changeGainPattern={changeGainPattern} />
+              </div>
+              <div>
+                <BassPanel changeBass={changeBass} />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <InstrumentsPanel
+                  onInstrumentChange={changeInstrumentsCombination}
+                />
+              </div>
+              <div>
+                <BassPanel changeBass={changeBass} />
+              </div>
+            </div>
+          </>
+        )}
+        {/* <ToggleControls /> */}
+        <IOAccordion
+          procValue={procValue}
+          handleProcChange={handleProcChange}
+        />
+        <canvas id="roll"></canvas>
+      </div>
     </div>
   );
 }
