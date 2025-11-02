@@ -25,18 +25,18 @@ const handleD3Data = (event) => {
 };
 
 // Mute selected track
-function muteTrack(text, trackName){
-  const lines = text.split('\n');
+function muteTrack(text, trackName) {
+  const lines = text.split("\n");
 
   // update target track status
-  const updatedLines = lines.map(line => {
+  const updatedLines = lines.map((line) => {
     if (line.trim().startsWith(`${trackName}:`)) {
       return line.replace(`${trackName}:`, `_${trackName}:`);
     }
     return line;
-  })
+  });
 
-  return updatedLines.join('\n');
+  return updatedLines.join("\n");
 }
 
 // Preprocesses the source code by muting specific tracks
@@ -44,7 +44,7 @@ function processText(source, tracks) {
   let text = source;
 
   for (let trackName in tracks) {
-    if (tracks[trackName] === 'HUSH') {
+    if (tracks[trackName] === "HUSH") {
       text = muteTrack(text, trackName);
     }
   }
@@ -60,8 +60,8 @@ export default function StrudelDemo() {
     bassline: "ON",
     main_arp: "ON",
     drums: "ON",
-    drums2: "ON"
-  })
+    drums2: "ON",
+  });
 
   //Preprocess controls
   const handlePreprocess = () => {
@@ -137,30 +137,32 @@ export default function StrudelDemo() {
       <main>
         <div className="container-fluid">
           <div className="row">
-            <div
-              className="col-md-8"
-              style={{ maxHeight: "50vh", overflowY: "auto" }}
-            >
-              <PreprocessArea />
+            <div className="col-md-8">
+              {/* Preprocess text area */}
+              <div
+                style={{ maxHeight: "50vh", overflowY: "auto" }}
+                className="mb-3"
+              >
+                <PreprocessArea />
+              </div>
+
+              {/* output */}
+              <div style={{ maxHeight: "50vh", overflowY: "auto" }}>
+                <div id="editor" />
+                <div id="output" />
+              </div>
             </div>
+
             <div className="col-md-4">
+              {/* Buttons */}
               <ProcButtons
                 onPreprocess={handlePreprocess}
                 onProcAndPlay={handleProcAndPlay}
               />
               <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-            </div>
-          </div>
-          <div className="row">
-            <div
-              className="col-md-8"
-              style={{ maxHeight: "50vh", overflowY: "auto" }}
-            >
-              <div id="editor" />
-              <div id="output" />
-            </div>
-            <div className="col-md-4">
-              <DJControls tracks={tracks} onTrackChange={handleTrackChange}/>
+
+              {/* DJ controls */}
+              <DJControls tracks={tracks} onTrackChange={handleTrackChange} />
             </div>
           </div>
         </div>
