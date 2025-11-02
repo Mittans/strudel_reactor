@@ -13,10 +13,9 @@ function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
     const hasRun = useRef(false);
 
     const handleD3Data = (event) => {
-    const data = event.detail;
-    console.log("🎶 Received d3Data:", data);
-    // You can visualize or store this data as needed
-  };
+        const data = event.detail;
+        console.log("Received d3Data:", data);
+    };
 
     useEffect(() => {
         if (hasRun.current) return;
@@ -55,10 +54,9 @@ function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
         else editorRef.current.setCode(stranger_tune);
         })();
 
-        // 👂 Listen for D3 data events
+        
         document.addEventListener("d3Data", handleD3Data);
 
-        // 🧹 Cleanup on unmount
         return () => {
         document.removeEventListener("d3Data", handleD3Data);
         editorRef.current?.stop?.();

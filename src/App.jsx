@@ -61,7 +61,7 @@ function App() {
                     <div className='vr p-0' style={{ minHeight: '100vh'}}>
                     </div>
                     <div className='col-4 me-0'>
-                        <Presets onPresetLoad={setCode} />
+                        <Presets onPresetLoad={setCode} currentCode={code} />
                         <Strudel onModeChange={setRadioValue}/>
                     </div>
                 </div>
