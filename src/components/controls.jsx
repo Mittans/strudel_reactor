@@ -8,10 +8,10 @@
                 Proc & Play
             </button>
             <button className="btn btn-outline-success" onClick={onPlay}>
-                Play
+                ▶
             </button>
             <button className="btn btn-outline-danger" onClick={onStop}>
-                Stop
+                ⏹️
             </button>
             <button className="no-outline-button"
                 onClick={replay}
