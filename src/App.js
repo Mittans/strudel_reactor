@@ -24,20 +24,32 @@ const handleD3Data = (event) => {
   console.log(event.detail);
 };
 
-export function Proc() {
-  let proc_text = document.getElementById("proc").value;
-  let proc_text_replaced = proc_text.replaceAll("<p1_Radio>", ProcessText);
-  ProcessText(proc_text);
-  globalEditor.setCode(proc_text_replaced);
+// Mute selected track
+function muteTrack(text, trackName){
+  const lines = text.split('\n');
+
+  // update target track status
+  const updatedLines = lines.map(line => {
+    if (line.trim().startsWith(`${trackName}:`)) {
+      return line.replace(`${trackName}:`, `_${trackName}:`);
+    }
+    return line;
+  })
+
+  return updatedLines.join('\n');
 }
 
-export function ProcessText(match, ...args) {
-  let replace = "";
-  if (document.getElementById("flexRadioDefault2").checked) {
-     replace = "_";
-   }
+// Preprocesses the source code by muting specific tracks
+function processText(source, tracks) {
+  let text = source;
 
-  return replace;
+  for (let trackName in tracks) {
+    if (tracks[trackName] === 'HUSH') {
+      text = muteTrack(text, trackName);
+    }
+  }
+
+  return text;
 }
 
 export default function StrudelDemo() {
@@ -51,6 +63,20 @@ export default function StrudelDemo() {
     drums2: "ON"
   })
 
+  //Preprocess controls
+  const handlePreprocess = () => {
+    let proc_text = document.getElementById("proc").value;
+    let proc_text_replaced = processText(proc_text, tracks);
+    globalEditor.setCode(proc_text_replaced);
+  };
+
+  const handleProcAndPlay = () => {
+    if (globalEditor != null) {
+      handlePreprocess();
+      globalEditor.evaluate();
+    }
+  };
+
   // Playback controls
   const handlePlay = () => {
     globalEditor.evaluate();
@@ -58,18 +84,6 @@ export default function StrudelDemo() {
 
   const handleStop = () => {
     globalEditor.stop();
-  };
-
-  // Preprocess controls
-  const handlePreprocess = () => {
-    Proc();
-  };
-
-  const handleProcAndPlay = () => {
-    if (globalEditor != null) {
-      Proc();
-      globalEditor.evaluate();
-    }
   };
 
   useEffect(() => {
@@ -110,7 +124,6 @@ export default function StrudelDemo() {
       });
 
       document.getElementById("proc").value = stranger_tune;
-      Proc();
     }
   }, []);
 
