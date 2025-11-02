@@ -229,8 +229,14 @@ html, body {
 }
 
 .dropdown-item {
-  
   color: var(--quaternaryColour) !important;
+  border-color: var(--quaternaryColour) !important;
+}
+
+.dropdown-menu.show {
+  color: var(--secondaryColour) !important;
+  border-color: var(--secondaryColour) !important;
+  background-color: var(--secondaryColour) !important;
 }
 
 .dropdown-item:hover {

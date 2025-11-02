@@ -3,7 +3,9 @@
 stuff
 features: 
 - volume slider
--  
+- cpm input
+- editor control/settings: themes, font size
+- 
 
 TODO: clear this
 
