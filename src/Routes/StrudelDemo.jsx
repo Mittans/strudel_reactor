@@ -10,6 +10,9 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from '../tunes';
 import console_monkey_patch, { getD3Data } from '../console-monkey-patch';
 
+
+
+
 //Components
 import PlayControl from '../Components/PlayControl';
 import PlayButtons from '../Components/PlayButtons';
@@ -25,8 +28,6 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
-
-
 
 
 
@@ -78,7 +79,14 @@ export default function StrudelDemo() {
     //use empty string as initial value
     const [songData, setSongData] = useState(stranger_tune)
 
+    //volume state and setter. Initially set to 50.
+    const [volume, setVolume] = useState(50);
 
+    //new volume handler to update volume state
+    const newVolumeHandler = (newVolume) => {
+        setVolume(newVolume);
+
+    }
 
     useEffect(() => {
 
@@ -123,10 +131,13 @@ export default function StrudelDemo() {
             // so its value updates automatically without direct DOM manipulation.
 
 
+            const codeWithVolume = songData + `\nall(x => x.gain(${volume / 100}))`;
+            editorRef.current.setCode(codeWithVolume);
+
         }
         editorRef.current.setCode(songData)
 
-    }, [songData]); // Added setSongText as a dependency to ensure the effect runs when songText changes hook
+    }, [songData, volume]); // Added setSongText as a dependency to ensure the effect runs when songText changes hook
 
 
     return (
@@ -162,7 +173,7 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <PlayControl /> {/* calls the play control class*/}
+                            <PlayControl volume={volume} onVolumeChange={setVolume} /> {/* calls the play control class*/}
                         </div>
 
 

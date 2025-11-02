@@ -1,6 +1,7 @@
 
 
-function PlayControl({ }) {
+function PlayControl({ volume, onVolumeChange }) {
+
     return (
         <> {/* React Fragment lets us group elements without an extra div */}
 
@@ -23,8 +24,8 @@ function PlayControl({ }) {
 
 
                 <div className="p-3 rounded-3 bg-white shadow-sm fw-semibold mb-3">
-                    <label htmlFor="volume_range" className="form-label">Volume Slider</label>
-                    <input type="range" className="form-range" min="0" max="100" step="10" id="volume_range"
+                    <label htmlFor="volume_range" className="form-label">Volume Slider {volume}%</label>
+                    <input type="range" className="form-range" min="0" value={volume} id="volume_range  onChange={(e) => onVolumeChange(Number(e.target.value))}"
                     />
                 </div>
 
