@@ -1,7 +1,7 @@
 
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Strudel from "./Routes/Strudel";
-import "./App.css";
+import "./Styles/App.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function App() {

@@ -1,4 +1,4 @@
-import '../App.css';
+import '../Styles/App.css';
 import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
@@ -25,6 +25,9 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
+
+
+
 
 
 export default function StrudelDemo() {
@@ -124,8 +127,6 @@ export default function StrudelDemo() {
         editorRef.current.setCode(songData)
 
     }, [songData]); // Added setSongText as a dependency to ensure the effect runs when songText changes hook
-
-
 
 
     return (

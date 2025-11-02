@@ -1,4 +1,4 @@
-import "../App.css";
+import "../Styles/App.css";
 import StrudelDemo from "./StrudelDemo";
 
 export default function Strudel() {
