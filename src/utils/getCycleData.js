@@ -2,8 +2,9 @@ export default function getCycleData(songText) {
     const cycleData = {
         isCycleExists: false,
         isPerMinute: false,
-        text: '',
-        value: 0
+        fullText: '',
+        cycleText: '',
+        value: NaN
     }
 
     // Get last used cycle interval type
@@ -14,20 +15,18 @@ export default function getCycleData(songText) {
     cycleData.isCycleExists = lastUsedCycleIndex != -1;
     cycleData.isPerMinute = cpmLastIndex > cpsLastIndex;
 
-    // Get the cycle value from the song text
     if (cycleData.isCycleExists) {
+        // Get the cycle values from the song text
         const startIndex = songText.indexOf('(', lastUsedCycleIndex) + 1;
         const endIndex = songText.indexOf(')', startIndex)
-        cycleData.text = songText.slice(startIndex, endIndex);
+        cycleData.fullText = songText.slice(lastUsedCycleIndex, endIndex + 1);
+        cycleData.cycleText = songText.slice(startIndex, endIndex);
 
+        // Calculate speed
         try {
-            if (cycleData.isPerMinute) {
-                cycleData.value = eval(cycleData.text);
-            } else {
-                cycleData.value = eval(cycleData.text) * 60;
-            }
+            cycleData.value = eval(cycleData.cycleText);
         } catch {
-            cycleData.value = 0;
+            cycleData.value = NaN;
         }
     }
 

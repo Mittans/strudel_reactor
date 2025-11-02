@@ -15,6 +15,7 @@ import PlayButtons from './components/PlayButtons';
 import ProcButtons from './components/ProcButtons'
 import PreprocessTextArea from './components/PreprocessTextArea'
 import getCycleData from './utils/getCycleData'
+import setCycle from './utils/setCycle'
 
 let globalEditor = null;
 
@@ -24,8 +25,8 @@ const handleD3Data = (event) => {
 
 export default function StrudelDemo() {
     const hasRun = useRef(false);
-    const handlePlay = () => {globalEditor.evaluate()};
-    const handleStop = () => {globalEditor.stop()};
+    const handlePlay = () => { globalEditor.evaluate() };
+    const handleStop = () => { globalEditor.stop() };
     const [songText, setSongText] = useState(stranger_tune);
     const [cycleData, setCycleData] = useState(getCycleData(songText));
 
@@ -61,13 +62,9 @@ export default function StrudelDemo() {
                         await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
                     },
                 });
-            
-            document.getElementById('proc').value = stranger_tune
         }
         globalEditor.setCode(songText);
-
         setCycleData(getCycleData(songText));
-        console.log(cycleData.text);
     }, [songText]);
 
 
@@ -79,7 +76,7 @@ export default function StrudelDemo() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                            <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                            <PreprocessTextArea songText={songText} onChange={(e) => setSongText(e.target.value)} />
                         </div>
                         <div className="col-md-4">
 
@@ -96,7 +93,7 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <MasterControls cycleData={cycleData} />
+                            <MasterControls cycleData={cycleData} songText={songText} setSongText={setSongText} setCycle={setCycle} />
                         </div>
                     </div>
                 </div>
