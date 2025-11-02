@@ -3,11 +3,11 @@ function MasterControls({ cycleData }) {
         <>
             <div className="input-group mb-3">
                 <div className="input-group-prepstart">
-                    <span className="input-group-text" id="cpm-label">Set {cycleData.isPerMinute ? "CPM" : "CPS"}</span>
+                    <span className="input-group-text" id="cycle-label">Set {cycleData.isPerMinute ? "CPM" : "CPS"}</span>
                 </div>
-                <input type="text" className="form-control" id="cpm-text-input" placeholder={cycleData.text} aria-label="cpm" aria-describedby="cpm-label" />
+                <input type="text" className="form-control" id="cycle-text-input" placeholder={cycleData.text} aria-label="cycle" aria-describedby="cycle-label" />
                 <div className="input-group-prepend">
-                    <span className="input-group-text" id="cpm-label">{cycleData.isPerMinute ? "CPM" : "CPS"} = {Math.round(cycleData.value * 100)/100}</span>
+                    <span className="input-group-text" id="cycle-label">{cycleData.isPerMinute ? "CPM" : "CPS"} = {Math.round(cycleData.value * 100)/100}</span>
                 </div>
             </div>
 
