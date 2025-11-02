@@ -1,13 +1,11 @@
-import setCycle from "../utils/setCycle";
-
-function MasterControls({ cycleData, songText, setSongText, setCycle }) {
+﻿function MasterControls({ cycleData, songText, setSongText, setCycleValue, setCycleInterval }) {
     return (
         <>
             <div className="input-group mb-3">
                 <div className="input-group-prepstart">
-                    <span className="input-group-text" id="cycle-label">Set {cycleData.isPerMinute ? "CPM" : "CPS"}</span>
+                    <button className="btn  btn-outline-primary input-group-text" id="cycle-label" onClick={(e) => setSongText(setCycleInterval(songText, cycleData))}>Set {cycleData.isPerMinute ? "CPM" : "CPS"} ↑↓</button>
                 </div>
-                <input type="text" className="form-control" id="cycle-text-input" placeholder="Insert cycle value here" aria-label="cycle" aria-describedby="cycle-label" value={cycleData.cycleText} onChange={(e) => setSongText(setCycle(songText, cycleData, e.target.value))} />
+                <input type="text" className="form-control" id="cycle-text-input" placeholder="Insert cycle value here" aria-label="cycle" aria-describedby="cycle-label" value={cycleData.cycleText} onChange={(e) => setSongText(setCycleValue(songText, cycleData, e.target.value))} />
                 <div className="input-group-prepend">
                     <span className="input-group-text" id="cycle-label">CPS = {!isNaN(cycleData.value) ? (Math.round(cycleData.value / (cycleData.isPerMinute ? 60 : 1) * 100) / 100) : "?"}</span>
                 </div>

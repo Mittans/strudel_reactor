@@ -15,7 +15,8 @@ import PlayButtons from './components/PlayButtons';
 import ProcButtons from './components/ProcButtons'
 import PreprocessTextArea from './components/PreprocessTextArea'
 import getCycleData from './utils/getCycleData'
-import setCycle from './utils/setCycle'
+import setCycleValue from './utils/setCycleValue'
+import setCycleInterval from './utils/setCycleInterval'
 
 let globalEditor = null;
 
@@ -93,7 +94,7 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <MasterControls cycleData={cycleData} songText={songText} setSongText={setSongText} setCycle={setCycle} />
+                            <MasterControls cycleData={cycleData} songText={songText} setSongText={setSongText} setCycleValue={setCycleValue} setCycleInterval={setCycleInterval} />
                         </div>
                     </div>
                 </div>
