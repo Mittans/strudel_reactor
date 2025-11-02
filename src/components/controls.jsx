@@ -1,24 +1,11 @@
 ﻿export default function Controls({ onProcess, onProcPlay, onPlay, onStop , replay}) {
     return (
-        <nav style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: '1rem' }}>
-            <button className="btn btn-outline-primary" onClick={onProcess}>
-                Preprocess
-            </button>
-            <button className="btn btn-outline-primary" onClick={onProcPlay}>
-                Proc & Play
-            </button>
-            <button className="btn btn-outline-success" onClick={onPlay}>
-                ▶
-            </button>
-            <button className="btn btn-outline-danger" onClick={onStop}>
-                ⏹️
-            </button>
-            <button className="no-outline-button"
-                onClick={replay}
-            >
-                🔄
-            </button>
-
-        </nav>
+        <div className="music-controls d-flex justify-content-center align-items-center gap-3 my-3">
+            <button className="control-btn" onClick={onProcess}>Process</button>
+            <button className="control-btn" onClick={onProcPlay}>Proc&Play</button>
+            <button className="control-btn" onClick={onStop}>⏹️</button>
+            <button className="control-btn play-btn" onClick={onPlay}>▶</button>
+            <button className="control-btn" onClick={replay}>🔄</button>
+        </div>
     );
 }
