@@ -86,6 +86,10 @@ export default function StrudelDemo() {
     globalEditor.stop();
   };
 
+  const handleTrackChange = (track, value) => {
+    setTracks({ ...tracks, [track]: value });
+  };
+
   useEffect(() => {
     if (!hasRun.current) {
       document.addEventListener("d3Data", handleD3Data);
@@ -156,7 +160,7 @@ export default function StrudelDemo() {
               <div id="output" />
             </div>
             <div className="col-md-4">
-              <DJControls />
+              <DJControls tracks={tracks} onTrackChange={handleTrackChange}/>
             </div>
           </div>
         </div>

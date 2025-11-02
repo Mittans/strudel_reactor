@@ -1,4 +1,4 @@
-function TrackControls() {
+function TrackControls({ tracks, onTrackChange }) {
   return (
     <div className="row row-cols-2 g-4">
       {/* Bassline */}
@@ -10,8 +10,9 @@ function TrackControls() {
               className="form-check-input"
               type="radio"
               name="bassline"
-              id="basslineOn"
-              defaultChecked
+              id="bassline-on"
+              checked={tracks.bassline === 'ON'}
+              onChange={() => onTrackChange('bassline', 'ON')}
             />
             <label className="form-check-label" htmlFor="basslineOn">
               ON
@@ -22,7 +23,9 @@ function TrackControls() {
               className="form-check-input"
               type="radio"
               name="bassline"
-              id="basslineHush"
+              id="bassline-hush"
+              checked={tracks.bassline === 'HUSH'}
+              onChange={() => onTrackChange('bassline', 'HUSH')}
             />
             <label className="form-check-label" htmlFor="basslineHush">
               HUSH
@@ -40,8 +43,9 @@ function TrackControls() {
               className="form-check-input"
               type="radio"
               name="main"
-              id="mainOn"
-              defaultChecked
+              id="main-on"
+              checked={tracks.main_arp === 'ON'}
+              onChange={() => onTrackChange('main_arp', 'ON')}
             />
             <label className="form-check-label" htmlFor="mainOn">
               ON
@@ -52,7 +56,9 @@ function TrackControls() {
               className="form-check-input"
               type="radio"
               name="main"
-              id="mainHush"
+              id="main-hush"
+              checked={tracks.main_arp === 'HUSH'}
+              onChange={() => onTrackChange('main_arp', 'HUSH')}
             />
             <label className="form-check-label" htmlFor="mainHush">
               HUSH
@@ -70,8 +76,9 @@ function TrackControls() {
               className="form-check-input"
               type="radio"
               name="drums"
-              id="drumsOn"
-              defaultChecked
+              id="drums-on"
+              checked={tracks.drums === 'ON'}
+              onChange={() => onTrackChange('drums', 'ON')}
             />
             <label className="form-check-label" htmlFor="drumsOn">
               ON
@@ -82,7 +89,9 @@ function TrackControls() {
               className="form-check-input"
               type="radio"
               name="drums"
-              id="drumsHush"
+              id="drums-hush"
+              checked={tracks.drums === 'HUSH'}
+              onChange={() => onTrackChange('drums', 'HUSH')}
             />
             <label className="form-check-label" htmlFor="drumsHush">
               HUSH
@@ -100,8 +109,9 @@ function TrackControls() {
               className="form-check-input"
               type="radio"
               name="drums2"
-              id="drums2On"
-              defaultChecked
+              id="drums2-on"
+              checked={tracks.drums2 === 'ON'}
+              onChange={() => onTrackChange('drums2', 'ON')}
             />
             <label className="form-check-label" htmlFor="drums2On">
               ON
@@ -112,7 +122,9 @@ function TrackControls() {
               className="form-check-input"
               type="radio"
               name="drums2"
-              id="drums2Hush"
+              id="drums2-hush"
+              checked={tracks.drums2 === 'HUSH'}
+              onChange={() => onTrackChange('drums2', 'HUSH')}
             />
             <label className="form-check-label" htmlFor="drums2Hush">
               HUSH
