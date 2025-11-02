@@ -52,7 +52,7 @@ export function Save(props){
     return (
         <div>
             <button className="flex content-center" onClick={props.modalOpenControl}> 
-                <CiSaveDown2 className="mx-1 self-center text-[28px] text-green-500"/>
+                <CiSaveDown2 className="mx-1 self-center text-[28px] text-green-600"/>
             </button>
         </div>
     );
@@ -62,7 +62,7 @@ export function Load(props){
     return (
         <div>
             <button id={props.id} className="flex" onClick={props.handleLoad}> 
-                <FaDownload className="mx-1 self-center text-[25px] text-yellow-500"/>
+                <FaDownload className="mx-1 self-center text-[25px] text-yellow-600"/>
             </button>
         </div>
     );
@@ -72,7 +72,7 @@ export function Delete(props){
     return (
         <div>
             <button id={props.id} className="flex" onClick={props.handleDelete}> 
-                <RiDeleteBin7Fill className="mx-1 text-[25px] self-center text-red-500"/>
+                <RiDeleteBin7Fill className="mx-1 text-[25px] self-center text-red-700"/>
             </button>
         </div>
     );

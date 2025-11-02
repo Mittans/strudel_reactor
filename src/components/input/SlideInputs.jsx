@@ -4,7 +4,7 @@ import {Volume} from './slideInputs/Volume';
 export function SlideInputs(props){
 
     return (
-        <div className='flex'>
+        <div className='flex justify-center'>
             <Speed onSpeedChange={props.onSpeedChange}/>
             <Volume onVolumeChange={props.onVolumeChange} />
         </div>

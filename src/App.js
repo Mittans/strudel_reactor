@@ -7,10 +7,10 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import { ControlButtons } from './components/buttons/ControlButtons';
 import { CRUDManager } from './components/buttons/CRUDManager';
-import { ListInputs } from './components/input/ListInputs';
 import { SlideInputs } from './components/input/SlideInputs';
 import {Effects} from './components/input/Effects';
 import SaveModal from './components/modal/saveModal';
+import { Instrument } from './components/input/Instrument';
 
 let globalEditor = null;
 
@@ -180,8 +180,43 @@ export default function StrudelDemo() {
     window.location.reload(); 
   };
 
+  const [isOnHush,setIsOnHush] = useState(false);
+  const [isOpenEffects, setIsOpenEffects] = useState(false);
+  const [isOpenInstrument, setIsOpenInstrument] = useState(false);
+  
+  // Function to open the On & Hush
+  const handleOnHush = () => {
+    if (isOnHush === false) {
+      setIsOnHush(true);
+    } else {
+      setIsOnHush(false);
+    }
+    setIsOpenEffects(false);
+    setIsOpenInstrument(false);
+  };
+
+  const handleOpenEffects = () => {
+    if (isOpenEffects === false) {
+      setIsOpenEffects(true);
+    } else {
+      setIsOpenEffects(false);
+    }
+    setIsOnHush(false);
+    setIsOpenInstrument(false);
+  }
+
+  const handleOpenInstrument= () => {
+    if (isOpenInstrument === false) {
+      setIsOpenInstrument(true);
+    } else {
+      setIsOpenInstrument(false);
+    }
+    setIsOnHush(false);
+    setIsOpenEffects(false);
+  }
+
   return (
-    <div className="bg-gray-100">
+    <div className="bg-yellow-500">
       <div name="components-bar" className="bg-black p-2 mb-2 flex justify-between">
 
         {/* The title */}
@@ -232,29 +267,47 @@ export default function StrudelDemo() {
                 handleLoad={handleLoad}
                 />
               </div>
-              
-              <ListInputs/>
             </div>
-            <div className='flex'>
-              <div className="m-2 p-2">
-                <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                <label className="peer-checked:bg-gray-500 bg-gray-400 text-white rounded-md px-5 py-2 font-bold" htmlFor="flexRadioDefault1">
-                  p1: ON
-                </label>
-              </div>
-              <div className="m-2 p-2">
-                <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                <label className="peer-checked:bg-gray-500 bg-gray-400 text-white rounded-md px-5 py-2 font-bold" htmlFor="flexRadioDefault2">
-                  p1: HUSH
-                </label>
-              </div>
-              
+            <div>
               <SlideInputs onVolumeChange={updateGainInCode} onSpeedChange={updateSpeedInCode} />
-              <Effects/>
+              <div className='flex justify-center'>
+                <button onClick={handleOnHush} 
+                className={`m-3 text-lg ${isOnHush ? "border border-black bg-black text-yellow-500 px-3 rounded-lg font-bold " : "border border-black bg-white text-black px-3 rounded-lg font-bold"}`}> 
+                ON&HUSH 
+                </button>
+
+                <button onClick={handleOpenEffects} 
+                className={`m-3 text-lg ${isOpenEffects ? "border border-black bg-black text-yellow-500 px-3 rounded-lg font-bold " : "border border-black bg-white text-black px-3 rounded-lg font-bold"}`}> 
+                Effects 
+                </button>
+
+                <button onClick={handleOpenInstrument} 
+                className={`m-3 text-lg ${isOpenInstrument ? "border border-black bg-black text-yellow-500 px-3 rounded-lg font-bold " : "border border-black bg-white text-black px-3 rounded-lg font-bold"}`}> 
+                Instrument
+                </button>
+              </div>
+
+              <div className={`flex mx-2 bg-black rounded-lg border border-black ${isOnHush ? "" : "hidden"}`}>
+                <div className="m-2 p-2">
+                  <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
+                  <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor="flexRadioDefault1">
+                    p1: ON
+                  </label>
+                </div>
+                <div className="m-2 p-2">
+                  <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
+                  <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor="flexRadioDefault2">
+                    p1: HUSH
+                  </label>
+                </div>
+              </div>
+              
+              <Effects isOpenEffects={isOpenEffects}/>
+              <Instrument isOpenInstrument={isOpenInstrument}/>
             </div>
-            <div className='flex justify-between'>
+            <div className='mx-2 mt-4'>
                 <textarea 
-                  className="w-full border border-black" 
+                  className="w-full border border-black rounded-lg" 
                   rows="15" 
                   id="proc" 
                   value={text}

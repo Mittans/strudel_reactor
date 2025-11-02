@@ -13,7 +13,7 @@ export function Speed(props){
     };
 
     return (
-        <div className="m-3 flex items-center border border-black rounded-lg bg-gray-300 px-2">
+        <div className="m-3 flex items-center border border-black rounded-lg bg-gray-300 p-3">
             <label className="mr-2 font-medium">Speed:</label>
             <input
                 type="range"

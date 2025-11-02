@@ -2,23 +2,21 @@ export function Instrument(props){
     const instrumentList = ["saw","sine","sawtooth"];
 
     return (
-        <div className="flex">
-            <label className={props.className}> Instrument: </label>
-            <select className="border border-black bg-yellow-500 rounded-md mx-1 font-bold text-black"> 
-                <option 
-                className="text-sm text-center font-bold bg-gray-200 text-black w-40 rounded-lg"
-                value=""> 
-                Choose instrument 
-                </option>
-                {instrumentList.map((ins) => (
-                    <option 
-                    className="text-sm text-center font-bold bg-gray-200 text-black w-40 rounded-lg"
-                    value={ins}> 
-                    {ins} 
-                    </option>
-                ))}
-
-            </select>
+        <div className={`flex mx-2 bg-black rounded-lg border border-black ${props.isOpenInstrument ? "" : "hidden"}`}>
+            <div className="m-2 p-2">
+                <input className="hidden peer" type="radio" name="flexInstrument" id="flexInstrument0" defaultChecked/>
+                <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor="flexInstrument0">
+                    None
+                </label>
+            </div>
+            {instrumentList.map((instrument) => (
+                 <div className="m-2 p-2">
+                <input className="hidden peer" type="radio" name="flexInstrument" id={`flexInstrument-${instrument}`}/>
+                <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor={`flexInstrument-${instrument}`}>
+                    {instrument}
+                </label>
+            </div>
+            ))}
         </div>
     );
 }
