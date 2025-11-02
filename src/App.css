@@ -18,18 +18,17 @@
 }
 
 [data-theme="Light"] {
-  --secondaryColour: red !important; /* darkest colour; text area + code editor + setting buttons  */ 
+  --secondaryColour: #f6fffe !important; /* darkest colour; text area + code editor + setting buttons  */ 
   --foreground: blue !important; /* unused */
-  --primaryColour: yellow !important; /* lightest colour; right hand panel colour */
-  --tertiaryColour: orange !important; /* between darkest, lightest; header + menu panel control button colours */
-  --quaternaryColour: green !important; /* should be lighter than main text colour */
+  --primaryColour: #e2e2e2 !important; /* lightest colour; right hand panel colour */
+  --tertiaryColour: #c4c4c4 !important; /* between darkest, lightest; header + menu panel control button colours */
+  --quaternaryColour: black !important; /* should be lighter than main text colour */
 
-  --editorTextColour: black !important;
-  --rightPanelTextColour: black !important;
+  --editorTextColour: black;
+  --rightPanelTextColour: white;
 
-  /* only change these below 2 to change panel menu buttons text colour */
-  --menuPanelPrim: white; 
-  --menuPanelSec: black;
+  --menuPanelPrim: black;
+  --menuPanelSec: white;
 
   --unSelectedMenuButtonTextColor: var(--menuPanelSec) !important;
   --selectedMenuButtonTextColor: var(--menuPanelPrim) !important;
@@ -55,7 +54,7 @@
 * {
   background-color: var(--secondaryColour) !important; /* important overrides span/input-group-text */
   color: var(--textColor);
-  border-color: yellow !important; /* if we see yellow, somethings wrong */
+  border-color: var(--menuPanelPrim) !important; /* if we see yellow, somethings wrong */
   max-height: 100% !important; /* Ensure html and body take up full viewport height */
   min-height: 0% !important;
 }
@@ -157,14 +156,23 @@ html, body {
 
 /* "Strudel Demo" */
 .bg-header b {
-  color: var(--quaternaryColour) !important;
+  color: var(--primaryColour) !important;
   
 }
 
+.container {
+  background-color: var(--primaryColour) !important;
+}
+
+#controls_reset {
+  color: var(--editorTextColour);
+  background-color: var(--tertiaryColour) !important;
+  border-color: var(--tertiaryColour) !important;
+}
 
 .header.container-fluid {
   padding-top: 1vh; /* extends the top header row (with the play/proc buttons) to top of page */
-  background-color: var(--primaryColour) !important;
+  background-color: var(--quaternaryColour) !important;
   
 }
 

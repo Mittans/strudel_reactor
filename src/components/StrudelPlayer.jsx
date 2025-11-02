@@ -79,8 +79,10 @@ function StrudelPlayer() {
 
     // handles setting changes
     useEffect((e) => {
+        
         console.log("Second useEffect in StrudelPlayer called");
-        document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
+        onHandleFontSize();
+        //document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
         
         //document.getElementById("proc").style = `resize: none; font-size: `+codeFontSize+`px;`;
         
@@ -121,9 +123,10 @@ function StrudelPlayer() {
     function onHandleResetControls() {
         console.log("onHandleResetControls called");
         setCodeFontSize(14);
-        setCPM(120);
+        
         setVolume(0.5);
         setThemeDropdown("Dark");
+        
         setGlobalVolume(0.5);
         setGlobalCPM(120);
         document.getElementById("checkbox_1").checked = document.getElementById("checkbox_1").defaultChecked;
