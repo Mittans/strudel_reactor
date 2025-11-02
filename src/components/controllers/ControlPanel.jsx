@@ -6,7 +6,6 @@ import { IoSettings } from "react-icons/io5";
 
 // import functions
 import { strudelActions } from "../../strudel/strudelSetup";
-import { Proc } from "../../strudel/procLogic";
 
 export default function ControlPanel({ isPlaying, setIsPlaying }) {
   const [open, setOpen] = useState(false);
@@ -22,12 +21,10 @@ export default function ControlPanel({ isPlaying, setIsPlaying }) {
   };
 
   const handleProcess = () => {
-    Proc();
     setOpen(false);
   };
 
   const handleProcessAndPlay = () => {
-    Proc();
     handlePlay();
     setOpen(false);
   };

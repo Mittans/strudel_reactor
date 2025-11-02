@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { initStrudel, playTune, stopTune } from "../strudel/strudelController";
-import { strudelActions } from "../strudel/strudelSetup";
+import { initializeStrudel, strudelActions } from "../strudel/strudelSetup";
 
 export function useStrudel(intitalTune) {
   const [isReady, setIsReady] = useState(false);
@@ -10,6 +9,7 @@ export function useStrudel(intitalTune) {
   const [volume, setVol] = useState(0.8);
   const [pattern, setPattern] = useState(0);
   const [bass, setBass] = useState(0);
+  const [reverb, setReverb] = useState(0.25);
 
   const hasInit = useRef(false);
 
@@ -19,7 +19,7 @@ export function useStrudel(intitalTune) {
   useEffect(() => {
     if (!hasInit.current) {
       hasInit.current = true;
-      initStrudel(intitalTune).then(() => {
+      initializeStrudel(intitalTune).then(() => {
         setIsReady(true);
       });
     }
@@ -82,6 +82,15 @@ export function useStrudel(intitalTune) {
     );
   }
 
+  function changeReverb(newReverb) {
+    setReverb(newReverb);
+
+    return applyUpdatedCode(
+      /const reverb = [0-9.]+/,
+      `const reverb = ${newReverb.toFixed(2)}`
+    );
+  }
+
   const handleProcChange = (e) => {
     const newCode = e.target.value;
     setProcValue(newCode);
@@ -100,5 +109,7 @@ export function useStrudel(intitalTune) {
     changeVolume,
     changeGainPattern,
     changeBass,
+    changeReverb,
+    reverb,
   };
 }

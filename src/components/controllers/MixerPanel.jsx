@@ -4,8 +4,10 @@ import Slider from "../ui/Slider";
 export default function MixerPanel({
   volume,
   bpm,
+  reverb,
   onVolumeChange,
   onTempoChange,
+  onReverbChange,
 }) {
   return (
     <Panel>
@@ -31,6 +33,17 @@ export default function MixerPanel({
         step={1}
         value={bpm}
         onChange={(e) => onTempoChange(parseInt(e.target.value))}
+      />
+
+      {/* ------------Reverb------------ */}
+      <Slider
+        id="tempo-slider"
+        label={`Reverb`}
+        min={0.1}
+        max={10}
+        step={0.1}
+        value={reverb}
+        onChange={(e) => onReverbChange(parseFloat(e.target.value))}
       />
     </Panel>
   );

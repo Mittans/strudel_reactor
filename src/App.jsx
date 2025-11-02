@@ -27,6 +27,8 @@ export default function App() {
     changeVolume,
     changeGainPattern,
     changeBass,
+    changeReverb,
+    reverb,
   } = useStrudel(stranger_tune);
 
   return (
@@ -41,8 +43,10 @@ export default function App() {
             <MixerPanel
               volume={volume}
               bpm={bpm}
+              reverb={reverb}
               onVolumeChange={changeVolume}
               onTempoChange={changeTempo}
+              onReverbChange={changeReverb}
             />
           </div>
           <div className="col-4">
