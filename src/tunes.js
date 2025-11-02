@@ -98,6 +98,10 @@ stack(
 <Low_Pass_Filter>
 <Medium_Pass_Filter>
 <High_Pass_Filter>
+<Room>
+<Room_Low_Pass>
+<Room_Fade>
+<Decay>
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())

@@ -20,6 +20,11 @@ export default function StrudelDemo() {
     const [LowPassState, setLowPassState] = useState(0);
     const [MediumPassState, setMediumPassState] = useState(0);
     const [HighPassState, setHighPassState] = useState(0);
+    const [RoomState, setRoomState] = useState(0);
+    const [RoomLowPassState, setRoomLowPassState] = useState(0);
+    const [RoomFadeState, setRoomFadeState] = useState(0);
+    const [RoomDecayState, setRoomDecayState] = useState(0);
+    const [RoomSustainState, setRoomSustainState] = useState(0);
 
     useEffect(() => {
         if (globalEditor) {
@@ -62,6 +67,13 @@ export default function StrudelDemo() {
             "<High_Pass_Filter>",
             ProcessText("hpf", "")
         );
+        proc_text_replaced = proc_text_replaced.replaceAll("<Room>", ProcessText("Room", ""));
+        proc_text_replaced = proc_text_replaced.replaceAll(
+            "<Room_Low_Pass>",
+            ProcessText("rlp", "")
+        );
+        proc_text_replaced = proc_text_replaced.replaceAll("<Decay>", ProcessText("Decay", ""));
+        proc_text_replaced = proc_text_replaced.replaceAll("<Room_Fade>", ProcessText("Fade", ""));
         if (Tracks.length === 0) {
             proc_text_replaced = proc_text_replaced.replaceAll(
                 /<([A-Za-z][_0-9A-Za-z]*\s?)_Volume>/g,
@@ -103,6 +115,21 @@ export default function StrudelDemo() {
         }
         if (HighPassState && match === "hpf") {
             replace = `all(x => x.hpf(${HighPassState}))`;
+        }
+        if (RoomState && match === "Room") {
+            replace = `all(x => x.room(${RoomState}))`;
+        }
+        if (RoomLowPassState && match === "rlp") {
+            replace = `all(x => x.room(${RoomState}).rlp(${RoomLowPassState}))`;
+        }
+        if (RoomFadeState && match === "Fade") {
+            replace = `all(x => x.room(${RoomState}).rlp(${RoomLowPassState}).rfade(${RoomFadeState}))`;
+        }
+        if (RoomDecayState && match === "Decay") {
+            replace = `all(x => x.decay(${RoomDecayState}).sustain(${RoomSustainState}))`;
+        }
+        if (RoomSustainState && match === "Decay") {
+            replace = `all(x => x.decay(${RoomDecayState}).sustain(${RoomSustainState}))`;
         }
 
         return replace;
@@ -203,11 +230,19 @@ export default function StrudelDemo() {
                                 width: "33%",
                                 backgroundColor: "white",
                                 border: "2px solid yellow",
+                                overflowY: "auto",
                             }}
                         >
                             <div style={{ height: "26vw" }}>
                                 <h6 className="text-center mt-2">Reverb:</h6>
-                                <Reverb />
+                                <Reverb
+                                    setRoomState={setRoomState}
+                                    Proc={Proc}
+                                    setRoomLowPassState={setRoomLowPassState}
+                                    setRoomFadeState={setRoomFadeState}
+                                    setRoomSustainState={setRoomSustainState}
+                                    setRoomDecayState={setRoomDecayState}
+                                />
                             </div>
                         </div>
                     </div>
