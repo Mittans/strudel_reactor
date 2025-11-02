@@ -45,7 +45,7 @@ function ControlPanel({ volume, setVolume, cpm, setCPM, onHandleGeneric, onUpdat
         <>
             <div className="" role="group" id="menuPanelStuff1" aria-label="Control panel">
                 <div className="" id="menuPanel">
-                    <div className="btn-group btn-light" role="group" id="menuBtns" aria-label="Menu buttons">
+                    <div className="btn-group" role="group" id="menuBtns" aria-label="Menu buttons">
                         <button href="#" id="exportJSON" className="btn" onClick={(e) => {
                             exportJSON();
                         }}>Export JSON</button>

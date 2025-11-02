@@ -5,9 +5,9 @@ function ConsolePanel({  }) {
     
     return (
         <>
-            <div className="btn-group" role="group" id="menuPanelStuff3" aria-label="Console panel">
-                <div className="mt-4">
-                    <p>console panel</p>
+            <div className="" role="group" id="menuPanelStuff3" aria-label="Console panel">
+                <div className="mt-5 menuJustTextBox">
+                    console panel
                 </div>
             </div>
         </>

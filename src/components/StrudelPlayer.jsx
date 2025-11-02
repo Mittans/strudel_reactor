@@ -61,7 +61,7 @@ function StrudelPlayer() {
     const [ cpm, setCPM ] = useState(120);
 
     // dj_controls
-    const [ themeDropdown, setThemeDropdown] = useState("Light"); // light is default for maximum effect
+    const [ themeDropdown, setThemeDropdown] = useState("Dark"); // light is default for maximum effect
     const [ codeFontSize, setCodeFontSize ] = useState(18);
 
     // on load the player needs to setup the strudel
@@ -119,7 +119,7 @@ function StrudelPlayer() {
         setCodeFontSize(18);
         setCPM(120);
         setVolume(0.5);
-        setThemeDropdown("Light");
+        setThemeDropdown("Dark");
         setGlobalVolume(0.5);
         setGlobalCPM(120);
         document.getElementById("checkbox_1").checked = document.getElementById("checkbox_1").defaultChecked;
@@ -170,11 +170,11 @@ function StrudelPlayer() {
     }
 
     return (
-        <div data-theme={themeDropdown}>
-            <h2 className="header container-fluid">
-                <div className="mt-2 row">
-                    <b className="col" style={{ maxWidth:'85%' }}>Strudel Demo</b>
-                    <div className="col-auto">
+        <div className="bg-header" data-theme={themeDropdown}>
+            <h2 className="container-fluid bg-header">
+                <div className="row bg-header">
+                    <b className="col bg-header" style={{ maxWidth:'85%' }}>Strudel Demo</b>
+                    <div className="col-auto bg-header mb-4">
                         <PlayButtons onPlay={handlePlay} onStop={handleStop} />
                         <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} onReset={handleReset} />
                     </div>
@@ -202,9 +202,9 @@ function StrudelPlayer() {
                             </div>
                         </div>
 
-                        <div className="col-md-4 bg-white" id="rightPanel">
+                        <div className="col-md-4 rightPanel bg-foreground" id="rightPanel">
                             {/* the nav menu for right panel -- should control whats in box below on page and be highlighted when active */}
-                            <div className="menuNavBar row bg-light">
+                            <div className="menuNavBar row">
                                 <MenuButtons theme={themeDropdown} defaultValue={activeBtn} onClick={(e) => {
                                     setActiveBtn(e)
                                     //console.log("activeBtn : " + e);
@@ -212,25 +212,25 @@ function StrudelPlayer() {
                             </div>
                             <div className="mb-4">
                                 {/* rather than selectively loading them, menu panel will just show and hide them respectively */}
-                                <div className="HelpPanel" style={{ display: (activeBtn === "helpBtn") ? 'block' : 'none' }}>
+                                <div className="HelpPanel bg-foreground" style={{ display: (activeBtn === "helpBtn") ? 'block' : 'none' }}>
                                     < HelpPanel />
                                 </div>
-                                <div className="ControlPanel" style={{ display: (activeBtn === "controlBtn") ? 'block' : 'none' }}>
+                                <div className="ControlPanel bg-foreground" style={{ display: (activeBtn === "controlBtn") ? 'block' : 'none' }}>
                                     {/* < ControlPanel 
                                         onUpdate={handleThisChange}
                                         onHandleGeneric={onHandleGeneric}
                                     /> */}
                                     <div className="importExportBtns mb-4" role="group" id="menuPanelStuff1" aria-label="Control panel">
                                         <div className="row" id="menuPanel">
-                                            <div className="btn-group btn-light" role="group" id="menuBtns" aria-label="Menu buttons">
-                                                <button href="#" style={{ textAlign:'center', maxWidth:'25%' }} id="exportJSON" className="btn container" onClick={(e) => {
+                                            <div className="btn-group" role="group" id="menuBtns" aria-label="Menu buttons">
+                                                <button href="#" style={{ textAlign:'center', maxWidth:'25%' }} id="exportJSON" className="btn container ioBtnRow" onClick={(e) => {
                                                     //exportJSON();
                                                 }}>Export JSON</button>
-                                                <button className="btn container" style={{ textAlign:'center', maxWidth:'25%' }} id="importJSON" onClick={(e) => {
+                                                <button className="btn container ioBtnRow" style={{ textAlign:'center', maxWidth:'25%' }} id="importJSON" onClick={(e) => {
                                                     //importJSON();
                                                 }}>Import JSON</button>
-                                                <div className="container" disabled style={{ textAlign:'center', width:'5%' }} ></div>
-                                                <button id="reset" className="btn container" onClick={handleResetCode} style={{ textAlign:'center', maxWidth:'33%' }}>Restore Default</button>
+                                                <div className="container ioBtnRow" disabled style={{ textAlign:'center', width:'5%' }} ></div>
+                                                <button id="reset" className="btn container ioBtnRow" onClick={handleResetCode} style={{ textAlign:'center', maxWidth:'33%' }}>Restore Default</button>
                                             </div>
                                         </div>
                                     </div>
@@ -259,10 +259,10 @@ function StrudelPlayer() {
                                         theme={themeDropdown}
                                     />
                                 </div>
-                                <div className="ConsolePanel" style={{ display: (activeBtn === "consoleBtn") ? 'block' : 'none' }}>
+                                <div className="ConsolePanel bg-foreground" style={{ display: (activeBtn === "consoleBtn") ? 'block' : 'none' }}>
                                     < ConsolePanel />
                                 </div>
-                                <div className="SourcePanel" style={{ display: (activeBtn === "sourceBtn") ? 'block' : 'none' }}>
+                                <div className="SourcePanel bg-foreground" style={{ display: (activeBtn === "sourceBtn") ? 'block' : 'none' }}>
                                     < SourcePanel />
                                 </div>
                             </div>
@@ -274,7 +274,7 @@ function StrudelPlayer() {
                 {/* this should only appear when errors detected -- relies on a conditionals state to show */}
                 < ErrorTextArea errorText={errorText} setErrorText={setErrorText} />
                 {/* { showErrText ? < ErrorTextArea defaultValue={showErrText} /> : null } */}
-                <canvas id="roll"></canvas>
+                <canvas hidden id="roll"></canvas>
             </main >
         </div >
     );

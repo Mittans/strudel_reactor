@@ -11,31 +11,31 @@ import ResetControlsButton from "./ResetControlsButton";
 export function DJControls({ codeFontSize, setCodeFontSize, themeDropdown, setThemeDropdown, onHandleGeneric, onHandleTheme, onHandleFontSize, onHandleResetControls, theme }) {
     return (
         <>
-            <div className="container dj-controls" onChange={onHandleGeneric} data-theme={theme}>
+            <div className="container dj-controls bg-foreground" onChange={onHandleGeneric} data-theme={theme}>
                 <br/>
-                <div className="mt-4 mb-4 h6">DJ Controls</div>
+                <div className="mt-4 mb-4 h6 bg-foreground">DJ Controls</div>
                 
 
                 <div className="row mb-2">
-                    <div className="col">
+                    <div className="col bg-foreground">
                         <ThemDropdown themeDropdown={themeDropdown} setThemeDropdown={setThemeDropdown} onHandleGeneric={onHandleGeneric} onHandleTheme={onHandleTheme}/>
                     </div>
-                    <div className="col">
+                    <div className="col bg-foreground">
                         <CodeFontSizeSlider codeFontSize={codeFontSize} setCodeFontSize={setCodeFontSize} onHandleGeneric={onHandleGeneric} onHandleFontSize={onHandleFontSize} />
                     </div>
                 </div>
 
-                <div className="row mb-2">
+                <div className="row mb-2 bg-foreground">
                     {/* TODO: this does nothing! */}
-                <div className="col">
+                <div className="col bg-foreground">
                     <input className="form-check-input" type="checkBox" name="aa" value="" id="checkbox_1" defaultChecked onChange={onHandleGeneric} /> {/*onChange={ProcAndPlay} */}
-                    <label className="form-check-label" htmlFor="checkbox_1">
+                    <label className="form-check-label bg-foreground" htmlFor="checkbox_1">
                         check1: a {/* p1 ON */}
                     </label>
                 </div>
-                <div className="col mb-4">
+                <div className="col mb-4 bg-foreground">
                     <input className="form-check-input" type="checkBox" name="bb" value="" id="checkbox_2" onChange={onHandleGeneric} /> {/*onChange={ProcAndPlay} */}
-                    <label className="form-check-label" htmlFor="checkbox_2">
+                    <label className="form-check-label bg-foreground" htmlFor="checkbox_2">
                         check2: a {/* p1 HUSH */}
                     </label>
                 </div>
