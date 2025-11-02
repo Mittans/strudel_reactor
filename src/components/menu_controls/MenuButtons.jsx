@@ -15,7 +15,7 @@ function MenuButtons({ activeBtn, onClick, theme }) {
 
     return (
         <>
-            <div className="btn-group menu_buttons bg-menuBtns" role="group"  id="menuBtns" aria-label="Menu buttons">
+            <div className="btn-group" role="group" id="menuBtns" aria-label="Menu buttons">
                 <button className={`btn btn-${(defaultBtn === "helpBtn") ? "selected" : "unselected" }`} id="helpBtn" onClick={(e) => {
                     handleMenuButton(e);
                     }}>Help</button>
@@ -31,7 +31,7 @@ function MenuButtons({ activeBtn, onClick, theme }) {
                 <button className={`btn btn-${(defaultBtn === "unusedBtn") ? "selected" : "unselected" }`} disabled id="unusedBtn" onClick={(e) => {
                     handleMenuButton(e);
                     }}>Placeholder</button>
-                <button className={`btn btn-${(defaultBtn === "unusedBtn") ? "selected" : "unselected" }`} disabled id="unusedBtn" onClick={(e) => {
+                <button hidden className={`btn btn-${(defaultBtn === "unusedBtn") ? "selected" : "unselected" }`} disabled id="unusedBtn" onClick={(e) => {
                     handleMenuButton(e);
                     }}>Placeholder</button>
             </div>

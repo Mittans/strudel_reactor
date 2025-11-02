@@ -62,7 +62,7 @@ function StrudelPlayer() {
 
     // dj_controls
     const [ themeDropdown, setThemeDropdown] = useState("Dark"); // light is default for maximum effect
-    const [ codeFontSize, setCodeFontSize ] = useState(18);
+    const [ codeFontSize, setCodeFontSize ] = useState(14);
 
     // on load the player needs to setup the strudel
     useEffect((e) => {
@@ -81,7 +81,8 @@ function StrudelPlayer() {
     useEffect((e) => {
         console.log("Second useEffect in StrudelPlayer called");
         document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
-        document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`;
+        
+        //document.getElementById("proc").style = `resize: none; font-size: `+codeFontSize+`px;`;
         
     });
 
@@ -104,19 +105,22 @@ function StrudelPlayer() {
     }
 
     function onHandleFontSize() {
+        let padding = codeFontSize * 2;
         // font size
-        console.log("onHandleFontSize called");
         document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
-        document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`;
+        //document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`+`paddingLeft:`+codeFontSize+`px;\``;
+        document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`+`padding-left:`+padding+`px;`;
     }
 
     function handleResetCode() {
         setSongText(stranger_tune);
+        setCodeFontSize(14);
+        Proc();
     }
 
     function onHandleResetControls() {
         console.log("onHandleResetControls called");
-        setCodeFontSize(18);
+        setCodeFontSize(14);
         setCPM(120);
         setVolume(0.5);
         setThemeDropdown("Dark");
@@ -174,7 +178,7 @@ function StrudelPlayer() {
             <h2 className="container-fluid bg-header">
                 <div className="row bg-header">
                     <b className="col bg-header" style={{ maxWidth:'85%' }}>Strudel Demo</b>
-                    <div className="col-auto bg-header mb-4">
+                    <div className="col-auto bg-header">
                         <PlayButtons onPlay={handlePlay} onStop={handleStop} />
                         <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} onReset={handleReset} />
                     </div>
@@ -183,7 +187,7 @@ function StrudelPlayer() {
             <main>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-8" id="leftPanel">
+                        <div className="col-md-8 main" id="leftPanel">
                             {/* <StrudelPlayer 
                                     songText={songText} 
                                     strudelRef={strudelRef} 
@@ -191,10 +195,10 @@ function StrudelPlayer() {
                             <div className="unprocessedTextPanel" id="editorPanel" style={{ maxHeight: '50vh', overflowY: 'auto'}}>
                                 {/* e knows where it is because it knows where it isn't.
                                 ... not really, i'm assuming e just has a reference to self or smth */}
-                                <PreprocessTextArea songText={songText} setSongText={setSongText}/>
+                                <PreprocessTextArea songText={songText} setSongText={setSongText} />
                             </div>
                             <div className="processedCodePanel" id="codePanel" style={{ 
-                                maxHeight: '50vh',
+                                maxHeight: '35vh',
                                 overflowY: 'auto',
                                 }}>
                                 <div className="editor" id="editor"/>
@@ -202,7 +206,7 @@ function StrudelPlayer() {
                             </div>
                         </div>
 
-                        <div className="col-md-4 rightPanel bg-foreground" id="rightPanel">
+                        <div className="col-md-4 bg-foreground">
                             {/* the nav menu for right panel -- should control whats in box below on page and be highlighted when active */}
                             <div className="menuNavBar row">
                                 <MenuButtons theme={themeDropdown} defaultValue={activeBtn} onClick={(e) => {
@@ -210,26 +214,26 @@ function StrudelPlayer() {
                                     //console.log("activeBtn : " + e);
                                 }}/>
                             </div>
-                            <div className="mb-4">
+                            <div className="rightPanel" id="rightPanel">
                                 {/* rather than selectively loading them, menu panel will just show and hide them respectively */}
                                 <div className="HelpPanel bg-foreground" style={{ display: (activeBtn === "helpBtn") ? 'block' : 'none' }}>
                                     < HelpPanel />
                                 </div>
-                                <div className="ControlPanel bg-foreground" style={{ display: (activeBtn === "controlBtn") ? 'block' : 'none' }}>
+                                <div className="ControlPanel bg-foreground" id="rightPanel" style={{ display: (activeBtn === "controlBtn") ? 'block' : 'none' }}>
                                     {/* < ControlPanel 
                                         onUpdate={handleThisChange}
                                         onHandleGeneric={onHandleGeneric}
                                     /> */}
                                     <div className="importExportBtns mb-4" role="group" id="menuPanelStuff1" aria-label="Control panel">
                                         <div className="row" id="menuPanel">
-                                            <div className="btn-group" role="group" id="menuBtns" aria-label="Menu buttons">
+                                            <div className="btn-group" role="group" id="" aria-label="Menu buttons">
                                                 <button href="#" style={{ textAlign:'center', maxWidth:'25%' }} id="exportJSON" className="btn container ioBtnRow" onClick={(e) => {
                                                     //exportJSON();
                                                 }}>Export JSON</button>
                                                 <button className="btn container ioBtnRow" style={{ textAlign:'center', maxWidth:'25%' }} id="importJSON" onClick={(e) => {
                                                     //importJSON();
                                                 }}>Import JSON</button>
-                                                <div className="container ioBtnRow" disabled style={{ textAlign:'center', width:'5%' }} ></div>
+                                                <div className="container ioBtnRow dontShow" disabled style={{ textAlign:'center', width:'5%' }} ></div>
                                                 <button id="reset" className="btn container ioBtnRow" onClick={handleResetCode} style={{ textAlign:'center', maxWidth:'33%' }}>Restore Default</button>
                                             </div>
                                         </div>

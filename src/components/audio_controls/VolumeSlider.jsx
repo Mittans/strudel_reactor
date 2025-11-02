@@ -8,7 +8,7 @@ function VolumeSlider({ volume, setVolume, onHandleVolume}) {
                 setVolume(e.target.value);
                 onHandleVolume(e);
             }}/>
-            <span className="input-group-text menu_label_value" id="volume_label">{(volume*100).toFixed(0)}%</span>
+            <span className="input-group-text menu_label_subject_minor" id="volume_label">{(volume*100).toFixed(0)}%</span>
         </div>
     )
 }

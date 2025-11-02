@@ -53,12 +53,23 @@
 }
 
 * {
-  
   background-color: var(--secondaryColour) !important; /* important overrides span/input-group-text */
   color: var(--textColor);
-  border-color: yellow !important;
+  border-color: yellow !important; /* if we see yellow, somethings wrong */
+  max-height: 100% !important; /* Ensure html and body take up full viewport height */
+  min-height: 0% !important;
 }
 
+html, body {
+  
+  height: 100% !important; /* Ensure html and body take up full viewport height */
+  min-height: 100% !important;
+  width: 100% !important;
+  padding-bottom:0.01%;
+  overflow-x:hidden !important;
+  overflow-y:hidden !important;
+  
+}
 /* unselected menu buttons */
 .btn-unselected {
   color: var(--quaternaryColour) !important;
@@ -80,8 +91,9 @@
 
 
 /* right panel foreground, essentially */
-.bg-foreground, .rightPanel, .btn-group, .menu-panel, .row, .input-group {
+.bg-foreground, .btn-group, .menu-panel, .row, .input-group {
   background-color: var(--primaryColour) !important;
+  
 }
 
 /* menu buttons and row they're on */
@@ -96,24 +108,26 @@
 
 /* header buttons = play,stop,pre-process,proc&play */
 .headerButtons {
-  color: var(--unSelectedMenuButtonTextColor) !important;
+  color: var(--quaternaryColour) !important;
   background-color: var(--tertiaryColour) !important;
   border-color: var(--tertiaryColour) !important;
 }
 
 .headerButtons:hover {
-  color: var(--selectedMenuButtonTextColor) !important;
+  color: var(--editorTextColour) !important;
   background-color: var(--tertiaryColour) !important;
   border-color: var(--tertiaryColour) !important;
 }
 
 .menuRoot {
   background-color: pink !important;
+  
 }
 
 .settingTitle {
   background-color: var(--primaryColour) !important;
-  margin-bottom: 2px;
+  margin-bottom: 1vh;
+  
 }
 
 /* for buttons on import/export/reset row */
@@ -133,21 +147,66 @@
 .bg-header, .main {
   color: var(--editorTextColour) !important;
   background-color: var(--tertiaryColour) !important;
+  
+  
 }
 
-.header.container-fluid {
-  padding-top: 2px; /* extends the top header row (with the play/proc buttons) to top of page */
+.dontShow:hover {
   background-color: var(--primaryColour) !important;
 }
 
-.form-control.editor {
-  border-color: var(--secondaryColour) !important; /* hides weird border around lhs text area */
+/* "Strudel Demo" */
+.bg-header b {
+  color: var(--quaternaryColour) !important;
+  
+}
+
+
+.header.container-fluid {
+  padding-top: 1vh; /* extends the top header row (with the play/proc buttons) to top of page */
+  background-color: var(--primaryColour) !important;
+  
+}
+
+/* unprocessed code text area */
+.form-control.editor, #proc {
+  border-color: var(--tertiaryColour) !important; /* hides weird border around lhs text area */
   color: var(--editorTextColour) !important;
+  height: 50vh;
+  overflow-y:scroll;
+}
+
+.processedCodePanel {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+#menuBtns {
+  background-color: var(--tertiaryColour) !important;
+}
+
+/* processed code box */
+.left-panel, .cm_scroller, .processedCodePanel, .form-control.editor {
+  height: 45.375vh; /* this is to get rid of that useless white space on the bottom of the page */
+  overflow-x:hidden !important;
+}
+
+/* scrollbar for the right panel */
+.rightPanel #rightPanel {
+  height: 90vh; /* this is to get rid of that useless white space on the bottom of the page */
+  width:100%;
+  padding-bottom:20px;
+  overflow-y:auto !important;
 }
 
 /* enforces no borders between input labels & their connected values - sliders, text, etc */
 .input-group-text, .menu_label_value {
   border-color: var(--secondaryColour) !important;
+  
+}
+
+.menuBtns {
+  width:10px !important;
 }
 
 .input-group-text {
@@ -162,6 +221,7 @@
 }
 
 .dropdown-item {
+  
   color: var(--quaternaryColour) !important;
 }
 
@@ -216,31 +276,33 @@
 
 /* custom for menu labels to sync their widths  */
 .menu_label_subject {
-  width: 110px;
-  height: 38px;
+  width: 13vh;
+  height: 5vh;
 }
 
-.menu_label_value, .span {
-  width: 70px;
-  height: 38px;
+.menu_label_value, .menu_label_subject_minor, .span {
+  width: 8.5vh;
+  height: 5vh;
   background-color: var(--secondaryColour);
   color: var(--quaternaryColour) !important;
   border-color: var(--foreground);
-  
   font-family: var(--font); 
 }
 
 .proc {
   resize: none;
-  font-size: 18px;
-  
+}
+
+.form-check-input {
+  border-color: var(--secondaryColour) !important;
 }
 
 .editor {
   display: block;
   background-color: var(--secondaryColour); 
-  font-size: 18px; 
   font-family: monospace;
+  overflow:auto !important;
+
 }
 /* .cm-line {
   font-size: 4px;
