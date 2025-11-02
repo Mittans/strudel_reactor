@@ -13,15 +13,10 @@ function DJControls() {
                 />
             </div>
 
-            <label htmlFor="volume_range" className="form-label">Volume</label>
-            <input
-                type="range"
-                className="form-range"
-                min="0"
-                max="1"
-                step="0.01"
-                id="volume_range"
-            />
+            <div className="volume-container">
+                <label htmlFor="volume_range" className="form-label">Volume</label>
+                <input type="range" className="form-range" min="0" max="1" step="0.01" id="volume_range" />
+            </div>
 
             <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="s1" />

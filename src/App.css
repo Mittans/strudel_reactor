@@ -37,7 +37,7 @@
   }
 }
 
-/*Play & Stop Buttons Styling*/
+/* Play & Stop Buttons Styling */
 .btn-group {
     display: flex;
     justify-content: center;
@@ -75,3 +75,24 @@
     box-shadow: 0px 0px 40px #dc3545;
 }
 
+/*Volume Component Styling*/
+.volume-container {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+#volume_range {
+    flex-grow: 1;
+    height: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    background: linear-gradient( to right, red, orange, yellow, lime, cyan, blue, magenta );
+    transition: background 0.30s ease;
+}
+
+#volume_range:hover {
+    transform: scale(1.03);
+}
