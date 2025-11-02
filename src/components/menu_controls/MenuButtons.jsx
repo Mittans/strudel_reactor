@@ -3,7 +3,7 @@ const defaultBtn = "controlBtn"; // this adds... almost nothing except for very 
 let lastBtnId = defaultBtn;
 let targetBtnId = null;
 
-function MenuButtons({ activeBtn, onClick }) {
+function MenuButtons({ activeBtn, onClick, theme }) {
     function handleMenuButton(e) {
         targetBtnId = e["target"].id;
         lastBtnId = (lastBtnId == null) ? e["target"].id : lastBtnId;
@@ -15,7 +15,7 @@ function MenuButtons({ activeBtn, onClick }) {
 
     return (
         <>
-            <div className="btn-group menu_buttons" role="group" id="menuBtns" aria-label="Menu buttons">
+            <div className="btn-group menu_buttons" role="group"  id="menuBtns" aria-label="Menu buttons">
                 <button className={`btn btn-${(defaultBtn === "helpBtn") ? "secondary" : "light" }`} id="helpBtn" onClick={(e) => {
                     handleMenuButton(e);
                     }}>Help</button>

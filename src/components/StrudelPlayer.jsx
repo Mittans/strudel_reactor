@@ -94,7 +94,8 @@ function StrudelPlayer() {
     
     // func being referenced from inside component function can't be a "function ..." it has to be a const
     const onHandleTheme = (e) => {
-        console.log("handleTheme is being called in StrudelPlayer?");
+        console.log("Switched theme.");
+        //setTheme((themeDropdown === "Light" ? "Dark" : "Light"));
     }
 
     function handleSettings(codeString) {
@@ -169,7 +170,7 @@ function StrudelPlayer() {
     }
 
     return (
-        <div>
+        <div data-theme={themeDropdown}>
             <h2 className="header container-fluid">
                 <div className="mt-2 row">
                     <b className="col" style={{ maxWidth:'85%' }}>Strudel Demo</b>
@@ -204,7 +205,7 @@ function StrudelPlayer() {
                         <div className="col-md-4 bg-white" id="rightPanel">
                             {/* the nav menu for right panel -- should control whats in box below on page and be highlighted when active */}
                             <div className="menuNavBar row bg-light">
-                                <MenuButtons defaultValue={activeBtn} onClick={(e) => {
+                                <MenuButtons theme={themeDropdown} defaultValue={activeBtn} onClick={(e) => {
                                     setActiveBtn(e)
                                     //console.log("activeBtn : " + e);
                                 }}/>
@@ -228,8 +229,8 @@ function StrudelPlayer() {
                                                 <button className="btn container" style={{ textAlign:'center', maxWidth:'25%' }} id="importJSON" onClick={(e) => {
                                                     //importJSON();
                                                 }}>Import JSON</button>
-                                                <div className="container" disabled style={{ textAlign:'center', Width:'25%' }} ></div>
-                                                <button id="reset" className="btn container" onClick={handleResetCode} style={{ textAlign:'center', Width:'25%' }} >Restore Default</button>
+                                                <div className="container" disabled style={{ textAlign:'center', width:'5%' }} ></div>
+                                                <button id="reset" className="btn container" onClick={handleResetCode} style={{ textAlign:'center', maxWidth:'33%' }}>Restore Default</button>
                                             </div>
                                         </div>
                                     </div>
@@ -238,9 +239,11 @@ function StrudelPlayer() {
                                         setVolume={setVolume}
                                         cpm={cpm}
                                         setCPM={setCPM}
+
                                         onHandleGeneric={onHandleGeneric}
                                         onHandleVolume={onHandleVolume}
                                         onHandleCPM={onHandleCPM}
+                                        theme={themeDropdown}
                                     />
                                     
                                     < DJControls
@@ -248,10 +251,12 @@ function StrudelPlayer() {
                                         setCodeFontSize={setCodeFontSize}
                                         themeDropdown={themeDropdown}
                                         setThemeDropdown={setThemeDropdown}
+
                                         onHandleGeneric={onHandleGeneric}
                                         onHandleTheme={onHandleTheme}
                                         onHandleFontSize={onHandleFontSize}
                                         onHandleResetControls={onHandleResetControls}
+                                        theme={themeDropdown}
                                     />
                                 </div>
                                 <div className="ConsolePanel" style={{ display: (activeBtn === "consoleBtn") ? 'block' : 'none' }}>

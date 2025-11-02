@@ -1,4 +1,23 @@
 
+[data-theme="Light"] {
+  --background: green !important;
+  --foreground: green !important;
+  /* --color-bg: #ffffff;
+  --color-fg: #000000; */
+}
+
+[data-theme="Dark"] {
+  --background: red !important;
+  --foreground: red !important;
+  --font: 'Courier New', Courier, monospace !important; 
+  /* --color-bg: #000000;
+  --color-fg: #ffffff; */
+}
+
+*, div, span, .form-check, .input-group-text, .h6 {
+  font-family: var(--font); 
+}
+
 .App {
   text-align: center;
 }
@@ -39,9 +58,19 @@
 }
 
 /* custom for menu labels to sync their widths  */
-.menu_label {
+.menu_label_subject {
   width: 110px;
   height: 38px;
+}
+
+.menu_label_value, .span {
+  width: 70px;
+  height: 38px;
+  background-color: var(--background);
+  color: var(--foreground);
+  border-color: var(--foreground);
+  
+  font-family: var(--font); 
 }
 
 .proc {
