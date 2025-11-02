@@ -14,6 +14,7 @@ import MasterControls from './components/MasterControls'
 import PlayButtons from './components/PlayButtons';
 import ProcButtons from './components/ProcButtons'
 import PreprocessTextArea from './components/PreprocessTextArea'
+import getCycleData from './utils/getCycleData'
 
 let globalEditor = null;
 
@@ -24,32 +25,9 @@ const handleD3Data = (event) => {
 export default function StrudelDemo() {
     const hasRun = useRef(false);
     const handlePlay = () => {globalEditor.evaluate()};
-    const handleStop = () => { globalEditor.stop() };
+    const handleStop = () => {globalEditor.stop()};
     const [songText, setSongText] = useState(stranger_tune);
-
-    // Extract Cycle Speed
-    useEffect(() => {
-        // Get the last used cycle interval (per minute or second)
-        const cpmLastIndex = songText.lastIndexOf('setcpm(');
-        const cpsLastIndex = songText.lastIndexOf('setcps(');
-        const lastUsedCycleIndex = Math.max(cpmLastIndex, cpsLastIndex);
-        const isCycleFound = lastUsedCycleIndex != -1;
-        const isCycleInMinutes = cpmLastIndex > cpsLastIndex;
-
-        if (isCycleFound) {
-            const startIndex = songText.indexOf('(', lastUsedCycleIndex) + 1;
-            const endIndex = songText.indexOf(')', startIndex)
-
-            const cycleTextValue = songText.slice(startIndex, endIndex);
-            try {
-                const cycleValue = eval(cycleTextValue);
-                console.log(cycleValue);
-            } catch {
-                console.log("Invalid Cycle Value");
-            }
-        }
-
-    }, [songText])
+    const [cycleData, setCycleData] = useState(getCycleData(songText));
 
     // Demo Effect
     useEffect(() => {
@@ -87,6 +65,9 @@ export default function StrudelDemo() {
             document.getElementById('proc').value = stranger_tune
         }
         globalEditor.setCode(songText);
+
+        setCycleData(getCycleData(songText));
+        console.log(cycleData.text);
     }, [songText]);
 
 
@@ -115,7 +96,7 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <MasterControls />
+                            <MasterControls cycleData={cycleData} />
                         </div>
                     </div>
                 </div>
