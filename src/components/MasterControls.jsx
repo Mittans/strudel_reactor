@@ -14,8 +14,9 @@
                 </div>
             </div>
 
-            <label htmlFor="volume-range" className="form-label">Master Volume</label>
-            <input type="range" className="form-range" min="0" max="1" step="0.01" id="volume-range"/>
+            {/* Removed incomplete component to merge into main*/}
+            {/*<label htmlFor="volume-range" className="form-label">Master Volume</label>*/}
+            {/*<input type="range" className="form-range" min="0" max="1" step="0.01" id="volume-range"/>*/}
         </>
     );
 }
