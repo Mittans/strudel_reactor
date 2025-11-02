@@ -1,5 +1,5 @@
 import "./App.css";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { StrudelMirror } from "@strudel/codemirror";
 import { evalScope } from "@strudel/core";
 import { drawPianoroll } from "@strudel/draw";
@@ -24,14 +24,6 @@ const handleD3Data = (event) => {
   console.log(event.detail);
 };
 
-// export function ProcAndPlay() {
-//     if (globalEditor != null && globalEditor.repl.state.started == true) {
-//         console.log(globalEditor)
-//         Proc()
-//         globalEditor.evaluate();
-//     }
-// }
-
 export function Proc() {
   let proc_text = document.getElementById("proc").value;
   let proc_text_replaced = proc_text.replaceAll("<p1_Radio>", ProcessText);
@@ -41,9 +33,9 @@ export function Proc() {
 
 export function ProcessText(match, ...args) {
   let replace = "";
-  // if (document.getElementById("flexRadioDefault2").checked) {
-  //   replace = "_";
-  // }
+  if (document.getElementById("flexRadioDefault2").checked) {
+     replace = "_";
+   }
 
   return replace;
 }
@@ -51,6 +43,15 @@ export function ProcessText(match, ...args) {
 export default function StrudelDemo() {
   const hasRun = useRef(false);
 
+  // Add tracks status
+  const [tracks, setTracks] = useState({
+    bassline: "ON",
+    main_arp: "ON",
+    drums: "ON",
+    drums2: "ON"
+  })
+
+  // Playback controls
   const handlePlay = () => {
     globalEditor.evaluate();
   };
@@ -59,6 +60,7 @@ export default function StrudelDemo() {
     globalEditor.stop();
   };
 
+  // Preprocess controls
   const handlePreprocess = () => {
     Proc();
   };
