@@ -1,4 +1,254 @@
 
+[data-theme="Debug"] {
+  --secondaryColour: red !important; /* darkest colour; text area + code editor + setting buttons  */ 
+  --foreground: blue !important; /* unused */
+  --primaryColour: yellow !important; /* lightest colour; right hand panel colour */
+  --tertiaryColour: orange !important; /* between darkest, lightest; header + menu panel control button colours */
+  --quaternaryColour: green !important; /* should be lighter than main text colour */
+
+  --editorTextColour: black !important;
+  --rightPanelTextColour: black !important;
+
+  /* only change these below 2 to change panel menu buttons text colour */
+  --menuPanelPrim: white; 
+  --menuPanelSec: black;
+
+  --unSelectedMenuButtonTextColor: var(--menuPanelSec) !important;
+  --selectedMenuButtonTextColor: var(--menuPanelPrim) !important;
+}
+
+[data-theme="Light"] {
+  --secondaryColour: #f6fffe !important; /* darkest colour; text area + code editor + setting buttons  */ 
+  --foreground: blue !important; /* unused */
+  --primaryColour: #e2e2e2 !important; /* lightest colour; right hand panel colour */
+  --tertiaryColour: #c4c4c4 !important; /* between darkest, lightest; header + menu panel control button colours */
+  --quaternaryColour: black !important; /* should be lighter than main text colour */
+
+  --editorTextColour: black;
+  --rightPanelTextColour: white;
+
+  --menuPanelPrim: black;
+  --menuPanelSec: white;
+
+  --unSelectedMenuButtonTextColor: var(--menuPanelSec) !important;
+  --selectedMenuButtonTextColor: var(--menuPanelPrim) !important;
+}
+
+[data-theme="Dark"] {
+  --secondaryColour: #30292f !important;
+  --foreground: red !important;
+  --primaryColour: #413f54 !important;
+  --tertiaryColour: #393442 !important;
+  --quaternaryColour: #dad8e9 !important;
+
+  --editorTextColour: white;
+  --rightPanelTextColour: white;
+
+  --menuPanelPrim: black;
+  --menuPanelSec: white;
+
+  --unSelectedMenuButtonTextColor: var(--menuPanelSec) !important;
+  --selectedMenuButtonTextColor: var(--menuPanelPrim) !important;
+}
+
+* {
+  background-color: var(--secondaryColour) !important; /* important overrides span/input-group-text */
+  color: var(--textColor);
+  border-color: var(--menuPanelPrim) !important; /* if we see yellow, somethings wrong */
+  max-height: 100% !important; /* Ensure html and body take up full viewport height */
+  min-height: 0% !important;
+}
+
+html, body {
+  
+  height: 100% !important; /* Ensure html and body take up full viewport height */
+  min-height: 100% !important;
+  width: 100% !important;
+  padding-bottom:0.01%;
+  overflow-x:hidden !important;
+  overflow-y:hidden !important;
+  
+}
+/* unselected menu buttons */
+.btn-unselected {
+  color: var(--quaternaryColour) !important;
+  background-color: var(--tertiaryColour) !important;
+  border-color: var(--tertiaryColour) !important;
+}
+.btn-unselected:hover {
+  color: var(--quaternaryColour) !important;
+  background-color: var(--primaryColour) !important;
+  border-color: var(--primaryColour) !important;
+}
+
+/* selected menu buttons */
+.btn-selected {
+  color: var(--unSelectedMenuButtonTextColor) !important;
+  background-color: var(--primaryColour) !important;
+  border-color: var(--primaryColour) !important;
+}
+
+
+/* right panel foreground, essentially */
+.bg-foreground, .btn-group, .menu-panel, .row, .input-group {
+  background-color: var(--primaryColour) !important;
+  
+}
+
+/* menu buttons and row they're on */
+.menu_buttons, .menuNavBar.row {
+  background-color: var(--tertiaryColour) !important;
+}
+
+/* other than the controls panel, they all have a box with text & other stuff in */
+.menuJustTextBox p, a, .menuJustTextBox{
+  background-color: var(--primaryColour) !important;
+}
+
+/* header buttons = play,stop,pre-process,proc&play */
+.headerButtons {
+  color: var(--quaternaryColour) !important;
+  background-color: var(--tertiaryColour) !important;
+  border-color: var(--tertiaryColour) !important;
+}
+
+.headerButtons:hover {
+  color: var(--editorTextColour) !important;
+  background-color: var(--tertiaryColour) !important;
+  border-color: var(--tertiaryColour) !important;
+}
+
+.menuRoot {
+  background-color: pink !important;
+  
+}
+
+.settingTitle {
+  background-color: var(--primaryColour) !important;
+  margin-bottom: 1vh;
+  
+}
+
+/* for buttons on import/export/reset row */
+.ioBtnRow {
+  color: var(--unSelectedMenuButtonTextColor) !important;
+  background-color: var(--primaryColour) !important;
+  border-color: var(--primaryColour) !important;
+}
+
+.ioBtnRow:hover {
+  color: var(--quaternaryColour) !important;
+  background-color: var(--tertiaryColour) !important;
+  border-color: var(--tertiaryColour) !important;
+}
+
+/* part with title & play/proc buttons */
+.bg-header, .main {
+  color: var(--editorTextColour) !important;
+  background-color: var(--tertiaryColour) !important;
+  
+  
+}
+
+.dontShow:hover {
+  background-color: var(--primaryColour) !important;
+}
+
+/* "Strudel Demo" */
+.bg-header b {
+  color: var(--primaryColour) !important;
+  
+}
+
+.container {
+  background-color: var(--primaryColour) !important;
+}
+
+#controls_reset {
+  color: var(--editorTextColour);
+  background-color: var(--tertiaryColour) !important;
+  border-color: var(--tertiaryColour) !important;
+}
+
+.header.container-fluid {
+  padding-top: 1vh; /* extends the top header row (with the play/proc buttons) to top of page */
+  background-color: var(--quaternaryColour) !important;
+  
+}
+
+/* unprocessed code text area */
+.form-control.editor, #proc {
+  border-color: var(--tertiaryColour) !important; /* hides weird border around lhs text area */
+  color: var(--editorTextColour) !important;
+  height: 50vh;
+  overflow-y:scroll;
+}
+
+.processedCodePanel {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+}
+
+#menuBtns {
+  background-color: var(--tertiaryColour) !important;
+}
+
+/* processed code box */
+.left-panel, .cm_scroller, .processedCodePanel, .form-control.editor {
+  height: 45.375vh; /* this is to get rid of that useless white space on the bottom of the page */
+  overflow-x:hidden !important;
+}
+
+/* scrollbar for the right panel */
+.rightPanel #rightPanel {
+  height: 90vh; /* this is to get rid of that useless white space on the bottom of the page */
+  width:100%;
+  padding-bottom:20px;
+  overflow-y:auto !important;
+}
+
+/* enforces no borders between input labels & their connected values - sliders, text, etc */
+.input-group-text, .menu_label_value {
+  border-color: var(--secondaryColour) !important;
+  
+}
+
+.menuBtns {
+  width:10px !important;
+}
+
+.input-group-text {
+  background-color: var(--tertiaryColour) !important;
+  border-color: var(--tertiaryColour) !important;
+  color: var(--editorTextColour) !important;
+}
+
+/* inner (value) part of setting inputs */
+.menu_label_value {
+  background-color: var(--secondaryColour) !important;
+}
+
+.dropdown-item {
+  color: var(--quaternaryColour) !important;
+  border-color: var(--quaternaryColour) !important;
+}
+
+.dropdown-menu.show {
+  color: var(--secondaryColour) !important;
+  border-color: var(--secondaryColour) !important;
+  background-color: var(--secondaryColour) !important;
+}
+
+.dropdown-item:hover {
+  color: var(--editorTextColour) !important;
+  background-color: var(--tertiaryColour) !important;
+}
+
+/* .div, .btn, span#cpm_label, .form-control, .input-group-text, .input-group, .h6, .menu_label_subject, .menu_label_value {
+  color: pink !important;
+  
+} */
+
 .App {
   text-align: center;
 }
@@ -39,22 +289,34 @@
 }
 
 /* custom for menu labels to sync their widths  */
-.menu_label {
-  width: 110px;
-  height: 38px;
+.menu_label_subject {
+  width: 13vh;
+  height: 5vh;
+}
+
+.menu_label_value, .menu_label_subject_minor, .span {
+  width: 8.5vh;
+  height: 5vh;
+  background-color: var(--secondaryColour);
+  color: var(--quaternaryColour) !important;
+  border-color: var(--foreground);
+  font-family: var(--font); 
 }
 
 .proc {
   resize: none;
-  font-size: 18px;
-  
+}
+
+.form-check-input {
+  border-color: var(--secondaryColour) !important;
 }
 
 .editor {
   display: block;
-  background-color: var(--background); 
-  font-size: 18px; 
+  background-color: var(--secondaryColour); 
   font-family: monospace;
+  overflow:auto !important;
+
 }
 /* .cm-line {
   font-size: 4px;
@@ -64,8 +326,8 @@
   text-align: center;
 }
 
-.header {
-  color: black;
+/* .header {
+  color: black !important;
   height: 60px;
   
-}
+} */

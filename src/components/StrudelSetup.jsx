@@ -182,8 +182,8 @@ export const handleProcPlay = async () => {
 
 export const handleReset = () => {
     handleStop();
+    strudelEditor.setCode(stranger_tune);
     console.log("handleReset triggered");
-    //document.getElementById('proc').value = defaultTune;
     // @TODO: this needs to reset settings, too! otherwise we're allowing for errors 
     //strudelRef.current.setCode(defaultTune);
 }

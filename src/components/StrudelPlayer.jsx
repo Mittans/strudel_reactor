@@ -61,8 +61,8 @@ function StrudelPlayer() {
     const [ cpm, setCPM ] = useState(120);
 
     // dj_controls
-    const [ themeDropdown, setThemeDropdown] = useState("Light"); // light is default for maximum effect
-    const [ codeFontSize, setCodeFontSize ] = useState(18);
+    const [ themeDropdown, setThemeDropdown] = useState("Dark"); // light is default for maximum effect
+    const [ codeFontSize, setCodeFontSize ] = useState(14);
 
     // on load the player needs to setup the strudel
     useEffect((e) => {
@@ -79,9 +79,12 @@ function StrudelPlayer() {
 
     // handles setting changes
     useEffect((e) => {
+        
         console.log("Second useEffect in StrudelPlayer called");
-        document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
-        document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`;
+        onHandleFontSize();
+        //document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
+        
+        //document.getElementById("proc").style = `resize: none; font-size: `+codeFontSize+`px;`;
         
     });
 
@@ -94,7 +97,8 @@ function StrudelPlayer() {
     
     // func being referenced from inside component function can't be a "function ..." it has to be a const
     const onHandleTheme = (e) => {
-        console.log("handleTheme is being called in StrudelPlayer?");
+        console.log("Switched theme.");
+        //setTheme((themeDropdown === "Light" ? "Dark" : "Light"));
     }
 
     function handleSettings(codeString) {
@@ -103,22 +107,26 @@ function StrudelPlayer() {
     }
 
     function onHandleFontSize() {
+        let padding = codeFontSize * 2;
         // font size
-        console.log("onHandleFontSize called");
         document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
-        document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`;
+        //document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`+`paddingLeft:`+codeFontSize+`px;\``;
+        document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`+`padding-left:`+padding+`px;`;
     }
 
     function handleResetCode() {
         setSongText(stranger_tune);
+        setCodeFontSize(14);
+        Proc();
     }
 
     function onHandleResetControls() {
         console.log("onHandleResetControls called");
-        setCodeFontSize(18);
-        setCPM(120);
+        setCodeFontSize(14);
+        
         setVolume(0.5);
-        setThemeDropdown("Light");
+        setThemeDropdown("Dark");
+        
         setGlobalVolume(0.5);
         setGlobalCPM(120);
         document.getElementById("checkbox_1").checked = document.getElementById("checkbox_1").defaultChecked;
@@ -169,11 +177,11 @@ function StrudelPlayer() {
     }
 
     return (
-        <div>
-            <h2 className="header container-fluid">
-                <div className="mt-2 row">
-                    <b className="col" style={{ maxWidth:'85%' }}>Strudel Demo</b>
-                    <div className="col-auto">
+        <div className="bg-header" data-theme={themeDropdown}>
+            <h2 className="container-fluid bg-header">
+                <div className="row bg-header">
+                    <b className="col bg-header" style={{ maxWidth:'85%' }}>Strudel Demo</b>
+                    <div className="col-auto bg-header">
                         <PlayButtons onPlay={handlePlay} onStop={handleStop} />
                         <ProcButtons onProc={handleProc} onProcPlay={handleProcPlay} onReset={handleReset} />
                     </div>
@@ -182,7 +190,7 @@ function StrudelPlayer() {
             <main>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-8" id="leftPanel">
+                        <div className="col-md-8 main" id="leftPanel">
                             {/* <StrudelPlayer 
                                     songText={songText} 
                                     strudelRef={strudelRef} 
@@ -190,10 +198,10 @@ function StrudelPlayer() {
                             <div className="unprocessedTextPanel" id="editorPanel" style={{ maxHeight: '50vh', overflowY: 'auto'}}>
                                 {/* e knows where it is because it knows where it isn't.
                                 ... not really, i'm assuming e just has a reference to self or smth */}
-                                <PreprocessTextArea songText={songText} setSongText={setSongText}/>
+                                <PreprocessTextArea songText={songText} setSongText={setSongText} />
                             </div>
                             <div className="processedCodePanel" id="codePanel" style={{ 
-                                maxHeight: '50vh',
+                                maxHeight: '35vh',
                                 overflowY: 'auto',
                                 }}>
                                 <div className="editor" id="editor"/>
@@ -201,35 +209,35 @@ function StrudelPlayer() {
                             </div>
                         </div>
 
-                        <div className="col-md-4 bg-white" id="rightPanel">
+                        <div className="col-md-4 bg-foreground">
                             {/* the nav menu for right panel -- should control whats in box below on page and be highlighted when active */}
-                            <div className="menuNavBar row bg-light">
-                                <MenuButtons defaultValue={activeBtn} onClick={(e) => {
+                            <div className="menuNavBar row">
+                                <MenuButtons theme={themeDropdown} defaultValue={activeBtn} onClick={(e) => {
                                     setActiveBtn(e)
                                     //console.log("activeBtn : " + e);
                                 }}/>
                             </div>
-                            <div className="mb-4">
+                            <div className="rightPanel" id="rightPanel">
                                 {/* rather than selectively loading them, menu panel will just show and hide them respectively */}
-                                <div className="HelpPanel" style={{ display: (activeBtn === "helpBtn") ? 'block' : 'none' }}>
+                                <div className="HelpPanel bg-foreground" style={{ display: (activeBtn === "helpBtn") ? 'block' : 'none' }}>
                                     < HelpPanel />
                                 </div>
-                                <div className="ControlPanel" style={{ display: (activeBtn === "controlBtn") ? 'block' : 'none' }}>
+                                <div className="ControlPanel bg-foreground" id="rightPanel" style={{ display: (activeBtn === "controlBtn") ? 'block' : 'none' }}>
                                     {/* < ControlPanel 
                                         onUpdate={handleThisChange}
                                         onHandleGeneric={onHandleGeneric}
                                     /> */}
                                     <div className="importExportBtns mb-4" role="group" id="menuPanelStuff1" aria-label="Control panel">
                                         <div className="row" id="menuPanel">
-                                            <div className="btn-group btn-light" role="group" id="menuBtns" aria-label="Menu buttons">
-                                                <button href="#" style={{ textAlign:'center', maxWidth:'25%' }} id="exportJSON" className="btn container" onClick={(e) => {
+                                            <div className="btn-group" role="group" id="" aria-label="Menu buttons">
+                                                <button href="#" style={{ textAlign:'center', maxWidth:'25%' }} id="exportJSON" className="btn container ioBtnRow" onClick={(e) => {
                                                     //exportJSON();
                                                 }}>Export JSON</button>
-                                                <button className="btn container" style={{ textAlign:'center', maxWidth:'25%' }} id="importJSON" onClick={(e) => {
+                                                <button className="btn container ioBtnRow" style={{ textAlign:'center', maxWidth:'25%' }} id="importJSON" onClick={(e) => {
                                                     //importJSON();
                                                 }}>Import JSON</button>
-                                                <div className="container" disabled style={{ textAlign:'center', Width:'25%' }} ></div>
-                                                <button id="reset" className="btn container" onClick={handleResetCode} style={{ textAlign:'center', Width:'25%' }} >Restore Default</button>
+                                                <div className="container ioBtnRow dontShow" disabled style={{ textAlign:'center', width:'5%' }} ></div>
+                                                <button id="reset" className="btn container ioBtnRow" onClick={handleResetCode} style={{ textAlign:'center', maxWidth:'33%' }}>Restore Default</button>
                                             </div>
                                         </div>
                                     </div>
@@ -238,9 +246,11 @@ function StrudelPlayer() {
                                         setVolume={setVolume}
                                         cpm={cpm}
                                         setCPM={setCPM}
+
                                         onHandleGeneric={onHandleGeneric}
                                         onHandleVolume={onHandleVolume}
                                         onHandleCPM={onHandleCPM}
+                                        theme={themeDropdown}
                                     />
                                     
                                     < DJControls
@@ -248,16 +258,18 @@ function StrudelPlayer() {
                                         setCodeFontSize={setCodeFontSize}
                                         themeDropdown={themeDropdown}
                                         setThemeDropdown={setThemeDropdown}
+
                                         onHandleGeneric={onHandleGeneric}
                                         onHandleTheme={onHandleTheme}
                                         onHandleFontSize={onHandleFontSize}
                                         onHandleResetControls={onHandleResetControls}
+                                        theme={themeDropdown}
                                     />
                                 </div>
-                                <div className="ConsolePanel" style={{ display: (activeBtn === "consoleBtn") ? 'block' : 'none' }}>
+                                <div className="ConsolePanel bg-foreground" style={{ display: (activeBtn === "consoleBtn") ? 'block' : 'none' }}>
                                     < ConsolePanel />
                                 </div>
-                                <div className="SourcePanel" style={{ display: (activeBtn === "sourceBtn") ? 'block' : 'none' }}>
+                                <div className="SourcePanel bg-foreground" style={{ display: (activeBtn === "sourceBtn") ? 'block' : 'none' }}>
                                     < SourcePanel />
                                 </div>
                             </div>
@@ -269,7 +281,7 @@ function StrudelPlayer() {
                 {/* this should only appear when errors detected -- relies on a conditionals state to show */}
                 < ErrorTextArea errorText={errorText} setErrorText={setErrorText} />
                 {/* { showErrText ? < ErrorTextArea defaultValue={showErrText} /> : null } */}
-                <canvas id="roll"></canvas>
+                <canvas hidden id="roll"></canvas>
             </main >
         </div >
     );
