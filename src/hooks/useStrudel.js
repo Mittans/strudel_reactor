@@ -14,6 +14,7 @@ export function useStrudel(intitalTune) {
 
   const [isRandomHitsOn, setIsRandomHitsOn] = useState(false);
   const [isShapeValueOn, setIsShapeValueOn] = useState(false);
+  const [isCrushValueOn, setIsCrushValueOn] = useState(false);
 
   const hasInit = useRef(false);
 
@@ -173,6 +174,15 @@ export function useStrudel(intitalTune) {
     });
   }
 
+  function toggleBitReduction() {
+    toggleEffect({
+      name: "crushValue",
+      onValue: "4",
+      offValue: "8",
+      setEffect: setIsCrushValueOn,
+    });
+  }
+
   const handleProcChange = (e) => {
     const newCode = e.target.value;
     setProcValue(newCode);
@@ -196,7 +206,9 @@ export function useStrudel(intitalTune) {
     changeInstrumentsCombination,
     toggleRandonHits,
     toggleShapeValue,
+    toggleBitReduction,
     isRandomHitsOn,
     isShapeValueOn,
+    isCrushValueOn,
   };
 }

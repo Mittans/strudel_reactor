@@ -33,8 +33,10 @@ export default function App() {
     changeInstrumentsCombination,
     toggleRandonHits,
     toggleShapeValue,
+    toggleBitReduction,
     isRandomHitsOn,
     isShapeValueOn,
+    isCrushValueOn,
   } = useStrudel(stranger_tune);
 
   return (
@@ -75,8 +77,10 @@ export default function App() {
                 <EffectPanel
                   toggleRandonHits={toggleRandonHits}
                   toggleShapeValue={toggleShapeValue}
+                  toggleBitReduction={toggleBitReduction}
                   isRandomHitsOn={isRandomHitsOn}
                   isShapeValueOn={isShapeValueOn}
+                  isCrushValueOn={isCrushValueOn}
                 />
               </div>
             </div>

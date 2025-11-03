@@ -5,8 +5,10 @@ import PanelToggle from "../ui/PanelToggle";
 export default function EffectPanel({
   toggleRandonHits,
   toggleShapeValue,
+  toggleBitReduction,
   isRandomHitsOn,
   isShapeValueOn,
+  isCrushValueOn,
 }) {
   const effects = [
     {
@@ -20,6 +22,12 @@ export default function EffectPanel({
       id: 1,
       onClick: toggleRandonHits,
       isActive: isRandomHitsOn,
+    },
+    {
+      label: "Reduct Bit",
+      id: 2,
+      onClick: toggleBitReduction,
+      isActive: isCrushValueOn,
     },
   ];
 

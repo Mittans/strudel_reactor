@@ -41,6 +41,7 @@ const volume = 0.80
 const reverb = 0.25
 const randomHits = 0
 const shapeValue = 0
+const crushValue = 8
 
 bassline:
 note(pick(basslines, bass))
@@ -91,6 +92,7 @@ stack(
   .gain(volume)
   .degradeBy(randomHits)
   .shape(shapeValue)
+  .crush(crushValue) 
 
 
 drums2: 
@@ -112,6 +114,7 @@ stack(
   .postgain(volume)
   .degradeBy(randomHits)
   .shape(shapeValue)
+.scramble(4)
   
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
