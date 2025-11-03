@@ -1,18 +1,14 @@
+import InstrumentControls from "./instrument-controls";
+
 function DJControls() {
     return (
         <>
-            <div className="form-check">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" defaultChecked />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                    p1: ON
-                </label>
+            <div className="form-check form-switch">
+                <label class="form-check-label" for="instrumentSwitch">p1</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="instrumentSwitch" />
             </div>
-            <div className="form-check">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                    p1: HUSH
-                </label>
-            </div>
+
+            <InstrumentControls/>
         </>
     );
 }
