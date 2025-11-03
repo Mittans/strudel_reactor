@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -14,9 +14,14 @@ import { SlideInputs } from './components/input/SlideInputs';
 import {Effects} from './components/input/Effects';
 import SaveModal from './components/modal/saveModal';
 import { Instrument } from './components/input/Instrument';
-import {Graph} from './components/graph/Graph'
+import {Graph} from './components/graph/Graph';
+import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 
 let globalEditor = null;
+
+const handleD3Data = (event) => {
+    console.log(event.detail);
+};
 
 export function ProcAndPlay() {
   if (globalEditor != null && globalEditor.repl.state.started == true) {
@@ -28,13 +33,6 @@ export function ProcAndPlay() {
 
 export function updateGainInCode(newGain) {
   const procText = document.getElementById("proc").value;
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
-
-let globalEditor = null;
-
-const handleD3Data = (event) => {
-    console.log(event.detail);
-};
 
   // Replace all existing .gain(number)
   const updatedText = procText.replace(/\.gain\(\s*[\d.]+\s*\)/g, `.gain(${newGain})`);
@@ -91,9 +89,7 @@ export default function StrudelDemo() {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [musicList, setMusicList] = useState([]);
 
-
-useEffect(() => {
-
+  useEffect(() => {
     if (!hasRun.current) {
         document.addEventListener("d3Data", handleD3Data);
         console_monkey_patch();
@@ -124,16 +120,10 @@ useEffect(() => {
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
                 },
             });
-            
-        document.getElementById('proc').value = stranger_tune
-        SetupButtons()
-        Proc()
-      })();
-      document.getElementById('proc').value = stranger_tune
-      setMusicList(getAllMusic())
-    }
-  
-  }, []);
+          }
+          setMusicList(getAllMusic())
+          Proc();
+      });
 
   const handlePlay = () => {
     const editorValue = document.getElementById("proc").value;
@@ -349,10 +339,9 @@ useEffect(() => {
           </div>
           <Graph/>
         </div>
-
+        <canvas id="roll"></canvas>
       </main >
     </div >
 );
-
 
 }
