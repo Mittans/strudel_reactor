@@ -17,6 +17,19 @@ export function SetupButtons() {
             Proc()
             editor.evaluate()
         }
+
     }
     )
+    const vol = document.getElementById('volume_slider');
+    const cpm = document.getElementById('cpm_input');
+
+    const reevalIfPlaying = () => {
+        if (editor && editor.repl?.state?.started) {
+            Proc();
+            editor.evaluate();
+        }
+    };
+
+    vol?.addEventListener('input', reevalIfPlaying);   
+    cpm?.addEventListener('change', reevalIfPlaying);
 }

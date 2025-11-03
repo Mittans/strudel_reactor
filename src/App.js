@@ -8,7 +8,7 @@ import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import console_monkey_patch, { getD3Data } from './console-monkey-patch'; 
 import DJControls from './components/DJControls';
 import PauseAndPlay from './components/PauseAndPlay';
 import ProcButtons from './components/ProcButtons';
@@ -19,9 +19,6 @@ import { handleD3Data } from './utils/d3Handler';
 import { SetupButtons } from './utils/buttons';
 import { Proc } from './utils/proc';
 import { setGlobalEditor } from './utils/globalEditor';
-
-
-
 
 
 

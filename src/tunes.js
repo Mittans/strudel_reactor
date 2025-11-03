@@ -1,4 +1,4 @@
-export const stranger_tune = `setcps(140/60/4)
+export const stranger_tune = `setcps(<CPM>/60/4)
 
 samples('github:algorave-dave/samples')
 samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
@@ -93,6 +93,9 @@ stack(
   .speed(0.5)
   .rarely(jux(rev)),
 )
+
+all(x => x.gain(<VOLUME>))
+
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())

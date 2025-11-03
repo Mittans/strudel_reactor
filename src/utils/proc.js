@@ -13,11 +13,24 @@ export function Proc() {
     const editor = getGlobalEditor();
     if (!editor) {
         return;
+
+
     }
 
 
     let proc_text = document.getElementById('proc').value
+
+    const volumeEl = document.getElementById('volume_slider');
+    const cpmEl = document.getElementById('cpm_input');
+    const currentVolume = volumeEl ? volumeEl.value : "0.8";
+    const currentCPM = cpmEl ? cpmEl.value : "120";
+
     let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
+
+    proc_text_replaced = proc_text_replaced
+        .replaceAll('<VOLUME>', currentVolume)
+        .replaceAll('<CPM>', currentCPM);
+
     ProcessText(proc_text);
     editor.setCode(proc_text_replaced)
 }
