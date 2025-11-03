@@ -1,9 +1,11 @@
 import { useEffect, useRef } from "react";
-import { initStrudel, webaudioOutput, getAudioContext, transpiler, evalScope, registerSynthSounds, initAudioOnFirstClick } from "@strudel/web";
-import { StrudelMirror } from "@strudel/codemirror";
-import { registerSoundfonts } from "@strudel/soundfonts";
-import { drawPianoroll } from "@strudel/draw";
-import { stranger_tune } from "../assets/tunes";
+import { StrudelMirror } from '@strudel/codemirror';
+import { evalScope } from '@strudel/core';
+import { drawPianoroll } from '@strudel/draw';
+import { initAudioOnFirstClick } from '@strudel/webaudio';
+import { transpiler } from '@strudel/transpiler';
+import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
+import { registerSoundfonts } from '@strudel/soundfonts';
 
 
 function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
@@ -26,7 +28,6 @@ function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
         const drawTime = [-2, 2]; // Time window
 
         (async () => {
-        await initStrudel();
 
         editorRef.current = new StrudelMirror({
             defaultOutput: webaudioOutput,
@@ -50,17 +51,15 @@ function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
             },
         });
 
-        if (procText) editorRef.current.setCode(procText);
-        else editorRef.current.setCode(stranger_tune);
         })();
 
         
         document.addEventListener("d3Data", handleD3Data);
 
-        return () => {
-        document.removeEventListener("d3Data", handleD3Data);
-        editorRef.current?.stop?.();
-        };
+        // return () => {
+        // document.removeEventListener("d3Data", handleD3Data);
+        // editorRef.current?.stop?.();
+        // };
     }, []);
 
     useEffect(() => {
