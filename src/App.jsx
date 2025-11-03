@@ -5,7 +5,6 @@ import { stranger_tune } from "./tunes";
 import { useStrudel } from "./hooks/useStrudel";
 
 // import components
-import ToggleControls from "./components/ToggleControls";
 import Header from "./components/Header";
 import StatusBar from "./components/status/StatusBar";
 import ControlPanel from "./components/controllers/ControlPanel";
@@ -14,6 +13,7 @@ import MixerPanel from "./components/controllers/MixerPanel";
 import PatternPanel from "./components/controllers/PatternPanel";
 import BassPanel from "./components/controllers/BassPanel";
 import InstrumentsPanel from "./components/controllers/InstrumentsPanel";
+import EffectPanel from "./components/controllers/EffectPanel";
 
 export default function App() {
   const {
@@ -31,6 +31,10 @@ export default function App() {
     changeReverb,
     reverb,
     changeInstrumentsCombination,
+    toggleRandonHits,
+    toggleShapeValue,
+    isRandomHitsOn,
+    isShapeValueOn,
   } = useStrudel(stranger_tune);
 
   return (
@@ -68,7 +72,12 @@ export default function App() {
                 />
               </div>
               <div>
-                <BassPanel changeBass={changeBass} />
+                <EffectPanel
+                  toggleRandonHits={toggleRandonHits}
+                  toggleShapeValue={toggleShapeValue}
+                  isRandomHitsOn={isRandomHitsOn}
+                  isShapeValueOn={isShapeValueOn}
+                />
               </div>
             </div>
           </>

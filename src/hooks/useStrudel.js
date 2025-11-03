@@ -12,6 +12,9 @@ export function useStrudel(intitalTune) {
   const [bass, setBass] = useState(0);
   const [reverb, setReverb] = useState(0.25);
 
+  const [isRandomHitsOn, setIsRandomHitsOn] = useState(false);
+  const [isShapeValueOn, setIsShapeValueOn] = useState(false);
+
   const hasInit = useRef(false);
 
   const [procValue, setProcValue] = useState(intitalTune);
@@ -127,6 +130,49 @@ export function useStrudel(intitalTune) {
     });
   }
 
+  // ---- Toggle between effect ------------------------------------------------------
+  function toggleEffect({ name, onValue, offValue, setEffect }) {
+    const ON = `const ${name} = ${onValue}`;
+    const OFF = `const ${name} = ${offValue}`;
+
+    setProcValue((prev) => {
+      // Check if effect is currently ON
+      const isCurrentlyOn = prev.includes(ON);
+      setEffect(!isCurrentlyOn);
+
+      // replace the randomHits
+      let newCode = isCurrentlyOn
+        ? prev.replace(ON, OFF)
+        : prev.replace(OFF, ON);
+
+      // Save and run the song with new changes
+      strudelActions.setCode(newCode);
+      if (isPlaying) {
+        strudelActions.evaluate();
+      }
+
+      return newCode;
+    });
+  }
+
+  function toggleRandonHits() {
+    toggleEffect({
+      name: "randomHits",
+      onValue: "0.25",
+      offValue: "0",
+      setEffect: setIsRandomHitsOn,
+    });
+  }
+
+  function toggleShapeValue() {
+    toggleEffect({
+      name: "shapeValue",
+      onValue: '"<0 0.2 0.4 0.8>*2"',
+      offValue: "0",
+      setEffect: setIsShapeValueOn,
+    });
+  }
+
   const handleProcChange = (e) => {
     const newCode = e.target.value;
     setProcValue(newCode);
@@ -148,5 +194,9 @@ export function useStrudel(intitalTune) {
     changeReverb,
     reverb,
     changeInstrumentsCombination,
+    toggleRandonHits,
+    toggleShapeValue,
+    isRandomHitsOn,
+    isShapeValueOn,
   };
 }

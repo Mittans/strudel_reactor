@@ -39,6 +39,8 @@ const pattern = 0
 const bass = 0
 const volume = 0.80
 const reverb = 0.25
+const randomHits = 0
+const shapeValue = 0
 
 bassline:
 note(pick(basslines, bass))
@@ -49,6 +51,8 @@ note(pick(basslines, bass))
 .room(0.4)
 .postgain(pick(gain_patterns, pattern))
 .gain(volume)
+.degradeBy(randomHits)
+.shape(shapeValue)
 
 
 main_arp: 
@@ -60,6 +64,8 @@ note(pick(arpeggiator2, "<0 1 2 3>/2"))
 .lpenv(3.3)
 .postgain(pick(gain_patterns, pattern))
 .gain(volume)
+.degradeBy(randomHits)
+.shape(shapeValue)
 
 
 drums:
@@ -81,7 +87,11 @@ stack(
   s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2")
   .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
   .postgain(.25),
-).gain(volume)
+)
+  .gain(volume)
+  .degradeBy(randomHits)
+  .shape(shapeValue)
+
 
 drums2: 
 stack(
@@ -98,7 +108,10 @@ stack(
   .hpf(1000)
   .speed(0.5)
   .rarely(jux(rev)),
-).postgain(volume)
+)
+  .postgain(volume)
+  .degradeBy(randomHits)
+  .shape(shapeValue)
   
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
