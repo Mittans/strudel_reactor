@@ -233,9 +233,8 @@ function StrudelPlayer() {
                                                 <button href="#" style={{ textAlign:'center', maxWidth:'25%' }} id="exportJSON" className="btn container ioBtnRow" onClick={(e) => {
                                                     //exportJSON();
                                                 }}>Export JSON</button>
-                                                <button className="btn container ioBtnRow" style={{ textAlign:'center', maxWidth:'25%' }} id="importJSON" onClick={(e) => {
-                                                    //importJSON();
-                                                }}>Import JSON</button>
+                                                <input hidden id="fileUploadElement" onChange={importJSON} type="file" />
+                                                <label for="fileUploadElement" className="btn container ioBtnRow" style={{ textAlign:'center', maxWidth:'25%' }} id="importJSON" >Import JSON</label>
                                                 <div className="container ioBtnRow dontShow" disabled style={{ textAlign:'center', width:'5%' }} ></div>
                                                 <button id="reset" className="btn container ioBtnRow" onClick={handleResetCode} style={{ textAlign:'center', maxWidth:'33%' }}>Restore Default</button>
                                             </div>
