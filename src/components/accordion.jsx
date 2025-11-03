@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import { BsChevronDown } from "react-icons/bs";
-import { BsChevronUp } from "react-icons/bs";
+import { BsPlusLg } from "react-icons/bs";
+import { BsDashLg } from "react-icons/bs";
 
 function Accordion ( {component, text} ) {
     const [isHidden, setIsHidden] = useState(false);
 
     const [buttonText, setButtonText] = useState('Hide ' + text);
-    const [buttonIcon, setButtonIcon] = useState(<BsChevronUp />);
+    const [buttonIcon, setButtonIcon] = useState(<BsDashLg />);
 
     const toggleHidden = (event) => {
         setIsHidden(!isHidden);
@@ -17,11 +17,11 @@ function Accordion ( {component, text} ) {
 
         if (!isHidden){
             setButtonText('Show ' + text);
-            setButtonIcon(<BsChevronUp />)
+            setButtonIcon(<BsPlusLg />)
         }
         else {
             setButtonText('Hide ' + text);
-            setButtonIcon(<BsChevronDown />)
+            setButtonIcon(<BsDashLg />)
         }
     };
 
