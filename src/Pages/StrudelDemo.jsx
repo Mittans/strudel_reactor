@@ -7,10 +7,8 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import { stranger_tune } from '../tunes';
+import { stranger_tune } from '../Storage/tunes';
 import console_monkey_patch, { getD3Data } from '../console-monkey-patch';
-
-
 
 
 //Components
@@ -74,11 +72,13 @@ export default function StrudelDemo() {
         handlePlay();
     };
 
+    //music code takes too much space, reduce the space and expand the space to the right, make it 50/50
 
-    //created a varible called song text and used setSongText as a setter and songText as getter
+
+    //created a varible called song data and used songData as a setter and songData as getter
     //used it like that so that all react hooks are fired when we call the function
     //use empty string as initial value
-    const [songData, setSongData] = useState(stranger_tune)
+    const [songData, setSongData] = useState(stranger_tune) //there is only one music called stranger_tune in the storage folder. Inital music 
 
     //volume state and setter. Initially set to 50.
     const [volume, setVolume] = useState(50);
@@ -136,9 +136,6 @@ export default function StrudelDemo() {
     }, [songData, volume]); // Runs again when songData or volume updates
 
 
-
-
-
     return (
         <div>
             <h2>Strudel Demo</h2>
@@ -149,6 +146,7 @@ export default function StrudelDemo() {
                         <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                             {/*onChange={(e) => setSongText(e.target.value) as there are two preprocess component, using (e) specifies the target  */}
                             <Preprocess defaultValue={songData} onChange={(e) => setSongData(e.target.value)} />
+
 
 
                             {/* calls the Preprocess class*/}

@@ -14,6 +14,8 @@ function PlayButtons({ onPlay, onStop }) {
                     <button id="stop" className="btn btn-danger px-4" onClick={onStop}>
                         <i className="bi bi-stop-fill"></i> Stop
                     </button>
+
+                
                 </div>
             </div>
         </>

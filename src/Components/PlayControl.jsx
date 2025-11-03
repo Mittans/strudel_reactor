@@ -50,6 +50,7 @@ function PlayControl({ volume, onVolumeChange }) {
                         </div>
                     </div>
                 </div>
+                
 
 
                 <div className="d-flex gap-2 mt-3 my-5">
