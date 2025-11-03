@@ -5,9 +5,6 @@ export function ControlButtons(props){
         <div>
             <nav className="flex justify-end">
               <div className="p-2">
-                <Process id="process" handleProc={props.handleProc}></Process>
-              </div>
-              <div className="p-2">
                 <ProPlay id="process_play" handleProcPlay={props.handleProcPlay}></ProPlay>
               </div>
               {props.isPlay ? (

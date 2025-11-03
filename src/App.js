@@ -9,13 +9,14 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import { ControlButtons } from './components/buttons/ControlButtons';
-import { CRUDManager } from './components/buttons/CRUDManager';
 import { SlideInputs } from './components/input/SlideInputs';
 import {Effects} from './components/input/Effects';
 import SaveModal from './components/modal/saveModal';
 import { Instrument } from './components/input/Instrument';
 import {Graph} from './components/graph/Graph';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import { SongNameController } from './components/controllers/SongNameController';
+import { ButtonShowController } from './components/controllers/ButtonShowController';
 
 let globalEditor = null;
 
@@ -69,25 +70,11 @@ export function ProcessText(match, ...args) {
   return replace
 }
 
-export function getAllMusic(){
-  const musicList = [];
-  for (let i = 0; i < localStorage.length; i++) {
-    const musicSong = localStorage.key(i);
-    if (musicSong !== "codemirror-settings") {
-      musicList.push(musicSong);
-    }
-    
-  }
-
-  return musicList
-}
-
 export default function StrudelDemo() {
 
   const hasRun = useRef(false);
   const [isPlay,setIsPlay] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [musicList, setMusicList] = useState([]);
 
   useEffect(() => {
     if (!hasRun.current) {
@@ -121,7 +108,6 @@ export default function StrudelDemo() {
                 },
             });
           }
-          setMusicList(getAllMusic())
           Proc();
       });
 
@@ -138,10 +124,6 @@ export default function StrudelDemo() {
   const handleStop = () => {
     setIsPlay(false);
     globalEditor.stop()
-  }
-
-  const handleProc = () => {
-    Proc()
   }
 
   const handleProcPlay = () => {
@@ -165,38 +147,19 @@ export default function StrudelDemo() {
   }
   // Variable to save text.
   const [text, setText] = useState(stranger_tune);
-
-  // Function to load the text song from local storage.
-  const handleLoad = () => {
-    const song = document.getElementById("songName").value
-    const savedItem = localStorage.getItem(song);
-
-    if (savedItem) {
-      setText(JSON.parse(savedItem));
-      alert("Loaded from local storage");
-    } else {
-      alert("No saved text found");
-    }
-  };
-
-  // Function to delete item from the local storage.
-  const handleDelete = () => {
-    const song = document.getElementById("songName").value;
-    const deletedItem = localStorage.getItem(song);
-    if (deletedItem) {
-      localStorage.removeItem(song);
-      alert("remove from local storage");
-    } else {
-      alert("No deleted item found");
-    }
-
-    window.location.reload(); 
-  };
-
   const [isOnHush,setIsOnHush] = useState(false);
   const [isOpenEffects, setIsOpenEffects] = useState(false);
   const [isOpenInstrument, setIsOpenInstrument] = useState(false);
-  
+  const [isOpenShowTime, setIsOpenShowTime] = useState(false);
+
+  const handleOpenShowTime = () => {
+    if (isOpenShowTime === false) {
+      setIsOpenShowTime(true);
+    } else {
+      setIsOpenShowTime(false);
+    }
+  };
+
   // Function to open the On & Hush
   const handleOnHush = () => {
     if (isOnHush === false) {
@@ -241,7 +204,6 @@ export default function StrudelDemo() {
         {/* The control buttons */}
         <div name="buttons">
           <ControlButtons
-          handleProc={handleProc}
           handleProcPlay={handleProcPlay}
           handleStop={handleStop}
           handlePlay={handlePlay}
@@ -257,48 +219,23 @@ export default function StrudelDemo() {
       <main>
         <div className="container-fluid">
           <div>
-            <div className='flex justify-between mb-2'>
-              <div className='flex'>
-                <select
-                className="text-2xl text-center font-bold bg-gray-200 text-black w-40  rounded-lg" 
-                htmlFor="exampleFormControlTextarea1" 
-                id="songName"
-                >
-                  <option value ="" className="text-sm text-center font-bold bg-gray-200 text-black w-40 rounded-lg" > Untitled </option>
-                  {musicList.map((obj) => (
-                      <option 
-                      className="text-sm text-center font-bold bg-gray-200 text-black w-40 rounded-lg"
-                      value={obj}> 
-                      {obj} 
-                      </option>
-                  ))}
-                </select>
-              
-                <CRUDManager  
-                handleDelete={handleDelete} 
+            <div className='flex justify-between mb-2'>  
+              <SongNameController
+                setText={setText} 
                 modalOpenControl={modalOpenControl} 
-                handleLoad={handleLoad}
-                />
-              </div>
+                />   
+              <SlideInputs onVolumeChange={updateGainInCode} onSpeedChange={updateSpeedInCode} />      
             </div>
+
             <div>
-              <SlideInputs onVolumeChange={updateGainInCode} onSpeedChange={updateSpeedInCode} />
-              <div className='flex justify-center'>
-                <button onClick={handleOnHush} 
-                className={`m-3 text-lg ${isOnHush ? "border border-black bg-black text-yellow-500 px-3 rounded-lg font-bold " : "border border-black bg-white text-black px-3 rounded-lg font-bold"}`}> 
-                ON&HUSH 
-                </button>
-
-                <button onClick={handleOpenEffects} 
-                className={`m-3 text-lg ${isOpenEffects ? "border border-black bg-black text-yellow-500 px-3 rounded-lg font-bold " : "border border-black bg-white text-black px-3 rounded-lg font-bold"}`}> 
-                Effects 
-                </button>
-
-                <button onClick={handleOpenInstrument} 
-                className={`m-3 text-lg ${isOpenInstrument ? "border border-black bg-black text-yellow-500 px-3 rounded-lg font-bold " : "border border-black bg-white text-black px-3 rounded-lg font-bold"}`}> 
-                Instrument
-                </button>
-              </div>
+              <ButtonShowController
+                handleOnHush={handleOnHush}
+                isOnHush={isOnHush}
+                handleOpenEffects={handleOpenEffects}
+                isOpenEffects={isOpenEffects}
+                handleOpenInstrument={handleOpenInstrument}
+                isOpenInstrument={isOpenInstrument}
+              />
 
               <div className={`flex mx-2 bg-black rounded-lg border border-black ${isOnHush ? "" : "hidden"}`}>
                 <div className="m-2 p-2">
@@ -329,12 +266,14 @@ export default function StrudelDemo() {
             </div>
           </div>
 
-          <div>
-            <h2 className='mt-2 text-2xl text-center font-bold'> Showtime </h2>
-          </div>
-          <div className=''>
+          <button className='text-2xl text-center font-bold flex justify-center rounded-lg w-full bg-white border border-black"' 
+          onClick={handleOpenShowTime}> 
+            Showtime 
+          </button>
+  
+          <div className={`${isOpenShowTime ? "" : "hidden"}`}>
             <div className="h-500" style={{ maxHeight: '500', overflowY: 'auto' }}>
-              <div id="editor" />
+              <div id="editor"/>
             </div>
           </div>
           <Graph/>
