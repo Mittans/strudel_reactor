@@ -25,9 +25,12 @@ function PlayControl({ volume, onVolumeChange }) {
 
                 <div className="p-3 rounded-3 bg-white shadow-sm fw-semibold mb-3">
                     <label htmlFor="volume_range" className="form-label">Volume Slider {volume}%</label>
-                    <input type="range" className="form-range" min="0" value={volume} id="volume_range  onChange={(e) => onVolumeChange(Number(e.target.value))}"
+                    <input type="range" className="form-range" min="0" max="100" value={volume} id="volume_range" onChange={(e) => onVolumeChange(Number(e.target.value))}
                     />
                 </div>
+
+
+
 
 
                 <div className="p-3 rounded-3 bg-white shadow-sm fw-semibold mb-3">

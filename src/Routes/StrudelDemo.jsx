@@ -64,7 +64,8 @@ export default function StrudelDemo() {
     // preprocess copies current songData into the editor
     const handlePreprocess = () => {
         if (!editorRef.current) return;
-        editorRef.current.setCode(songData);
+        const volumeController = songData + `\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
+        editorRef.current.setCode(volumeController);
     };
 
     // preprocess then play
@@ -82,11 +83,6 @@ export default function StrudelDemo() {
     //volume state and setter. Initially set to 50.
     const [volume, setVolume] = useState(50);
 
-    //new volume handler to update volume state
-    const newVolumeHandler = (newVolume) => {
-        setVolume(newVolume);
-
-    }
 
     useEffect(() => {
 
@@ -129,15 +125,18 @@ export default function StrudelDemo() {
 
             // Removed document.getElementById('proc').value = stranger_tune because the textarea is now controlled by React state (songData)
             // so its value updates automatically without direct DOM manipulation.
-
-
-            const codeWithVolume = songData + `\nall(x => x.gain(${volume / 100}))`;
-            editorRef.current.setCode(codeWithVolume);
-
         }
-        editorRef.current.setCode(songData)
 
-    }, [songData, volume]); // Added setSongText as a dependency to ensure the effect runs when songText changes hook
+        // Combines song text with volume and log functions
+        const volumeController = songData + `\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
+
+        editorRef.current.setCode(volumeController);
+
+        //Updates Strudel editor with new code  song and volume
+    }, [songData, volume]); // Runs again when songData or volume updates
+
+
+
 
 
     return (
