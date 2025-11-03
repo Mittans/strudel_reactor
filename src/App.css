@@ -1,4 +1,5 @@
 
+
 [data-theme="Debug"] {
   --secondaryColour: red !important; /* darkest colour; text area + code editor + setting buttons  */ 
   --foreground: blue !important; /* unused */
@@ -8,6 +9,7 @@
 
   --editorTextColour: black !important;
   --rightPanelTextColour: black !important;
+  --sliderColour: blue;
 
   /* only change these below 2 to change panel menu buttons text colour */
   --menuPanelPrim: white; 
@@ -22,10 +24,11 @@
   --foreground: blue !important; /* unused */
   --primaryColour: #e2e2e2 !important; /* lightest colour; right hand panel colour */
   --tertiaryColour: #c4c4c4 !important; /* between darkest, lightest; header + menu panel control button colours */
-  --quaternaryColour: black !important; /* should be lighter than main text colour */
+  --quaternaryColour: #000000 !important; /* should be lighter than main text colour */
 
   --editorTextColour: black;
   --rightPanelTextColour: white;
+  --sliderColour: #00000099;
 
   --menuPanelPrim: black;
   --menuPanelSec: white;
@@ -43,6 +46,7 @@
 
   --editorTextColour: white;
   --rightPanelTextColour: white;
+  --sliderColour: #dad8e979;
 
   --menuPanelPrim: black;
   --menuPanelSec: white;
@@ -57,6 +61,7 @@
   border-color: var(--menuPanelPrim) !important; /* if we see yellow, somethings wrong */
   max-height: 100% !important; /* Ensure html and body take up full viewport height */
   min-height: 0% !important;
+  
 }
 
 html, body {
@@ -92,8 +97,51 @@ html, body {
 /* right panel foreground, essentially */
 .bg-foreground, .btn-group, .menu-panel, .row, .input-group {
   background-color: var(--primaryColour) !important;
-  
+  scrollbar-color: var(--secondaryColour) var(--primaryColour) !important; /* right panel only */
 }
+
+
+/* The slider itself */
+.slider {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  background: var(--secondaryColour); /* Grey background */
+  outline: none; /* Remove outline */
+  height: 5vh;
+  cursor:pointer; /* Cursor on hover */
+}
+
+/* Mouse-over effects */
+.slider:hover {
+  cursor:pointer; /* Cursor on hover */
+}
+
+/* The slider handle */
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 1.25vh; /* Set a specific slider handle width */
+  height: 5vh; /* Slider handle height */
+  background: var(--sliderColour); /* Green background */
+}
+
+/* the slider bar itself; user is pointing to a spot to set to, rather than drag to */
+.slider::-webkit-slider-runnable-track {
+  background: var(--secondaryColour); /* Green background */
+  cursor:pointer; /* Cursor hovering over the slider track */
+}
+
+/* when hovering over slider handle */
+.slider::-webkit-slider-thumb:hover {
+  background: var(--quaternaryColour); 
+  cursor: grab;
+}
+
+/* when dragging slider handle */
+.slider::-webkit-slider-runnable-track:active {
+  cursor: grab;
+}
+
 
 /* menu buttons and row they're on */
 .menu_buttons, .menuNavBar.row {
@@ -131,13 +179,13 @@ html, body {
 
 /* for buttons on import/export/reset row */
 .ioBtnRow {
-  color: var(--unSelectedMenuButtonTextColor) !important;
+  color: var(--quaternaryColour) !important;
   background-color: var(--primaryColour) !important;
   border-color: var(--primaryColour) !important;
 }
 
 .ioBtnRow:hover {
-  color: var(--quaternaryColour) !important;
+  color: var(--unSelectedMenuButtonTextColor) !important;
   background-color: var(--tertiaryColour) !important;
   border-color: var(--tertiaryColour) !important;
 }
@@ -156,7 +204,7 @@ html, body {
 
 /* "Strudel Demo" */
 .bg-header b {
-  color: var(--primaryColour) !important;
+  color: var(--editorTextColour) !important;
   
 }
 
@@ -182,6 +230,7 @@ html, body {
   color: var(--editorTextColour) !important;
   height: 50vh;
   overflow-y:scroll;
+  
 }
 
 .processedCodePanel {
@@ -197,6 +246,7 @@ html, body {
 .left-panel, .cm_scroller, .processedCodePanel, .form-control.editor {
   height: 45.375vh; /* this is to get rid of that useless white space on the bottom of the page */
   overflow-x:hidden !important;
+  scrollbar-color: var(--tertiaryColour) var(--secondaryColour) !important; /* affects both editor & processed text areas */
 }
 
 /* scrollbar for the right panel */
@@ -294,7 +344,7 @@ html, body {
   height: 5vh;
 }
 
-.menu_label_value, .menu_label_subject_minor, .span {
+.menu_label_value, .menu_label_subject_minor {
   width: 8.5vh;
   height: 5vh;
   background-color: var(--secondaryColour);
