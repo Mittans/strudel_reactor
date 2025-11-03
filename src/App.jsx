@@ -5,8 +5,12 @@ import Repl from './components/Repl'
 import Strudel from './components/Strudel'
 import Graph from './components/Graph'
 import { extractControlsFromCode, applyControlsToCode, CONTROL_DEFINITIONS } from './utils/controlDefinitions.js'
+import console_monkey_patch from './assets/console-monkey-patch' // ADD THIS
 import './css/App.css'
 import { useState, useRef, useEffect } from 'react';
+
+// Initialize the monkey patch once
+console_monkey_patch(); // ADD THIS
 
 function App() {
     
@@ -16,7 +20,7 @@ function App() {
     const [shouldStop, setShouldStop] = useState(false);
     const [showGraph, setShowGraph] = useState(false);
     const [radioValue, setRadioValue] = useState("on");
-    const [bpmValue, setBpmValue] = useState(140); // NEW: BPM state
+    const [bpmValue, setBpmValue] = useState(140);
 
     const [activeControls, setActiveControls] = useState([]);
     const [controlValues, setControlValues] = useState({});
@@ -30,8 +34,6 @@ function App() {
     const handleProc = () => {
         let replaced = code.replace(`<p1>`, radioValue === "hush" ? "_" : "");
         
-        // NEW: Replace setcps expressions with calculated value
-        // Matches: setcps(number/number/number) or setcps(number)
         const cpsValue = bpmValue / 60 / 4; // Convert BPM to CPS
         replaced = replaced.replace(/setcps\s*\([^)]+\)/g, `setcps(${cpsValue})`);
         
@@ -95,7 +97,6 @@ function App() {
                     <div className='col-4 me-0'>
                         <Presets onPresetLoad={setCode} currentCode={code} />
                         <Strudel
-                            
                             activeControls={activeControls}
                             controlValues={controlValues}
                             onControlChange={(key, val) =>
@@ -104,11 +105,9 @@ function App() {
                             bpmValue={bpmValue}
                             onBpmChange={setBpmValue}
                         />
-
                     </div>
                 </div>
             </main>
-
         </>
     )
 }

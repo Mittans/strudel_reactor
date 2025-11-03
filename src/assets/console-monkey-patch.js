@@ -1,35 +1,40 @@
 let originalLog = null;
 const logArray = [];
 
-
 export default function console_monkey_patch() {
-
-    //If react multicalls this, do nothing
-    if (originalLog) return;
+    // If react multicalls this, do nothing
+    if (originalLog) {
+        console.warn("Monkey patch already applied");
+        return;
+    }
 
     originalLog = console.log;
 
-    //Overwrite console.log function
+    // Overwrite console.log function
     console.log = function (...args) {
-        //Join args with space, default behaviour. Check for [hap], that's a strudel prefix
-        if (args.join(" ").substring(0, 8) === "%c[hap] ")
-        {
-
-            //If so, add it to the Array of values.
-            //Then remove the oldest values once we've hit 100.
-            logArray.push(args.join(" ").replace("%c[hap] ", ""));
+        const message = args.join(" ");
+        
+        // Look for [hap] messages or messages with note: patterns
+        if (message.includes("[hap]") || message.includes("note:")) {
+            console.warn("Captured musical log:", message.substring(0, 100) + "...");
+            
+            // Extract the meaningful part
+            let cleaned = message.replace("%c[hap] ", "").replace("[hap] ", "");
+            
+            logArray.push(cleaned);
 
             if (logArray.length > 100) {
                 logArray.splice(0, 1);
             }
-            //Dispatch a customevent we can listen to in App.js
+            
+            // Dispatch a customevent
             const event = new CustomEvent("d3Data", { detail: [...logArray] });
             document.dispatchEvent(event);
-
+            console.warn("Dispatched d3Data event with", logArray.length, "entries");
         }
+        
         originalLog.apply(console, args);
     };
-
 }
 
 export function getD3Data() {

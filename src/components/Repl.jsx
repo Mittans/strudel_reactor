@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -7,12 +7,30 @@ import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
 
-
-function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
+const Repl = forwardRef(({ procText, shouldPlay, shouldStop, onPlayDone }, ref) => {
     const editorContainerRef = useRef(null);
     const canvasRef = useRef(null);
     const editorRef = useRef(null);
     const hasRun = useRef(false);
+
+    // Expose setCode method to parent via ref
+    useImperativeHandle(ref, () => ({
+        setCode: (code) => {
+            if (editorRef.current && code) {
+                editorRef.current.setCode(code);
+            }
+        },
+        evaluate: () => {
+            if (editorRef.current) {
+                editorRef.current.evaluate();
+            }
+        },
+        stop: () => {
+            if (editorRef.current) {
+                editorRef.current.stop();
+            }
+        }
+    }));
 
     const handleD3Data = (event) => {
         const data = event.detail;
@@ -28,61 +46,58 @@ function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
         const drawTime = [-2, 2]; // Time window
 
         (async () => {
-
-        editorRef.current = new StrudelMirror({
-            defaultOutput: webaudioOutput,
-            getTime: () => getAudioContext().currentTime,
-            transpiler,
-            root: editorContainerRef.current,
-            drawTime,
-            onDraw: (haps, time) => {
-            drawPianoroll({ haps, time, ctx, drawTime, fold: 0 });
-            },
-            prebake: async () => {
-            initAudioOnFirstClick();
-            const loadModules = evalScope(
-                import("@strudel/core"),
-                import("@strudel/draw"),
-                import("@strudel/mini"),
-                import("@strudel/tonal"),
-                import("@strudel/webaudio")
-            );
-            await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
-            },
-        });
-
+            editorRef.current = new StrudelMirror({
+                defaultOutput: webaudioOutput,
+                getTime: () => getAudioContext().currentTime,
+                transpiler,
+                root: editorContainerRef.current,
+                drawTime,
+                onDraw: (haps, time) => {
+                    drawPianoroll({ haps, time, ctx, drawTime, fold: 0 });
+                },
+                prebake: async () => {
+                    initAudioOnFirstClick();
+                    const loadModules = evalScope(
+                        import("@strudel/core"),
+                        import("@strudel/draw"),
+                        import("@strudel/mini"),
+                        import("@strudel/tonal"),
+                        import("@strudel/webaudio")
+                    );
+                    await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+                },
+            });
         })();
 
-        
         document.addEventListener("d3Data", handleD3Data);
 
-        // return () => {
-        // document.removeEventListener("d3Data", handleD3Data);
-        // editorRef.current?.stop?.();
-        // };
+        return () => {
+            document.removeEventListener("d3Data", handleD3Data);
+            // editorRef.current?.stop?.();
+        };
     }, []);
 
     useEffect(() => {
         if (editorRef.current && procText) {
-        editorRef.current.setCode(procText);
+            editorRef.current.setCode(procText);
         }
     }, [procText]);
 
     // Play
     useEffect(() => {
         if (shouldPlay && editorRef.current) {
-        editorRef.current.evaluate();
-        onPlayDone?.();
+            editorRef.current.evaluate();
+            onPlayDone?.();
         }
-    }, [shouldPlay]);
+    }, [shouldPlay, onPlayDone]);
 
     // Stop
     useEffect(() => {
         if (shouldStop && editorRef.current) {
-        editorRef.current.stop();
-        onPlayDone?.();
+            editorRef.current.stop();
+            onPlayDone?.();
         }
-    }, [shouldStop]);
+    }, [shouldStop, onPlayDone]);
 
     return (
         <>
@@ -136,7 +151,6 @@ function Repl({ procText, shouldPlay, shouldStop, onPlayDone }) {
             </div>
         </>
     );
-
-}
+});
 
 export default Repl;
