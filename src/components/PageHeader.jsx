@@ -1,6 +1,6 @@
 import './PageHeader.css';
 
-function PageHeader() {
+function PageHeader({saveJSON, loadJSON}) {
   return (
     <>
     <div className="col-md-12 text-center mt-4 mb-4">
@@ -8,8 +8,8 @@ function PageHeader() {
       <p className="small mt-2">Enhanced by Benjamin Rebbeck: 110447076</p>
     </div>
     <div className="col-md-2">
-        <button class="btn btn-primary me-2">Save JSON</button>
-        <button class="btn btn-primary">Load JSON</button>
+        <button class="btn btn-primary me-2" onClick={saveJSON}>Save JSON</button>
+        <button class="btn btn-primary" onClick={loadJSON}>Load JSON</button>
     </div>
     </>
   );

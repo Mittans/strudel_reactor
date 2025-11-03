@@ -42,6 +42,34 @@ export default function StrudelDemo() {
         strudelRef.current?.evaluate();
     }
 
+    // Json Stroage Implementation
+    function JSONDataString() {
+
+        const controlValues = {
+            strudelCode: strudelCode,
+            cpm: cpm,
+            volume: volume
+        }
+
+        return JSON.stringify(controlValues);
+    }
+
+    function saveApp() {
+        const dataString = JSONDataString();
+        localStorage.setItem('controlData', dataString)
+    }
+
+    function loadApp() {
+        const JSONString = localStorage.getItem('controlData');
+
+        if (JSONString) {
+            const data = JSON.parse(JSONString);
+            setStrudelCode(data.strudelCode);
+            setCpm(data.cpm);
+            setVolume(data.volume);
+        }
+    }
+
     // Updates the REPL when changes in the text preprocessor are entered
     // Updates the CPM in the REPL
     useEffect(() => {
@@ -65,7 +93,7 @@ export default function StrudelDemo() {
 
     return (
         <div className="container-fluid main-container py-4 px-4">
-            <PageHeader />
+            <PageHeader saveJSON={saveApp} loadJSON={loadApp} />
             <br />
             <div className="row g-4 justify-content-center">
                 <div className="col-md-7 col-sm-10">
