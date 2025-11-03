@@ -37,6 +37,7 @@ const Repl = forwardRef(({ procText, shouldPlay, shouldStop, onPlayDone }, ref) 
         console.log("Received d3Data:", data);
     };
 
+    // Initialize StrudelMirror editor
     useEffect(() => {
         if (hasRun.current) return;
         hasRun.current = true;

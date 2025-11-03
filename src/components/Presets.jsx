@@ -94,6 +94,16 @@ function Presets({ onPresetLoad, currentCode }) {
             <button onClick={handleSavePreset} style={{ marginLeft: "10px" }} className="btn btn-success btn-md mb-1 ">
                 Add Preset
             </button>
+
+            {/* Temporary placeholder for delete functionality */}
+            <button onClick={() => {
+                if (!selectedPreset) {
+                    alert("No preset selected to delete.");
+                    return;
+                }
+            }} className="btn btn-danger btn-md mb-3">
+                Delete Preset
+            </button>
         </>
     );
 }

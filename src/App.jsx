@@ -41,11 +41,26 @@ function App() {
     };
 
     const handleProcAndPlay = () => {
-        handleProc();
-        setShouldPlay(true);
+
+        if(code == ""){
+            alert("No code to process and play!");
+            return;
+        }
+        else{
+            handleProc();
+            setShouldPlay(true);
+        }
     };
 
-    const handlePlay = () => setShouldPlay(true);
+    const handlePlay = () => {
+        if(processedCode == '') {
+            alert("Process the code before playing!"); 
+            return;
+        } 
+        else {
+            setShouldPlay(true)
+        }
+    };
     const handleStop = () => setShouldStop(true);
 
     const handlePlayDone = () => {

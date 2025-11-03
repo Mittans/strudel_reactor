@@ -4,13 +4,6 @@ import '../css/Preprocess.css';
 
 function Preprocess({ onChange, value }){
 
-    // const [code, setCode] = useState("");
-
-    // useEffect(() => {
-    //     setCode(stranger_tune);
-    //     onChange?.(stranger_tune);
-    // }, []);
-    
     const handleChange = (e) => {
         // setCode(e.target.value);
         onChange?.(e.target.value);
