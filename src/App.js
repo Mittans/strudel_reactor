@@ -6,6 +6,7 @@ import TextPreprocessor from './components/TextPreprocesser';
 import EditorArea from './components/EditorArea';
 import StrudelPlayer from "./components/StrudelPlayer";
 import { useState, useRef, useEffect } from "react";
+import Swal from 'sweetalert2';
 
 export default function StrudelDemo() {
 
@@ -45,21 +46,34 @@ export default function StrudelDemo() {
     // Updates the REPL when changes in the text preprocessor are entered
     // Updates the CPM in the REPL
     useEffect(() => {
-        if (strudelRef.current) {
-        
-        strudelCode = strudelCode.replace(/setcpm\(.*?\)/, `setcpm(${cpm})`)
-        strudelCode = strudelCode.replace(/.gain\(.*?\)/, `.gain(${volume})`)        
-        strudelRef.current.setCode(strudelCode);
+    if (strudelRef.current) {
+        let updatedCode = strudelCode;
 
-        if (strudelRef.current && strudelRef.current.repl.state.started) {
-            strudelRef.current.evaluate();
+        // Update tempo
+        updatedCode = updatedCode.replace(/setcpm\(.*?\)/, `setcpm(${cpm})`);
+
+        // Update gain()
+        updatedCode = updatedCode.replace(/\.gain\([^)]*\)/g, `.gain(${volume})`);
+
+        setStrudelCode(updatedCode);
+        strudelRef.current.setCode(updatedCode);
+
+        if (strudelRef.current.repl?.state?.started) {
+        strudelRef.current.evaluate();
         }
     }
-    }, [strudelCode, cpm, volume]);
+    }, [cpm, volume]);
 
     return (
         <div className="container-fluid main-container py-4 px-4">
-            <PageHeader />
+            <PageHeader 
+                strudelCode={strudelCode}
+                cpm={cpm}
+                volume={volume}
+                setStrudelCode={setStrudelCode}
+                setCpm={setCpm}
+                setVolume={setVolume}
+            />
             <br />
             <div className="row g-4 justify-content-center">
                 <div className="col-md-7 col-sm-10">
