@@ -31,7 +31,7 @@ export default function App() {
     changeReverb,
     reverb,
     changeInstrumentsCombination,
-    toggleRandonHits,
+    toggleRandomHits,
     toggleShapeValue,
     toggleBitReduction,
     isRandomHitsOn,
@@ -75,7 +75,7 @@ export default function App() {
               </div>
               <div>
                 <EffectPanel
-                  toggleRandonHits={toggleRandonHits}
+                  toggleRandomHits={toggleRandomHits}
                   toggleShapeValue={toggleShapeValue}
                   toggleBitReduction={toggleBitReduction}
                   isRandomHitsOn={isRandomHitsOn}

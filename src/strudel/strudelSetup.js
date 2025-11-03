@@ -63,10 +63,6 @@ export async function initializeStrudel(intialCode) {
   return globalEditor;
 }
 
-export function getGlobalEditor() {
-  return globalEditor;
-}
-
 export const strudelActions = {
   evaluate: () => globalEditor?.evaluate(),
   stop: () => globalEditor?.stop(),

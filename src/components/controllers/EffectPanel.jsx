@@ -3,7 +3,7 @@ import PanelButton from "../ui/PanelButton";
 import PanelToggle from "../ui/PanelToggle";
 
 export default function EffectPanel({
-  toggleRandonHits,
+  toggleRandomHits,
   toggleShapeValue,
   toggleBitReduction,
   isRandomHitsOn,
@@ -20,7 +20,7 @@ export default function EffectPanel({
     {
       label: "Skip Notes",
       id: 1,
-      onClick: toggleRandonHits,
+      onClick: toggleRandomHits,
       isActive: isRandomHitsOn,
     },
     {
@@ -38,6 +38,7 @@ export default function EffectPanel({
       <div className="grid grid-cols-2 gap-3 mt-3">
         {effects.map(({ id, label, onClick, isActive }) => (
           <PanelToggle
+            key={id}
             id={id}
             label={label}
             onClick={onClick}

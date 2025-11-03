@@ -11,6 +11,7 @@ export default function IOAccordion({ procValue, handleProcChange }) {
     <div className="my-6 space-y-4">
       {accordionSections.map((section) => (
         <AccordionItem
+          key={section.id}
           section={section}
           procValue={procValue}
           handleProcChange={handleProcChange}

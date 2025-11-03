@@ -1,16 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { initializeStrudel, strudelActions } from "../strudel/strudelSetup";
-import { getComboOrDefault } from "../config/instrumentCombos";
 
-export function useStrudel(intitalTune) {
+// Get some default settings, effect and combos from config
+import { getComboOrDefault } from "../config/instrumentCombos";
+import { EFFECTS } from "../config/effects";
+import {
+  BASS_DEFAULT,
+  BPM_DEFAULT,
+  PATTERN_DEFAULT,
+  REVERB_DEFAULT,
+  VOLUME_DEFAULT,
+} from "../config/audioDefaults";
+
+export function useStrudel(initialTune) {
   const [isReady, setIsReady] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
-  const [bpm, setBpm] = useState(140);
-  const [volume, setVol] = useState(0.8);
-  const [pattern, setPattern] = useState(0);
-  const [bass, setBass] = useState(0);
-  const [reverb, setReverb] = useState(0.25);
+  const [bpm, setBpm] = useState(BPM_DEFAULT);
+  const [volume, setVol] = useState(VOLUME_DEFAULT);
+  const [pattern, setPattern] = useState(PATTERN_DEFAULT);
+  const [bass, setBass] = useState(BASS_DEFAULT);
+  const [reverb, setReverb] = useState(REVERB_DEFAULT);
 
   const [isRandomHitsOn, setIsRandomHitsOn] = useState(false);
   const [isShapeValueOn, setIsShapeValueOn] = useState(false);
@@ -18,17 +28,17 @@ export function useStrudel(intitalTune) {
 
   const hasInit = useRef(false);
 
-  const [procValue, setProcValue] = useState(intitalTune);
+  const [procValue, setProcValue] = useState(initialTune);
 
-  // ---- Intialize Strudel ------------------------------------------------------
+  // ---- Initialize Strudel ------------------------------------------------------
   useEffect(() => {
     if (!hasInit.current) {
       hasInit.current = true;
-      initializeStrudel(intitalTune).then(() => {
+      initializeStrudel(initialTune).then(() => {
         setIsReady(true);
       });
     }
-  }, [intitalTune]);
+  }, [initialTune]);
 
   // ---- Helper Functions ------------------------------------------------------
   function applyUpdatedCode(currentText, replacedText) {
@@ -156,29 +166,29 @@ export function useStrudel(intitalTune) {
     });
   }
 
-  function toggleRandonHits() {
+  function toggleRandomHits() {
     toggleEffect({
-      name: "randomHits",
-      onValue: "0.25",
-      offValue: "0",
+      name: EFFECTS.randomHits.name,
+      onValue: EFFECTS.randomHits.onValue,
+      offValue: EFFECTS.randomHits.offValue,
       setEffect: setIsRandomHitsOn,
     });
   }
 
   function toggleShapeValue() {
     toggleEffect({
-      name: "shapeValue",
-      onValue: '"<0 0.2 0.4 0.8>*2"',
-      offValue: "0",
+      name: EFFECTS.shapeValue.name,
+      onValue: EFFECTS.shapeValue.onValue,
+      offValue: EFFECTS.shapeValue.offValue,
       setEffect: setIsShapeValueOn,
     });
   }
 
   function toggleBitReduction() {
     toggleEffect({
-      name: "crushValue",
-      onValue: "4",
-      offValue: "8",
+      name: EFFECTS.crushValue.name,
+      onValue: EFFECTS.crushValue.onValue,
+      offValue: EFFECTS.crushValue.offValue,
       setEffect: setIsCrushValueOn,
     });
   }
@@ -204,7 +214,7 @@ export function useStrudel(intitalTune) {
     changeReverb,
     reverb,
     changeInstrumentsCombination,
-    toggleRandonHits,
+    toggleRandomHits,
     toggleShapeValue,
     toggleBitReduction,
     isRandomHitsOn,
