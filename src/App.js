@@ -13,7 +13,6 @@ import { SlideInputs } from './components/input/SlideInputs';
 import {Effects} from './components/input/Effects';
 import SaveModal from './components/modal/saveModal';
 import { Instrument } from './components/input/Instrument';
-import {Graph} from './components/graph/Graph';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import { SongNameController } from './components/controllers/SongNameController';
 import { ButtonShowController } from './components/controllers/ButtonShowController';
@@ -32,29 +31,6 @@ export function ProcAndPlay() {
   }
 }
 
-export function updateGainInCode(newGain) {
-  const procText = document.getElementById("proc").value;
-
-  // Replace all existing .gain(number)
-  const updatedText = procText.replace(/\.gain\(\s*[\d.]+\s*\)/g, `.gain(${newGain})`);
-
-  document.getElementById("proc").value = updatedText;
-  globalEditor.setCode(updatedText);
-  ProcAndPlay();
-}
-
-export function updateSpeedInCode(newSpeed) {
-  const procText = document.getElementById("proc").value;
-
-  // Replace all existing setcps(speed number)
-  const updatedText = procText.replace(/setcps\(\s*[\d.]+\s*\)/g, `setcps(${newSpeed})`);
-
-  document.getElementById("proc").value = updatedText;
-  globalEditor.setCode(updatedText);
-  ProcAndPlay();
-}
-
-
 export function Proc() {
   let proc_text = document.getElementById("proc").value;
   let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
@@ -71,6 +47,32 @@ export function ProcessText(match, ...args) {
 }
 
 export default function StrudelDemo() {
+
+  /* Function updated the volume */
+  function updateGainInCode(newGain) {
+  const procText = document.getElementById("proc").value;
+
+  // Replace all existing .gain(number)
+  const updatedText = procText.replace(/\.gain\(\s*[\d.]+\s*\)/g, `.gain(${newGain})`);
+
+  document.getElementById("proc").value = updatedText;
+  globalEditor.setCode(updatedText);
+  setText(updatedText);
+  ProcAndPlay();
+}
+
+  /* Function updated the Speed*/
+  function updateSpeedInCode(newSpeed) {
+  const procText = document.getElementById("proc").value;
+
+  // Replace all existing setcps(speed number)
+  const updatedText = procText.replace( /setcps\([^)]*\)/, `setcps(${newSpeed})`);
+
+  document.getElementById("proc").value = updatedText;
+  globalEditor.setCode(updatedText);
+  setText(updatedText);
+  ProcAndPlay();
+}
 
   const hasRun = useRef(false);
   const [isPlay,setIsPlay] = useState(false);
@@ -151,12 +153,21 @@ export default function StrudelDemo() {
   const [isOpenEffects, setIsOpenEffects] = useState(false);
   const [isOpenInstrument, setIsOpenInstrument] = useState(false);
   const [isOpenShowTime, setIsOpenShowTime] = useState(false);
+  const [isOpenTextToProcess, setIsOpenTextToProcess] = useState(false);
 
   const handleOpenShowTime = () => {
     if (isOpenShowTime === false) {
       setIsOpenShowTime(true);
     } else {
       setIsOpenShowTime(false);
+    }
+  };
+
+  const handleOpenTextToProcess = () => {
+    if (isOpenTextToProcess === false) {
+      setIsOpenTextToProcess(true);
+    } else {
+      setIsOpenTextToProcess(false);
     }
   };
 
@@ -192,7 +203,7 @@ export default function StrudelDemo() {
   }
 
   return (
-    <div className="bg-yellow-500">
+    <div className="min-h-screen bg-yellow-500">
       <div name="components-bar" className="bg-black p-2 mb-2 flex justify-between">
 
         {/* The title */}
@@ -256,8 +267,13 @@ export default function StrudelDemo() {
               <Instrument isOpenInstrument={isOpenInstrument}/>
             </div>
             <div className='mx-2 mt-4'>
+                <button className={`text-2xl text-center font-bold flex justify-center rounded-lg w-full border border-black ${isOpenTextToProcess ? ("bg-black text-yellow-500") : ("bg-white text-black")}`}
+                onClick={handleOpenTextToProcess}> 
+                  Text to process
+                </button>
+
                 <textarea 
-                  className="w-full border border-black rounded-lg" 
+                  className={`w-full border border-black rounded-lg ${isOpenTextToProcess ? "" : "hidden"}`} 
                   rows="15" 
                   id="proc" 
                   value={text}
@@ -266,19 +282,22 @@ export default function StrudelDemo() {
             </div>
           </div>
 
-          <button className='text-2xl text-center font-bold flex justify-center rounded-lg w-full bg-white border border-black"' 
-          onClick={handleOpenShowTime}> 
-            Showtime 
-          </button>
-  
-          <div className={`${isOpenShowTime ? "" : "hidden"}`}>
-            <div className="h-500" style={{ maxHeight: '500', overflowY: 'auto' }}>
-              <div id="editor"/>
+          <div className='mx-2 mt-4'>
+            <button className={`text-2xl text-center font-bold flex justify-center rounded-lg w-full border border-black ${isOpenShowTime ? ("bg-black text-yellow-500") : ("bg-white text-black") }`}
+            onClick={handleOpenShowTime}> 
+              Show time 
+            </button>
+    
+            <div className={`${isOpenShowTime ? "" : "hidden"}`}>
+              <div className="h-500" style={{ maxHeight: '500', overflowY: 'auto' }}>
+                <div id="editor"/>
+              </div>
             </div>
           </div>
-          <Graph/>
         </div>
-        <canvas id="roll"></canvas>
+        <div className='w-full h-full'>
+          <canvas id="roll"></canvas>
+        </div>
       </main >
     </div >
 );

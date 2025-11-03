@@ -51,7 +51,7 @@ export function SongNameController(props) {
     return (
         <div className='flex p-4'>
             <select
-            className="text-2xl text-center font-bold bg-gray-200 text-black w-40  rounded-lg p-1" 
+            className="text-2xl text-center font-bold bg-gray-200 text-black w-40 rounded-lg" 
             htmlFor="exampleFormControlTextarea1" 
             id="songName"
             >

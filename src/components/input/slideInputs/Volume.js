@@ -1,3 +1,5 @@
+import { CiVolumeHigh, CiVolumeMute } from "react-icons/ci";
+import { FaVolumeDown, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
 export function Volume(props) {
@@ -12,8 +14,16 @@ export function Volume(props) {
     };
 
     return (
-        <div className="m-3 flex items-center border border-black rounded-lg bg-gray-300 p-2">
-            <label className="mr-2 font-medium">Volume:</label>
+        <div className="m-3 flex items-center border border-black rounded-lg bg-black p-2">
+            <label className="mr-2 font-medium"> 
+                {volume === 0 ? (
+                <FaVolumeMute className="text-xl text-yellow-500" />
+                ) : volume < 0.5 ? (
+                <FaVolumeDown className="text-xl text-yellow-500" />
+                ) : (
+                <FaVolumeUp className="text-xl text-yellow-500" />
+                )}
+            </label>
             <input
                 type="range"
                 min="0"
@@ -21,9 +31,9 @@ export function Volume(props) {
                 step="0.01"
                 value={volume}
                 onChange={handleVolumeChange}
-                className="w-48 "
+                className="w-48 accent-yellow-500"
             />
-            <span className="ml-2">{Math.round(volume * 100)}%</span>
+            <span className="ml-2 text-yellow-500">{Math.round(volume * 100)}%</span>
         </div>
     );
 }
