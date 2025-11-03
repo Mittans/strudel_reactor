@@ -11,8 +11,9 @@ import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import AUXControls from './components/AUXControls';
 import PlayButtons from './components/PlayButtons';
-import ProcessButtons from './components/ProcessButtons';
+// import ProcessButtons from './components/ProcessButtons';
 import PreprocessTextArea from './components/PreprocessTextArea';
+
 let globalEditor = null;
 
 const handleD3Data = (event) => {
@@ -33,7 +34,6 @@ export function ProcessText(index, toggles) {
         return name;
     }
 }
-
 
 
 export default function StrudelDemo() {
@@ -97,12 +97,6 @@ export default function StrudelDemo() {
         }
     };
 
-    const handleSongTextChange = (e) => {
-        const newText = e.target.value;
-        setSongText(newText);
-        originalSongTextRef.current = newText;
-    };
-
 
 
     useEffect(() => {
@@ -145,36 +139,31 @@ export default function StrudelDemo() {
     }, [songText]);
 
 
-    return (
-        <div>
-            <h2>Strudel Demo</h2>
-            <main>
-
-                <div className="container-fluid">
-                    <div className="row">
+return (
+    <div>
+        <h2>Strudel Demo</h2>
+        <main>
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-md-8">
                         <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
-                        <div className="col-md-4">
-                            <nav>
-                                {/* <ProcessButtons /> */}
-                                <br />
-                                <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-                            </nav>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                        <div style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                             <div id="editor" />
                             <div id="output" />
                         </div>
-                        <div className="col-md-4">
+                    </div>
+                    <div className="col-md-4">
+                        <nav>
+                            <PlayButtons onPlay={handlePlay} onStop={handleStop} />
                             <AUXControls onToggleChange={handleToggleChange} />
-                        </div>
+                        </nav>
                     </div>
                 </div>
-                <canvas id="roll"></canvas>
-            </main >
-        </div >
-    );
+            </div>
+            <canvas id="roll"></canvas>
+        </main>
+    </div>
+);
 
 
 }
