@@ -45,17 +45,23 @@ export default function StrudelDemo() {
     // Updates the REPL when changes in the text preprocessor are entered
     // Updates the CPM in the REPL
     useEffect(() => {
-        if (strudelRef.current) {
-        
-        strudelCode = strudelCode.replace(/setcpm\(.*?\)/, `setcpm(${cpm})`)
-        strudelCode = strudelCode.replace(/.gain\(.*?\)/, `.gain(${volume})`)        
-        strudelRef.current.setCode(strudelCode);
+    if (strudelRef.current) {
+        let updatedCode = strudelCode;
 
-        if (strudelRef.current && strudelRef.current.repl.state.started) {
-            strudelRef.current.evaluate();
+        // Update tempo
+        updatedCode = updatedCode.replace(/setcpm\(.*?\)/, `setcpm(${cpm})`);
+
+        // Update gain()
+        updatedCode = updatedCode.replace(/\.gain\([^)]*\)/g, `.gain(${volume})`);
+
+        setStrudelCode(updatedCode);
+        strudelRef.current.setCode(updatedCode);
+
+        if (strudelRef.current.repl?.state?.started) {
+        strudelRef.current.evaluate();
         }
     }
-    }, [strudelCode, cpm, volume]);
+    }, [cpm, volume]);
 
     return (
         <div className="container-fluid main-container py-4 px-4">
