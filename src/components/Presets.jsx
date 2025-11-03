@@ -96,14 +96,14 @@ function Presets({ onPresetLoad, currentCode }) {
             </button>
 
             {/* Temporary placeholder for delete functionality */}
-            <button onClick={() => {
+            {/* <button onClick={() => {
                 if (!selectedPreset) {
                     alert("No preset selected to delete.");
                     return;
                 }
             }} className="btn btn-danger btn-md mb-3">
                 Delete Preset
-            </button>
+            </button> */}
         </>
     );
 }

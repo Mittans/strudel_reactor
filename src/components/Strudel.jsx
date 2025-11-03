@@ -1,9 +1,7 @@
 import { CONTROL_DEFINITIONS } from '../utils/controlDefinitions.js';
 
 function Strudel({ activeControls, controlValues, onControlChange, bpmValue, onBpmChange }) {
-    // Calculate the resulting CPS value
-    const cpsValue = (bpmValue / 60 / 4).toFixed(4);
-
+    
     return (
         <>
             <div style={{ width: '75%' }}>

@@ -106,7 +106,7 @@ const Repl = forwardRef(({ procText, shouldPlay, shouldStop, onPlayDone }, ref) 
             <canvas
                 id="roll"
                 ref={canvasRef}
-                height={100}
+                height={50}
                 style={{
                     width: "100%",
                     background:

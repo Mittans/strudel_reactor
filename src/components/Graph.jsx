@@ -30,19 +30,19 @@ function Graph({ showGraph, onClose }) {
 
         function extractValue(line, mode) {
             if (mode === "pitch") {
-                // Extract note like "note:d4"
+                // Extract note pitch
                 const noteMatch = line.match(/note:([a-g]b?\d+)/i);
                 if (noteMatch) {
                     return noteToMidi(noteMatch[1]);
                 }
             } else if (mode === "cutoff") {
-                // Extract cutoff like "cutoff:300"
+                // Extract cutoff
                 const cutoffMatch = line.match(/cutoff:(\d+)/);
                 if (cutoffMatch) {
                     return parseFloat(cutoffMatch[1]);
                 }
             } else if (mode === "attack") {
-                // Extract attack like "attack:0.1"
+                // Extract attack
                 const attackMatch = line.match(/attack:([\d.]+)/);
                 if (attackMatch) {
                     return parseFloat(attackMatch[1]);

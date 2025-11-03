@@ -42,7 +42,7 @@ function App() {
 
     const handleProcAndPlay = () => {
 
-        if(code == ""){
+        if(code === ""){
             alert("No code to process and play!");
             return;
         }
@@ -53,7 +53,7 @@ function App() {
     };
 
     const handlePlay = () => {
-        if(processedCode == '') {
+        if(processedCode === '') {
             alert("Process the code before playing!"); 
             return;
         } 

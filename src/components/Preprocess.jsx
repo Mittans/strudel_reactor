@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { stranger_tune } from '../assets/tunes';
 import '../css/Preprocess.css';
 
 function Preprocess({ onChange, value }){
@@ -13,7 +11,7 @@ function Preprocess({ onChange, value }){
         <>
             <div id='preProcContainer' style={{ maxHeight: '80vh', overflowY: 'auto', maxWidth: '100%'}}>
               <label  id='procLabel' htmlFor="proc" className="form-label fw-bold">Text to Preprocess:</label>
-              <textarea className="form-control" rows="15" id="proc" value={value} onChange={handleChange} ></textarea>
+              <textarea className="form-control" rows="10" id="proc" value={value} onChange={handleChange} ></textarea>
             </div>
         </>
     )
