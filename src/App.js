@@ -11,6 +11,7 @@ import { SlideInputs } from './components/input/SlideInputs';
 import {Effects} from './components/input/Effects';
 import SaveModal from './components/modal/saveModal';
 import { Instrument } from './components/input/Instrument';
+import {Graph} from './components/graph/Graph'
 
 let globalEditor = null;
 
@@ -324,6 +325,7 @@ export default function StrudelDemo() {
               <div id="editor" />
             </div>
           </div>
+          <Graph/>
         </div>
 
       </main >
