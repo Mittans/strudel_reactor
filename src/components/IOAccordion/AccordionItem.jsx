@@ -65,6 +65,13 @@ export default function AccordionItem({
               />
             </div>
           )}
+
+          {/* ---------------- Canvas Display ---------------- */}
+          {section.id === "canvas" && (
+            <div className="w-full flex justify-center">
+              <canvas id="roll" className="block" width={900} height={240} />
+            </div>
+          )}
         </div>
       </div>
     </div>

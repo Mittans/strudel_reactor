@@ -24,7 +24,7 @@ export default function EffectPanel({
       isActive: isRandomHitsOn,
     },
     {
-      label: "Reduct Bit",
+      label: "Reduce Bit",
       id: 2,
       onClick: toggleBitReduction,
       isActive: isCrushValueOn,

@@ -39,9 +39,9 @@ export default function MixerPanel({
       <Slider
         id="tempo-slider"
         label={`Reverb`}
-        min={0.1}
+        min={0.01}
         max={10}
-        step={0.1}
+        step={0.01}
         value={reverb}
         onChange={(e) => onReverbChange(parseFloat(e.target.value))}
       />

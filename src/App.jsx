@@ -91,7 +91,6 @@ export default function App() {
           procValue={procValue}
           handleProcChange={handleProcChange}
         />
-        <canvas id="roll"></canvas>
       </div>
     </div>
   );
