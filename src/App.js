@@ -7,6 +7,8 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import Controls from "./components/controls"; // Importing the nessesary buttons
 import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
+import { FaVolumeUp } from "react-icons/fa"; // Useful for button icons
+
 
 
 
@@ -157,7 +159,7 @@ export default function StrudelDemo() {
                                           slider.style.display === "none" ? "block" : "none";
                                   }}
                               >
-                                  🔊
+                                  <FaVolumeUp />
                               </button>
 
                               <input
