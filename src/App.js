@@ -1,16 +1,21 @@
 import './App.css';
 import { stranger_tune } from './tunes';
 import AudioControls from './components/audio-control/AudioControls';
-import PageTitle from './components/PageTitle';
+import PageHeader from './components/PageHeader';
 import TextPreprocessor from './components/TextPreprocesser';
 import EditorArea from './components/EditorArea';
 import StrudelPlayer from "./components/StrudelPlayer";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export default function StrudelDemo() {
 
     let strudelRef = useRef();
-    const [strudelCode, setStrudelCode] = useState(stranger_tune);
+    let [strudelCode, setStrudelCode] = useState(stranger_tune);
+
+    // CPM Tempo Edit
+    const [cpm, setCpm] = useState(120);
+    // Volume (Gain) Edit
+    const [volume, setVolume] = useState(0.5);
 
     function handlePreprocess() {
         const processed = strudelCode.replaceAll("<p1_Radio>", "_");
@@ -37,30 +42,83 @@ export default function StrudelDemo() {
         strudelRef.current?.evaluate();
     }
 
-return (
-    <div>
-        <PageTitle/>
-        <main>
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <TextPreprocessor defaultText={stranger_tune} onchange={e => setStrudelCode(e.target.value)}/>
-                    </div>
-                    <div className="col-md-4">
-                        <AudioControls
-                        handlePlay={handlePlay}
-                        handleStop={handleStop}
-                        handlePreprocess={handlePreprocess}
-                        handleProcPlay={handleProcPlay}
-                        />
+    // Updates the REPL when changes in the text preprocessor are entered
+    // Updates the CPM in the REPL
+    useEffect(() => {
+        if (strudelRef.current) {
+        
+        strudelCode = strudelCode.replace(/setcpm\(.*?\)/, `setcpm(${cpm})`)
+        strudelCode = strudelCode.replace(/.gain\(.*?\)/, `.gain(${volume})`)        
+        strudelRef.current.setCode(strudelCode);
+
+        if (strudelRef.current && strudelRef.current.repl.state.started) {
+            strudelRef.current.evaluate();
+        }
+    }
+    }, [strudelCode, cpm, volume]);
+
+    return (
+        <div className="container-fluid main-container py-4 px-4">
+            <PageHeader />
+            <br />
+            <div className="row g-4 justify-content-center">
+                <div className="col-md-7 col-sm-10">
+                    <div className="card h-100">
+                        <div className="card-header text-white">
+                            Code Preprocessor
+                        </div>
+                        <div className="card-body d-flex align-items-center justify-content-center">
+                            <TextPreprocessor 
+                                defaultText={strudelCode} 
+                                onchange={e => setStrudelCode(e.target.value)} 
+                            />
+                        </div>
                     </div>
                 </div>
-                <div className="row">
-                    <EditorArea onProc={handleProc}/>
+                <div className="col-md-5 col-sm-10">
+                    <div className="card h-100">
+                        <div className="card-header text-white">
+                            Audio Controls
+                        </div>
+                        <div className="card-body d-flex align-items-center justify-content-center">
+                            <AudioControls
+                                handlePlay={handlePlay}
+                                handleStop={handleStop}
+                                handlePreprocess={handlePreprocess}
+                                handleProcPlay={handleProcPlay}
+                                cpm={cpm}
+                                setCpm={setCpm}
+                                volume={volume}
+                                setVolume={setVolume}
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-7 col-sm-10">
+                    <div className="card h-100">
+                        <div className="card-header text-white">
+                            Strudel Player
+                        </div>
+                        <div className="card-body">
+                            <StrudelPlayer 
+                                strudelCode={strudelCode} 
+                                strudelRef={strudelRef} 
+                            />
+                        </div>
+                    </div>
+                </div>
+                <div className="col-md-5 col-sm-10">
+                    <div className="card h-100">
+                        <div className="card-header text-white">
+                            Editor Area
+                        </div>
+                        <div className="card-body d-flex align-items-center justify-content-center">
+                            <EditorArea onProc={handleProc}/>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <StrudelPlayer strudelCode={stranger_tune} strudelRef={strudelRef}/>
-        </main >
-    </div >
-);
+            <canvas id="roll"></canvas>
+        </div>
+    );
 }

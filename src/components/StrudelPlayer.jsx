@@ -51,13 +51,18 @@ function StrudelPlayer({strudelCode, strudelRef}) {
             strudelMirror.setCode(strudelCode);
             strudelRef.current = strudelMirror;
         }
-    }, [strudelCode]);
+    }, []);
+
+    useEffect(() => {
+        if (strudelRef.current) {
+            strudelRef.current.setCode(strudelCode);
+        }
+    }, [strudelCode])
 
     return (
-        <>
+        <div className="col-md-12" style={{maxHeight: '45vh', overflowY: 'auto'}}>
             <div id="editor"></div>
-            <canvas id="roll"></canvas>
-        </>
+        </div>
     );
 }
 

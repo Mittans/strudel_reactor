@@ -1,10 +1,14 @@
-function ProcessControls({handlePreprocess, handleProcPlay}) {
+function ProcessControls({ handlePreprocess, handleProcPlay }) {
     return (
         <>
-            <button id="process" className="btn btn-outline-primary" onClick={handlePreprocess}>Preprocess</button>
-            <button id="process_play" className="btn btn-outline-primary" onClick={handleProcPlay}>Proc & Play</button>
+            <div className="col-6">
+                <button className="btn btn-primary btn-lg btn-proc w-100" onClick={handlePreprocess}>Preprocess</button>
+            </div>
+            <div className="col-6">
+                <button className="btn btn-primary btn-lg btn-proc w-100" onClick={handleProcPlay}>Proc & Play</button>
+            </div>
         </>
-    )
+    );
 }
 
 export default ProcessControls;

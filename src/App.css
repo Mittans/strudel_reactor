@@ -28,6 +28,33 @@
   color: #61dafb;
 }
 
+/* Boostrap Card Styling */
+
+.main-container {
+  background-color: #000;
+  min-height: 100vh;
+  padding: 40px 20px 80px 20px;
+}
+
+.card {
+  background-color: #000 !important; 
+  color: #fff; 
+  border: 2px solid #0ff;
+  border-radius: 12px;
+  box-shadow: 0 0 5 #0ff, 0 0 10px #00ffff;
+}
+
+.card-header {
+  background-color: #4e4c4cb7 !important;
+  color: #fff;
+  font-weight: bold;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 20px #0ff, 0 0 40px #00ffff;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +62,34 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+#editor {
+  width: 100%;
+  height: 50%;
+  overflow: auto;
+}
+
+#roll {
+  width: 100%;
+  height: 50%; 
+  display: block;
+  object-fit: contain;
+}
+
+/* CSS for button controls */
+
+.audio-controls {
+  width: 100%;
+  padding: 10px;
+}
+
+.btn-stop {
+  background-color: red !important;
+  border-color: red !important;
+}
+
+.btn-play {
+  background-color: green !important;
+  border-color: green! important;
 }
