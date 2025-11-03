@@ -3,7 +3,7 @@ import { FaPlayCircle } from "react-icons/fa";
 
 function ProcButtons({ onPreprocess, onProcAndPlay }) {
   return (
-    <div className="card bg-dark text-light border-0 rounded-4 p-3">
+    <div className="card bg-dark text-light border-0 rounded-4 px-5 py-4">
       <div className="d-flex justify-content-between align-items-center">
         <button className="proc-btn" onClick={onPreprocess}>
           <RiMagicLine className="proc-icon" />

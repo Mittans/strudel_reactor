@@ -1,6 +1,6 @@
 function EffectsControls() {
   return (
-    <div className="my-2">
+    <div className="my-3">
       <div className="row row-cols-2 g-3">
         {/* Room Reverb */}
         <div className="col d-flex align-items-center justify-content-between">

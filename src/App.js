@@ -90,6 +90,34 @@ export default function StrudelDemo() {
     setTracks({ ...tracks, [track]: value });
   };
 
+  // Save to localStorage json
+  const handleSave = () => {
+    try {
+      localStorage.setItem("strudel-settings", JSON.stringify({tracks}));
+      alert("Settings saved!");
+    } catch (error) {
+      alert("Error saving settings");
+    }
+
+  };
+
+  // Load from localStorage json
+  const handleLoad = () => {
+    try {
+      const saved = localStorage.getItem("strudel-settings");
+    if (saved) {
+      const settings = JSON.parse(saved);
+      setTracks(settings.tracks);
+      alert("Settings loaded");
+    } else {
+      alert("No saved settings found!");
+    }
+    } catch (error) {
+      alert("Error loading settings");
+    }
+
+  };
+
   useEffect(() => {
     if (!hasRun.current) {
       document.addEventListener("d3Data", handleD3Data);
@@ -159,10 +187,15 @@ export default function StrudelDemo() {
                 onPreprocess={handlePreprocess}
                 onProcAndPlay={handleProcAndPlay}
               />
-              <PlayButtons onPlay={handlePlay} onStop={handleStop} />
+              <PlayButtons
+                onPlay={handlePlay}
+                onStop={handleStop} />
 
               {/* DJ controls */}
-              <DJControls tracks={tracks} onTrackChange={handleTrackChange} />
+              <DJControls tracks={tracks}
+                onTrackChange={handleTrackChange}
+                onSave={handleSave}
+                onLoad={handleLoad}/>
             </div>
           </div>
         </div>
