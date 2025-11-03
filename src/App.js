@@ -6,6 +6,7 @@ import TextPreprocessor from './components/TextPreprocesser';
 import EditorArea from './components/EditorArea';
 import StrudelPlayer from "./components/StrudelPlayer";
 import { useState, useRef, useEffect } from "react";
+import Swal from 'sweetalert2';
 
 export default function StrudelDemo() {
 
@@ -54,21 +55,99 @@ export default function StrudelDemo() {
         return JSON.stringify(controlValues);
     }
 
-    function saveApp() {
+    async function saveApp() {
         const dataString = JSONDataString();
-        localStorage.setItem('controlData', dataString)
-    }
 
-    function loadApp() {
-        const JSONString = localStorage.getItem('controlData');
+        const { value: name} = await Swal.fire({
+            title: "Save Application Preset",
+            input: "text",
+            inputLabel: "Enter a name for your preset",
+            inputPlaceholder: "e.g. My Cool Song!",
+            confirmButtonText: 'Save',
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return 'Please enter a preset name!';
+                }
+            },
+            confirmButtonColor: '#02f75c',
+            cancelButtonColor: '#f70244'
+        })
 
-        if (JSONString) {
-            const data = JSON.parse(JSONString);
-            setStrudelCode(data.strudelCode);
-            setCpm(data.cpm);
-            setVolume(data.volume);
+        if (name) {
+            localStorage.setItem(`${name}_JSON`, dataString)
+
+            Swal.fire({
+                title: 'Saved!',
+                text: `Your preset ${name} has been saved!`,
+                icon: 'success',
+            })
         }
     }
+
+    async function loadApp() {
+
+        // Filters to only json presets
+        const keys = Object.keys(localStorage).filter(key => key.endsWith("_JSON"));
+
+        if (keys.length == 0) {
+            Swal.fire("No saved presents", "You haven't saved a preset yet!", "info");
+            return;
+        }
+
+        // Prompts which preset to load
+        const { value: chosenKey } = await Swal.fire({
+            title: "Select a preset",
+            input: "select",
+            inputOptions: keys.reduce((acc, key) => {
+                acc[key] = key;
+                return acc;
+            }, {}),
+            showCancelButton: true,
+            confirmButtonText: "Select",
+            cancelButtonText: "Cancel"
+        });
+
+        // Prompts to either load or delete preset
+        const { isConfirmed, isDenied } = await Swal.fire({
+            title: `Load or Delete "${chosenKey}"?`,
+            showDenyButton: true,
+            confirmButtonText: "Load",
+            denyButtonText: "Delete",
+            showCancelButton: true
+        });
+
+        if (isConfirmed) {
+            const JSONString = localStorage.getItem(chosenKey);
+            if (JSONString) {
+                const data = JSON.parse(JSONString);
+                setStrudelCode(data.strudelCode);
+                setCpm(data.cpm);
+                setVolume(data.volume);
+                Swal.fire("Loaded!", `"${chosenKey}" loaded successfully`, "success");
+            } else {
+                Swal.fire("Error", "Could not find preset in local storage", "error");
+            }
+        }
+
+        if (isDenied) {
+            const confirmDelete = await Swal.fire({
+            title: "Are you sure?",
+            text: `Delete "${chosenKey}" permanently?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes",
+            confirmButtonColor: "#f70244"
+            });
+
+            if (confirmDelete.isConfirmed) {
+                localStorage.removeItem(chosenKey);
+                Swal.fire("Deleted!", `"${chosenKey}" has been removed.`, "success");
+            }
+        }
+    }
+
+
 
     // Updates the REPL when changes in the text preprocessor are entered
     // Updates the CPM in the REPL
