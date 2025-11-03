@@ -27,7 +27,7 @@ function Accordion ( {component, text} ) {
 
     return (
         <>
-            <button onClick={ () => {toggleHidden(); handleClick();} } className='btn btn-secondary w-100 text-start rounded-top-1 rounded-bottom-0' >{buttonText}<span className='float-end'>{buttonIcon}</span></button>       
+            <button onClick={ () => {toggleHidden(); handleClick();} } className='btn btn-secondary w-100 text-start rounded-top-0 rounded-bottom-0' >{buttonText}<span className='float-end'>{buttonIcon}</span></button>       
                 <div style={ { display: isHidden ? 'none' : 'block' }}>
                     {component}
                 </div>
