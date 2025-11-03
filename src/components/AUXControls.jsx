@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 function AUXControls({ onToggleChange }) {
   const [toggles, setToggles] = useState({
     Baseline: true,
@@ -60,9 +59,9 @@ function AUXControls({ onToggleChange }) {
   return (
     <>
       <div className="card border-0 shadow-sm">
-        <div className='card-header bg-white'>
+        <div className='card-header bg-white pt-3'>
           <div className="d-flex justify-content-between align-items-center">
-            <h6 className='mb-0 text-black'>Instruments</h6>
+            <h6 className="text-muted text-uppercase mb-3 mt-2" style={{ fontSize: '1rem' }}>Instruments</h6>
             <span className='badge bg-light text-dark'>
               {activeCount} / 4
             </span>
