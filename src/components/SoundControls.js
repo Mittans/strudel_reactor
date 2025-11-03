@@ -7,7 +7,7 @@ function SoundControls() {
   return (
     <>
       {/* Volume slider */}
-      <div className="my-2">
+      <div className="mb-2">
         <label htmlFor="volumeRange" className="form-label fw-semibold d-flex">
           <span className="me-3">Volume:</span>
           <span>{volume}</span>

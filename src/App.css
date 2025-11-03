@@ -57,7 +57,6 @@ body {
 
 .control-icon:hover{
   transform: scale(1.1);
-  color: #d4ff99;
 }
 
 .status-pill {
@@ -84,7 +83,6 @@ body {
 }
 
 .proc-btn:hover {
-  border-color: #d4ff99;
   transform: translateY(-2px);
 }
 
@@ -110,6 +108,21 @@ body {
 .form-range:focus::-webkit-slider-thumb {
   background-color: #ffa733;
   box-shadow: none;
+}
+
+.preset-btn{
+  background-color: #2a2a2a;
+  border: 2px solid #b9ff66;
+  border-radius: 12px;
+  padding: 6px 14px;
+  color: #b9ff66;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.preset-btn:hover {
+  transform: scale(1.05);
 }
 
 /* temperary - for testing layout */

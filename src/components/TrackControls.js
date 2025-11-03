@@ -1,6 +1,6 @@
 function TrackControls({ tracks, onTrackChange }) {
   return (
-    <div className="row row-cols-2 g-4">
+    <div className="row row-cols-2 g-2 my-3">
       {/* Bassline */}
       <div className="col">
         <div className="mb-1 fw-semibold">Bassline</div>
