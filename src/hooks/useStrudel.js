@@ -13,8 +13,7 @@ import {
 } from "../config/audioDefaults";
 
 export function useStrudel(initialTune) {
-  const [isReady, setIsReady] = useState(false);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [procValue, setProcValue] = useState(initialTune);
 
   const [bpm, setBpm] = useState(BPM_DEFAULT);
   const [volume, setVol] = useState(VOLUME_DEFAULT);
@@ -22,13 +21,14 @@ export function useStrudel(initialTune) {
   const [bass, setBass] = useState(BASS_DEFAULT);
   const [reverb, setReverb] = useState(REVERB_DEFAULT);
 
+  const [isReady, setIsReady] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+
   const [isRandomHitsOn, setIsRandomHitsOn] = useState(false);
   const [isShapeValueOn, setIsShapeValueOn] = useState(false);
   const [isCrushValueOn, setIsCrushValueOn] = useState(false);
 
   const hasInit = useRef(false);
-
-  const [procValue, setProcValue] = useState(initialTune);
 
   // ---- Initialize Strudel ------------------------------------------------------
   useEffect(() => {
@@ -44,18 +44,63 @@ export function useStrudel(initialTune) {
   function applyUpdatedCode(currentText, replacedText) {
     setProcValue((prevCode) => {
       let updatedCode = prevCode.replace(currentText, replacedText);
-
-      // update the code
-      strudelActions.setCode(updatedCode);
-
-      // re-play the song if the song is currently playing
-      if (isPlaying) {
-        strudelActions.evaluate();
-      }
-
-      // update the textarea
+      setCodeAndPlay(updatedCode);
+      updateUiFromCode(updatedCode);
       return updatedCode;
     });
+  }
+
+  function updateUiFromCode(code) {
+    const newBpm = code.match(/setcps\((\d+)\/60\/4\)/);
+    const newPattern = code.match(/const pattern = (\d+)/);
+    const newBass = code.match(/const bass = (\d+)/);
+    const newVolume = code.match(/const volume = ([\d.]+)/);
+    const newReverb = code.match(/const reverb = ([\d.]+)/);
+    const newRandomHits = code.match(/const\s+randomHits\s*=\s*([\d.]+)/);
+    const newShapeValue = code.match(
+      /const\s+shapeValue\s*=\s*("[^"]*"|<[^>]+>|\d+(\.\d+)?)/
+    );
+    const newCrushValue = code.match(/const\s+crushValue\s*=\s*([\d.]+)/);
+
+    if (newBpm) {
+      setBpm(Number(newBpm[1]));
+    }
+
+    if (newPattern) {
+      setPattern(Number(newPattern[1]));
+    }
+
+    if (newBass) {
+      setBass(Number(newBass[1]));
+    }
+
+    if (newVolume) {
+      setVol(Number(newVolume[1]));
+    }
+
+    if (newReverb) {
+      setReverb(Number(newReverb[1]));
+    }
+
+    if (newRandomHits) {
+      setIsRandomHitsOn(Number(newRandomHits[1]) !== 0);
+    }
+
+    if (newShapeValue) {
+      setIsShapeValueOn(Number(newShapeValue[1]) !== 0);
+    }
+
+    if (newCrushValue) {
+      setIsCrushValueOn(Number(newCrushValue[1]) !== 8);
+    }
+  }
+
+  function setCodeAndPlay(code) {
+    setProcValue(code);
+    strudelActions.setCode(code);
+    if (isPlaying) {
+      strudelActions.evaluate();
+    }
   }
 
   // ---- Updaters: allow user to update different setting to the song ------------------------------------------------------
@@ -131,12 +176,7 @@ export function useStrudel(initialTune) {
           code = code.replaceAll(noUnderscore, withUnderscore);
         }
       }
-
-      strudelActions.setCode(code);
-      if (isPlaying) {
-        strudelActions.evaluate();
-      }
-
+      setCodeAndPlay(code);
       return code;
     });
   }
@@ -156,12 +196,7 @@ export function useStrudel(initialTune) {
         ? prev.replace(ON, OFF)
         : prev.replace(OFF, ON);
 
-      // Save and run the song with new changes
-      strudelActions.setCode(newCode);
-      if (isPlaying) {
-        strudelActions.evaluate();
-      }
-
+      setCodeAndPlay(newCode);
       return newCode;
     });
   }
@@ -193,10 +228,33 @@ export function useStrudel(initialTune) {
     });
   }
 
-  const handleProcChange = (e) => {
-    const newCode = e.target.value;
-    setProcValue(newCode);
-    strudelActions.setCode(newCode);
+  // ---- Storage save and load ------------------------------------------------------
+  const saveToLocalStorage = () => {
+    localStorage.setItem("savedSong", procValue);
+  };
+
+  const loadFromLocalStorage = () => {
+    const savedSong = localStorage.getItem("savedSong");
+
+    if (!savedSong) {
+      return null;
+    }
+
+    handleProcChange(savedSong);
+    return savedSong;
+  };
+
+  const handleProcChange = (param) => {
+    // because the param can be an e.target.value or it can be a string so check first to extract the value
+    let newCode;
+    if (typeof param === "string") {
+      newCode = param;
+    } else {
+      newCode = param.target.value;
+    }
+
+    setCodeAndPlay(newCode);
+    updateUiFromCode(newCode);
   };
 
   return {
@@ -206,6 +264,7 @@ export function useStrudel(initialTune) {
     bpm,
     volume,
     procValue,
+    setProcValue,
     handleProcChange,
     changeTempo,
     changeVolume,
@@ -220,5 +279,7 @@ export function useStrudel(initialTune) {
     isRandomHitsOn,
     isShapeValueOn,
     isCrushValueOn,
+    saveToLocalStorage,
+    loadFromLocalStorage,
   };
 }

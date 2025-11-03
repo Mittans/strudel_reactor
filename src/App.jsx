@@ -23,6 +23,7 @@ export default function App() {
     bpm,
     volume,
     procValue,
+    setProcValue,
     handleProcChange,
     changeTempo,
     changeVolume,
@@ -37,12 +38,17 @@ export default function App() {
     isRandomHitsOn,
     isShapeValueOn,
     isCrushValueOn,
+    loadFromLocalStorage,
+    saveToLocalStorage,
   } = useStrudel(stranger_tune);
 
   return (
     <div className="bg-gradient-to-br from-[#1e3a8a] via-[#3b82f6] to-[#06b6d4] min-h-screen text-white p-3">
       <div className="w-full max-w-7xl mx-auto">
-        <Header />
+        <Header
+          loadFromLocalStorage={loadFromLocalStorage}
+          saveToLocalStorage={saveToLocalStorage}
+        />
         <StatusBar isPlaying={isPlaying} bpm={bpm} volume={volume} />
         <ControlPanel isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
 

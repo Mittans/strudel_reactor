@@ -67,5 +67,4 @@ export const strudelActions = {
   evaluate: () => globalEditor?.evaluate(),
   stop: () => globalEditor?.stop(),
   setCode: (code) => globalEditor?.setCode(code),
-  isStarted: () => globalEditor?.repl.state.started === true,
 };
