@@ -56,13 +56,14 @@ export default function StrudelDemo() {
     }
 
     //Ref for the editor root element
-    // Ref for the Strudel editor container div where the editor will appear
+    //Ref for the Strudel editor container div where the editor will appear
     const editorRootRef = useRef(null);
 
     // preprocess copies current songData into the editor
     const handlePreprocess = () => {
         if (!editorRef.current) return;
-        const volumeController = songData + `\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
+
+        const volumeController = `setcps(${cpm / 60 / 4})\n${songData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
         editorRef.current.setCode(volumeController);
     };
 
@@ -82,6 +83,9 @@ export default function StrudelDemo() {
 
     //volume state and setter. Initially set to 50.
     const [volume, setVolume] = useState(50);
+
+    //cpm setter. Initially set to 120 by default.
+    const [cpm, setCpm] = useState(120);
 
 
     useEffect(() => {
@@ -127,13 +131,16 @@ export default function StrudelDemo() {
             // so its value updates automatically without direct DOM manipulation.
         }
 
-        // Combines song text with volume and log functions
-        const volumeController = songData + `\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
+
+        // Combines song text with CPM, volume and log functions
+        const volumeController = `setcps(${cpm / 60 / 4})\n${songData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
 
         editorRef.current.setCode(volumeController);
 
+
+
         //Updates Strudel editor with new code  song and volume
-    }, [songData, volume]); // Runs again when songData or volume updates
+    }, [songData, volume, cpm]); // Runs again when songData or volume updates and the cpm
 
 
     return (
@@ -170,7 +177,12 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <PlayControl volume={volume} onVolumeChange={setVolume} /> {/* calls the play control class*/}
+                            <PlayControl
+                                volume={volume}
+                                onVolumeChange={setVolume}
+                                cpm={cpm}
+                                onCpmChange={setCpm}
+                            /> {/* calls the play control class*/}
                         </div>
 
 

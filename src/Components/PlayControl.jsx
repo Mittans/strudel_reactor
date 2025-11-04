@@ -1,6 +1,6 @@
 
 
-function PlayControl({ volume, onVolumeChange }) {
+function PlayControl({ volume, onVolumeChange, cpm, onCpmChange }) {
 
     return (
         <> {/* React Fragment lets us group elements without an extra div */}
@@ -15,11 +15,7 @@ function PlayControl({ volume, onVolumeChange }) {
 
                 <div className="input-group mb-3">
                     <span className="input-group-text" id="cpm_label">SetCPM</span>
-                    <input type="number" className="form-control" id="cpm_text_input" placeholder="120" aria-label="120" aria-describedby="cpm_label"
-                        min="0"
-                        max="500"
-                        step="10"
-                    />
+                    <input type="number" className="form-control" id="cpm_text_input" min="0" max="500" step="10" placeholder="120" aria-label="120" aria-describedby="cpm_label" value={cpm} onChange={(e) => onCpmChange(Number(e.target.value))} />
                 </div>
 
 
@@ -50,7 +46,7 @@ function PlayControl({ volume, onVolumeChange }) {
                         </div>
                     </div>
                 </div>
-                
+
 
 
                 <div className="d-flex gap-2 mt-3 my-5">
