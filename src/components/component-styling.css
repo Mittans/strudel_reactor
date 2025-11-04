@@ -12,3 +12,7 @@
       background-color: #1fb800 !important; 
       border-color: #1fb800 !important;
 }
+
+.header-shadow {
+    box-shadow: 5px 5px 10px rgba(8, 8, 8, 0.3);
+}
