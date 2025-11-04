@@ -34,7 +34,7 @@ export function SongNameController(props) {
         }
     };
 
-    // Function to delete item from the local storage.
+    // Function to delete song from the local storage.
     const handleDelete = () => {
         const song = document.getElementById("songName").value;
         const deletedItem = localStorage.getItem(song);
@@ -46,6 +46,19 @@ export function SongNameController(props) {
         }
 
         window.location.reload(); 
+    };
+
+    // Function to save song if already exisits
+    const handleSave = () => {
+        const song = document.getElementById("songName").value;
+        const savedSong = localStorage.getItem(song);
+        if (savedSong) {
+            localStorage.setItem(song, JSON.stringify(props.text));
+            alert("Succeccfully save song");
+        } else {
+            alert("No song is found. Please add it first.");
+            props.modalOpenControl();
+        }
     };
 
     return (
@@ -69,6 +82,7 @@ export function SongNameController(props) {
             handleDelete={handleDelete} 
             modalOpenControl={props.modalOpenControl} 
             handleLoad={handleLoad}
+            handleSave={handleSave}
             />
         </div>
     );

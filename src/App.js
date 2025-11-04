@@ -33,15 +33,15 @@ export function ProcAndPlay() {
 
 export function Proc() {
   let proc_text = document.getElementById("proc").value;
-  let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
+  let proc_text_replaced = proc_text.replaceAll('<Radio>', ProcessText);
   ProcessText(proc_text);
   globalEditor.setCode(proc_text_replaced)
 }
 
 export function ProcessText(match, ...args) {
-  let replace = ""
+  let replace = "arpeggiator1"
   if (document.getElementById('flexRadioDefault2').checked) {
-    replace = "_"
+    replace = "arpeggiator2"
   }
   return replace
 }
@@ -240,6 +240,7 @@ export default function StrudelDemo() {
               <SongNameController
                 setText={setText} 
                 modalOpenControl={modalOpenControl} 
+                text={text}
                 />   
               <SlideInputs onVolumeChange={updateGainInCode} onSpeedChange={updateSpeedInCode} />      
             </div>
@@ -258,13 +259,13 @@ export default function StrudelDemo() {
                 <div className="m-2 p-2">
                   <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
                   <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor="flexRadioDefault1">
-                    p1: ON
+                    Arpeggiator 1
                   </label>
                 </div>
                 <div className="m-2 p-2">
                   <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
                   <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor="flexRadioDefault2">
-                    p1: HUSH
+                    Arpeggiator 2
                   </label>
                 </div>
               </div>

@@ -18,7 +18,7 @@ export default function SaveModal(props){
     const [songName, setSongName] = useState("Untitled");
 
     // Function to save the text song based on name.
-    const handleSave = () => {
+    const handleAdd = () => {
         console.log(JSON.stringify(props.text))
 
         const isduplicated = localStorage.getItem(songName);
@@ -54,7 +54,7 @@ export default function SaveModal(props){
                     <div className="m-2">
                         <button 
                             className="rounded-full font-bold w-20 mr-2 border border-black mx-2 bg-green-500 text-white" 
-                            onClick={handleSave}>
+                            onClick={handleAdd}>
                                 Save
                         </button>
                     </div>
