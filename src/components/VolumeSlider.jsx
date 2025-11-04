@@ -28,7 +28,7 @@ function VolumeSlider() {
       .attr('width', width)
       .attr('height', barHeight)
       .attr('rx', 4)
-      .attr('fill', '#ddd');
+      .attr('fill', 'white');
 
     // Filled track
     const filledTrack = svg.append('rect')
@@ -36,7 +36,7 @@ function VolumeSlider() {
       .attr('width', scale(volume))
       .attr('height', barHeight)
       .attr('rx', 4)
-      .attr('fill', '#4285f4');
+      .attr('fill', 'blue');
 
     // Handle
     const handle = svg.append('circle')
@@ -44,33 +44,15 @@ function VolumeSlider() {
       .attr('cy', height / 2)
       .attr('r', 10)
       .attr('fill', '#fff')
-      .attr('stroke', '#4285f4')
+      .attr('stroke', 'blue')
       .attr('stroke-width', 2)
       .attr('cursor', 'pointer');
 
-    // Drag behavior
-    const drag = d3.drag()
-      .on('drag', function(event) {
-        const x = Math.max(0, Math.min(width, event.x));
-        const newVolume = Math.round(scale.invert(x));
-        
-        setVolume(newVolume);
-        
-        d3.select(this).attr('cx', scale(newVolume));
-        filledTrack.attr('width', scale(newVolume));
-      });
-
-    handle.call(drag);
-
-    // Click on track
-    svg.on('click', function(event) {
+    // Click to set volume
+    svg.on('click', (event) => {
       const x = d3.pointer(event)[0];
       const newVolume = Math.round(scale.invert(x));
-      
       setVolume(newVolume);
-      
-      handle.attr('cx', scale(newVolume));
-      filledTrack.attr('width', scale(newVolume));
     });
 
   }, [volume]);
