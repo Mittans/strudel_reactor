@@ -1,3 +1,4 @@
+import VolumeSlider from './VolumeSlider';
 import { useState } from 'react';
 function AUXControls({ onToggleChange }) {
   const [toggles, setToggles] = useState({
@@ -108,9 +109,11 @@ function AUXControls({ onToggleChange }) {
                 <span className={`badge ${toggles[id] ? 'bg-success' : 'bg-secondary'}`}>
                   {toggles[id] ? 'ON' : 'OFF'}
                 </span>
+
               </div>
             ))}
           </div>
+          <VolumeSlider/>
         </div>
       </div>
     </>
