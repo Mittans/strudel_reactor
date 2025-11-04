@@ -1,4 +1,4 @@
-function PreprocessEditor({defaultValue, onChange }) {
+function PreprocessEditor({defaultValue, onChange}) {
 	return (
 		<>
 			<label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>

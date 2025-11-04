@@ -76,9 +76,16 @@ export default function StrudelDemo() {
         globalEditor.stop()
     }
 
+
+    const handlePreprocess = () => {
+            globalEditor.setCode(songText);
+    }
+
+
     const [songText, setSongText] = useState(stranger_tune)
 
     const [volume, setVolume] = useState(0.8)
+
 
     useEffect(() => {
 
@@ -108,18 +115,22 @@ export default function StrudelDemo() {
                         import('@strudel/mini'),
                         import('@strudel/tonal'),
                         import('@strudel/webaudio'),
+                        //{volume}
                     );
+                    
+
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+
                 },
             });
 
             document.getElementById('proc').value = stranger_tune;
             //SetupButtons()
             //Proc()
+            globalEditor.setCode(songText);
         }
-        globalEditor.setCode(songText);
+        
     }, [songText]);
-
 
     return (
         <div>
@@ -134,7 +145,7 @@ export default function StrudelDemo() {
                         <div className="col-md-4">
                             <nav>
 
-                                <ProcButtons />
+                                <ProcButtons onPreprocess={handlePreprocess} />
 
                                 <br />
 
@@ -149,7 +160,7 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <DJControls volume={volume} onChange={(e) => setVolume(parseFloat(e.target.value))} />
+                            <DJControls volume={volume} onChange={(e) => setVolume(e.target.value)} />
                         </div>
                     </div>
                 </div>
