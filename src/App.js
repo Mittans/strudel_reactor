@@ -1,3 +1,5 @@
+﻿// main application component for Strudel demo app
+
 import './App.css';
 import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
@@ -10,7 +12,6 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import console_monkey_patch from './console-monkey-patch';
 // import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 
-//import components
 import PreprocessorControl from './components/PreprocessorControl';
 import TrackControl from './components/TrackControl';
 import InstrumentControl from './components/InstrumentControl';
@@ -24,31 +25,37 @@ export default function App() {
     const editorRef = useRef(null);
     const hasRun = useRef(false);
     const [tuneIndex, setTuneIndex] = useState(0);
+    const [currentTuneName, setCurrentTuneName] = useState(tunes2[0].name || ""); 
 
     //helper and handler functions
     function processText(text, radioState) {
         return text.replaceAll('<p1_Radio>', radioState === "HUSH" ? "_" : "");
     }
 
+    //handlers for track control
     function handleProcess() {
         if (editorRef.current) {
             editorRef.current.setCode(processText(procText, radioValue));
         }
     }
 
+    //handler for process and play
     function handleProcessPlay() {
         handleProcess();
         if (editorRef.current) editorRef.current.evaluate();
     }
 
+    //handlers for play and stop
     function handlePlay() {
         if (editorRef.current) editorRef.current.evaluate();
     }
 
+    //stop handler
     function handleStop() {
         if (editorRef.current) editorRef.current.stop();
     }
 
+    //handler for instrument control radio buttons
     function handleRadioChange(value) {
         setRadioValue(value);
         if (editorRef.current) {
@@ -60,6 +67,8 @@ export default function App() {
     // next and previous tune functions
     function loadTune(index) {
         const tune = tunes2[index];
+        setTuneIndex(index);
+        setCurrentTuneName(tune.name || `Tune ${index + 1}`); // set name
         setProcText(tune.code);
         if (editorRef.current) {
             editorRef.current.setCode(tune.code);
@@ -67,18 +76,22 @@ export default function App() {
         }
     }
 
+
+    //next and previous tune handlers
     function nextTune() {
         const nextIndex = (tuneIndex + 1) % tunes2.length;
         setTuneIndex(nextIndex);
         loadTune(nextIndex);
     }
 
+    //previous tune handler
     function prevTune() {
         const prevIndex = (tuneIndex - 1 + tunes2.length) % tunes2.length;
         setTuneIndex(prevIndex);
         loadTune(prevIndex);
     }
 
+    //useEffect to initialize StrudelMirror editor
     useEffect(() => {
         if (!hasRun.current) {
             document.addEventListener("d3Data", event => console.log(event.detail));
@@ -119,8 +132,7 @@ export default function App() {
 
     return (
         <div className="strudel-demo-container">
-            <h2 style={{ fontWeight: 700, marginBottom: "24px" }}>Strudel Demo</h2>
-            <main>
+            <h2 style={{ fontSize: "22px", fontWeight: "600", color: "#ff0000", textTransform: "uppercase", letterSpacing: "3px", textShadow: "0 0 8px rgba(255,204,0,0.6)", marginBottom: "15px", padding: "5px 20px" }}>Strudel Demo</h2>            <main>
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-8">
@@ -129,6 +141,9 @@ export default function App() {
                             </div>
                         </div>
                         <div className="col-md-4">
+                            <h5 style={{
+                                fontSize: "22px", fontWeight: "600", color: "#ff0000", textAlign: "center", textTransform: "uppercase",
+                                letterSpacing: "1px", textShadow: "0 0 8px rgba(255,204,0,0.6)", marginBottom: "10px"}} >Track Control</h5>
                             <div className="card" style={{ display: "flex", alignItems: "start" }}>
                                 <TrackControl
                                     onProcess={handleProcess}
@@ -136,7 +151,8 @@ export default function App() {
                                     onPlay={handlePlay}
                                     onStop={handleStop}
                                 />
-                                <div style={{ display: "flex", gap: "8px", justifyContent: "center", marginTop: "0 auto", alignItems: "center" }}>
+                                <div style={{
+                                    display: "flex", gap: "8px", alignItems: "center", padding: "10px 60px" }}>
                                     <button className="btn btn-outline-warning"
                                         onClick={nextTune}
                                         title="Next Tune"
@@ -146,6 +162,7 @@ export default function App() {
                                         title="Previous Tune"
                                         style={{ fontSize: "18px", padding: "6px 12px", width: "120px", alignItems: "center" }} > Next </button>
                                 </div>
+                                <p style={{ marginTop: "6px", fontWeight: "bold", color: "#800000", padding: "2px 80px" }}>Now Playing: {currentTuneName}</p>
                             </div>
                         </div>
                     </div>
@@ -157,6 +174,7 @@ export default function App() {
                             </div>
                         </div>
                         <div className="col-md-4">
+                            <h5 style={{ fontSize: "22px", fontWeight: "600", color: "#ff0000", textTransform: "uppercase", letterSpacing: "1px", textShadow: "0 0 8px rgba(255,204,0,0.6)", marginBottom: "15px", padding: "0px 80px" }}>Instrument Control</h5>
                             <div className="card">
                                 <InstrumentControl onStateChange={handleRadioChange} radioValue={radioValue} />
                             </div>
