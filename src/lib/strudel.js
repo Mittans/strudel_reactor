@@ -6,10 +6,18 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import { transpiler } from '@strudel/transpiler';
 
 let _editor = null;
+let _ctx = null;
+
 export const getEditor = () => _editor;
 
-export async function initStrudel({ editorRootEl, canvasEl }) {
-    const drawContext = canvasEl.getContext('2d');
+export function attachCanvas(canvasEl) {
+    if (!canvasEl) { _ctx = null; return; }
+    _ctx = canvasEl.getContext('2d');
+}
+
+export async function initStrudel({ editorRootEl }) {
+    if (_editor) return _editor;
+
     const drawTime = [-2, 2];
 
     _editor = new StrudelMirror({
@@ -18,7 +26,12 @@ export async function initStrudel({ editorRootEl, canvasEl }) {
         transpiler,
         root: editorRootEl,
         drawTime,
-        onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
+        onDraw: (haps, time) => {
+            if (!_ctx) return;
+            const { canvas } = _ctx;
+            _ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawPianoroll({ haps, time, ctx: _ctx, drawTime, fold: 0 });
+        },
         prebake: async () => {
             initAudioOnFirstClick();
             const loadModules = evalScope(

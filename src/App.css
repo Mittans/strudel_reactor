@@ -1,57 +1,47 @@
-.App {
-  text-align: center;
+:root {
+  --bs-body-bg: #0c0f13;
+  --bs-body-color: #ffffff;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* background */
+html, body, #root, .app-viewport {
+  background-color: #0c0f13 !important;
+  color: #fff;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Cards and sections */
+.card,
+.card-body,
+.card-header {
+  background-color: #0f131a !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Tabs bar */
+.pane .nav-tabs {
+  background: transparent;
+  border-color: #2a2f3a;
+}
+.pane .nav-link { color: #fff; }
+.pane .nav-link.active {
+  background: #121620;
+  color: #fff;
+  border-color: #2a2f3a #2a2f3a #121620;
 }
 
-.App-link {
-  color: #61dafb;
+.form-control,
+.form-select,
+.form-check-input {
+  background-color: #0a0e14 !important;
+  color: #fff !important;
+  border-color: #2a2f3a !important;
+}
+.form-control::placeholder { color: rgba(255,255,255,0.6); }
+.form-control:focus,
+.form-select:focus {
+  border-color: #2f6fed !important;
+  box-shadow: 0 0 0 .2rem rgba(47,111,237,.15) !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-html, body, #root { height: 100%; }
-.app-viewport { min-height: 100%; background: #0c0f13; color: #dee2e6; }
-
-.top-pane, .bottom-pane { height: 50vh; }
-.pane { height: 100%; display: flex; flex-direction: column; }
-.pane .nav-tabs { border-color: #1f2430; }
-.pane .nav-link { color: #9ab0d0; }
-.pane .nav-link.active { background: #121620; border-color: #2a3242 #2a3242 #121620; color: #e8f0ff; }
-.pane-content { flex: 1; min-height: 0; overflow: auto; }
-
-.card { border: 1px solid #1d2330; border-radius: 14px; background: #0f131a; }
-.card-header { background: linear-gradient(180deg,#121620,#0e1218); border-bottom: 1px solid #1f2430; }
-.card-body { background: #0f131a; }
-
-#proc { background:#0a0e14; color:#e9edf5; border:1px solid #1f2430; }
-#proc:focus { border-color:#2f6fed; box-shadow: 0 0 0 .2rem rgba(47,111,237,.2); outline:none; }
-
-#roll { background:#0a0e14; border:1px solid #1f2430; border-radius: 10px; width: 100%; }
+/* Canvas & generic borders */
+#roll,
+.border { border-color: #2a2f3a !important; }

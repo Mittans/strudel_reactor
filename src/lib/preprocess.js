@@ -1,7 +1,8 @@
 import { getEditor } from './strudel';
 
 export function ProcessText() {
-    return document.getElementById('flexRadioDefault2')?.checked ? "_" : "";
+    const hush = document.getElementById('flexRadioDefault2')?.checked;
+    return hush ? "_" : "cp*2"; 
 }
 
 export function Proc() {
