@@ -84,8 +84,8 @@ export default function StrudelDemo() {
 
     const updateStrudelCode = (text) => {
         const processedText = text
-            .replaceAll("volume", volume)
-            .replaceAll("cpm", cpm);
+            .replaceAll("<volume>", volume)
+            .replaceAll("<cpm>", cpm);
 
         globalEditor.setCode(processedText);
         globalEditor.evaluate();
