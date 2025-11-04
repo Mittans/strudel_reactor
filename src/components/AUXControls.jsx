@@ -38,6 +38,7 @@ function AUXControls({ onToggleChange }) { // Calls back on onToggleChange
     }
   };
 
+  // Unmute all
   const handleUnmuteAll = () => {
     const allUnmuted = {
       Baseline: true,
@@ -47,18 +48,22 @@ function AUXControls({ onToggleChange }) { // Calls back on onToggleChange
     };
     setToggles(allUnmuted);
 
+    // Update changes
     if (onToggleChange) {
       onToggleChange(allUnmuted);
     }
   };
 
+  // Counts how many instruments are active
   const activeCount = Object.values(toggles).filter(Boolean).length;
+
+  // Checks if all instruments are muted
   const allMuted = activeCount === 0;
 
   const handleToggleAll = () => {
-    if (allMuted) {
-      handleUnmuteAll();
-    } else {
+    if (allMuted) { // If all muted, unmute all
+      handleUnmuteAll(); 
+    } else { // Mute all
       handleMuteAll();
     }
   };
