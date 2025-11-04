@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -9,6 +9,10 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import AUXControls from './components/AUXControls';
+import PlayButtons from './components/PlayButtons';
+// import ProcessButtons from './components/ProcessButtons';
+import PreprocessTextArea from './components/PreprocessTextArea';
 
 let globalEditor = null;
 
@@ -16,62 +20,99 @@ const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-export function SetupButtons() {
 
-    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-    document.getElementById('process').addEventListener('click', () => {
-        Proc()
-    }
-    )
-    document.getElementById('process_play').addEventListener('click', () => {
-        if (globalEditor != null) {
-            Proc()
-            globalEditor.evaluate()
-        }
-    }
-    )
-}
+export function ProcessText(index, toggles) {
+    const instrumentals = ['baseline', 'main_arp', 'drums', 'drum_set_2'];
+    const name = instrumentals[index];
 
+    // Map index to the toggle key
+    const keys = Object.keys(toggles);
+    const key = keys[index];
 
-
-export function ProcAndPlay() {
-    if (globalEditor != null && globalEditor.repl.state.started == true) {
-        console.log(globalEditor)
-        Proc()
-        globalEditor.evaluate();
+    // Returns instruments name whether it is toggled on / off
+    if (toggles[key] === false) {
+        return `_${name}`; // Toggle Off
+    } else {
+        return name; // Toggle On
     }
 }
 
-export function Proc() {
-
-    let proc_text = document.getElementById('proc').value
-    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-    ProcessText(proc_text);
-    globalEditor.setCode(proc_text_replaced)
-}
-
-export function ProcessText(match, ...args) {
-
-    let replace = ""
-    if (document.getElementById('flexRadioDefault2').checked) {
-        replace = "_"
-    }
-
-    return replace
-}
 
 export default function StrudelDemo() {
+    const hasRun = useRef(false);
+    
+    const [songText, setSongText] = useState(stranger_tune);
+    const [toggles, setToggles] = useState({ 
+        Baseline: true, 
+        MainArp: true, 
+        Drums: true,
+        Drums2: true
+    });
 
-const hasRun = useRef(false);
+ 
+    const handlePlay = () => {
+        globalEditor.evaluate(); // Runs strudel playback code
+    };
 
-useEffect(() => {
+    const handleStop = () => {
+        globalEditor.stop(); // Stops strudel playback code
+    };
 
-    if (!hasRun.current) {
-        document.addEventListener("d3Data", handleD3Data);
-        console_monkey_patch();
-        hasRun.current = true;
-        //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
+    const applyToggles = (text, toggles) => {
+        // Map UI toggle names to actual instrument names in the code
+        const instrumentMap = {
+            'Baseline': 'bassline',
+            'MainArp': 'main_arp',
+            'Drums': 'drums',
+            'Drums2': 'drums2'
+        };
+        
+        let processed = text;
+        
+        // Loops through each toggle ^
+        Object.keys(instrumentMap).forEach((toggleKey) => {
+            const instrument = instrumentMap[toggleKey];
+            
+            // Create regex (finds text inside strings) patterns for both versions
+            // "\\b" looks for exact match e.g, "baseline"
+            const normalPattern = new RegExp(`\\b${instrument}:`); // Looks for first instrumental thats turned on
+            const underscorePattern = new RegExp(`\\b_${instrument}:`); // Looks for first muted instrumented with "_"
+            
+
+            if (toggles[toggleKey] === false) {
+                // Replace "instrument:" with "_instrument:"
+                processed = processed.replace(normalPattern, `_${instrument}:`);
+            } else {
+                // Replace "_instrument:" with "instrument:"
+                processed = processed.replace(underscorePattern, `${instrument}:`);
+            }
+        });
+        
+        return processed;
+    };
+
+    // Live updates the toggle state
+    const handleToggleChange = (newToggles) => {
+        setToggles(newToggles);
+        // Apply toggles to the current song text
+        const processedText = applyToggles(songText, newToggles);
+        globalEditor.setCode(processedText);
+        
+        // If already playing, re-evaluate to apply changes immediately
+        if (globalEditor.repl.state.started) {
+            globalEditor.evaluate();
+        }
+    };
+
+
+
+    useEffect(() => {
+
+        if (!hasRun.current) {
+            document.addEventListener("d3Data", handleD3Data);
+            console_monkey_patch();
+            hasRun.current = true;
+            //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
             //init canvas
             const canvas = document.getElementById('roll');
             canvas.width = canvas.width * 2;
@@ -97,61 +138,38 @@ useEffect(() => {
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
                 },
             });
-            
-        document.getElementById('proc').value = stranger_tune
-        SetupButtons()
-        Proc()
-    }
 
-}, []);
+            document.getElementById('proc').value = stranger_tune
+
+        }
+        globalEditor.setCode(songText);
+    }, [songText]);
 
 
 return (
     <div>
         <h2>Strudel Demo</h2>
         <main>
-
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
-                        <textarea className="form-control" rows="15" id="proc" ></textarea>
+                    <div className="col-md-8">
+                        <PreprocessTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                        <div style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                            <div id="editor" />
+                            <div id="output" />
+                        </div>
                     </div>
                     <div className="col-md-4">
-
                         <nav>
-                            <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                            <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
-                            <br />
-                            <button id="play" className="btn btn-outline-primary">Play</button>
-                            <button id="stop" className="btn btn-outline-primary">Stop</button>
+                            <PlayButtons onPlay={handlePlay} onStop={handleStop} />
+                            <AUXControls onToggleChange={handleToggleChange} />
                         </nav>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                            <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                p1: ON
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                            <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                p1: HUSH
-                            </label>
-                        </div>
                     </div>
                 </div>
             </div>
             <canvas id="roll"></canvas>
-        </main >
-    </div >
+        </main>
+    </div>
 );
 
 
