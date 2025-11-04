@@ -1,6 +1,8 @@
 import VolumeSlider from './VolumeSlider';
 import { useState } from 'react';
-function AUXControls({ onToggleChange }) {
+
+function AUXControls({ onToggleChange }) { // Calls back on onToggleChange
+  // Sets default as all instruments "On"
   const [toggles, setToggles] = useState({
     Baseline: true,
     MainArp: true,
@@ -8,16 +10,19 @@ function AUXControls({ onToggleChange }) {
     Drums2: true,
   });
 
+  // Handles individual instrument toggle change
   const handleCheck = (e) => {
-    const { id, checked } = e.target;
-    const updated = { ...toggles, [id]: checked };
-    setToggles(updated);
+    const { id, checked } = e.target; // id = instrument name, checked = new state (boolean)
+    const updated = { ...toggles, [id]: checked }; // creates a "copied" toggles object, setting instrument as id and checked as state (true/false)
+    setToggles(updated); // Re-renders UI
 
+    // Update to new changes
     if (onToggleChange) {
       onToggleChange(updated);
     }
   };
 
+  // Mute all
   const handleMuteAll = () => {
     const allMuted = {
       Baseline: false,
@@ -25,8 +30,9 @@ function AUXControls({ onToggleChange }) {
       Drums: false,
       Drums2: false,
     };
-    setToggles(allMuted);
 
+    setToggles(allMuted);
+    // Update to new changes
     if (onToggleChange) {
       onToggleChange(allMuted);
     }
