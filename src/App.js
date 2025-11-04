@@ -20,6 +20,7 @@ const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
+
 export function ProcessText(index, toggles) {
     const instrumentals = ['baseline', 'main_arp', 'drums', 'drum_set_2'];
     const name = instrumentals[index];
@@ -28,16 +29,18 @@ export function ProcessText(index, toggles) {
     const keys = Object.keys(toggles);
     const key = keys[index];
 
+    // Returns instruments name whether it is toggled on / off
     if (toggles[key] === false) {
-        return `_${name}`;
+        return `_${name}`; // Toggle Off
     } else {
-        return name;
+        return name; // Toggle On
     }
 }
 
 
 export default function StrudelDemo() {
     const hasRun = useRef(false);
+    
     const [songText, setSongText] = useState(stranger_tune);
     const [toggles, setToggles] = useState({ 
         Baseline: true, 
@@ -45,14 +48,14 @@ export default function StrudelDemo() {
         Drums: true,
         Drums2: true
     });
-    const originalSongTextRef = useRef(stranger_tune);
 
+ 
     const handlePlay = () => {
-        globalEditor.evaluate();
+        globalEditor.evaluate(); // Runs strudel playback code
     };
 
     const handleStop = () => {
-        globalEditor.stop();
+        globalEditor.stop(); // Stops strudel playback code
     };
 
     const applyToggles = (text, toggles) => {
@@ -66,13 +69,16 @@ export default function StrudelDemo() {
         
         let processed = text;
         
+        // Loops through each toggle ^
         Object.keys(instrumentMap).forEach((toggleKey) => {
             const instrument = instrumentMap[toggleKey];
             
-            // Create regex patterns for both versions
-            const normalPattern = new RegExp(`\\b${instrument}:`, 'g');
-            const underscorePattern = new RegExp(`\\b_${instrument}:`, 'g');
+            // Create regex (finds text inside strings) patterns for both versions
+            // "\\b" looks for exact match e.g, "baseline"
+            const normalPattern = new RegExp(`\\b${instrument}:`); // Looks for first instrumental thats turned on
+            const underscorePattern = new RegExp(`\\b_${instrument}:`); // Looks for first muted instrumented with "_"
             
+
             if (toggles[toggleKey] === false) {
                 // Replace "instrument:" with "_instrument:"
                 processed = processed.replace(normalPattern, `_${instrument}:`);
@@ -85,6 +91,7 @@ export default function StrudelDemo() {
         return processed;
     };
 
+    // Live updates the toggle state
     const handleToggleChange = (newToggles) => {
         setToggles(newToggles);
         // Apply toggles to the current song text
