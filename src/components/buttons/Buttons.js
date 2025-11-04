@@ -1,6 +1,7 @@
 import { FaCircleStop } from "react-icons/fa6";
 import { CiSaveDown2 } from "react-icons/ci";
 import { FaRecycle, FaPlay, FaDownload } from "react-icons/fa";
+import { IoIosAddCircle } from "react-icons/io";
 import { BiReset } from "react-icons/bi";
 import { RiDeleteBin7Fill } from "react-icons/ri";
 
@@ -52,7 +53,7 @@ export function Save(props){
     return (
         <div>
             <button className="flex content-center" onClick={props.modalOpenControl}> 
-                <CiSaveDown2 className="mx-1 self-center text-[28px] text-green-600"/>
+                <IoIosAddCircle className="mx-1 self-center text-[28px] text-green-600"/>
             </button>
         </div>
     );

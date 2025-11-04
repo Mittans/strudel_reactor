@@ -74,6 +74,12 @@ export default function StrudelDemo() {
   ProcAndPlay();
 }
 
+  function updateEditor(newText) {
+    setText(newText);
+    if (globalEditor) globalEditor.setCode(newText);
+  }
+
+
   const hasRun = useRef(false);
   const [isPlay,setIsPlay] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -264,7 +270,7 @@ export default function StrudelDemo() {
               </div>
               
               <Effects isOpenEffects={isOpenEffects}/>
-              <Instrument isOpenInstrument={isOpenInstrument}/>
+              <Instrument isOpenInstrument={isOpenInstrument} updateEditor={updateEditor}/>
             </div>
             <div className='mx-2 mt-4'>
                 <button className={`text-2xl text-center font-bold flex justify-center rounded-lg w-full border border-black ${isOpenTextToProcess ? ("bg-black text-yellow-500") : ("bg-white text-black")}`}
