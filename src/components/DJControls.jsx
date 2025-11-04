@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-function DJControls({ onCpmChange, cpm }) {
+function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
     // State variable to store the current CPM value
     const [localCpm, setLocalCpm] = useState(cpm ?? 140);
+    // State variable to store the current Key shitf value
+    const [localShift, setLocalShift] = useState(keyShift ?? 0);
 
     //  Sync the local CPM value
     useEffect(() => {
@@ -10,6 +12,12 @@ function DJControls({ onCpmChange, cpm }) {
         }
     }, [cpm]);
 
+    useEffect(() => {
+        if (typeof keyShift === 'number' && !Number.isNaN(keyShift)) {
+            setLocalShift(keyShift);
+        }
+    }, [keyShift]);
+
     const handleCpmChange = (e) => {
         let value = e.target.valueAsNumber;
         if (Number.isNaN(value)) value = 140;
@@ -17,6 +25,16 @@ function DJControls({ onCpmChange, cpm }) {
 
         setLocalCpm(value);
         onCpmChange?.(value);
+    };
+
+    const handleKeyShiftChange = (e) => {
+        let value = e.target.valueAsNumber;
+        if (Number.isNaN(value)) value = 0;
+        value = Math.min(24, Math.max(-24, value));
+
+        setLocalShift(value);
+        onKeyShiftChange?.(value);
+
     };
 
     const quickCpms = [30, 60, 90, 120, 140];
@@ -28,20 +46,25 @@ function DJControls({ onCpmChange, cpm }) {
         140: 'btn-outline-danger',
     };
 
-    const quickKeys = [-12, -4, -2, 0, 2, 4, 12];
+    const quickKeys = [-24, -12, -6, 0, 6, 12, 24];
     const keyStyles = {
-        [-12]: 'btn-outline-danger',
-        [-4]: 'btn-outline-warning',
-        [-2]: 'btn-outline-info',
+        [-24]: 'btn-outline-danger',
+        [-12]: 'btn-outline-warning',
+        [-6]: 'btn-outline-info',
         [0]: 'btn-outline-secondary',
-        [2]: 'btn-outline-success',
-        [4]: 'btn-outline-info',
-        [12]: 'btn-outline-primary',
+        [6]: 'btn-outline-success',
+        [12]: 'btn-outline-info',
+        [24]: 'btn-outline-primary',
     };
 
     const handleQuickCpm = (value) => {
         setLocalCpm(value);
         if (typeof onCpmChange === "function") onCpmChange(value);
+    };
+
+    const handleQuickShift = (value) => {
+        setLocalShift(value);
+        if (typeof onKeyShiftChange === "function") onKeyShiftChange(value);
     };
 
     return (
@@ -98,15 +121,16 @@ function DJControls({ onCpmChange, cpm }) {
 
             <div className="input-group mb-3">
                 <span className="input-group-text">Semitones</span>
-                <input type="number" className="form-control" id="key_shift_input" placeholder="0" min="-12" max="12" step="1" />
+                <input type="number" className="form-control" id="key_shift_input" value={localShift} onChange={handleKeyShiftChange} placeholder="0" min="-12" max="12" step="1" />
             </div>
 
             {/* Button for quick change cpm */}
-            <div className="btn-group mb-3 w-100" role="group" aria-label="Quick CPM Buttons">
-                {quickCpms.map((val) => (
-                    <button key={val} type="button" className={`btn ${cpmStyles[val]} ${localCpm === val ? 'active' : ''} btn-sm`} onClick={() => handleQuickCpm(val)} >
-                        {val}
+            <div className="btn-group mb-3 w-100" role="group" aria-label="Quick Key Buttons">
+                {quickKeys.map((val) => (
+                    <button key={val} type="button" className={`btn ${keyStyles[val]} ${localShift === val ? 'active' : ''} btn-sm`} onClick={() => handleQuickShift(val)} >
+                        {val > 0 ? `+${val}` : val}
                     </button>
+
                 ))}
             </div>
 

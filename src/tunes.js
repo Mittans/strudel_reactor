@@ -40,7 +40,7 @@ const pattern = 0
 const bass = 0
 
 bassline:
-note(pick(basslines, bass))
+note(pick(basslines, bass).add("<keyshift>"))
 .sound("supersaw")
 .postgain(2)
 .room(0.6)
@@ -49,8 +49,9 @@ note(pick(basslines, bass))
 .postgain(pick(gain_patterns, pattern))
 
 
+
 main_arp: 
-note(pick(arpeggiator1, "<0 1 2 3>/2"))
+note(pick(arpeggiator1, "<0 1 2 3>/2").add("<keyshift>"))
 .sound("supersaw")
 .lpf(300)
 .adsr("0:0:.5:.1")
