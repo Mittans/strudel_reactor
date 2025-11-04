@@ -11,11 +11,14 @@ import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import DJControls from './components/dj-controls';
 import PlayButtons from './components/play-buttons';
-import ProcessingButtons from './components/processing-buttons';
 import PreprocessText from './components/PreprocessText';
 import PageHeader from './components/page-header';
 import Accordion from './components/accordion';
 import CodeOutput from './components/code-output';
+import InstrumentSlider from './components/instrument-slider';
+import ProcessCode from './components/processCode';
+import InstrumentControls from './components/instrument-controls';
+import './components/component-styling.css'
 
 let globalEditor = null;
 
@@ -133,23 +136,26 @@ return (
                     <div className="col-md-8 pt-3" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                         <Accordion component={ <PreprocessText defaultValue={songText} onChange={(e) => setSongText(e.target.value)}/>} text={"Preprocess Text Input"}/>
                     </div>
-                    <div className="col-md-4">
+                    <div className="col-md-4 d-flex align-items-center">
 
                         <nav>
                             <div>
                                 <PlayButtons onPlay={handlePlay} onPause={handlePause}/>
-                                <ProcessingButtons/>
                             </div>
                         </nav>
                     </div>
                 </div>
                 <div className="row px-2 py-2">
                     <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        {/* this is broken */}
                         <Accordion component={<CodeOutput/>} text={'Code Output'}/>
+
+                        <InstrumentControls/>
                     </div>
                     <div className="col-md-4">
+                        <ProcessCode songText={songText} />
                         <DJControls/>
+                        <InstrumentSlider instrument={"p1"} text={"Volume"}/>
+                        <InstrumentSlider instrument={"p2"} text={"Volume"}/>
                     </div>
                 </div>
             </div>
