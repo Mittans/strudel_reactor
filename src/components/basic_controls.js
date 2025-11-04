@@ -1,4 +1,4 @@
-function basic_controls() {
+function basic_controls(defaultGainValue, onGainChange) {
     return (
         <>
             <div className="form-check">
@@ -21,24 +21,30 @@ function basic_controls() {
             </div>
 
             <label htmlFor="vol_range" className="form-label">Volume</label>
-            <input type="range" className="form-range" min="0" max="1" step="0.01" id="vol_range"></input>
+            <input type="range" className="form-range" min="0" max="1" step="0.01" defaultValue={defaultGainValue} onChange={onGainChange} id="vol_range"></input>
 
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="s1" />
-                <label className="form-check-label" htmlFor="s1">
-                    s1
+                <input className="form-check-input" type="checkbox" value="" id="bassline" />
+                <label className="form-check-label" htmlFor="bassline">
+                    mute bassline
                 </label>
             </div>
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="s2" />
-                <label className="form-check-label" htmlFor="s2">
-                    s2
+                <input className="form-check-input" type="checkbox" value="" id="main_arp" />
+                <label className="form-check-label" htmlFor="main_arp">
+                    mute main_arp
                 </label>
             </div>
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="s3" />
-                <label className="form-check-label" htmlFor="s3">
-                    s3
+                <input className="form-check-input" type="checkbox" value="" id="drums" />
+                <label className="form-check-label" htmlFor="drums">
+                    mute drums
+                </label>
+            </div>
+            <div className="form-check">
+                <input className="form-check-input" type="checkbox" value="" id="drums2" />
+                <label className="form-check-label" htmlFor="drums2">
+                    mute drums2
                 </label>
             </div>
 

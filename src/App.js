@@ -80,6 +80,8 @@ export default function StrudelDemo() {
 
     const [songText, setSongText] = useState(stranger_tune)
 
+    const [gainLevel, setGainLevel] = useState(0.5);
+
 useEffect(() => {
 
     if (!hasRun.current) {
@@ -148,7 +150,7 @@ return (
                         <div id="output" />
                     </div>
                     <div className="col-md-4">
-                        <BasicControls />
+                        <BasicControls defaultGainValue={gainLevel} onGainChange={(e) => setGainLevel.ParseFloat(e.target.value)}/>
                     </div>
                 </div>
             </div>
