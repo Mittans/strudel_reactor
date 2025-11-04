@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { setGlobalVolume } from "../StrudelSetup";
 import ThemDropdown from "./ThemeDropdown";
+import base from '../BaseSettings';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -25,22 +26,23 @@ export function DJControls({ codeFontSize, setCodeFontSize, themeDropdown, setTh
                     </div>
                 </div>
 
+                { (base.DEBUG_MODE) ? 
                 <div className="row mb-2 bg-foreground">
                         {/* TODO: this does nothing! */}
                     <div className="col bg-foreground">
-                        <input className="form-check-input" type="checkBox" name="aa" value="" id="checkbox_1" defaultChecked onChange={onHandleGeneric} /> {/*onChange={ProcAndPlay} */}
+                        <input className="form-check-input" type="checkBox" name="aa" defaultChecked={base.CHECKBOX_1} id="checkbox_1" onChange={onHandleGeneric} /> {/*onChange={ProcAndPlay} */}
                         <label className="form-check-label bg-foreground" htmlFor="checkbox_1">
                             check1: a {/* p1 ON */}
                         </label>
                     </div>
                     <div className="col mb-4 bg-foreground">
-                        <input className="form-check-input" type="checkBox" name="bb" value="" id="checkbox_2" onChange={onHandleGeneric} /> {/*onChange={ProcAndPlay} */}
+                        <input className="form-check-input" type="checkBox" name="bb" defaultChecked={base.CHECKBOX_2} id="checkbox_2" onChange={onHandleGeneric} /> {/*onChange={ProcAndPlay} */}
                         <label className="form-check-label bg-foreground" htmlFor="checkbox_2">
                             check2: a {/* p1 HUSH */}
                         </label>
                     </div>
                 </div>
-
+                : null }
                 <br/>
                 <br/>
                 <br/>

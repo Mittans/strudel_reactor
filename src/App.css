@@ -10,6 +10,7 @@
   --editorTextColour: black !important;
   --rightPanelTextColour: black !important;
   --sliderColour: blue;
+  --checkboxBackgroundColour: var(--secondaryColour);
 
   /* only change these below 2 to change panel menu buttons text colour */
   --menuPanelPrim: white; 
@@ -29,6 +30,7 @@
   --editorTextColour: black;
   --rightPanelTextColour: white;
   --sliderColour: #00000099;
+  --checkboxBackgroundColour: var(--sliderColour);
 
   --menuPanelPrim: black;
   --menuPanelSec: white;
@@ -47,6 +49,7 @@
   --editorTextColour: white;
   --rightPanelTextColour: white;
   --sliderColour: #dad8e979;
+  --checkboxBackgroundColour: var(--secondaryColour);
 
   --menuPanelPrim: black;
   --menuPanelSec: white;
@@ -294,6 +297,12 @@ html, body {
   background-color: var(--tertiaryColour) !important;
 }
 
+/* checkboxes */
+.form-check-input {
+  border-color: var(--primaryColour) !important;
+  background-color: var(--checkboxBackgroundColour) !important;
+}
+
 /* .div, .btn, span#cpm_label, .form-control, .input-group-text, .input-group, .h6, .menu_label_subject, .menu_label_value {
   color: pink !important;
   
@@ -355,10 +364,6 @@ html, body {
 
 .proc {
   resize: none;
-}
-
-.form-check-input {
-  border-color: var(--secondaryColour) !important;
 }
 
 .editor {

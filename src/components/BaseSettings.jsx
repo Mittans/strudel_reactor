@@ -10,7 +10,9 @@ let h = parseInt(6);
 let i = parseInt(40);
 let j = parseInt(1);
 let k = parseFloat(0.01);
-let l = false;
+let l = true; // determines whether or not debug theme and various debug functions are included
+let m = true;
+let n = false;
 
 const base = {
     VOLUME_MIN: a,
@@ -24,7 +26,10 @@ const base = {
     FONT_SIZE_SLIDER_MAX: i,
     FONT_SIZE_SLIDER_STEP: j,
     VOLUME_SLIDER_STEP: k,
-    ALLOW_DEBUG_THEME: l
+    DEBUG_MODE: l,
+    // replace these with whatever the checkboxes are actually used for later
+    CHECKBOX_1: m,
+    CHECKBOX_2: n
 };
 
 export default base;

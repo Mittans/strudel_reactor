@@ -102,23 +102,23 @@ function StrudelPlayer() {
 
     function handleResetCode() {
         setSongText(stranger_tune);
-        setCodeFontSize(14);
+        setCodeFontSize(base.DEFAULT_FONT_SIZE);
         Proc();
     }
 
     // will reset controls to default; not the loaded settings.
     function onHandleResetControls() {
         console.log("onHandleResetControls called");
-        setCodeFontSize(14);
-        
-        setVolume(0.5);
-        setThemeDropdown("Dark");
-        
-        setGlobalVolume(0.5);
-        setGlobalCPM(120);
-        document.getElementById("checkbox_1").checked = document.getElementById("checkbox_1").defaultChecked;
-        document.getElementById("checkbox_2").checked = document.getElementById("checkbox_2").defaultChecked;
-
+        setCodeFontSize(base.DEFAULT_FONT_SIZE);
+        setVolume(base.DEFAULT_VOLUME);
+        setCPM(base.DEFAULT_CPM);
+        setThemeDropdown(base.DEFAULT_THEME);
+        setGlobalVolume(base.DEFAULT_VOLUME);
+        setGlobalCPM(base.DEFAULT_CPM);
+        if (base.DEBUG_MODE) {
+            document.getElementById("checkbox_1").checked = document.getElementById("checkbox_1").defaultChecked;
+            document.getElementById("checkbox_2").checked = document.getElementById("checkbox_2").defaultChecked;
+        }
     }
 
     // TODO: this is messy
@@ -189,46 +189,94 @@ function StrudelPlayer() {
     function onHandleLoadSettings(settingsJSON) {
         console.log("onHandleLoadSettings called");
         console.log("settingsJSON:\n" + settingsJSON);
-        const isValid = validateSettings(settingsJSON);
 
-        if (!isValid) {
+        let validKeys = validateSettingKeys(settingsJSON);
+        if (!validKeys) {
             return;
         }
-        // // we need to validate that the settings file has the settings we need
 
-        // setCodeFontSize(14);
+        let withinLimits = validateSettingLimits(settingsJSON);
+        if (!withinLimits) {
+            return;
+        }
         
-        // setVolume(0.5);
-        // setThemeDropdown("Dark");
-        
-        // setGlobalVolume(0.5);
-        // setGlobalCPM(120);
-        // document.getElementById("checkbox_1").checked = document.getElementById("checkbox_1").defaultChecked;
-        // document.getElementById("checkbox_2").checked = document.getElementById("checkbox_2").defaultChecked;
+        console.log("Loaded JSON data keys are valid and the corresponding data values are within acceptable limits.");
+
+        // load the settings
+        console.log("onHandleResetControls called");
+        try {
+            setCodeFontSize(settingsJSON["fontSize"]);
+            setVolume(settingsJSON["volume"]);
+            setCPM(settingsJSON["cpm"]);
+            setThemeDropdown(settingsJSON["theme"]);
+            setGlobalVolume(settingsJSON["volume"]);
+            setGlobalCPM(settingsJSON["cpm"]);
+            if (base.DEBUG_MODE) {
+                document.getElementById("checkbox_1").checked = settingsJSON["checkbox1"];
+                document.getElementById("checkbox_2").checked = settingsJSON["checkbox2"];
+            }
+        } catch (e) {
+            console.log("somehow failed the try-catch to load settings...?");
+        }
     }
 
     // compare settings to hard coded ranges and what settings exist to see if we can load it
-    function validateSettings(settingsJSON) {
-        console.log("validateSettings called");
+    function validateSettingKeys(settingsJSON) {
+        console.log("validateSettingKeys called");
         // what settings we need; ignore other keys
         const listOfSettingKeys = [ "volume", "cpm", "fontSize", "theme", "checkbox1", "checkbox2" ];
+        const missingKeys = [];
 
         var listOfFileKeys = [];
         for (let key in settingsJSON) {
             listOfFileKeys.push(key);
         }
 
-        // 
-        for (var i in listOfSettingKeys) {
-            if ( !(listOfSettingKeys[i] in listOfFileKeys ) ) {
-                console.log("settingsJSON is missing key : " + listOfSettingKeys[i]);
+        //console.log("listOfFileKeys : " + listOfFileKeys);
+        // ensure we have the correct keys
+        for (let i in listOfSettingKeys) {
+            if ( !(listOfSettingKeys[i] === listOfFileKeys[i] ) ) {
+                //console.log("listOfSettingKeys[i] : " + listOfSettingKeys[i]);
+                missingKeys.push(listOfSettingKeys[i]);
             }
         }
+        if (missingKeys.length == 0){
+            console.log("valid; no missing keys");
+            return true;
+        } else {
+            for (let key in missingKeys) {
+                console.log("settingsJSON is missing key : " + missingKeys[key]);
+            }
+            return false;
+        }
+    }
 
+    // compare settings to limits
+    function validateSettingLimits(settingsJSON) {
+        console.log("validateSettingLimits called");
+        let isValid = true; // have to be careful as it is valid by default; *never* set this to true anywhere else
 
+        /*
+        console.log("\n");
+        console.log("is volume ("+settingsJSON["volume"]+") below max : " + ( settingsJSON["volume"] < base.VOLUME_MAX ));
+        console.log("is volume ("+settingsJSON["volume"]+") above min : " + ( settingsJSON["volume"] > base.VOLUME_MIN ));
+        console.log("is fontSize ("+settingsJSON["fontSize"]+") below max : " + ( settingsJSON["fontSize"] < base.FONT_SIZE_SLIDER_MAX ));
+        console.log("is fontSize ("+settingsJSON["fontSize"]+") above min : " + ( settingsJSON["fontSize"] > base.FONT_SIZE_SLIDER_MIN ));
+        console.log("is theme ("+settingsJSON["theme"]+") valid : " + ( ["Debug", "Light", "Dark"].includes(settingsJSON["theme"]) ) );
+        console.log("is checkbox1 ("+settingsJSON["checkbox1"]+")valid : " + ( [true, false].includes(settingsJSON["checkbox1"]) ));
+        console.log("is checkbox2 ("+settingsJSON["checkbox2"]+")valid : " + ( [true, false].includes(settingsJSON["checkbox2"]) ));
+        */
 
-        // should print out a list of errors
-        return false;
+        // if setting is valid, isValid is true. We set isValid to false on the inverse
+        isValid = (!( settingsJSON["volume"] < base.VOLUME_MAX ) ? false : isValid);
+        isValid = (!( settingsJSON["volume"] > base.VOLUME_MIN ) ? false : isValid);
+        isValid = (!( settingsJSON["fontSize"] < base.FONT_SIZE_SLIDER_MAX ) ? false : isValid);
+        isValid = (!( settingsJSON["fontSize"] > base.FONT_SIZE_SLIDER_MIN ) ? false : isValid);
+        isValid = (!( ["Debug", "Light", "Dark"].includes(settingsJSON["theme"]) ) ? false : isValid);
+        isValid = (!( [true, false].includes(settingsJSON["checkbox1"]) ) ? false : isValid);
+        isValid = (!( [true, false].includes(settingsJSON["checkbox2"]) ) ? false : isValid);
+
+        return isValid;
     }
 
     return (
