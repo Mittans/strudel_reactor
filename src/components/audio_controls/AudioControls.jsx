@@ -5,7 +5,6 @@ import VolumeSlider from "./VolumeSlider";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 
-
 export function AudioControls({ volume, setVolume, cpm, setCPM, onHandleGeneric, onHandleVolume, onHandleCPM, theme}) {
     return (
         <>

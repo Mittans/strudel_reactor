@@ -1,3 +1,4 @@
+import base from '../BaseSettings';
 
 function ThemeDropdown ({ themeDropdown, setThemeDropdown, onHandleTheme}) {
     const themesList = [ "Debug", "Light", "Dark" ];
@@ -19,7 +20,9 @@ function ThemeDropdown ({ themeDropdown, setThemeDropdown, onHandleTheme}) {
                         }
                     }}>
                         {/* <li><h6 class="dropdown-header">Dropdown explanation here</h6></li> */}
-                        <li><button hidden className="dropdown-item" id="theme1" name={themesList[0]}>{themesList[0]}</button></li>
+                        {(base.ALLOW_DEBUG_THEME) ?  
+                        <li><button className="dropdown-item" id="theme1" name={themesList[0]}>{themesList[0]}</button></li>
+                        : ""}
                         <li><button className="dropdown-item" id="theme2" name={themesList[1]}>{themesList[1]}</button></li>
                         <li><button className="dropdown-item" id="theme3" name={themesList[2]}>{themesList[2]}</button></li>
                     </ul>

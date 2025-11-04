@@ -22,6 +22,7 @@ import SourcePanel from './menu_controls/SourcePanel';
 import ConsolePanel from './menu_controls/ConsolePanel';
 import { setGlobalCPM, StrudelSetup } from './StrudelSetup';
 import { handlePlay, handleStop, handleProc, handleProcPlay, handleReset, Proc, setGlobalVolume} from './StrudelSetup';
+import base from './BaseSettings';
 import userEvent from "@testing-library/user-event";
 
 let defaultTune = stranger_tune;
@@ -29,21 +30,6 @@ let defaultTune = stranger_tune;
 let strudelRef = null;
 let globalEditor = null;
 let StrudelDemoThingo = null;
-
-//let volumeControlRef = null;
-
-// export const setGlobalVolume = (volume) => {
-//     console.log("new setVolume used");
-//     const ctx = getAudioContext();
-//     if (volumeControlRef == null){
-//         volumeControlRef = ctx.createGain(); // volume based on gain, have to create it like so
-//         volumeControlRef.connect(ctx.destination);
-//     } else {
-//         console.log("failed condition checker in setGlobalVolume");
-//     }
-//     volumeControlRef.gain.value = volume;
-//     console.log("volumeControlRef.gain.value - " + volumeControlRef.gain.value);
-// }
 
 // strudelRef references the strudel/globaleditor 
 // this is basically the new StrudelDemo from App.js
@@ -53,16 +39,16 @@ function StrudelPlayer() {
     //let strudelRef = useRef();
     const hasRun = useRef(false);
     const [ songText, setSongText ] = useState("");
-    const [ activeBtn, setActiveBtn ] = useState("controlBtn")
+    const [ activeBtn, setActiveBtn ] = useState(base.DEFAULT_MENU);
     const [ errorText, setErrorText ] = useState("");
 
     // audio_controls
-    const [ volume, setVolume ] = useState(0.5);
-    const [ cpm, setCPM ] = useState(120);
+    const [ volume, setVolume ] = useState(base.DEFAULT_VOLUME);
+    const [ cpm, setCPM ] = useState(base.DEFAULT_CPM);
 
     // dj_controls
-    const [ themeDropdown, setThemeDropdown] = useState("Dark"); // light is default for maximum effect
-    const [ codeFontSize, setCodeFontSize ] = useState(14);
+    const [ themeDropdown, setThemeDropdown] = useState(base.DEFAULT_THEME); // light is default for maximum effect
+    const [ codeFontSize, setCodeFontSize ] = useState(base.DEFAULT_FONT_SIZE);
 
     // on load the player needs to setup the strudel
     useEffect((e) => {
@@ -120,6 +106,7 @@ function StrudelPlayer() {
         Proc();
     }
 
+    // will reset controls to default; not the loaded settings.
     function onHandleResetControls() {
         console.log("onHandleResetControls called");
         setCodeFontSize(14);
@@ -166,14 +153,82 @@ function StrudelPlayer() {
         setGlobalCPM(newCPM); // strudel player volume
     };
 
-    function exportJSON() {
+    function onHandleExportJSON() {
         console.log("exportJSON() called");
         let docString = document.getElementById('proc').value;
         alert(docString); //this needs to write to a file or smth, and then download
     }
 
-    function importJSON() {
-        console.log("importJSON() called");
+    // takes an uploaded file, verifies it is valid, and outputs as dict to be read into settings
+    function onHandleImportJSON(file) {
+        console.log("onHandleImportJSON() called");
+
+        if (!file) {
+            alert("No file selected. Please choose a JSON file.", "error");
+            return;
+        }
+
+        if (!file.type.endsWith("json")) {
+            alert("Unsupported file type. Please select a JSON file.", "error");
+            return;
+        }
+
+        // read the file
+        const reader = new FileReader();
+        reader.onload = () => {
+            const readableJSON = JSON.parse(reader.result);
+            onHandleLoadSettings(readableJSON);
+        };
+        reader.onerror = () => {
+            alert("Error reading the file. Please try again.", "error");
+        };
+        // this *must* be here for reader.onload to work; it sets reader.result
+        reader.readAsText(file);
+    }
+
+    function onHandleLoadSettings(settingsJSON) {
+        console.log("onHandleLoadSettings called");
+        console.log("settingsJSON:\n" + settingsJSON);
+        const isValid = validateSettings(settingsJSON);
+
+        if (!isValid) {
+            return;
+        }
+        // // we need to validate that the settings file has the settings we need
+
+        // setCodeFontSize(14);
+        
+        // setVolume(0.5);
+        // setThemeDropdown("Dark");
+        
+        // setGlobalVolume(0.5);
+        // setGlobalCPM(120);
+        // document.getElementById("checkbox_1").checked = document.getElementById("checkbox_1").defaultChecked;
+        // document.getElementById("checkbox_2").checked = document.getElementById("checkbox_2").defaultChecked;
+    }
+
+    // compare settings to hard coded ranges and what settings exist to see if we can load it
+    function validateSettings(settingsJSON) {
+        console.log("validateSettings called");
+        // what settings we need; ignore other keys
+        const listOfSettingKeys = [ "volume", "cpm", "fontSize", "theme", "checkbox1", "checkbox2" ];
+
+        var listOfFileKeys = [];
+        for (let key in settingsJSON) {
+            listOfFileKeys.push(key);
+        }
+
+        // 
+        for (var i in listOfSettingKeys) {
+            if ( !(listOfSettingKeys[i] in listOfFileKeys ) ) {
+                console.log("settingsJSON is missing key : " + listOfSettingKeys[i]);
+            }
+        }
+
+
+
+        // should print out a list of errors
+        return false;
     }
 
     return (
@@ -229,11 +284,14 @@ function StrudelPlayer() {
                                     /> */}
                                     <div className="importExportBtns mb-4" role="group" id="menuPanelStuff1" aria-label="Control panel">
                                         <div className="row" id="menuPanel">
-                                            <div className="btn-group" role="group" id="" aria-label="Menu buttons">
+                                            <div className="btn-group" role="group" id="">
                                                 <button href="#" style={{ textAlign:'center', maxWidth:'25%' }} id="exportJSON" className="btn container ioBtnRow" onClick={(e) => {
                                                     //exportJSON();
                                                 }}>Export JSON</button>
-                                                <input hidden id="fileUploadElement" onChange={importJSON} type="file" />
+                                                <input hidden id="fileUploadElement" value={""} onChange={(e) => {
+                                                    const file = e.target.files[0];
+                                                    onHandleImportJSON(file);
+                                                }} accept=".json" type="file" />
                                                 <label for="fileUploadElement" className="btn container ioBtnRow" style={{ textAlign:'center', maxWidth:'25%' }} id="importJSON" >Import JSON</label>
                                                 <div className="container ioBtnRow dontShow" disabled style={{ textAlign:'center', width:'5%' }} ></div>
                                                 <button id="reset" className="btn container ioBtnRow" onClick={handleResetCode} style={{ textAlign:'center', maxWidth:'33%' }}>Restore Default</button>
