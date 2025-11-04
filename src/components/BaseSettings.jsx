@@ -10,7 +10,7 @@ let h = parseInt(6);
 let i = parseInt(40);
 let j = parseInt(1);
 let k = parseFloat(0.01);
-let l = true; // determines whether or not debug theme and various debug functions are included
+let l = false; // determines whether or not debug theme and various debug functions are included
 let m = true;
 let n = false;
 
