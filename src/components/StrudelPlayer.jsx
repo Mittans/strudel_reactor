@@ -55,6 +55,7 @@ function StrudelPlayer() {
     // on load the player needs to setup the strudel
     useEffect((e) => {
         console.log("First useEffect in StrudelPlayer called");
+        document.getElementById("consolePanelText").innerText = "";
 
         if (!hasRun.current) {
             console.log("hasRun is false; setting up Strudel");
@@ -70,11 +71,16 @@ function StrudelPlayer() {
         
         console.log("Second useEffect in StrudelPlayer called");
         onHandleFontSize();
-        //document.getElementById("editor").style.cssText = `a:display: block; background-color: var(--background); font-size: `+codeFontSize+`px; font-family: monospace;`;
-        
-        //document.getElementById("proc").style = `resize: none; font-size: `+codeFontSize+`px;`;
+
+        // add listener to print logs into console panel
+        //document.getElementById("consolePanelText").addEventListener("useState", onHandleConsolePanel(e));
         
     });
+
+    // broken
+    function onHandleConsolePanel(e) {
+        //document.getElementById("consolePanelText").innerText += "\n"+e+"\n";
+    }
 
     const [ showErrText, setShowErrText ] = useState(false) // for later use
     const [ settings, setSetting ] = useState() // unused
@@ -89,6 +95,7 @@ function StrudelPlayer() {
         //setTheme((themeDropdown === "Light" ? "Dark" : "Light"));
     }
 
+    // useless
     function handleSettings(codeString) {
         console.log("handleSettings is being called in StrudelPlayer???");
         strudelRef.current.setCode(codeString);
@@ -102,9 +109,10 @@ function StrudelPlayer() {
         document.getElementById("proc").style.cssText = `resize: none; font-size: `+codeFontSize+`px;`+`padding-left:`+padding+`px;`;
     }
 
+    // resets both LHS panel (editor and processed text)
     function handleResetCode() {
         setSongText(stranger_tune);
-        //setCodeFontSize(base.DEFAULT_FONT_SIZE);
+        document.getElementById("proc").value=stranger_tune;
         Proc();
     }
 

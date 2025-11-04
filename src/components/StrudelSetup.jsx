@@ -27,7 +27,7 @@ export const Proc = () => {
     } else {
         let volumeToUse = parseFloat(bigVolume);
         let cpmToUse = parseInt(bigCPM);
-        console.log("this is: " + (procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
+        //console.log("this is: " + (procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
         strudelEditor.setCode((procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
     }
 };
@@ -181,4 +181,6 @@ export const handleReset = () => {
     console.log("called handleReset");
     handleStop();
     strudelEditor.setCode(stranger_tune);
+    // @TODO: this needs to reset settings, too! otherwise we're allowing for errors 
+    //strudelRef.current.setCode(defaultTune);
 }

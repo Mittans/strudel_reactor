@@ -6,7 +6,7 @@ function ConsolePanel({  }) {
     return (
         <>
             <div className="" role="group" id="menuPanelStuff3" aria-label="Console panel">
-                <div className="mt-5 menuJustTextBox">
+                <div className="mt-5 menuJustTextBox" id="consolePanelText">
                     console panel
                 </div>
             </div>
