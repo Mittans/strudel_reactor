@@ -9,6 +9,7 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from '../Storage/tunes';
 import console_monkey_patch, { getD3Data } from '../console-monkey-patch';
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 //Components
@@ -17,31 +18,23 @@ import PlayButtons from '../Components/PlayButtons';
 import ProcessButtons from '../Components/ProcessButtons';
 import Preprocess from '../Components/Preprocess';
 
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
 //need to use ref, cannot use global variable, react re-renders components and manages state internally.
 //let globalEditor = null;
-
 
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-
-
 export default function StrudelDemo() {
-
     const hasRun = useRef(false);
 
     //React refs instead of getElementById
     //references the StrudelMirror instance itself (used to play, stop, or update code)
     const editorRef = useRef(null);
 
-
-
     //avoid using document.getElementById, thus useRef to reference the canvas
     const canvasRef = useRef(null);
-
 
     // Function runs when the Play button is clicked
     const handlePlay = () => {
@@ -63,7 +56,9 @@ export default function StrudelDemo() {
     const handlePreprocess = () => {
         if (!editorRef.current) return;
 
-        const volumeController = `setcps(${cpm / 60 / 4})\n${songData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
+        // Replace the 140 with our CPM value in the existing setcps
+        const updatedSongData = songData.replace("setcps(140/60/4)", `setcps(${cpm}/60/4)`);
+        const volumeController = `${updatedSongData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
         editorRef.current.setCode(volumeController);
     };
 
@@ -74,7 +69,6 @@ export default function StrudelDemo() {
     };
 
     //music code takes too much space, reduce the space and expand the space to the right, make it 50/50
-
 
     //created a varible called song data and used songData as a setter and songData as getter
     //used it like that so that all react hooks are fired when we call the function
@@ -87,9 +81,7 @@ export default function StrudelDemo() {
     //cpm setter. Initially set to 120 by default.
     const [cpm, setCpm] = useState(120);
 
-
     useEffect(() => {
-
         if (!hasRun.current) {
             document.addEventListener("d3Data", handleD3Data);
             console_monkey_patch();
@@ -99,7 +91,6 @@ export default function StrudelDemo() {
             //const canvas = document.getElementById('roll');
             const canvas = canvasRef.current;
 
-
             const drawContext = canvas.getContext('2d');
 
             canvas.width = canvas.width * 2;
@@ -107,7 +98,6 @@ export default function StrudelDemo() {
 
             const drawTime = [-2, 2]; // time window of drawn haps
             editorRef.current = new StrudelMirror({
-
                 defaultOutput: webaudioOutput,
                 getTime: () => getAudioContext().currentTime,
                 transpiler,
@@ -131,23 +121,19 @@ export default function StrudelDemo() {
             // so its value updates automatically without direct DOM manipulation.
         }
 
-
-        // Combines song text with CPM, volume and log functions
-        const volumeController = `setcps(${cpm / 60 / 4})\n${songData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
+        // Combines and updates songData with CPM, volume and log functions
+        const updatedSongData = songData.replace("setcps(140/60/4)", `setcps(${cpm}/60/4)`);
+        const volumeController = `${updatedSongData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
 
         editorRef.current.setCode(volumeController);
 
-
-
         //Updates Strudel editor with new code  song and volume
     }, [songData, volume, cpm]); // Runs again when songData or volume updates and the cpm
-
 
     return (
         <div>
             <h2>Strudel Demo</h2>
             <main>
-
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
@@ -155,14 +141,11 @@ export default function StrudelDemo() {
                             <Preprocess defaultValue={songData} onChange={(e) => setSongData(e.target.value)} />
 
 
-
                             {/* calls the Preprocess class*/}
                         </div>
                         <div className="col-md-4">
-
                             <nav>
                                 {/* calls the ProcessButtons class*/}
-
                                 <ProcessButtons onPreprocess={handlePreprocess} onPreprocessPlay={handlePreprocessPlay} />
 
                                 <br />
@@ -170,9 +153,9 @@ export default function StrudelDemo() {
                             </nav>
                         </div>
                     </div>
+
                     <div className="row">
                         <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-
                             <div ref={editorRootRef} />
                             <div id="output" />
                         </div>
@@ -184,12 +167,11 @@ export default function StrudelDemo() {
                                 onCpmChange={setCpm}
                             /> {/* calls the play control class*/}
                         </div>
-
-
                     </div>
                 </div>
                 {/*by using ref={canvasRef}, we link the canvas element to the canvasRef defined earlier*/}
                 <canvas id="roll" ref={canvasRef}></canvas>
+
             </main >
         </div >
     );
