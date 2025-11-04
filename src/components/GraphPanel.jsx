@@ -18,13 +18,12 @@ export default function GraphPanel() {
 
         const c = canvasRef.current;
         if (c) {
-            const dpr = window.devicePixelRatio || 1;
-            const cssWidth = c.clientWidth || 800;
+            const cssWidth = c.clientWidth || 800; // the visible width
             const cssHeight = 200;
-            c.width = Math.round(cssWidth * dpr);
-            c.height = Math.round(cssHeight * dpr);
-            const ctx = c.getContext('2d');
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+            c.width = cssWidth;
+            c.height = cssHeight;
+
             attachCanvas(c);
 
             const editor = getEditor();
@@ -37,13 +36,10 @@ export default function GraphPanel() {
         const onResize = () => {
             const c = canvasRef.current;
             if (!c) return;
-            const dpr = window.devicePixelRatio || 1;
             const cssWidth = c.clientWidth || 800;
             const cssHeight = 200;
-            c.width = Math.round(cssWidth * dpr);
-            c.height = Math.round(cssHeight * dpr);
-            const ctx = c.getContext('2d');
-            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            c.width = cssWidth;
+            c.height = cssHeight;
             attachCanvas(c);
             const editor = getEditor();
             if (editor) editor.evaluate();
@@ -56,6 +52,7 @@ export default function GraphPanel() {
             attachCanvas(null);
         };
     }, []);
+
 
     return (
         <div className="card h-100">
