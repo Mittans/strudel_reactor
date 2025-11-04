@@ -81,6 +81,10 @@ export default function StrudelDemo() {
             globalEditor.setCode(songText);
     }
 
+    const handleProcPlay = () => {
+            globalEditor.setCode(songText);
+            globalEditor.evaluate();
+    }
 
     const [songText, setSongText] = useState(stranger_tune)
 
@@ -145,7 +149,7 @@ export default function StrudelDemo() {
                         <div className="col-md-4">
                             <nav>
 
-                                <ProcButtons onPreprocess={handlePreprocess} />
+                                <ProcButtons onPreprocess={handlePreprocess} onProcPlay={handleProcPlay} />
 
                                 <br />
 
