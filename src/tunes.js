@@ -1,4 +1,4 @@
-export const stranger_tune = `setcps(140/60/4)
+export const stranger_tune = `setcps(&CPS&/60/4)
 
 samples('github:algorave-dave/samples')
 samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
@@ -39,7 +39,7 @@ const arpeggiator2 = [
 const pattern = 0
 const bass = 0
 
-bassline:
+&bassline&bassline:
 note(pick(basslines, bass))
 .sound("supersaw")
 .postgain(2)
@@ -49,7 +49,7 @@ note(pick(basslines, bass))
 .postgain(pick(gain_patterns, pattern))
 
 
-main_arp: 
+&MAIN_ARP&main_arp:
 note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .sound("supersaw")
 .lpf(300)
@@ -59,7 +59,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .postgain(pick(gain_patterns, pattern))
 
 
-drums:
+&DRUMS&drums:
 stack(
   s("tech:5")
   .postgain(6)
@@ -77,7 +77,7 @@ stack(
   .postgain(.25),
 )
 
-drums2: 
+&DRUMS2&drums2:
 stack(
   s("[~ hh]*4").bank("RolandTR808").room(0.3).speed(0.75).gain(1.2),
   s("hh").struct("x*16").bank("RolandTR808")
