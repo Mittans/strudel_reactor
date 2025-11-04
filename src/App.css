@@ -36,3 +36,22 @@
     transform: rotate(360deg);
   }
 }
+
+html, body, #root { height: 100%; }
+.app-viewport { min-height: 100%; background: #0c0f13; color: #dee2e6; }
+
+.top-pane, .bottom-pane { height: 50vh; }
+.pane { height: 100%; display: flex; flex-direction: column; }
+.pane .nav-tabs { border-color: #1f2430; }
+.pane .nav-link { color: #9ab0d0; }
+.pane .nav-link.active { background: #121620; border-color: #2a3242 #2a3242 #121620; color: #e8f0ff; }
+.pane-content { flex: 1; min-height: 0; overflow: auto; }
+
+.card { border: 1px solid #1d2330; border-radius: 14px; background: #0f131a; }
+.card-header { background: linear-gradient(180deg,#121620,#0e1218); border-bottom: 1px solid #1f2430; }
+.card-body { background: #0f131a; }
+
+#proc { background:#0a0e14; color:#e9edf5; border:1px solid #1f2430; }
+#proc:focus { border-color:#2f6fed; box-shadow: 0 0 0 .2rem rgba(47,111,237,.2); outline:none; }
+
+#roll { background:#0a0e14; border:1px solid #1f2430; border-radius: 10px; width: 100%; }

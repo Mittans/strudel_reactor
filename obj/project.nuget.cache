@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "dgSpecHash": "Z3uel4I27Xc=",
+  "success": false,
+  "projectFilePath": "/Users/maxkamp/RiderProjects/strudel_reactor/ReactAssignment.esproj",
+  "expectedPackageFiles": [],
+  "logs": [
+    {
+      "code": "NU1012",
+      "level": "Error",
+      "message": "Platform version is not present for one or more target frameworks, even though they have specified a platform: net6.0-none",
+      "projectPath": "/Users/maxkamp/RiderProjects/strudel_reactor/ReactAssignment.esproj",
+      "filePath": "/Users/maxkamp/RiderProjects/strudel_reactor/ReactAssignment.esproj",
+      "targetGraphs": []
+    }
+  ]
+}
