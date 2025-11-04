@@ -1,3 +1,5 @@
+import './preproc_textarea.css'
+
 function preproc_textarea({ defaultValue, onChange }) {
     return (
         <>

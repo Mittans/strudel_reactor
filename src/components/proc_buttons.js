@@ -1,3 +1,5 @@
+import './proc_buttons.css'
+
 function proc_buttons() {
     return (
         <>

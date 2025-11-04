@@ -1,3 +1,5 @@
+import './play_buttons.css'
+
 function play_buttons({ onPlay, onStop }) {
     return (
         <>

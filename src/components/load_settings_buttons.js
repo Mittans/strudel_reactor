@@ -1,3 +1,5 @@
+import './load_settings_buttons.css'
+
 function load_settings_buttons() {
     return (
         <>

@@ -1,3 +1,5 @@
+import './basic_controls.css'
+
 function basic_controls(defaultGainValue, onGainChange) {
     return (
         <>
