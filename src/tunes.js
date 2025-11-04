@@ -147,6 +147,7 @@ const guitar_patterns = [
 // --------------------- INSTRUMENTS -------------------------
 
 // BASS
+<bass>
 bassline:
 note(pick(basslines, bass))
 .sound("supersaw")
@@ -156,6 +157,7 @@ note(pick(basslines, bass))
 .postgain(pick(gain_patterns, pattern))
 
 // HOOK
+<melody>
 lead_hook:
 note(pick(hook_arp, "<0 1 2 3>/2"))
 .sound("supersaw")
@@ -166,6 +168,7 @@ note(pick(hook_arp, "<0 1 2 3>/2"))
 .rarely(jux(rev))
 
 // GUITAR
+<guitar>
 guitar_strums:
 stack(
   s("acg:0").struct(pick(guitar_patterns, 0))
@@ -176,6 +179,7 @@ stack(
 )
 
 // ------------------------- DRUMS -------------------------
+<drums1>
 drums:
 stack(
   s(pick(drum_structure, pattern)).bank("RolandTR808")     
@@ -196,6 +200,7 @@ stack(
   .postgain(0.35)
 )
 
+<drums2>
 drums2:
 s("tech:5").struct("~ ~ ~ ~ x ~ ~ ~")
 .postgain(0.5).pcurve(2).pdec(1)
