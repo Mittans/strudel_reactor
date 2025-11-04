@@ -28,7 +28,8 @@ export const Proc = () => {
         let volumeToUse = parseFloat(bigVolume);
         let cpmToUse = parseInt(bigCPM);
         //console.log("this is: " + (procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
-        strudelEditor.setCode((procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
+        strudelEditor.setCode(procText);
+        //strudelEditor.setCode((procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
     }
 };
 
@@ -125,15 +126,15 @@ export const setGlobalCPM = (value) => {
 export const handlePlay = () => {
     console.log("called handlePlay");
     if (strudelEditor) {
+        strudelEditor.stop();
+        let procText = document.getElementById("proc").value;
+        let volumeToUse = parseFloat(bigVolume);
+        let cpmToUse = parseInt(bigCPM);
+
+        // adds settings to code for use, then removes them to keep them hidden from user
+        strudelEditor.setCode((procText + "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
         strudelEditor.evaluate();
-        if (volumeControlRef) {
-            let procText = document.getElementById("proc").value;
-            let volumeToUse = parseFloat(bigVolume);
-            let cpmToUse = parseInt(bigCPM);
-            strudelEditor.setCode((procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
-            strudelEditor.evaluate();
-            strudelEditor.setCode(procText);
-        }
+        strudelEditor.setCode(procText);
     } else {
         console.log("Failed condition checker in handlePlay");
     }
@@ -151,7 +152,7 @@ export const handleStop = () => {
 export const handleProc = () => {
     console.log("called handleProc");
     if (strudelEditor) {
-        handleStop();
+        //handleStop();
         Proc();
     } else {
         console.log("Failed condition checker in handleProc");
@@ -169,9 +170,13 @@ export const handleProcPlay = async () => {
         let procText = document.getElementById("proc").value;
         let volumeToUse = parseFloat(bigVolume);
         let cpmToUse = parseInt(bigCPM);
-        strudelEditor.setCode((procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
+        //strudelEditor.setCode((procText += "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
+
+        strudelEditor.setCode((procText + "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
         strudelEditor.evaluate();
         strudelEditor.setCode(procText);
+
+        //strudelEditor.setCode(procText);
     } else {
         console.log("Failed condition checker in handleProcPlay");
     }
