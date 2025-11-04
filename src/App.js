@@ -13,6 +13,7 @@ import BasicControls  from './components/basic_controls';
 import PlayButtons from './components/play_buttons';
 import ProcButtons from './components/proc_buttons';
 import PreProcTextArea from './components/preproc_textarea';
+import LoadSettingsButtons from './components/load_settings_buttons';
 
 let globalEditor = null;
 
@@ -136,6 +137,8 @@ return (
                             <ProcButtons />
                             <br />
                             <PlayButtons onPlay={handlePlay} onStop={handleStop}/>
+                            <br />
+                            <LoadSettingsButtons />
                         </nav>
                     </div>
                 </div>
