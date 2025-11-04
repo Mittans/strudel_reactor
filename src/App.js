@@ -78,6 +78,8 @@ export default function StrudelDemo() {
 
     const [songText, setSongText] = useState(stranger_tune)
 
+    const [volume, setVolume] = useState(0.8)
+
     useEffect(() => {
 
         if (!hasRun.current) {
@@ -147,7 +149,7 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <DJControls />
+                            <DJControls volume={volume} onChange={(e) => setVolume(parseFloat(e.target.value))} />
                         </div>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-function DJControls() {
+function DJControls({volume, onChange}) {
     return (
         <>
             <div className="input-group mb-3">
@@ -14,8 +14,8 @@ function DJControls() {
             </div>
 
             <div className="volume-container">
-                <label htmlFor="volume_range" className="form-label">Volume</label>
-                <input type="range" className="form-range" min="0" max="1" step="0.01" id="volume_range" />
+                <label htmlFor="volume_range" className="form-label">Volume ({Math.round(volume * 100)}%)</label>
+                <input type="range" className="form-range" min="0" max="1" step="0.01" id="volume_range" value={volume} onChange={onChange} />
             </div>
 
             <div className="form-check">
