@@ -132,11 +132,11 @@ export default function StrudelDemo() {
                         <div className="col-md-4">
                             <nav>
 
-                                <ProcButtons onPlay={handlePlay} onStop={handleStop } />
+                                <ProcButtons />
 
                                 <br />
 
-                                <Buttons />
+                                <Buttons onPlay={handlePlay} onStop={handleStop} />
 
                             </nav>
                         </div>
