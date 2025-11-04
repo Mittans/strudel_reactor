@@ -82,10 +82,28 @@ export default function StrudelDemo() {
 
     const [cpm, setCpm] = useState(120);
 
+    const [bass, setBass] = useState(true);
+
+    const [melody, setMelody] = useState(true);
+
+    const [guitar, setGuitar] = useState(true);
+
+    const [drums1, setDrums1] = useState(true);
+
+    const [drums2, setDrums2] = useState(true);
+
+    const [reverbFX, setReverbFX] = useState(true);
+
     const updateStrudelCode = (text) => {
         const processedText = text
             .replaceAll("<volume>", volume)
-            .replaceAll("<cpm>", cpm);
+            .replaceAll("<cpm>", cpm)
+            .replaceAll("<bass>", bass ? "" : "_")
+            .replaceAll("<melody>", melody ? "" : "_")
+            .replaceAll("<guitar>", guitar ? "" : "_")
+            .replaceAll("<drums1>", drums1 ? "" : "_")
+            .replaceAll("<drums2>", drums2 ? "" : "_")
+            .replaceAll("<reverbFX>", reverbFX ? "" : "_");
 
         globalEditor.setCode(processedText);
         globalEditor.evaluate();
@@ -183,7 +201,13 @@ export default function StrudelDemo() {
                                 volume={volume}
                                 onChange={handleVolumeChange}
                                 cpm={cpm}
-                                onCpmChange={(e) => setCpm(e.target.value)}/>
+                                onCpmChange={(e) => setCpm(e.target.value)}
+                                bass={bass} onBassChange={() => setBass(!bass)}
+                                melody={melody} onMelodyChange={() => setMelody(!melody)}
+                                guitar={guitar} onGuitarChange={() => setGuitar(!guitar)}
+                                drums1={drums1} onDrums1Change={() => setDrums1(!drums1)}
+                                drums2={drums2} onDrums2Change={() => setDrums2(!drums2)}
+                                reverbFX={reverbFX} onReverbFXChange={() => setReverbFX(!reverbFX)}                            />
                         </div>
                     </div>
                 </div>
