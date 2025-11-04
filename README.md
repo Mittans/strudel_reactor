@@ -1,3 +1,17 @@
+# WebTech Assignment 2
+Controls used:
+Checkboxes for enabling/disabling different song components
+Slider for controlling volume
+Text input to change song speed
+
+also included buttons for saving and loading data (JSON handling)
+
+DEMO VIDEO HERE: ''
+
+## Song Used
+used the 'stranger_tune' song provided in starter code
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
