@@ -10,7 +10,7 @@ function VolumeSlider() {
     if (!svgRef.current) return;
 
     // Slider dimensions
-    const width = 300;
+    const width = 575;
     const height = 30;
     const barHeight = 6;
 
@@ -21,7 +21,7 @@ function VolumeSlider() {
     const svg = d3.select(svgRef.current)
       .attr('width', width)
       .attr('height', height);
-    
+
     // Creates scale to map volume 0 - 100 with pixels 0 - width
     const scale = d3.scaleLinear()
       .domain([0, 100])
@@ -33,7 +33,7 @@ function VolumeSlider() {
       .attr('width', width)
       .attr('height', barHeight)
       .attr('rx', 4)
-      .attr('fill', 'white');
+      .attr('fill', 'grey');
 
     // Filled slider portion
     const filledTrack = svg.append('rect')
@@ -53,6 +53,18 @@ function VolumeSlider() {
       .attr('stroke-width', 2)
       .attr('cursor', 'pointer');
 
+    // Drag
+    const drag = d3.drag()
+      .on('drag', (event) => {
+        let x = event.x;
+        if (x < 0) x = 0;
+        if (x > width) x = width;
+        const newVolume = Math.round(scale.invert(x));
+        setVolume(newVolume);
+      });
+
+    handle.call(drag);
+
     // Updates volume when user clicks on slider
     svg.on('click', (event) => {
       const x = d3.pointer(event)[0];
@@ -63,14 +75,13 @@ function VolumeSlider() {
   }, [volume]); // Runs effect when volume changes
 
   return (
-    <div style={{ padding: '50px' }}>
-      {/* SVG AREA */}
-      <svg ref={svgRef}></svg>
-
+    <div>
       {/* Display current volume value */}
       <div style={{ marginTop: '10px', fontSize: '18px' }}>
         Volume: {volume}%
       </div>
+      {/* SVG AREA */}
+      <svg ref={svgRef}></svg>
     </div>
   );
 }

@@ -79,7 +79,9 @@ function AUXControls({ onToggleChange }) { // Calls back on onToggleChange
             </span>
           </div>
         </div>
-
+          <div className="d-flex align-items-center mt-2 px-3">
+              <VolumeSlider />
+          </div>
         <div className="card-body p-3">
           <div className='d-grid gap-2 mb-3'>
             <button
@@ -122,9 +124,9 @@ function AUXControls({ onToggleChange }) { // Calls back on onToggleChange
                 </span>
 
               </div>
+              
             ))}
           </div>
-          <VolumeSlider/>
         </div>
       </div>
     </>
