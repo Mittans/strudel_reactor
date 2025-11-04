@@ -1,4 +1,5 @@
-function DJControls({ volume, cpm, onCpmChange, onChange, bass, onBassChange,
+function DJControls({ volume, cpm, onCpmChange,
+    onChange, bass, onBassChange,
     melody, onMelodyChange,
     guitar, onGuitarChange,
     drums1, onDrums1Change,
@@ -64,7 +65,7 @@ function DJControls({ volume, cpm, onCpmChange, onChange, bass, onBassChange,
             </div>
 
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="reverbFX" checked={reverbFX} onChange={reverbFX} />
+                <input className="form-check-input" type="checkbox" value="" id="reverbFX" checked={reverbFX} onChange={onReverbFXChange} />
                 <label className="form-check-label" htmlFor="reverbFX">
                     Reverb FX
                 </label>

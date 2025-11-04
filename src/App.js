@@ -154,7 +154,7 @@ export default function StrudelDemo() {
                         import('@strudel/webaudio'),
                         //{volume}
                     );
-                    
+
 
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
 
@@ -162,12 +162,18 @@ export default function StrudelDemo() {
             });
 
             document.getElementById('proc').value = stranger_tune;
+            updateStrudelCode(stranger_tune);
+
             //SetupButtons()
             //Proc()
             globalEditor.setCode(songText);
         }
+
+        else {
+            updateStrudelCode(songText);
+        }
         
-    }, [songText]);
+    }, [songText, bass, melody, guitar, drums1, drums2, reverbFX, volume, cpm]);
 
     return (
         <div>
