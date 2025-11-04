@@ -76,29 +76,33 @@ export default function StrudelDemo() {
         globalEditor.stop()
     }
 
-
-    const handlePreprocess = () => {
-            globalEditor.setCode(songText);
-    }
-
-    const handleProcPlay = () => {
-        const processedText = songText.replaceAll("volume", volume);
-        globalEditor.setCode(processedText);
-        globalEditor.evaluate();
-    }
-
     const [songText, setSongText] = useState(stranger_tune)
 
     const [volume, setVolume] = useState(0.8)
 
+    const [cpm, setCpm] = useState(120);
+
+    const updateStrudelCode = (text) => {
+        const processedText = text
+            .replaceAll("volume", volume)
+            .replaceAll("cpm", cpm);
+
+        globalEditor.setCode(processedText);
+        globalEditor.evaluate();
+    };
+
+    const handlePreprocess = () => {
+        globalEditor.setCode(songText);
+    };
+
+    const handleProcPlay = () => {
+        updateStrudelCode(songText);
+    };
+
     const handleVolumeChange = (e) => {
         const newVolume = e.target.value;
         setVolume(newVolume);
-
-        const updatedCode = songText.replaceAll("volume", newVolume);
-        globalEditor.setCode(updatedCode);
-        globalEditor.evaluate(); 
-
+        updateStrudelCode(songText);
     };
 
 
@@ -175,7 +179,11 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <DJControls volume={volume} onChange={handleVolumeChange} />
+                            <DJControls
+                                volume={volume}
+                                onChange={handleVolumeChange}
+                                cpm={cpm}
+                                onCpmChange={(e) => setCpm(e.target.value)}/>
                         </div>
                     </div>
                 </div>

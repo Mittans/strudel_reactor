@@ -1,4 +1,4 @@
-function DJControls({volume, onChange}) {
+function DJControls({volume, cpm, onCpmChange, onChange}) {
     return (
         <>
             <div className="input-group mb-3">
@@ -10,6 +10,8 @@ function DJControls({volume, onChange}) {
                     placeholder="120"
                     aria-label="cpm"
                     aria-describedby="cpm_label"
+                    value={cpm}
+                    onChange={onCpmChange}
                 />
             </div>
 
