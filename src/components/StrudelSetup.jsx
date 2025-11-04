@@ -12,6 +12,7 @@ import console_monkey_patch from '../console-monkey-patch';
 let strudelEditor = null;
 let bigVolume = null;
 let bigCPM = null;
+let oldProcText = null;
 
 let isProccessed = false;
 
@@ -21,6 +22,7 @@ export const Proc = () => {
     console.log("Proc() triggered");
     isProccessed = true;
     let procText = document.getElementById("proc").value;
+    oldProcText = document.getElementById("proc").value;
     if (!procText || !strudelEditor) {
         strudelEditor.setCode(stranger_tune);
         return;
@@ -123,6 +125,7 @@ export const setGlobalCPM = (value) => {
 
 }
 
+// this is actually acting as a process button now due to how i'm hiding settings -- maybe a comment to target the lines?
 export const handlePlay = () => {
     console.log("called handlePlay");
     if (strudelEditor) {
@@ -132,9 +135,16 @@ export const handlePlay = () => {
         let cpmToUse = parseInt(bigCPM);
 
         // adds settings to code for use, then removes them to keep them hidden from user
-        strudelEditor.setCode((procText + "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
-        strudelEditor.evaluate();
-        strudelEditor.setCode(procText);
+        if (oldProcText) {
+            strudelEditor.setCode((oldProcText + "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
+            strudelEditor.evaluate();
+            strudelEditor.setCode(oldProcText);
+            oldProcText = null;
+        } else {
+            //strudelEditor.setCode((procText + "\n" + "setcpm("+cpmToUse/4+")" + "\n" + "all(x => x.gain("+volumeToUse+"));"));
+            strudelEditor.evaluate();
+            //strudelEditor.setCode(procText);
+        }
     } else {
         console.log("Failed condition checker in handlePlay");
     }
