@@ -82,13 +82,24 @@ export default function StrudelDemo() {
     }
 
     const handleProcPlay = () => {
-            globalEditor.setCode(songText);
-            globalEditor.evaluate();
+        const processedText = songText.replaceAll("volume", volume);
+        globalEditor.setCode(processedText);
+        globalEditor.evaluate();
     }
 
     const [songText, setSongText] = useState(stranger_tune)
 
     const [volume, setVolume] = useState(0.8)
+
+    const handleVolumeChange = (e) => {
+        const newVolume = e.target.value;
+        setVolume(newVolume);
+
+        const updatedCode = songText.replaceAll("volume", newVolume);
+        globalEditor.setCode(updatedCode);
+        globalEditor.evaluate(); 
+
+    };
 
 
     useEffect(() => {
@@ -164,7 +175,7 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <DJControls volume={volume} onChange={(e) => setVolume(e.target.value)} />
+                            <DJControls volume={volume} onChange={handleVolumeChange} />
                         </div>
                     </div>
                 </div>
