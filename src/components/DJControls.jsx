@@ -27,6 +27,18 @@ function DJControls({ onCpmChange, cpm }) {
         120: 'btn-outline-warning',
         140: 'btn-outline-danger',
     };
+
+    const quickKeys = [-12, -4, -2, 0, 2, 4, 12];
+    const keyStyles = {
+        [-12]: 'btn-outline-danger',
+        [-4]: 'btn-outline-warning',
+        [-2]: 'btn-outline-info',
+        [0]: 'btn-outline-secondary',
+        [2]: 'btn-outline-success',
+        [4]: 'btn-outline-info',
+        [12]: 'btn-outline-primary',
+    };
+
     const handleQuickCpm = (value) => {
         setLocalCpm(value);
         if (typeof onCpmChange === "function") onCpmChange(value);
@@ -87,17 +99,17 @@ function DJControls({ onCpmChange, cpm }) {
             <div className="input-group mb-3">
                 <span className="input-group-text">Semitones</span>
                 <input type="number" className="form-control" id="key_shift_input" placeholder="0" min="-12" max="12" step="1" />
-                <button className="btn btn-outline-secondary" type="button" id="key_down_btn">
-                    -1
-                </button>
-                <button className="btn btn-outline-secondary" type="button" id="key_up_btn">
-                    +1
-                </button>
             </div>
 
-            <div className="form-text text-muted">
-                Adjust pitch by semitones
+            {/* Button for quick change cpm */}
+            <div className="btn-group mb-3 w-100" role="group" aria-label="Quick CPM Buttons">
+                {quickCpms.map((val) => (
+                    <button key={val} type="button" className={`btn ${cpmStyles[val]} ${localCpm === val ? 'active' : ''} btn-sm`} onClick={() => handleQuickCpm(val)} >
+                        {val}
+                    </button>
+                ))}
             </div>
+
       </>
   );
 }
