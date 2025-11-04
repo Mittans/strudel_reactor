@@ -24,6 +24,7 @@ import { setGlobalCPM, StrudelSetup } from './StrudelSetup';
 import { handlePlay, handleStop, handleProc, handleProcPlay, handleReset, Proc, setGlobalVolume} from './StrudelSetup';
 import base from './BaseSettings';
 import userEvent from "@testing-library/user-event";
+import { stringifyValues } from "@strudel/core";
 
 let defaultTune = stranger_tune;
 
@@ -155,8 +156,30 @@ function StrudelPlayer() {
 
     function onHandleExportJSON() {
         console.log("exportJSON() called");
-        let docString = document.getElementById('proc').value;
-        alert(docString); //this needs to write to a file or smth, and then download
+
+        let exportJSON = {
+            "volume": 0.4,
+            "cpm": 30,
+            "fontSize": 12,
+            "theme": "Dark",
+            "checkbox1": true,
+            "checkbox2": true
+        };
+
+        const localeTime = new Date().toLocaleTimeString();
+        let fileName = "Strudel_Settings_"+localeTime;
+
+        const blob = new Blob([JSON.stringify(exportJSON, null, 2)], { type: 'application/json' });
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+
+        //let docString = document.getElementById('proc').value;
+        console.log("exportJSON : " + stringifyValues(exportJSON));
+        alert(stringifyValues(exportJSON)); //this needs to write to a file or smth, and then download
     }
 
     // takes an uploaded file, verifies it is valid, and outputs as dict to be read into settings
@@ -334,7 +357,7 @@ function StrudelPlayer() {
                                         <div className="row" id="menuPanel">
                                             <div className="btn-group" role="group" id="">
                                                 <button href="#" style={{ textAlign:'center', maxWidth:'25%' }} id="exportJSON" className="btn container ioBtnRow" onClick={(e) => {
-                                                    //exportJSON();
+                                                    onHandleExportJSON();
                                                 }}>Export JSON</button>
                                                 <input hidden id="fileUploadElement" value={""} onChange={(e) => {
                                                     const file = e.target.files[0];
