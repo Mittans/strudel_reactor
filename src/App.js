@@ -20,6 +20,6 @@ export default function App() {
 
                 <StrudelHost id="strudel-editor" label="Strudel Editor" />
             </div>
-        </StrudelProvider>
+        </StrudelProvider>//
     );
 }
