@@ -4,6 +4,7 @@ import ControlsPanel from "./components/ControlsPanel";
 import EditorPane from "./components/EditorPane";
 import StrudelProvider from "./context/StrudelProvider";
 import StrudelHost from "./components/StrudelHost";
+import SettingsBar from "./components/SettingsBar";
 
 export default function App() {
     return (
@@ -16,10 +17,11 @@ export default function App() {
                     <div className="col-md-4"><ControlsPanel /></div>
                 </div>
 
-                <EditorPane />
+                <SettingsBar />
 
+                <EditorPane />
                 <StrudelHost id="strudel-editor" label="Strudel Editor" />
             </div>
-        </StrudelProvider>//
+        </StrudelProvider>
     );
 }
