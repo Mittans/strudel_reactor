@@ -1,4 +1,4 @@
-import {Save, Play, Stop, ProPlay, Process, Load, Delete} from './Buttons';
+import {Play, Stop, ProPlay} from './Buttons';
 
 export function ControlButtons(props){
     return (

@@ -270,8 +270,16 @@ export default function StrudelDemo() {
                 </div>
               </div>
               
-              <Effects isOpenEffects={isOpenEffects} updateEditor={updateEditor}/>
-              <Instrument isOpenInstrument={isOpenInstrument} updateEditor={updateEditor}/>
+              <Effects 
+                isOpenEffects={isOpenEffects} 
+                updateEditor={updateEditor} 
+                text={text}
+              />
+              <Instrument 
+                isOpenInstrument={isOpenInstrument} 
+                updateEditor={updateEditor} 
+                text={text}
+              />
             </div>
             <div className='mx-2 mt-4'>
                 <button className={`text-2xl text-center font-bold flex justify-center rounded-lg w-full border border-black ${isOpenTextToProcess ? ("bg-black text-yellow-500") : ("bg-white text-black")}`}
