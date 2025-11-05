@@ -270,7 +270,7 @@ export default function StrudelDemo() {
                 </div>
               </div>
               
-              <Effects isOpenEffects={isOpenEffects}/>
+              <Effects isOpenEffects={isOpenEffects} updateEditor={updateEditor}/>
               <Instrument isOpenInstrument={isOpenInstrument} updateEditor={updateEditor}/>
             </div>
             <div className='mx-2 mt-4'>
