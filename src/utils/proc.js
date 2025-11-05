@@ -16,8 +16,6 @@ export function Proc() {
 
 
     }
-
-
     let proc_text = document.getElementById('proc').value
 
     const volumeEl = document.getElementById('volume_slider');

@@ -1,38 +1,78 @@
-.App {
-  text-align: center;
+body, .theme-dark {
+    background: #0f1115 !important;
+    color: #e6e6e6 !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1, h2, h3, h4, h5, p, label, small {
+    color: #e6e6e6 !important;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.container-fluid,
+.panel,
+nav,
+#editor,
+#output,
+#roll,
+.col-md-4,
+.col-md-8 {
+    background-color: #151922 !important;
+    border-radius: 0.75rem;
+    border: 1px solid #2a2f3a;
+    padding: 0.75rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+button {
+    border-radius: 0.75rem !important;
+    background-color: #1c2029 !important;
+    border: 1px solid #2a2f3a !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 transparent;
+    transition: 0.15s ease;
 }
 
-.App-link {
-  color: #61dafb;
+    button:hover {
+        filter: brightness(1.2);
+        box-shadow: 0 0 0 0.25rem rgba(110,168,254,0.35);
+    }
+
+#process_play,
+#play {
+    background-color: #0d6efd !important;
+    border-color: #0d6efd !important;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-control {
+    background-color: #0f1219 !important;
+    color: #ffffff !important;
+    border: 1px solid #2a2f3a !important;
+    border-radius: 0.75rem !important;
+}
+
+    .form-control:focus {
+        border-color: #6ea8fe !important;
+        box-shadow: 0 0 0 0.25rem rgba(110,168,254,0.35) !important;
+    }
+
+#proc {
+    min-height: 240px;
+    font-family: ui-monospace, monospace;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+    height: 6px;
+    background: linear-gradient(90deg, #0d6efd, #3b4150);
+    border-radius: 999px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    width: 18px;
+    height: 18px;
+    background: #fff;
+    border: 2px solid #0d6efd;
+    border-radius: 50%;
+    margin-top: -6px;
+}
+
+input[type="range"]:focus {
+    box-shadow: 0 0 0 0.25rem rgba(110,168,254,0.35) !important;
 }
