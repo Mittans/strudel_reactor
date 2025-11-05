@@ -40,7 +40,7 @@ export default function App() {
                 </div>
 
                 <div className="card jsr-card mt-3">
-                    <div className="card-header"><strong>Watch Yourself Incredibly Hard on the Live Stage:</strong></div>
+                    <div className="card-header"><strong>Watch the Beat Change AND Yourself Going Incredibly Hard on the Live Stage:</strong></div>
                     <div className="card-body">
                         <StrudelHost id="strudel-editor" label="" className="mb-0" />
                     </div>
