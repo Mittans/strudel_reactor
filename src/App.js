@@ -13,7 +13,7 @@ import DJControls from './components/DJControls';
 import PlayButtons from './components/PlayButtons';
 import ProcButtons from './components/ProcButtons';
 import PreprocessTextarea from './components/PreprocessTextarea';
-
+import Preprocess from './components/Preprocess';
 
 let globalEditor = null;
 
@@ -69,14 +69,23 @@ const handleD3Data = (event) => {
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
-    
+
     const [songText, setSongText] = useState(stranger_tune);
     const [cpm, setCpm] = useState(140);
     const [keyShift, setKeyShift] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [procText, setProcText] = useState(stranger_tune);
+    const [volume, setVolume] = useState(1);
+    const [state, setState] = useState("stop");
+
+    
+
+
 
     const handlePlay = () => {
-        globalEditor.evaluate()
+
+        let outputText = Preprocess({ inputText: procText, volume: volume });
+        globalEditor.evaluate(outputText);
         setIsPlaying(true);
     }
 
@@ -84,6 +93,13 @@ export default function StrudelDemo() {
         globalEditor.stop()
         setIsPlaying(false);
     }
+
+    useEffect(() => {
+        if (state === "play") {
+            handlePlay();
+        }
+
+    },[volume])
 
 useEffect(() => {
 
@@ -118,12 +134,13 @@ useEffect(() => {
                 },
             });
             
-        document.getElementById('proc').value = stranger_tune
+        document.getElementById('proc').value = procText
+        globalEditor.setCode(procText)
         //SetupButtons()
         //Proc()
     }
 
-    const processed = songText
+    const processed = procText
         .replaceAll("<cpm>", cpm.toString())
         .replaceAll("<keyshift>", keyShift.toString());
 
@@ -134,7 +151,7 @@ useEffect(() => {
         globalEditor.evaluate();
     }
 
-}, [songText, cpm, keyShift]);
+}, [procText, cpm, keyShift, isPlaying]);
 
 
 return (
@@ -145,14 +162,15 @@ return (
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <PreprocessTextarea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                        <PreprocessTextarea defaultValue={procText} onChange={(e) => setProcText(e.target.value)} />
                     </div>
                     <div className="col-md-4">
 
                         <nav>
-                            <ProcButtons />
+                            <ProcButtons onProc={() => { }} onProcPlay={() => { setState("play"); handlePlay() }} />
                             <br />
-                            <PlayButtons onPlay={handlePlay} onStop={handleStop} />
+                            <PlayButtons onProc={() => { }} onProcPlay={() => { setState("play"); handlePlay() }}
+                                onStop={() => { setState("stop"); handleStop() }} />
                         </nav>
                     </div>
                 </div>

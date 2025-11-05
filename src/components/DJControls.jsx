@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
+function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume,  onVolumeChange }) {
     // State variable to store the current CPM value
     const [localCpm, setLocalCpm] = useState(cpm ?? 140);
     // State variable to store the current Key shitf value
@@ -89,7 +89,7 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
             <hr className="my-3" />
             <div className="input-group mb-3">
                 <label htmlFor="volume_range" className="form-label">Volume</label>
-                <input type="range" className="form-range" min="0" max="1" step="0.01" id="volume_range" />
+                <input type="range" className="form-range" min="0" max="2" step="0.1" onMouseUp={onVolumeChange} id="volume_range" />
             </div>
 
             {/* CheckBox for select instruments */}
@@ -108,7 +108,7 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
                         </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="d1" />
+                    <input className="form-check-input" type="checkbox" value="" id="d2" />
                     <label className="form-check-label" htmlFor="d2">
                             d2
                         </label>
