@@ -1,8 +1,8 @@
 function PlayButtons({ onPlay, onStop }) {
     return (
         <>
-            <div className="container p-4 rounded-4 shadow-sm bg-light">
-                <h5 className="text-center mb-4 fw-bold">
+            <div className="container p-4 rounded-4 shadow-sm glass-card">
+                <h5 className="text-center mb-4 fw-bold text-light">
                     Play Buttons
                 </h5>
 
@@ -14,10 +14,8 @@ function PlayButtons({ onPlay, onStop }) {
                     <button id="stop" className="btn btn-danger px-4" onClick={onStop}>
                         <i className="bi bi-stop-fill"></i> Stop
                     </button>
-
-
                 </div>
-            </div>
+            </div >
         </>
     );
 }
