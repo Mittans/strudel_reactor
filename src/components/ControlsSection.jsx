@@ -1,40 +1,56 @@
-function ControlsSection() {
-  return (
-      <>
-          <div className="input-group mb-3">
-              <span className="input-group-text" id="cps_label">Set CPS</span>
-              <input type="text" className="form-control" id="cpm_text_input" placeholder="CPS (cycles per second) e.g. 140" aria-label="cps" aria-describedby="cps_label" />
-          </div>
+import { useRef, useState, useEffect } from "react";
+function ControlsSection({ CPS, onChange, volume, onVolumeChange }) {
+    const initialCPS = useRef(CPS);
+    const [inputValue, setInputValue] = useState(CPS);
 
-          <label htmlFor="volume_range" className="form-label">Volume</label>
-          <input type="range" className="form-range" min="0" max="1" step="0.01" id="volume_range" />
+    const handleChange = e => {
+        const val = e.target.value;
+        setInputValue(val);
 
-          <div className="form-check">
-              <input className="form-check-input" type="checkbox" value="" id="baseline" />
-              <label className="form-check-label" htmlFor="baseline">
-                  baseline
-              </label>
-          </div>
-          <div className="form-check">
-              <input className="form-check-input" type="checkbox" value="" id="main_arp" />
-              <label className="form-check-label" htmlFor="main_arp">
-                  main_arp
-              </label>
-          </div>
-          <div className="form-check">
-              <input className="form-check-input" type="checkbox" value="" id="drums" />
-              <label className="form-check-label" htmlFor="drums">
-                  drums
-              </label>
-          </div>
-          <div className="form-check">
-              <input className="form-check-input" type="checkbox" value="" id="drums2" />
-              <label className="form-check-label" htmlFor="drums2">
-                  drums2
-              </label>
-          </div>
-      </>
-  );
+        const num = parseInt(val, 10);
+        if (!isNaN(num)) onChange(num);
+    };
+
+    useEffect(() => {
+        setInputValue(CPS.toString());
+    }, [CPS]);
+
+    const handleVolumeChange = e => {
+        const val = parseFloat(e.target.value);
+        onVolumeChange(val);
+    };
+
+    return (
+        <>
+            <div className="mb-3">
+                <div className="input-group">
+                    <span className="input-group-text" id="cps_label">Set CPS</span>
+                    <input
+                        type="text"
+                        className="form-control"
+                        value={inputValue}
+                        placeholder="CPS (cycles per second) e.g. 140"
+                        onChange={handleChange}
+                    />
+                </div>
+                <p className="text-muted small">Default: {initialCPS.current}</p>
+            </div>
+
+            <div className="mb-3">
+                <label htmlFor="volume_range" className="form-label">Volume: {(volume * 100) + "%"}</label>
+                <input
+                    type="range"
+                    className="form-range"
+                    min="0"
+                    max="2"
+                    step="0.01"
+                    id="volume_range"
+                    value={volume}
+                    onChange={handleVolumeChange}
+                />
+            </div>
+        </>
+    );
 }
 
 export default ControlsSection;
