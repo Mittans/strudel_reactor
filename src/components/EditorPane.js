@@ -5,7 +5,6 @@ export default function EditorPane() {
 
     return (
         <div>
-            <label className="form-label">Text to preprocess:</label>
             <textarea
                 className="form-control"
                 rows={16}

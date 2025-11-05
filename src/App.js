@@ -11,7 +11,7 @@ export default function App() {
         <StrudelProvider editorContainerId="strudel-editor">
             <div className="container py-3">
                 <div className="d-flex align-items-end justify-content-between mb-3">
-                    <h2 className="mb-0">Strudel Demo</h2>
+                    <h2 className="mb-0">Strudel Beat Studio: React Edition</h2>
                 </div>
 
                 <SettingsBar />
@@ -19,7 +19,7 @@ export default function App() {
                 <div className="row g-3">
                     <div className="col-lg-7">
                         <div className="card h-100">
-                            <div className="card-header"><strong>Input</strong></div>
+                            <div className="card-header"><strong>Your Epic Beat Goes In This Box:</strong></div>
                             <div className="card-body">
                                 <EditorPane />
                             </div>
@@ -28,6 +28,7 @@ export default function App() {
 
                     <div className="col-lg-5">
                         <div className="card h-100">
+                            <div className="card-header"><strong>Modify &/Or Play it w/ DJ Controls:</strong></div>
                             <div className="card-body">
                                 <div className="mb-3">
                                     <Transport />
@@ -39,7 +40,7 @@ export default function App() {
                 </div>
 
                 <div className="card mt-3">
-                    <div className="card-header"><strong>Strudel Editor</strong></div>
+                    <div className="card-header"><strong>Live Stage:</strong></div>
                     <div className="card-body">
                         <StrudelHost id="strudel-editor" label="" className="mb-0" />
                     </div>

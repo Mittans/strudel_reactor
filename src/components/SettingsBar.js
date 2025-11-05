@@ -33,15 +33,15 @@ export default function SettingsBar() {
         <div className="card mb-3">
             <div className="card-body d-flex flex-wrap align-items-center justify-content-between gap-2">
                 <div className="d-flex align-items-center gap-2">
-                    <h6 className="mb-0">Project</h6>
-                    <span className="text-muted small">Save or load your song & controls</span>
+                    <h6 className="mb-0">Check it Out:</h6>
+                    <span className="text-muted small">If you're the forgetful type, you can also SAVE and LOAD your settings. How good?</span>
                 </div>
                 <div className="d-flex gap-2">
                     <button type="button" className="btn btn-outline-secondary" onClick={onSave}>
-                        Save
+                        Save DJ Settings
                     </button>
                     <button type="button" className="btn btn-outline-secondary" onClick={onOpenClick}>
-                        Load
+                        Load DJ Settings
                     </button>
                     <input
                         ref={fileRef}
