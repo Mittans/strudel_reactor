@@ -9,18 +9,41 @@ import SettingsBar from "./components/SettingsBar";
 export default function App() {
     return (
         <StrudelProvider editorContainerId="strudel-editor">
-            <div className="container-fluid">
-                <h2>Strudel Demo</h2>
-
-                <div className="row mb-3">
-                    <div className="col-md-8"><Transport /></div>
-                    <div className="col-md-4"><ControlsPanel /></div>
+            <div className="container py-3">
+                <div className="d-flex align-items-end justify-content-between mb-3">
+                    <h2 className="mb-0">Strudel Demo</h2>
                 </div>
 
                 <SettingsBar />
 
-                <EditorPane />
-                <StrudelHost id="strudel-editor" label="Strudel Editor" />
+                <div className="row g-3">
+                    <div className="col-lg-7">
+                        <div className="card h-100">
+                            <div className="card-header"><strong>Input</strong></div>
+                            <div className="card-body">
+                                <EditorPane />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="col-lg-5">
+                        <div className="card h-100">
+                            <div className="card-body">
+                                <div className="mb-3">
+                                    <Transport />
+                                </div>
+                                <ControlsPanel />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="card mt-3">
+                    <div className="card-header"><strong>Strudel Editor</strong></div>
+                    <div className="card-body">
+                        <StrudelHost id="strudel-editor" label="" className="mb-0" />
+                    </div>
+                </div>
             </div>
         </StrudelProvider>
     );

@@ -25,15 +25,33 @@ export default function SettingsBar() {
             if (typeof data.raw === "string") setRaw(data.raw);
             if (data.controls && typeof data.controls === "object") setControls(data.controls);
         } finally {
-            e.target.value = ""; // Just some extra handling so the same JSON can be added without errors.
+            e.target.value = ""; // Yeah, this is needed to prevent issues with having the same name but diff JSON.
         }
     };
 
     return (
-        <div className="d-flex flex-wrap gap-2 my-2">
-            <button className="btn btn-outline-secondary" onClick={onSave}>Save</button>
-            <button className="btn btn-outline-secondary" onClick={onOpenClick}>Load</button>
-            <input ref={fileRef} type="file" accept="application/json" hidden onChange={onLoad} />
+        <div className="card mb-3">
+            <div className="card-body d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <div className="d-flex align-items-center gap-2">
+                    <h6 className="mb-0">Project</h6>
+                    <span className="text-muted small">Save or load your song & controls</span>
+                </div>
+                <div className="d-flex gap-2">
+                    <button type="button" className="btn btn-outline-secondary" onClick={onSave}>
+                        Save
+                    </button>
+                    <button type="button" className="btn btn-outline-secondary" onClick={onOpenClick}>
+                        Load
+                    </button>
+                    <input
+                        ref={fileRef}
+                        type="file"
+                        accept="application/json"
+                        hidden
+                        onChange={onLoad}
+                    />
+                </div>
+            </div>
         </div>
     );
 }
