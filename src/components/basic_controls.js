@@ -3,28 +3,20 @@ import './basic_controls.css'
 function basic_controls({ volume, onVolumeChange }) {
     return (
         <>
-            <div className="form-check">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" defaultChecked />
-                <label className="form-check-label" htmlFor="flexRadioDefault1">
-                    p1: ON
-                </label>
-            </div>
-            <div className="form-check">
-                <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" />
-                <label className="form-check-label" htmlFor="flexRadioDefault2">
-                    p1: HUSH
-                </label>
-            </div>
+            {/* set song speed to x/60/4 (converts cpm to bpm) */}
             <div className="input-group mb-3">
-                <span className="input-group-text" id="cpm_label">setCPM</span>
+                <span className="input-group-text" id="cpm_label">setBPM</span>
 
                 <input type="text" className="form-control" id="cpm_text_input" placeholder="120" aria-label="cpm" aria-describedby="cpm_label" />
 
             </div>
 
+            {/* FUNCTIONAL */}
+            {/* Volume slider */}
             <label htmlFor="vol_range" className="form-label">Volume</label>
             <input type="range" className="form-range" min="0" max="2" step="0.1" onMouseUp={onVolumeChange} id="vol_range"></input>
 
+            {/* Checkboxes to mute particular instruments */}
             <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="bassline" />
                 <label className="form-check-label" htmlFor="bassline">
