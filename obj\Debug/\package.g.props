@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <PackageJsonName Condition="$(PackageJsonName) == ''">webtech-assignment2</PackageJsonName>
+    <PackageJsonVersion Condition="$(PackageJsonVersion) == ''">0.1.0</PackageJsonVersion>
+    <PackageJsonPrivate Condition="$(PackageJsonPrivate) == ''">true</PackageJsonPrivate>
+    <PackageJsonDependenciesStrudelCodemirror Condition="$(PackageJsonDependenciesStrudelCodemirror) == ''">^1.2.5</PackageJsonDependenciesStrudelCodemirror>
+    <PackageJsonDependenciesStrudelCore Condition="$(PackageJsonDependenciesStrudelCore) == ''">^1.2.4</PackageJsonDependenciesStrudelCore>
+    <PackageJsonDependenciesStrudelDraw Condition="$(PackageJsonDependenciesStrudelDraw) == ''">^1.2.4</PackageJsonDependenciesStrudelDraw>
+    <PackageJsonDependenciesStrudelMini Condition="$(PackageJsonDependenciesStrudelMini) == ''">^1.2.4</PackageJsonDependenciesStrudelMini>
+    <PackageJsonDependenciesStrudelSoundfonts Condition="$(PackageJsonDependenciesStrudelSoundfonts) == ''">^1.2.5</PackageJsonDependenciesStrudelSoundfonts>
+    <PackageJsonDependenciesStrudelTonal Condition="$(PackageJsonDependenciesStrudelTonal) == ''">^1.2.4</PackageJsonDependenciesStrudelTonal>
+    <PackageJsonDependenciesStrudelTranspiler Condition="$(PackageJsonDependenciesStrudelTranspiler) == ''">^1.2.4</PackageJsonDependenciesStrudelTranspiler>
+    <PackageJsonDependenciesStrudelWebaudio Condition="$(PackageJsonDependenciesStrudelWebaudio) == ''">^1.2.5</PackageJsonDependenciesStrudelWebaudio>
+    <PackageJsonDependenciesTestingLibraryDom Condition="$(PackageJsonDependenciesTestingLibraryDom) == ''">^10.4.1</PackageJsonDependenciesTestingLibraryDom>
+    <PackageJsonDependenciesTestingLibraryJestDom Condition="$(PackageJsonDependenciesTestingLibraryJestDom) == ''">^6.8.0</PackageJsonDependenciesTestingLibraryJestDom>
+    <PackageJsonDependenciesTestingLibraryReact Condition="$(PackageJsonDependenciesTestingLibraryReact) == ''">^16.3.0</PackageJsonDependenciesTestingLibraryReact>
+    <PackageJsonDependenciesTestingLibraryUserEvent Condition="$(PackageJsonDependenciesTestingLibraryUserEvent) == ''">^13.5.0</PackageJsonDependenciesTestingLibraryUserEvent>
+    <PackageJsonDependenciesBootstrap Condition="$(PackageJsonDependenciesBootstrap) == ''">^5.3.8</PackageJsonDependenciesBootstrap>
+    <PackageJsonDependenciesReact Condition="$(PackageJsonDependenciesReact) == ''">^19.1.1</PackageJsonDependenciesReact>
+    <PackageJsonDependenciesReactDom Condition="$(PackageJsonDependenciesReactDom) == ''">^19.1.1</PackageJsonDependenciesReactDom>
+    <PackageJsonDependenciesReactScripts Condition="$(PackageJsonDependenciesReactScripts) == ''">5.0.1</PackageJsonDependenciesReactScripts>
+    <PackageJsonDependenciesWebVitals Condition="$(PackageJsonDependenciesWebVitals) == ''">^2.1.4</PackageJsonDependenciesWebVitals>
+    <PackageJsonScriptsStart Condition="$(PackageJsonScriptsStart) == ''">react-scripts start</PackageJsonScriptsStart>
+    <PackageJsonScriptsBuild Condition="$(PackageJsonScriptsBuild) == ''">react-scripts build</PackageJsonScriptsBuild>
+    <PackageJsonScriptsTest Condition="$(PackageJsonScriptsTest) == ''">react-scripts test</PackageJsonScriptsTest>
+    <PackageJsonScriptsEject Condition="$(PackageJsonScriptsEject) == ''">react-scripts eject</PackageJsonScriptsEject>
+    <PackageJsonEslintconfigExtends Condition="$(PackageJsonEslintconfigExtends) == ''">[
+  "react-app",
+  "react-app/jest"
+]</PackageJsonEslintconfigExtends>
+    <PackageJsonBrowserslistProduction Condition="$(PackageJsonBrowserslistProduction) == ''">[
+  "\u003E0.2%",
+  "not dead",
+  "not op_mini all"
+]</PackageJsonBrowserslistProduction>
+    <PackageJsonBrowserslistDevelopment Condition="$(PackageJsonBrowserslistDevelopment) == ''">[
+  "last 1 chrome version",
+  "last 1 firefox version",
+  "last 1 safari version"
+]</PackageJsonBrowserslistDevelopment>
+  </PropertyGroup>
+</Project>
