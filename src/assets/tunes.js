@@ -1,6 +1,7 @@
 export const stranger_tune = `
-// Demo seed
-setcps(<TEMPO>)
-$: s("bd sd<DRUMS_RADIO>").gain(0.9)
-$: n("c3 e3 g3 c4 c5").sound("<SYNTH>").room(<ROOM>).gain(<GAIN>)
+setcps(<CPS>)
+samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
+
+$: s("<DRUMS>").room(<ROOM>).gain(<GAIN>)
+$: n("c3 e3 g3 c4").sound("<SYNTH>")
 `.trim();
