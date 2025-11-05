@@ -14,6 +14,7 @@ import PlayButtons from './components/play_buttons';
 import ProcButtons from './components/proc_buttons';
 import PreProcTextArea from './components/preproc_textarea';
 import LoadSettingsButtons from './components/load_settings_buttons';
+import { PreProcess } from './utils/PreProcLogic'
 
 let globalEditor = null;
 
@@ -71,6 +72,8 @@ export default function StrudelDemo() {
     const hasRun = useRef(false);
 
     const handlePlay = () => {
+        let outputText = PreProcess({ inputText: procText, volume: volume });
+        globalEditor.setCode(outputText);
         globalEditor.evaluate()
     }
 
@@ -78,9 +81,19 @@ export default function StrudelDemo() {
         globalEditor.stop()
     }
 
-    const [songText, setSongText] = useState(stranger_tune)
+    const [procText, setProcText] = useState(stranger_tune)
 
-    const [gainLevel, setGainLevel] = useState(0.5);
+    const [volume, setVolume] = useState(1);
+
+    const [state, setState] = useState("stop");
+
+    useEffect(() => {
+
+        if(state === "play") {
+            handlePlay();
+        }
+
+    }, [volume])
 
 useEffect(() => {
 
@@ -115,12 +128,11 @@ useEffect(() => {
                 },
             });
             
-        document.getElementById('proc').value = stranger_tune
-        // SetupButtons()
-        // Proc()
+        document.getElementById('proc').value = procText
+        globalEditor.setCode(procText);
     }
-    globalEditor.setCode(songText);
-}, [songText]);
+    
+}, [procText]);
 
 
 return (
@@ -131,14 +143,12 @@ return (
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <PreProcTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                        <PreProcTextArea defaultValue={procText} onChange={(e) => setProcText(e.target.value)} />
                     </div>
                     <div className="col-md-4">
 
                         <nav>
-                            <ProcButtons />
-                            <br />
-                            <PlayButtons onPlay={handlePlay} onStop={handleStop}/>
+                            <PlayButtons onPlay={() => { setState("play"); handlePlay()}} onStop={() => { setState("stop"); handleStop() }}/>
                             <br />
                             <LoadSettingsButtons />
                         </nav>
@@ -150,7 +160,7 @@ return (
                         <div id="output" />
                     </div>
                     <div className="col-md-4">
-                        <BasicControls defaultGainValue={gainLevel} onGainChange={(e) => setGainLevel.ParseFloat(e.target.value)}/>
+                        <BasicControls volumeChange={volume} onVolumeChange={(e) => setVolume(e.target.value)}/>
                     </div>
                 </div>
             </div>

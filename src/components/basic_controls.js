@@ -1,6 +1,6 @@
 import './basic_controls.css'
 
-function basic_controls(defaultGainValue, onGainChange) {
+function basic_controls({ volume, onVolumeChange }) {
     return (
         <>
             <div className="form-check">
@@ -23,7 +23,7 @@ function basic_controls(defaultGainValue, onGainChange) {
             </div>
 
             <label htmlFor="vol_range" className="form-label">Volume</label>
-            <input type="range" className="form-range" min="0" max="1" step="0.01" defaultValue={defaultGainValue} onChange={onGainChange} id="vol_range"></input>
+            <input type="range" className="form-range" min="0" max="2" step="0.1" onMouseUp={onVolumeChange} id="vol_range"></input>
 
             <div className="form-check">
                 <input className="form-check-input" type="checkbox" value="" id="bassline" />
