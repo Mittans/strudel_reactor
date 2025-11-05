@@ -72,7 +72,8 @@ useEffect(() => {
         console_monkey_patch();
         hasRun.current = true;
         //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
-            //init canvas
+        //init canvas
+        console.log("Data = " + getD3Data())
             const canvas = document.getElementById('roll');
             canvas.width = canvas.width * 2;
             canvas.height = canvas.height * 2;
