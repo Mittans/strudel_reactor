@@ -1,41 +1,40 @@
 import { getEditor } from './strudel';
 
-export function ProcessText() {
-    const hush = document.getElementById('flexRadioDefault2')?.checked;
-    return hush ? "_" : "cp*2"; 
-}
+const el = (id) => document.getElementById(id);
+const isOn = (id) => !!el(id)?.checked;
 
 export function Proc() {
     const editor = getEditor();
-    if (!editor) return;
+    const src = el('proc');
+    if (!editor || !src) return;
 
-    const srcEl = document.getElementById('proc');
-    if (!srcEl) return;
+    const tempo = Number(el('tempo')?.value) || 140;
+    const bass  = isOn('toggle-bass') ? 1 : 0;
+    const arp   = isOn('toggle-arp')  ? 1 : 0;
+    const dr1   = isOn('toggle-dr1')  ? 1 : 0;
+    // const dr2   = isOn('toggle-dr2')  ? 1 : 0;
 
-    const procText = srcEl.value;
-    const replaced = procText.replaceAll('<p1_Radio>', ProcessText);
-    editor.setCode(replaced);
+    const out = src.value
+        .replaceAll('<tempo_value>', String(tempo))
+        .replaceAll('<bass_gain>',   String(bass))
+        .replaceAll('<arp_gain>',    String(arp))
+        .replaceAll('<drums1_gain>', String(dr1))
+        // .replaceAll('<drums2_gain>', String(dr2));
+
+    editor.setCode(out);
 }
 
 export function ProcAndPlay() {
     const editor = getEditor();
-    if (editor && editor.repl?.state?.started === true) {
-        Proc();
-        editor.evaluate();
-    }
+    if (!editor) return;
+    Proc();
+    editor.evaluate(); 
 }
 
 export function SetupButtons() {
     const editor = getEditor();
-    const byId = (id) => document.getElementById(id);
-
-    byId('play')?.addEventListener('click', () => editor?.evaluate());
-    byId('stop')?.addEventListener('click', () => editor?.stop());
-    byId('process')?.addEventListener('click', () => Proc());
-    byId('process_play')?.addEventListener('click', () => {
-        if (getEditor()) {
-            Proc();
-            getEditor().evaluate();
-        }
-    });
+    el('process')?.addEventListener('click', () => Proc());
+    el('process_play')?.addEventListener('click', () => { Proc(); editor?.evaluate(); });
+    el('play')?.addEventListener('click', () => editor?.evaluate());
+    el('stop')?.addEventListener('click', () => editor?.stop());
 }
