@@ -15,7 +15,7 @@ function PlayButtons({ onPlay, onStop }) {
                         <i className="bi bi-stop-fill"></i> Stop
                     </button>
 
-                
+
                 </div>
             </div>
         </>
