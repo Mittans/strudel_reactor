@@ -23,15 +23,18 @@ export default function StrudelProvider({ children, editorContainerId = "strudel
     const [raw, setRaw] = useState(stranger_tune);
     const [controls, setControls] = useState({ p1Hushed: false });
     const processed = preprocessSong(raw, controls);
-
     const mirrorRef = useRef(null);
     const hostRef = useRef(null);
+    const mountedRef = useRef(false);
+    const [started, setStarted] = useState(false);
 
     useEffect(() => {
+        mountedRef.current = true;
+
         const host = document.getElementById(editorContainerId);
         if (!host) {
             console.error(`[StrudelProvider] Host #${editorContainerId} not found`);
-            return;
+            return () => { mountedRef.current = false; };
         }
         hostRef.current = host;
 
@@ -52,30 +55,38 @@ export default function StrudelProvider({ children, editorContainerId = "strudel
                     import("@strudel/webaudio")
                 );
                 await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+                if (mountedRef.current) setStarted(true);
             },
         });
 
         mirrorRef.current = mirror;
 
+        try { mirror.setCode(processed); } catch { }
+
         return () => {
+            mountedRef.current = false;
             try { mirror.stop(); } catch { }
             mirrorRef.current = null;
             try { host.replaceChildren(); } catch { }
             hostRef.current = null;
+            setStarted(false);
         };
-    }, [editorContainerId]);
+    }, [editorContainerId]); 
 
-    // Keep mirror code in sync with processed text
     useEffect(() => {
         const m = mirrorRef.current;
         if (m) m.setCode(processed);
     }, [processed]);
 
     const api = useMemo(() => {
-        const play = () => mirrorRef.current?.evaluate();
+        const play = () => {
+            if (!started) return;         
+            mirrorRef.current?.evaluate();
+        };
         const stop = () => mirrorRef.current?.stop();
         const proc = () => mirrorRef.current?.setCode(processed);
         const procAndPlay = () => {
+            if (!started) return;
             const m = mirrorRef.current;
             if (!m) return;
             m.setCode(processed);
@@ -87,9 +98,12 @@ export default function StrudelProvider({ children, editorContainerId = "strudel
             processed,
             controls,
             setControls: (patch) => setControls((c) => ({ ...c, ...patch })),
+
             play, stop, proc, procAndPlay,
+
+            started,
         };
-    }, [raw, processed, controls]);
+    }, [raw, processed, controls, started]);
 
     return <Ctx.Provider value={api}>{children}</Ctx.Provider>;
 }
