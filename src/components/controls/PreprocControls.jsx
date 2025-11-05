@@ -1,4 +1,4 @@
-import { ProcAndPlay } from '../../lib/preprocess';
+import { ProcAndPlay } from '../preprocess';
 
 function Toggle({ id, label, defaultChecked = true }) {
     return (

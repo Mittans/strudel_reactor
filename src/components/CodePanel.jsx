@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
-import { initStrudel } from '../lib/strudel';
-import { Proc } from '../lib/preprocess';
+import { initStrudel } from './strudel';
+import { Proc } from './preprocess';
 
 export default function CodePanel() {
     const hasRun = useRef(false);

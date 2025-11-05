@@ -1,24 +1,15 @@
 import { useEffect, useRef } from 'react';
-import { attachCanvas, getEditor } from '../lib/strudel';
-import { Proc } from '../lib/preprocess';
-import console_monkey_patch from '../console-monkey-patch';
+import { attachCanvas, getEditor } from './strudel';
+import { Proc } from './preprocess';
 
 export default function GraphPanel() {
     const canvasRef = useRef(null);
-    const wired = useRef(false);
 
+    
     useEffect(() => {
-        if (!wired.current) {
-            console_monkey_patch();
-            wired.current = true;
-        }
-
-        const handleD3Data = () => {};
-        document.addEventListener('d3Data', handleD3Data);
-
         const c = canvasRef.current;
         if (c) {
-            const cssWidth = c.clientWidth || 800; // the visible width
+            const cssWidth = c.clientWidth || 800;
             const cssHeight = 200;
 
             c.width = cssWidth;
@@ -33,6 +24,7 @@ export default function GraphPanel() {
             }
         }
 
+        //resizing handler, to redraw what's on the graph when it changes.
         const onResize = () => {
             const c = canvasRef.current;
             if (!c) return;
@@ -47,7 +39,6 @@ export default function GraphPanel() {
         window.addEventListener('resize', onResize);
 
         return () => {
-            document.removeEventListener('d3Data', handleD3Data);
             window.removeEventListener('resize', onResize);
             attachCanvas(null);
         };

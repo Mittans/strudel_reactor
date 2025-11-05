@@ -4,14 +4,14 @@ import './App.css';
 import { useEffect } from 'react';
 import AppNavBar from './components/AppNavBar';
 import TabbedTop from './components/TabbedTop';
-import TransportControls from './components/TransportControls';
+import Controls from './components/controls/Controls';
 import PreprocControls from './components/controls/PreprocControls';
-import { SetupButtons, Proc } from './lib/preprocess';
+import { SetupButtons, Proc } from './components/preprocess';
 
 export default function App() {
     useEffect(() => {
         SetupButtons();
-        Proc(); // ensure REPL has initial text
+        Proc();
     }, []);
 
     return (
@@ -23,10 +23,10 @@ export default function App() {
                 <TabbedTop />
             </div>
 
-            {/* BOTTOM HALF — transport + controls */}
+            {/* BOTTOM HALF — controls */}
             <div className="bottom-pane container-fluid py-2">
                 <div className="d-flex flex-column gap-3 h-100">
-                    <TransportControls />
+                    <Controls />
                     <PreprocControls />
                 </div>
             </div>

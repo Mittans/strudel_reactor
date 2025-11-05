@@ -4,7 +4,7 @@ import CodePanel from './CodePanel';
 import GraphPanel from './GraphPanel';
 
 export default function TabbedTop() {
-    const [tab, setTab] = useState('text'); // 'text' | 'code' | 'graph'
+    const [tab, setTab] = useState('text'); // tabs for (text | code | graph) 
 
     return (
         <div className="pane pane-top">
