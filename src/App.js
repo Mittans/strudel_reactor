@@ -3,7 +3,7 @@ import StrudelDemo from "./Pages/StrudelDemo";
 import "./Styles/App.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-export default function App() {
+export default function App(isPlaying) {
     return (
         <BrowserRouter>
 

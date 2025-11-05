@@ -2,6 +2,25 @@
   text-align: center;
 }
 
+
+.studio-bg {
+  background:
+    linear-gradient(rgba(30, 30, 30, 0.85), rgba(30, 30, 30, 0.9)),
+    url('../Assets/Background.jpg');
+
+}
+
+.studio-container {
+  padding: 20px;
+}
+
+
+
+.navbar-dark {
+  background-color: rgba(26, 32, 44, 0.95);
+  backdrop-filter: blur(10px);
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
