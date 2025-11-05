@@ -36,3 +36,87 @@
     transform: rotate(360deg);
   }
 }
+
+
+/* Yeah, I kinda like jet set radio, it's a thing. */
+:root {
+    --jsr-accent: #00e676; /* neon limeish colour */
+    --jsr-accent-dark: #00c853; /* deeper lime */
+    --jsr-ink: #101417; /* inky text */
+    --jsr-bg: #f7faf9; /* soft page bg */
+    --jsr-soft: #e9f7f0; /* pale accent wash */
+}
+
+body {
+    background: var(--jsr-bg);
+}
+
+.jsr-title {
+    display: inline-block;
+    font-weight: 800;
+    letter-spacing: .3px;
+    color: var(--jsr-ink);
+    background: linear-gradient(180deg,#fff, var(--jsr-soft));
+    border: 2px solid var(--jsr-accent);
+    border-radius: 14px;
+    padding: .35rem .85rem;
+    box-shadow: 0 4px 0 0 var(--jsr-accent-dark), 0 0 0 4px #fff inset;
+}
+
+.btn.jsr {
+    --bs-btn-color: var(--jsr-ink);
+    --bs-btn-border-color: var(--jsr-accent);
+    --bs-btn-hover-border-color: var(--jsr-accent-dark);
+    --bs-btn-hover-bg: var(--jsr-soft);
+    --bs-btn-active-bg: var(--jsr-accent);
+    --bs-btn-active-border-color: var(--jsr-accent-dark);
+    border-width: 2px;
+    border-radius: 14px;
+    box-shadow: 0 3px 0 0 var(--jsr-accent);
+    transition: transform .06s ease, box-shadow .06s ease;
+}
+
+    .btn.jsr:disabled {
+        opacity: .55;
+        box-shadow: none;
+    }
+
+    .btn.jsr:hover {
+        transform: translateY(-1px);
+    }
+
+    .btn.jsr:active {
+        transform: translateY(1px);
+        box-shadow: 0 1px 0 0 var(--jsr-accent-dark);
+    }
+
+.card.jsr-card {
+    border: 2px solid var(--jsr-soft);
+    border-radius: 16px;
+}
+
+    .card.jsr-card .card-header {
+        background: linear-gradient(180deg,#fff, var(--jsr-soft));
+        border-bottom: 2px solid var(--jsr-soft);
+        font-weight: 600;
+    }
+
+.form-range::-webkit-slider-thumb {
+    background: var(--jsr-accent);
+}
+
+.form-range::-moz-range-thumb {
+    background: var(--jsr-accent);
+}
+
+
+.form-check-input:checked {
+    background-color: var(--jsr-accent);
+    border-color: var(--jsr-accent);
+}
+
+[data-host="strudel"] {
+    border: 2px dashed var(--jsr-soft) !important;
+    border-radius: 16px !important;
+    background: #fff;
+}

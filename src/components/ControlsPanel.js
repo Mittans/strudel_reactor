@@ -1,4 +1,3 @@
-// src/components/ControlsPanel.jsx
 import { useStrudel } from "../context/StrudelProvider";
 
 export default function ControlsPanel() {
@@ -47,7 +46,7 @@ export default function ControlsPanel() {
                     onChange={(e) => setControls({ gain: parseFloat(e.target.value) })} />
             </div>
 
-            {/* 5) Drums mute feature (checkbox) */}
+            {/* Drums mute feature */}
             <div className="form-check">
                 <input className="form-check-input" type="checkbox" id="drumsMuted"
                     checked={!!controls.drumsMuted}

@@ -3,10 +3,10 @@ export default function Transport() {
     const { play, stop, proc, procAndPlay, started } = useStrudel();
     return (
         <nav className="btn-group gap-2">
-            <button onClick={proc} className="btn btn-outline-primary" disabled={!started}>Preprocess Song</button>
-            <button onClick={procAndPlay} className="btn btn-outline-primary" disabled={!started}>Proc & Play Song</button>
-            <button onClick={play} className="btn btn-outline-primary" disabled={!started}>Play Song</button>
-            <button onClick={stop} className="btn btn-outline-primary">Stop Song</button>
+            <button onClick={proc} className="btn btn-outline-primary jsr" disabled={!started}>Preprocess</button>
+            <button onClick={procAndPlay} className="btn btn-outline-primary jsr" disabled={!started}>Proc & Play</button>
+            <button onClick={play} className="btn btn-outline-primary jsr" disabled={!started}>Play</button>
+            <button onClick={stop} className="btn btn-outline-primary jsr">Stop</button>
         </nav>
     );
 }
