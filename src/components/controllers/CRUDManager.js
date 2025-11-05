@@ -1,4 +1,7 @@
-import {Save, Load, Delete, Add} from './Buttons';
+import {Add} from '../buttons/CRUD buttons/AddButton';
+import {Delete} from '../buttons/CRUD buttons/DeleteButton';
+import {Load} from "../buttons/CRUD buttons/LoadButton";
+import {Save} from '../buttons/CRUD buttons/SaveButton';
 
 export function CRUDManager(props){
     return (

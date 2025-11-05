@@ -1,4 +1,6 @@
-import {Play, Stop, ProPlay} from './Buttons';
+import {Stop} from '../buttons/control buttons/StopButton';
+import {Play} from '../buttons/control buttons/PlayButton';
+import {ProPlay} from '../buttons/control buttons/ProPlayButton';
 
 export function ControlButtons(props){
     return (

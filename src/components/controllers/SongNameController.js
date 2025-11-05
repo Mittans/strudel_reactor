@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import { CRUDManager } from '../buttons/CRUDManager';
+import { CRUDManager } from './CRUDManager';
 
 export function getAllMusic(){
   const musicList = [];

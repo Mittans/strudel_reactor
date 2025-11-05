@@ -8,7 +8,7 @@ import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import { ControlButtons } from './components/buttons/ControlButtons';
+import { ControlButtons } from './components/controllers/ControlButtons';
 import { SlideInputs } from './components/input/SlideInputs';
 import {Effects} from './components/input/Effects';
 import SaveModal from './components/modal/saveModal';
