@@ -1,8 +1,8 @@
-import {Stop} from '../buttons/control buttons/StopButton';
-import {Play} from '../buttons/control buttons/PlayButton';
-import {ProPlay} from '../buttons/control buttons/ProPlayButton';
+import {Stop} from '../buttons/playback buttons/StopButton';
+import {Play} from '../buttons/playback buttons/PlayButton';
+import {ProPlay} from '../buttons/playback buttons/ProPlayButton';
 
-export function ControlButtons(props){
+export function PlaybackController(props){
     return (
         <div>
             <nav className="flex justify-end">

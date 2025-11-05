@@ -1,6 +1,6 @@
-export function ButtonShowController(props) {
+export function PanelToggleController(props) {
     return (
-        <div className='flex'>
+        <div className='flex mx-8'>
             <button onClick={props.handleOnHush} 
             className={`m-3 text-xl ${props.isOnHush ? "border border-black bg-black text-yellow-500 px-3 rounded-lg font-bold " : "border border-black bg-white text-black px-3 rounded-lg font-bold"}`}> 
             Main

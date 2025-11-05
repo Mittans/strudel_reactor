@@ -8,14 +8,16 @@ import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import { ControlButtons } from './components/controllers/ControlButtons';
+import { PlaybackController } from './components/controllers/PlaybackController';
 import { SlideInputs } from './components/input/SlideInputs';
 import {Effects} from './components/input/Effects';
 import SaveModal from './components/modal/saveModal';
 import { Instrument } from './components/input/Instrument';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
-import { SongNameController } from './components/controllers/SongNameController';
-import { ButtonShowController } from './components/controllers/ButtonShowController';
+import { SongSelectorController } from './components/controllers/SongSelectorController';
+import { PanelToggleController } from './components/controllers/PanelToggleController';
+import { OpenShowTimeButton } from './components/buttons/OpenShowTimeButton';
+import { OpenTextToProcessButton } from './components/buttons/OpenTextToProcessButton';
 
 let globalEditor = null;
 
@@ -215,12 +217,12 @@ export default function StrudelDemo() {
         {/* The title */}
         <div className='flex'>
           <span className={`text-3xl font-bold text-yellow-500 px-1 ${isPlay ? "animate-spin" : ""}`}>꩜</span>
-          <h1 className="text-3xl font-bold text-yellow-500">Strudel Demo </h1>
+          <h1 className="text-3xl font-bold text-yellow-500">Strudel </h1>
         </div>
         
         {/* The control buttons */}
         <div name="buttons">
-          <ControlButtons
+          <PlaybackController
           handleProcPlay={handleProcPlay}
           handleStop={handleStop}
           handlePlay={handlePlay}
@@ -237,7 +239,7 @@ export default function StrudelDemo() {
         <div className="container-fluid">
           <div>
             <div className='flex justify-between mb-2'>  
-              <SongNameController
+              <SongSelectorController
                 setText={setText} 
                 modalOpenControl={modalOpenControl} 
                 text={text}
@@ -246,7 +248,7 @@ export default function StrudelDemo() {
             </div>
 
             <div>
-              <ButtonShowController
+              <PanelToggleController
                 handleOnHush={handleOnHush}
                 isOnHush={isOnHush}
                 handleOpenEffects={handleOpenEffects}
@@ -281,11 +283,8 @@ export default function StrudelDemo() {
                 text={text}
               />
             </div>
-            <div className='mx-2 mt-4'>
-                <button className={`text-2xl text-center font-bold flex justify-center rounded-lg w-full border border-black ${isOpenTextToProcess ? ("bg-black text-yellow-500") : ("bg-white text-black")}`}
-                onClick={handleOpenTextToProcess}> 
-                  Text to process
-                </button>
+            <div className='mx-10 mt-4'>
+                  <OpenTextToProcessButton handleOpenTextToProcess={handleOpenTextToProcess} isOpenTextToProcess={isOpenTextToProcess}/>
 
                 <textarea 
                   className={`w-full border border-black rounded-lg ${isOpenTextToProcess ? "" : "hidden"}`} 
@@ -297,11 +296,8 @@ export default function StrudelDemo() {
             </div>
           </div>
 
-          <div className='mx-2 mt-4'>
-            <button className={`text-2xl text-center font-bold flex justify-center rounded-lg w-full border border-black ${isOpenShowTime ? ("bg-black text-yellow-500") : ("bg-white text-black") }`}
-            onClick={handleOpenShowTime}> 
-              Show time 
-            </button>
+          <div className='mx-10 mt-4'>
+            <OpenShowTimeButton isOpenShowTime={isOpenShowTime} handleOpenShowTime={handleOpenShowTime}/>
     
             <div className={`${isOpenShowTime ? "" : "hidden"}`}>
               <div className="h-500" style={{ maxHeight: '500', overflowY: 'auto' }}>

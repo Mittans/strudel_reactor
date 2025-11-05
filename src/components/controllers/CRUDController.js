@@ -3,7 +3,7 @@ import {Delete} from '../buttons/CRUD buttons/DeleteButton';
 import {Load} from "../buttons/CRUD buttons/LoadButton";
 import {Save} from '../buttons/CRUD buttons/SaveButton';
 
-export function CRUDManager(props){
+export function CRUDController(props){
     return (
       <div className='border border-black mx-2 bg-black rounded-lg'>
           <nav className="flex justify-evenly">

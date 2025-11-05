@@ -1,5 +1,5 @@
 import {useState, useEffect} from "react";
-import { CRUDManager } from './CRUDManager';
+import { CRUDController } from './CRUDController';
 
 export function getAllMusic(){
   const musicList = [];
@@ -14,7 +14,7 @@ export function getAllMusic(){
   return musicList
 }
 
-export function SongNameController(props) {
+export function SongSelectorController(props) {
     const [musicList, setMusicList] = useState([]);
 
     useEffect (()=> {
@@ -78,7 +78,7 @@ export function SongNameController(props) {
                 ))}
             </select>
             
-            <CRUDManager  
+            <CRUDController 
             handleDelete={handleDelete} 
             modalOpenControl={props.modalOpenControl} 
             handleLoad={handleLoad}
