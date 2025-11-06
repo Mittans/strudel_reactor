@@ -134,6 +134,47 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
                 ))}
             </div>
 
+            {/* Effects Selector Card */}
+            <div className="card mb-3">
+                <div className="card-header d-flex align-items-center justify-content-between">
+                    <span className="fw-semibold">Effects</span>
+                    <div className="form-check form-switch m-0">
+                        <input className="form-check-input" type="checkbox" role="switch" id="fxMasterEnable" />
+                        <label className="form-check-label small" htmlFor="fxMasterEnable">Master</label>
+                    </div>
+                </div>
+
+                <div className="card-body">
+                    {/* Reverb */}
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                        <div className="form-check m-0">
+                            <input className="form-check-input" type="checkbox" id="fxReverb" />
+                            <label className="form-check-label" htmlFor="fxReverb">Reverb</label>
+                        </div>
+                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxReverbMix" />
+                    </div>
+
+                    {/* Delay */}
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                        <div className="form-check m-0">
+                            <input className="form-check-input" type="checkbox" id="fxDelay" />
+                            <label className="form-check-label" htmlFor="fxDelay">Delay</label>
+                        </div>
+                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxDelayMix" />
+                    </div>
+
+                    {/* Distortion */}
+                    <div className="d-flex align-items-center justify-content-between">
+                        <div className="form-check m-0">
+                            <input className="form-check-input" type="checkbox" id="fxDist" />
+                            <label className="form-check-label" htmlFor="fxDist">Distortion</label>
+                        </div>
+                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxDistAmount" />
+                    </div>
+                </div>
+            </div>
+
+
       </>
   );
 }
