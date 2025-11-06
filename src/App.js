@@ -7,12 +7,13 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import { stranger_tune } from './tunes';
+import { stranger_tune, algorave_dave_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import DJControls from './components/DJControls';
 import PlayButtons from './components/PlayButtons';
 import ProcButtons from './components/ProcButtons';
 import PreTextArea from './components/PreTextArea';
+import { Preprocess } from './utils/PreprocessLogic'
 
 let globalEditor = null;
 
@@ -20,64 +21,30 @@ const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-//export function SetupButtons() {
-
-//    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-//    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-//    document.getElementById('process').addEventListener('click', () => {
-//        Proc()
-//    }
-//    )
-//    document.getElementById('process_play').addEventListener('click', () => {
-//        if (globalEditor != null) {
-//            Proc()
-//            globalEditor.evaluate()
-//        }
-//    }
-//    )
-//}
-
-
-
-//export function ProcAndPlay() {
-//    if (globalEditor != null && globalEditor.repl.state.started == true) {
-//        console.log(globalEditor)
-//        Proc()
-//        globalEditor.evaluate();
-//    }
-//}
-
-//export function Proc() {
-
-//    let proc_text = document.getElementById('proc').value
-//    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-//    ProcessText(proc_text);
-//    globalEditor.setCode(proc_text_replaced)
-//}
-
-//export function ProcessText(match, ...args) {
-
-//    let replace = ""
-//    //if (document.getElementById('flexRadioDefault2').checked) {
-//    //    replace = "_"
-//    //}
-
-//    return replace
-//}
 
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
 
-    const handelPlay = (() => {
-        globalEditor.evaluate()
-    })
+    const handlePlay = () => {
+        let outputText = Preprocess({ inputText: procText, volume: volume });
+        globalEditor.setCode(outputText);
+        globalEditor.evaluate();
+    };
 
-    const handelStop = (() => {
-        globalEditor.stop()
-    })
+    const handleStop = () => {
+        globalEditor.stop();
+    };
 
-    const [songText, setSongText] = useState(stranger_tune)
+    const [procText, setProcText] = useState(algorave_dave_tune);
+    const [volume, setVolume] = useState(1);
+    const [state, setState] = useState("stop");
+
+    useEffect(() => {
+        if (state === "play") {
+            handlePlay();
+        }
+    }, [volume]);
 
 useEffect(() => {
 
@@ -112,12 +79,12 @@ useEffect(() => {
                 },
             });
             
-        document.getElementById('proc').value = stranger_tune
+        document.getElementById('proc').value = procText
         //SetupButtons()
         //Proc()
     }
-    globalEditor.setCode(songText);
-}, [songText]);
+    globalEditor.setCode(procText);
+}, [procText]);
 
 
 return (
@@ -128,14 +95,13 @@ return (
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <PreTextArea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                        <PreTextArea defaultValue={procText} onChange={(e) => setProcText(e.target.value)} />
                     </div>
                     <div className="col-md-4">
 
                         <nav>
-                            <ProcButtons />
-                            <br />
-                            <PlayButtons onPlay={handelPlay} onStop={handelStop}  />
+                            <PlayButtons onPlay={() => {setState("play"); handlePlay();}}
+                                onStop={() => {setState("stop"); handleStop();}} />
                         </nav>
                     </div>
                 </div>
@@ -145,7 +111,7 @@ return (
                         <div id="output" />
                     </div>
                     <div className="col-md-4">
-                        <DJControls />
+                        <DJControls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)} />
                     </div>
                 </div>
             </div>
