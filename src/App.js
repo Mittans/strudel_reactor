@@ -89,33 +89,46 @@ useEffect(() => {
 
 return (
     <div>
-        <h2>Strudel Demo</h2>
         <main>
+            <div className="container-fluid p-0">
 
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <PreTextArea defaultValue={procText} onChange={(e) => setProcText(e.target.value)} />
-                    </div>
-                    <div className="col-md-4">
+                <section className="vh-100 d-flex flex-column justify-content-center align-items-center bg-dark text-white">
+                    <h1>Strudel Demo</h1>
+                    <div className="card shadow" style={{ width: '70%' }}>
+                        <div className="card-body">
+                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <PlayButtons onPlay={() => { setState("play"); handlePlay(); }}
+                                        onStop={() => { setState("stop"); handleStop(); }} />
+                                </div>
 
-                        <nav>
-                            <PlayButtons onPlay={() => {setState("play"); handlePlay();}}
-                                onStop={() => {setState("stop"); handleStop();}} />
-                        </nav>
+                            </div>
+
+                            <DJControls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)} />
+                        </div>
                     </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
+
+                </section>
+
+
+                <section className="vh-100 overflow-auto bg-light">
+                    <canvas id="roll" className="w-100 border rounded shadow-sm"></canvas>
+                </section>
+
+
+                <section className="vh-100 overflow-auto bg-light">
+                    <div className="container py-4">
+                        <h2>Editor & Output</h2>
+                        <div>
+                            <PreTextArea defaultValue={procText} onChange={(e) => setProcText(e.target.value)} />
+                            <div id="editor" />
+                            <div id="output" />
+                        </div>
                     </div>
-                    <div className="col-md-4">
-                        <DJControls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)} />
-                    </div>
-                </div>
+                </section>
+
             </div>
-            <canvas id="roll"></canvas>
+
         </main >
     </div >
 );
