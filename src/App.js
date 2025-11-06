@@ -92,6 +92,8 @@ export default function StrudelDemo() {
 
     const [state, setState] = useState("stop")
 
+    const [instruments, setInstruments] = useState([])
+
     useEffect(() => {
         if (state === "play") {
             handlePlay();
@@ -167,8 +169,9 @@ useEffect(() => {
                     </div>
                     <div className="col-md-4">
                         <PlayControls
-                            volChange={vol} onVolChange={(e) => setVol(e.target.value)}
-                            speedChange={speed} onSpeedChange={(e) => setSpeed(e.target.value)}
+                                volChange={vol} onVolChange={(e) => setVol(e.target.value)}
+                                speedChange={speed} onSpeedChange={(e) => setSpeed(e.target.value)}
+                                instruments={instruments} onInstrumentsChange={(e) => setInstruments(e.target.value)}
                         />
                     </div>
                 </div>
