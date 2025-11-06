@@ -5,11 +5,8 @@ export function Preprocess({ inputText, volume, bpm }) {
     outputText = outputText.replaceAll("${VOLUME}", volume);
 
     if (Number.isFinite(Number(bpm))) {
-        const pattern = /setcps\(\s*([0-9.]+)\s*\/\s*60\s*([^\)]*)\)/g;
-        outputText = outputText.replace(
-            pattern,
-            (_m, _oldBpm, tail) => `setcps(${bpm}/60${tail || ''})`
-        );
+        //In Strudel, the last tempo setting takes effect, so this overrides the earlier setcps
+        outputText += `\nsetcps(${Number(bpm)}/60/4)`;
     }
 
     let regex = /[a-zA-Z0-9_]+:\s*\n[\s\S]+?\r?\n(?=[a-zA-Z0-9_]*[:\/])/gm;
