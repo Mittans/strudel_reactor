@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-export function Instrument({text, updateEditor, isOpenInstrument}){
+export function Instrument({text, updateEditor}){
     const instrumentList = ["RolandTR808","RolandTR606","KorgDDM110", "OberheimDmx"];
     const [selectedInstrument,setSelectedInstrument] = useState("None");
 
@@ -53,8 +53,8 @@ export function Instrument({text, updateEditor, isOpenInstrument}){
     }, [selectedInstrument]);
 
     return (
-        <div className={`flex mx-2 bg-black rounded-lg border border-black ${isOpenInstrument ? "" : "hidden"}`}>
-            <div className="m-2 p-2">
+        <div className={`grid grid-cols-3 sm:grid-cols-3 gap-3 p-4 mx-4 `}>
+            <div>
                 <input 
                     className="hidden peer" 
                     type="radio" 
@@ -63,11 +63,13 @@ export function Instrument({text, updateEditor, isOpenInstrument}){
                     defaultChecked 
                     onChange={() => setSelectedInstrument("None")}
                 />
-                <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor="flexInstrument-None">
+                <label 
+                className="block text-center cursor-pointer peer-checked:bg-yellow-400 bg-zinc-800 text-yellow-200 hover:bg-yellow-500 hover:text-black rounded-lg px-4 py-3 font-semibold transition-all duration-200" 
+                htmlFor="flexInstrument-None">
                     None
                 </label>
             </div>
-            <div className="m-2 p-2">
+            <div>
                 <input 
                     className="hidden peer" 
                     type="radio" 
@@ -75,12 +77,16 @@ export function Instrument({text, updateEditor, isOpenInstrument}){
                     id="flexInstrument-All" 
                     onChange={() => setSelectedInstrument("All")}
                     />
-                <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor="flexInstrument-All">
+                <label 
+                className="block text-center cursor-pointer peer-checked:bg-yellow-400 bg-zinc-800 text-yellow-200 hover:bg-yellow-500 hover:text-black rounded-lg px-4 py-3 font-semibold transition-all duration-200" 
+                htmlFor="flexInstrument-All">
                     All
                 </label>
             </div>
+
+            {/* List other instrument */}
             {instrumentList.map((instrument) => (
-                    <div className="m-2 p-2">
+                <div>
                 <input 
                     className="hidden peer" 
                     type="radio" 
@@ -88,7 +94,9 @@ export function Instrument({text, updateEditor, isOpenInstrument}){
                     id={`flexInstrument-${instrument}`} 
                     onChange={() => setSelectedInstrument(instrument)}
                 />
-                <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor={`flexInstrument-${instrument}`}>
+                <label 
+                className="block text-center cursor-pointer peer-checked:bg-yellow-400 bg-zinc-800 text-yellow-200 hover:bg-yellow-500 hover:text-black rounded-lg px-4 py-3 font-semibold transition-all duration-200" 
+                htmlFor={`flexInstrument-${instrument}`}>
                     {instrument}
                 </label>
             </div>

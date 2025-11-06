@@ -8,6 +8,20 @@
   }
 }
 
+@keyframes setting-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+.open-setting-spin {
+  animation: setting-spin 0.5s linear;
+}
+
+.close-setting-spin {
+  animation: spin 0.5s linear;
 }

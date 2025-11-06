@@ -10,9 +10,7 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import { PlaybackController } from './components/controllers/PlaybackController';
 import { SlideInputs } from './components/input/SlideInputs';
-import {Effects} from './components/input/Effects';
 import SaveModal from './components/modal/saveModal';
-import { Instrument } from './components/input/Instrument';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import { SongSelectorController } from './components/controllers/SongSelectorController';
 import { PanelToggleController } from './components/controllers/PanelToggleController';
@@ -157,9 +155,7 @@ export default function StrudelDemo() {
   }
   // Variable to save text.
   const [text, setText] = useState(stranger_tune);
-  const [isOnHush,setIsOnHush] = useState(false);
-  const [isOpenEffects, setIsOpenEffects] = useState(false);
-  const [isOpenInstrument, setIsOpenInstrument] = useState(false);
+  const [isOpenSetting,setIsOpenSetting] = useState(false);
   const [isOpenShowTime, setIsOpenShowTime] = useState(false);
   const [isOpenTextToProcess, setIsOpenTextToProcess] = useState(false);
 
@@ -179,36 +175,14 @@ export default function StrudelDemo() {
     }
   };
 
-  // Function to open the On & Hush
-  const handleOnHush = () => {
-    if (isOnHush === false) {
-      setIsOnHush(true);
+  // Function to open the setting
+  const handleOpenSetting= () => {
+    if (isOpenSetting === false) {
+      setIsOpenSetting(true);
     } else {
-      setIsOnHush(false);
+      setIsOpenSetting(false);
     }
-    setIsOpenEffects(false);
-    setIsOpenInstrument(false);
   };
-
-  const handleOpenEffects = () => {
-    if (isOpenEffects === false) {
-      setIsOpenEffects(true);
-    } else {
-      setIsOpenEffects(false);
-    }
-    setIsOnHush(false);
-    setIsOpenInstrument(false);
-  }
-
-  const handleOpenInstrument= () => {
-    if (isOpenInstrument === false) {
-      setIsOpenInstrument(true);
-    } else {
-      setIsOpenInstrument(false);
-    }
-    setIsOnHush(false);
-    setIsOpenEffects(false);
-  }
 
   return (
     <div className="min-h-screen bg-yellow-500">
@@ -216,8 +190,8 @@ export default function StrudelDemo() {
 
         {/* The title */}
         <div className='flex'>
-          <span className={`text-3xl font-bold text-yellow-500 px-1 ${isPlay ? "animate-spin" : ""}`}>꩜</span>
-          <h1 className="text-3xl font-bold text-yellow-500">Strudel </h1>
+          <span className={`text-4xl font-bold text-yellow-500 px-1 ${isPlay ? "animate-spin" : ""}`}>꩜</span>
+          <h1 className="text-4xl font-bold text-yellow-500">Strudel </h1>
         </div>
         
         {/* The control buttons */}
@@ -241,48 +215,22 @@ export default function StrudelDemo() {
             <div className='flex justify-between mb-2'>  
               <SongSelectorController
                 setText={setText} 
-                modalOpenControl={modalOpenControl} 
                 text={text}
+                handleOpenSetting={handleOpenSetting}
+                isOpenSetting={isOpenSetting}
+                modalOpenControl={modalOpenControl} 
                 />   
               <SlideInputs onVolumeChange={updateGainInCode} onSpeedChange={updateSpeedInCode} />      
             </div>
 
             <div>
               <PanelToggleController
-                handleOnHush={handleOnHush}
-                isOnHush={isOnHush}
-                handleOpenEffects={handleOpenEffects}
-                isOpenEffects={isOpenEffects}
-                handleOpenInstrument={handleOpenInstrument}
-                isOpenInstrument={isOpenInstrument}
-              />
-
-              <div className={`flex mx-2 bg-black rounded-lg border border-black ${isOnHush ? "" : "hidden"}`}>
-                <div className="m-2 p-2">
-                  <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                  <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor="flexRadioDefault1">
-                    Arpeggiator 1
-                  </label>
-                </div>
-                <div className="m-2 p-2">
-                  <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                  <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor="flexRadioDefault2">
-                    Arpeggiator 2
-                  </label>
-                </div>
-              </div>
-              
-              <Effects 
-                isOpenEffects={isOpenEffects} 
-                updateEditor={updateEditor} 
                 text={text}
-              />
-              <Instrument 
-                isOpenInstrument={isOpenInstrument} 
-                updateEditor={updateEditor} 
-                text={text}
+                updateEditor={updateEditor}
+                ProcAndPlay={ProcAndPlay}
               />
             </div>
+
             <div className='mx-10 mt-4'>
                   <OpenTextToProcessButton handleOpenTextToProcess={handleOpenTextToProcess} isOpenTextToProcess={isOpenTextToProcess}/>
 

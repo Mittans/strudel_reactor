@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-export function Effects({isOpenEffects, updateEditor, text}){
-    const effectList = ["reverse","wave","pan"];
+export function Effects({updateEditor, text}){
+    const effectList = ["reverse","coarse","pan","crush"];
     const [selectedEffect,setSelectedEffect] = useState("None");
  
     useEffect (() => {
         // Determine effect based on chosen id.
         let effectString = "";
         if (selectedEffect === "reverse") effectString = ".rev()";
-        else if (selectedEffect === "wave") effectString = `.coarse("<1 4>")`;
+        else if (selectedEffect === "coarse") effectString = `.coarse("<1 4>")`;
         else if (selectedEffect === "pan") effectString = `.pan("<.5 1 .5 0>")`;
+        else if (selectedEffect === "crush") effectString = `.crush("<16 8 7 6 5 4 3 2>")`;
 
         // Split text into lines and process
         const lines = text.split("\n").map(line => {
@@ -31,7 +32,8 @@ export function Effects({isOpenEffects, updateEditor, text}){
             let cleaned = line
             .replace(/\.rev\(\)/g, "")
             .replace(/\.coarse\([^\)]*\)/g, "")
-            .replace(/\.pan\([^\)]*\)/g, "");
+            .replace(/\.pan\([^\)]*\)/g, "")
+            .replace(/\.crush\([^\)]*\)/g, "");
 
             // Add effect if selected
             if (effectString) {
@@ -47,8 +49,8 @@ export function Effects({isOpenEffects, updateEditor, text}){
         updateEditor(lines.join("\n"));
     },[selectedEffect])
     return (
-        <div className={`flex mx-2 bg-black rounded-lg border border-black ${isOpenEffects ? "" : "hidden"}`}>
-            <div className="m-2 p-2">
+        <div className={`grid grid-cols-3 sm:grid-cols-3 gap-3 p-4 mx-4`}>
+            <div>
                 <input 
                     className="hidden peer" 
                     type="radio" 
@@ -57,19 +59,25 @@ export function Effects({isOpenEffects, updateEditor, text}){
                     defaultChecked 
                     onChange={() => setSelectedEffect("None")}
                 />
-                <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor="flexRadio-None">
+                <label 
+                className="block text-center cursor-pointer peer-checked:bg-yellow-400 bg-zinc-800 text-yellow-200 hover:bg-yellow-500 hover:text-black rounded-lg px-4 py-3 font-semibold transition-all duration-200" 
+                htmlFor="flexRadio-None">
                     None
                 </label>
             </div>
+
+            {/* List other effects */}
             {effectList.map((effect) => (
-                 <div className="m-2 p-2">
+            <div>
                 <input 
                     className="hidden peer" 
                     type="radio" 
                     name="flexRadio" 
                     id={`flexRadio-${effect}`} 
                     onChange={() => setSelectedEffect(effect)}/>
-                <label className="peer-checked:bg-yellow-500 bg-yellow-400 text-black rounded-md px-5 py-2 font-bold" htmlFor={`flexRadio-${effect}`}>
+                <label 
+                    className="block text-center cursor-pointer peer-checked:bg-yellow-400 bg-zinc-800 text-yellow-200 hover:bg-yellow-500 hover:text-black rounded-lg px-4 py-3 font-semibold transition-all duration-200" 
+                    htmlFor={`flexRadio-${effect}`}>
                     {effect}
                 </label>
             </div>

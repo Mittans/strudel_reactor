@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import { CRUDController } from './CRUDController';
+import { IoMdSettings } from "react-icons/io";
 
 export function getAllMusic(){
   const musicList = [];
@@ -14,7 +15,13 @@ export function getAllMusic(){
   return musicList
 }
 
-export function SongSelectorController(props) {
+export function SongSelectorController({
+    setText,
+    text,
+    handleOpenSetting,
+    isOpenSetting,
+    modalOpenControl
+}) {
     const [musicList, setMusicList] = useState([]);
 
     useEffect (()=> {
@@ -27,7 +34,7 @@ export function SongSelectorController(props) {
         const savedItem = localStorage.getItem(song);
 
         if (savedItem) {
-        props.setText(JSON.parse(savedItem));
+        setText(JSON.parse(savedItem));
         alert("Loaded from local storage");
         } else {
         alert("No saved text found");
@@ -53,16 +60,18 @@ export function SongSelectorController(props) {
         const song = document.getElementById("songName").value;
         const savedSong = localStorage.getItem(song);
         if (savedSong) {
-            localStorage.setItem(song, JSON.stringify(props.text));
+            localStorage.setItem(song, JSON.stringify(text));
             alert("Succeccfully save song");
         } else {
             alert("No song is found. Please add it first.");
-            props.modalOpenControl();
+            modalOpenControl();
         }
     };
 
     return (
         <div className='flex p-4'>
+
+            {/* List all songs that exist in the local storage */}
             <select
             className="text-2xl text-center font-bold bg-gray-200 text-black w-40 rounded-lg" 
             htmlFor="exampleFormControlTextarea1" 
@@ -78,12 +87,26 @@ export function SongSelectorController(props) {
                 ))}
             </select>
             
-            <CRUDController 
-            handleDelete={handleDelete} 
-            modalOpenControl={props.modalOpenControl} 
-            handleLoad={handleLoad}
-            handleSave={handleSave}
-            />
+            <div className="flex items-center">
+
+                {/* Setting Icon */}
+                <button onClick={handleOpenSetting}>
+                    <IoMdSettings 
+                        className={`text-5xl mx-3 duration-500 
+                        ${isOpenSetting ? ("bg-black text-yellow-500 rounded-full hover:text-yellow-700 open-setting-spin") : 
+                        ("close-setting-spin hover:text-gray-700")}`}
+                    />
+                </button>
+                
+                {/* Add, Delete, Load, and Save inside the controller. */}
+                <CRUDController 
+                handleDelete={handleDelete} 
+                modalOpenControl={modalOpenControl} 
+                handleLoad={handleLoad}
+                handleSave={handleSave}
+                isOpenSetting={isOpenSetting}
+                />
+            </div>
         </div>
     );
 }
