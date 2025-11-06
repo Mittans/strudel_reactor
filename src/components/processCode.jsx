@@ -1,9 +1,15 @@
 function ProcessCode( {songText} ) {
 
+    let instruments = []
     const songTextLines = songText.split('\n');
 
-    //may need to move this
     let cpmSpecified = false;
+
+    //iterate through songTextLines
+    //check for instruments and add it to list
+    
+    //iterate through instruments
+    //display related settings
 
     if (songText!= null && songText.includes("setcpm(")) {
             cpmSpecified = true;
