@@ -140,8 +140,8 @@ useEffect(() => {
 }, [songText]);
 
 
-return (
-    <div>
+    return (
+        <div className="bg-dark">
         
         <main>
 
