@@ -80,13 +80,15 @@ export default function StrudelDemo() {
     }
 
     const handleProc = () => {
-        let outText = PreProcess({ inputText: songText, vol: vol })
+        let outText = PreProcess({ inputText: songText, vol: vol, speed: speed })
         globalEditor.setCode(outText)
     }
 
     const [songText, setSongText] = useState(stranger_tune)
 
     const [vol, setVol] = useState(1)
+
+    const [speed, setSpeed] = useState(120)
 
     const [state, setState] = useState("stop")
 
@@ -164,7 +166,10 @@ return (
                         <div id="output" />
                     </div>
                     <div className="col-md-4">
-                        <PlayControls volChange={vol} onVolChange={(e) => setVol(e.target.value)} />
+                        <PlayControls
+                            volChange={vol} onVolChange={(e) => setVol(e.target.value)}
+                            speedChange={speed} onSpeedChange={(e) => setSpeed(e.target.value)}
+                        />
                     </div>
                 </div>
             </div>

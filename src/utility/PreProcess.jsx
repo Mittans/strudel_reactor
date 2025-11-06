@@ -1,4 +1,28 @@
-export function PreProcess({ inputText, vol }) {
+export function PreProcess({ inputText, vol, speed}) {
+    let outText = inputText
+
+    outText = volProc(inputText, vol)
+
+    outText = speedProc(inputText, speed)
+
+    return outText
+}
+function speedProc(inputText, speed) {
+    let out = inputText
+    let regex = /(?<=setcps\()[^)]*(?=\))/gm
+
+    
+    //outputText = outputText.replaceAll("{$VOL}", vol)
+
+    out = inputText.replace(regex, speed)
+
+
+
+    //console.log("matches = " + matches)
+
+    return out;
+}
+function volProc(inputText, vol) {
     let out = inputText
     //out += `\n//all(x => x.gain(${vol}))`
 
@@ -30,7 +54,7 @@ export function PreProcess({ inputText, vol }) {
         (text, original, i) => text.replaceAll(original, gainMatches[i]),
         out)
 
-    console.log(matchesReduce)
+    //console.log(matchesReduce)
 
     return matchesReduce;
 }
