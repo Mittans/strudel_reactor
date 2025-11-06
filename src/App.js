@@ -27,7 +27,7 @@ export default function StrudelDemo() {
     const hasRun = useRef(false);
 
     const handlePlay = () => {
-        let outputText = Preprocess({ inputText: procText, volume: volume });
+        let outputText = Preprocess({ inputText: procText, volume: volume, bpm });
         globalEditor.setCode(outputText);
         globalEditor.evaluate();
     };
@@ -39,12 +39,13 @@ export default function StrudelDemo() {
     const [procText, setProcText] = useState(algorave_dave_tune);
     const [volume, setVolume] = useState(1);
     const [state, setState] = useState("stop");
+    const [bpm, setBpm] = useState(120);
 
     useEffect(() => {
         if (state === "play") {
             handlePlay();
         }
-    }, [volume]);
+    }, [volume, bpm]);
 
 useEffect(() => {
 
@@ -104,7 +105,9 @@ return (
 
                             </div>
 
-                            <DJControls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)} />
+                            <DJControls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)}
+                                bpm={bpm} onBpmChange={(e) => setBpm(Number(e.target.value || 0))}
+                            />
                         </div>
                     </div>
 

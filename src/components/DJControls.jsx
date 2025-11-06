@@ -1,10 +1,10 @@
-function DJControls({ volume, onVolumeChange }) {
+function DJControls({ volume, onVolumeChange, bpm, onBpmChange }) {
     return (
         <>
             <div className="card p-3 shadow-sm">
                 <div className="input-group mb-3">
-                    <span className="input-group-text" id="basic-addon1">set CPM</span>
-                    <input type="text" className="form-control" id="cpm_text_input" placeholder="120" aria-label="cpm" aria-describedby="cpm_label" />
+                    <span className="input-group-text" id="basic-addon1">set BPM</span>
+                    <input type="number" className="form-control" id="bpm_text_input" placeholder="120" aria-label="bpm" aria-describedby="bpm_label" value={bpm} onChange={onBpmChange} />
                 </div>
 
                 <div className="mb-3">
