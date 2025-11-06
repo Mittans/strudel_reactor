@@ -12,7 +12,6 @@ main, label, span, p, input, .volume-container, .col-md-4, .col-md-6, nav, .row 
 }
 
 body::before {
-    content: "";
     position: fixed;
     backdrop-filter: blur(1px);
     z-index: -1;
@@ -41,6 +40,7 @@ body::before {
 nav {
     display: flex;
     justify-content: center;
+    margin-left: -15%;
     align-items: center;
 }
 
@@ -88,31 +88,31 @@ nav {
 }
 
 #play::before, #stop::before, #process::before, #process_play::before {
-    font-size: 28px; 
+    font-size: 28px;
     display: inline-block;
     line-height: 50px;
 }
 
 .volume-container {
+    position: relative;
+    font-family: 'Orbitron', sans-serif;
+    top: -19rem;
+    margin-left: -10%;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    margin-top: 15px;
-    margin-bottom: 30px;
+    align-items: center;
 }
 
 #volume_range {
     appearance: none;
-    width: 100%;
-    height: 10px;
-    border-radius: 6px;
+    width: 90%;
+    margin-left: 12%;
+    height: 12px;
     background: linear-gradient(90deg, #00e676 var(--fill, 100%), #e0e0e0 0%);
-    outline: none;
     background: #00e676;
-    border-radius: 50%;
+    border-radius: 20%;
     cursor: pointer;
-    box-shadow: 0 0 30px #00e676;
+    box-shadow: 0 0 20px #00e676;
     transition: all 0.25s ease;
 }
 
@@ -133,10 +133,150 @@ h2 {
 
 #proc, textarea.form-control {
     height: 40vh;
+    width: 70%;
     overflow-y: auto;
 }
 
 #editor {
     max-height: 40vh;
+    width: 70%;
     overflow-y: auto;
+}
+
+.dj-toggles {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-top: 20px;
+}
+
+.dj-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 10px 15px;
+    width: 110px;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+    transition: all 0.3s ease;
+}
+
+.dj-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+}
+
+#drums1, #drums2, #bass, #melody, #guitar {
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 2px solid #ff3b3b;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    margin-bottom: 8px;
+}
+
+#drums1:checked {
+    background: radial-gradient(circle, #ff3030, #ff8080);
+    box-shadow: 0 0 12px #ff0000;
+}
+
+#drums2:checked {
+    background: radial-gradient(circle, #ff3030, #ff8080);
+    box-shadow: 0 0 12px #ff0000;
+}
+
+#bass:checked {
+    background: radial-gradient(circle, #00bfff, #66e0ff);
+    box-shadow: 0 0 12px #00ffff;
+}
+
+#melody:checked {
+    background: radial-gradient(circle, #ff69b4, #ffb6c1);
+    box-shadow: 0 0 12px #ff69b4;
+}
+
+#guitar:checked {
+    background: radial-gradient(circle, #ffaa00, #ffdd55);
+    box-shadow: 0 0 12px #ffcc00;
+}
+
+label[for="drums1"],
+label[for="drums2"],
+label[for="bass"],
+label[for="melody"],
+label[for="guitar"] {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    text-shadow: 0 0 10px #ff3b3b;
+}
+
+label[for="drums1"]::after {
+    content: "🥁";
+    font-size: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+label[for="drums2"]::after {
+    content: "🎧";
+    font-size: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+label[for="bass"]::after {
+    content: "🎸";
+    font-size: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+label[for="melody"]::after {
+    content: "🎵";
+    font-size: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+label[for="guitar"]::after {
+    content: "🎶";
+    font-size: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+#drums1:checked ~ label[for="drums1"]::after,
+#drums2:checked ~ label[for="drums2"]::after {
+    box-shadow: 0 0 15px #ff0000;
+}
+
+#bass:checked ~ label[for="bass"]::after {
+    box-shadow: 0 0 15px #00ffff;
+}
+
+#melody:checked ~ label[for="melody"]::after {
+    box-shadow: 0 0 15px #ff69b4;
+}
+
+#guitar:checked ~ label[for="guitar"]::after {
+    box-shadow: 0 0 15px #ffcc00;
 }

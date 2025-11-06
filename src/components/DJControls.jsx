@@ -28,40 +28,34 @@ function DJControls({ volume, cpm, onCpmChange,
             </div>
 
             {/* --- Toggle Buttons --- */}
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="drums1" checked={drums1} onChange={onDrums1Change} />
-                <label className="form-check-label" htmlFor="drums1">
-                    Drums1
-                </label>
-            </div>
+            <div className="dj-toggles">
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="drums1" checked={drums1} onChange={onDrums1Change} />
+                    <label className="form-check-label" htmlFor="drums1"> Drums1</label>
+                </div>
 
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="drums2" checked={drums2} onChange={onDrums2Change} />
-                <label className="form-check-label" htmlFor="drums2">
-                    Drums2
-                </label>
-            </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="drums2" checked={drums2} onChange={onDrums2Change} />
+                    <label className="form-check-label" htmlFor="drums2"> Drums2</label>
+                </div>
 
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="bass" checked={bass} onChange={onBassChange} />
-                <label className="form-check-label" htmlFor="bass">
-                    Bass
-                </label>
-            </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="bass" checked={bass} onChange={onBassChange} />
+                    <label className="form-check-label" htmlFor="bass"> Bass</label>
+                </div>
 
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="melody" checked={melody} onChange={onMelodyChange} />
-                <label className="form-check-label" htmlFor="melody">
-                    Melody
-                </label>
-            </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="melody" checked={melody} onChange={onMelodyChange} />
+                    <label className="form-check-label" htmlFor="melody"> Melody</label>
+                </div>
 
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="guitar" checked={guitar} onChange={onGuitarChange} />
-                <label className="form-check-label" htmlFor="guitar">
-                    Guitar
-                </label>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="guitar" checked={guitar} onChange={onGuitarChange} />
+                    <label className="form-check-label" htmlFor="guitar"> Guitar</label>
+                </div>
             </div>
+            
+            
         </>
     );
 }

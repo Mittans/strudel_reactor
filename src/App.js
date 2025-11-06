@@ -19,6 +19,7 @@ let globalEditor = null;
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
+
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
@@ -46,8 +47,6 @@ export default function StrudelDemo() {
     const [drums1, setDrums1] = useState(true);
 
     const [drums2, setDrums2] = useState(true);
-
-    const [reverbFX, setReverbFX] = useState(true);
 
     const updateStrudelCode = (text) => {
         const processedText = text
@@ -124,7 +123,7 @@ export default function StrudelDemo() {
             updateStrudelCode(songText);
         }
         
-    }, [bass, melody, guitar, drums1, drums2, reverbFX, volume, cpm]);
+    }, [bass, melody, guitar, drums1, drums2, volume, cpm]);
 
     return (
         <div>
@@ -152,7 +151,7 @@ export default function StrudelDemo() {
                             <div id="editor" />
                             <div id="output" />
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-md-5">
                             <DJControls
                                 volume={volume}
                                 onChange={handleVolumeChange}
