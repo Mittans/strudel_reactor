@@ -6,7 +6,7 @@ export function SpeedProc(inputText, speed) {
     //outputText = outputText.replaceAll("{$VOL}", vol)
 
     out = inputText.replace(regex, speed)
-    console.log("out =" + out)
+    //console.log("out =" + out)
 
 
     //console.log("matches = " + matches)

@@ -80,7 +80,7 @@ export default function StrudelDemo() {
     }
 
     const handleProc = () => {
-        let outText = PreProcess({ inputText: songText, vol: vol, speed: speed })
+        let outText = PreProcess({ inputText: songText, vol: vol, speed: speed, instruments: instruments })
         globalEditor.setCode(outText)
     }
 
@@ -168,10 +168,20 @@ useEffect(() => {
                         <div id="output" />
                     </div>
                     <div className="col-md-4">
-                        <PlayControls
+                            <PlayControls
                                 volChange={vol} onVolChange={(e) => setVol(e.target.value)}
                                 speedChange={speed} onSpeedChange={(e) => setSpeed(e.target.value)}
-                                instruments={instruments} onInstrumentsChange={(e) => setInstruments(e.target.value)}
+                                instruments={instruments} onInstrumentsChange={(e) => {
+                                    if (instruments.includes(e.target.value)) {
+                                        var index = instruments.indexOf(e.target.value);
+                                        if (index !== -1) {
+                                            instruments.splice(index, 1);
+                                        }
+                                    } else {
+                                        instruments.push(e.target.value)
+                                    }
+                                }
+                                }
                         />
                     </div>
                 </div>

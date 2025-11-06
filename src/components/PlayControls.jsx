@@ -1,4 +1,4 @@
-function PlayControls({ volChange, onVolChange, speedChange, onSpeedChange }) {
+function PlayControls({ volChange, onVolChange, speedChange, onSpeedChange, instruments, onInstrumentsChange }) {
     return (
         <>
             <div className="bg-black p-2 rounded">
@@ -16,15 +16,15 @@ function PlayControls({ volChange, onVolChange, speedChange, onSpeedChange }) {
                 {/* Instruments */}
                 {/* TODO make seperate component */}
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="instruments1" />
+                    <input className="form-check-input" type="checkbox" onChange={onInstrumentsChange} value="drums" id="instruments1" />
                     <label className="form-check-label text-light" htmlFor="instruments1">
-                        Instruments 1
+                        drums
                     </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="instruments2" />
+                    <input className="form-check-input" type="checkbox" onChange={onInstrumentsChange} value="bells" id="instruments2" />
                     <label className="form-check-label text-light" htmlFor="instrument2">
-                        Instruments 2
+                        bells
                     </label>
                 </div>
             </div>
