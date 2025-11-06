@@ -36,16 +36,24 @@ export default function StrudelDemo() {
     //avoid using document.getElementById, thus useRef to reference the canvas
     const canvasRef = useRef(null);
 
+    // State to track if music is playing
+    const [isPlaying, setIsPlaying] = useState(false);
+
+
     // Function runs when the Play button is clicked
     const handlePlay = () => {
         // Plays the current Strudel code in the editor
         editorRef.current?.evaluate();
+        setIsPlaying(true); // Update state to indicate music is playing
+
     };
+
 
     //Safely play only if editor exists, avoid errors by checking if editorRef.current is not null
     //works even without the null check but just to be safe
     const handleStop = () => {
         editorRef.current?.stop();
+        setIsPlaying(false); // Update state to indicate music has stopped
     }
 
     //Ref for the editor root element
@@ -128,6 +136,12 @@ export default function StrudelDemo() {
         editorRef.current.setCode(volumeController);
 
         //Updates Strudel editor with new code  song and volume
+
+        if (isPlaying) {
+            editorRef.current.stop();
+            editorRef.current.evaluate();
+        }
+
     }, [songData, volume, cpm]); // Runs again when songData or volume updates and the cpm
 
     return (
