@@ -1,4 +1,5 @@
-function DJ_Controls({ volume, onVolumeChange }) {
+function DJ_Controls({ volume, onVolumeChange, onToggle }) {
+
     return (
         //cpm input
         <>
@@ -13,25 +14,25 @@ function DJ_Controls({ volume, onVolumeChange }) {
 
             {/* mute options */}
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="bassline" />
+                <input className="form-check-input" type="checkbox" value="" id="bassline" onChange={onToggle} />
                 <label className="form-check-label" htmlFor="bassline">
                     bassline
                 </label>
             </div>
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="mainArp" />
-                <label className="form-check-label" htmlFor="mainArp">
+                <input className="form-check-input" type="checkbox" value="" id="main_arp" onChange={onToggle} />
+                <label className="form-check-label" htmlFor="main_arp">
                     main arp
                 </label>
             </div>
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="drums1" />
-                <label className="form-check-label" htmlFor="drums1">
+                <input className="form-check-input" type="checkbox" value="" id="drums" onChange={onToggle} />
+                <label className="form-check-label" htmlFor="drums">
                     drums 1
                 </label>
             </div>
             <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="drums2" />
+                <input className="form-check-input" type="checkbox" value="" id="drums2" onChange={onToggle} />
                 <label className="form-check-label" htmlFor="drums2">
                     drums 2
                 </label>
@@ -41,3 +42,11 @@ function DJ_Controls({ volume, onVolumeChange }) {
 }
 
 export default DJ_Controls;
+
+
+
+//     let replace = ""
+//     if (document.getElementById('flexRadioDefault2').checked) {
+//         replace = "_"
+//     }
+//     return replace

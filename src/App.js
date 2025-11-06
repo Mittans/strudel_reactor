@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
-import { evalScope } from '@strudel/core';
+import { evalScope, set } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
 import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
@@ -14,20 +14,14 @@ import DJ_Controls from './components/DJ_Controls';
 import Play_Buttons from './components/Play_Buttons';
 import Proc_Buttons from './components/Proc_Buttons';
 import PreProcText from './components/PreProcText';
-import { preProcess } from './utils/preProcessLogic.jsx';
+import { preProcess } from './utils/preProcessLogic';
+import { toggleSectionPrefix } from './utils/MuteLogic';
 
 let globalEditor = null;
 
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
-
-
-//     let replace = ""
-//     if (document.getElementById('flexRadioDefault2').checked) {
-//         replace = "_"
-//     }
-//     return replace
 
 export default function StrudelDemo() {
 
@@ -48,6 +42,11 @@ export default function StrudelDemo() {
     const [volume, setVolume] = useState(1);
 
     const [state, setState] = useState("stop");
+
+    const handleToggle = (e) => {
+        const { id, checked } = e.target;
+        setProcText(prev => toggleSectionPrefix(prev, id, checked));
+    };
 
     useEffect(() => {
 
@@ -118,7 +117,7 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <DJ_Controls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)} />
+                            <DJ_Controls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)} onToggle={handleToggle} />
                         </div>
                     </div>
                 </div>

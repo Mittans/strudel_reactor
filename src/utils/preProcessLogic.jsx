@@ -1,9 +1,5 @@
 export function preProcess({ inputText, volume }) {
-    let outputText = inputText + "\n// Volume set to " + volume;
-
-    outputText += `\n//all(x => x.gain(${volume}));`
-
-    outputText = outputText.replaceAll('{$Volume}', volume)
+    let outputText = inputText
 
     let regex = /[a-zA-Z0-9_]+:\s*\n[\s\S]+?\r?\n(?=[a-zA-Z0-9_]*[:\/])/gm
 
