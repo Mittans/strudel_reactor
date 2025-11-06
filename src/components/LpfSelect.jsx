@@ -1,8 +1,15 @@
 // components/LpfSelect.jsx
 export default function LpfSelect({ value, onChange }) {
+  
+    //Convert the <select> value to Number or null
   const handleChange = (e) => {
     const v = e.target.value;
+
+      // if onChange was passed in and is a function
     if (typeof onChange === "function") {
+
+    //if  ("") then `null`
+    //otherwise string into num
       onChange(v === "" ? null : Number(v));
     }
   };

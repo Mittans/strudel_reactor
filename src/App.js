@@ -117,10 +117,10 @@ return (
 
         <div className="col-md-4 panel panel-actions">
           <nav className="action-grid">
-            <ProcControls
+            {/* <ProcControls
               onProc={handlePlay}
               onProcPlay={() => { setState("play"); handlePlay(); }}
-            />
+            /> */}
             <PlayControls
               onPlay={() => { setState("play"); handlePlay(); }}
               onStop={() => { setState("stop"); handleStop(); }}

@@ -2,12 +2,14 @@ export function Preprocess({ inputText, volume, cpm, lpf }) {
 
 
 
-    let outputText = inputText + "\n//Hello, this is a test";
+    let outputText = inputText + "\n//AHHHHH 67";
 
     outputText += `\n\nall(x => x.gain(${volume}))`
 
+    //replaces volume everywhere
     outputText = outputText.replaceAll("${VOLUME}", volume)
     
+   //replaces cpm if its a finite number 
 if (Number.isFinite(cpm)) {
   outputText = outputText.replaceAll("${CPM}", cpm);
 }
