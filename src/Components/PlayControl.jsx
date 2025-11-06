@@ -22,36 +22,36 @@ function PlayControl({ volume, onVolumeChange, cpm, onCpmChange }) {
                 </div>
 
                 <div className="p-3 rounded-3 glass-inner-card fw-semibold mb-3">
-                    <p className="fw-semibold mb-2 text-light">Tracks</p>
-                    <div className="d-flex flex-wrap gap-3">
+                    <p className="fw-semibold mb-2 text-light text-center">Tracks</p>
+                    <div className="d-flex justify-content-center flex-wrap gap-3">
                         <div className="form-check form-check-inline">
                             <input className="form-check-input glass-checkbox" type="checkbox" id="s1" />
-                            <label className="form-check-label text-light" htmlFor="s1">S1</label>
+                            <label className="form-check-label text-light" htmlFor="s1">Synth</label>
                         </div>
                         <div className="form-check form-check-inline">
                             <input className="form-check-input glass-checkbox" type="checkbox" id="d1" />
-                            <label className="form-check-label text-light" htmlFor="d1">D1</label>
+                            <label className="form-check-label text-light" htmlFor="d1">Drums</label>
                         </div>
                         <div className="form-check form-check-inline">
                             <input className="form-check-input glass-checkbox" type="checkbox" id="d2" />
-                            <label className="form-check-label text-light" htmlFor="d2">D2</label>
+                            <label className="form-check-label text-light" htmlFor="d2">Bass</label>
                         </div>
                     </div>
                 </div>
 
-                <div className="d-flex gap-2 mt-3 my-5">
+                <div className="d-flex justify-content-center gap-3 mt-3 my-5">
                     <button className="btn btn-secondary glass-btn">
                         <i className="bi bi-mic-mute-fill"></i> Mute
                     </button>
 
                     <button className="btn btn-primary glass-btn">
-                        <i className="bi bi-mic-fill"></i>Unmute
+                        <i className="bi bi-mic-fill"></i> Unmute
                     </button>
 
                     <button className="btn btn-warning glass-btn">
                         <i className="bi bi-shuffle"></i> Shuffle
                     </button>
-                </div >
+                </div>
 
             </div >
 

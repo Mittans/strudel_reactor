@@ -17,7 +17,7 @@ import PlayControl from '../Components/PlayControl';
 import PlayButtons from '../Components/PlayButtons';
 import ProcessButtons from '../Components/ProcessButtons';
 import Preprocess from '../Components/Preprocess';
-
+import MusicSearch from '../Components/SearchFunctionality';
 
 //need to use ref, cannot use global variable, react re-renders components and manages state internally.
 //let globalEditor = null;
@@ -144,9 +144,12 @@ export default function StrudelDemo() {
                             {/* calls the Preprocess class*/}
                         </div>
                         <div className="col-md-4">
+
+                            <MusicSearch /> {/* calls the MusicSearch class*/}
                             <nav>
                                 {/* calls the ProcessButtons class*/}
                                 <ProcessButtons onPreprocess={handlePreprocess} onPreprocessPlay={handlePreprocessPlay} />
+
 
                                 <br />
                                 <PlayButtons onPlay={handlePlay} onStop={handleStop} />  {/* calls the button class and the handle stop and handlePlay function created eariler*/}
