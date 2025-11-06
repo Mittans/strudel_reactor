@@ -14,6 +14,7 @@ import DJ_Controls from './components/DJ_Controls';
 import Play_Buttons from './components/Play_Buttons';
 import Proc_Buttons from './components/Proc_Buttons';
 import PreProcText from './components/PreProcText';
+import { preProcess } from './utils/preProcessLogic.jsx';
 
 let globalEditor = null;
 
@@ -21,56 +22,20 @@ const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-// export function SetupButtons() {
 
-//     document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-//     document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-//     document.getElementById('process').addEventListener('click', () => {
-//         Proc()
+//     let replace = ""
+//     if (document.getElementById('flexRadioDefault2').checked) {
+//         replace = "_"
 //     }
-//     )
-//     document.getElementById('process_play').addEventListener('click', () => {
-//         if (globalEditor != null) {
-//             Proc()
-//             globalEditor.evaluate()
-//         }
-//     }
-//     )
-// }
-
-
-
-// export function ProcAndPlay() {
-//     if (globalEditor != null && globalEditor.repl.state.started == true) {
-//         console.log(globalEditor)
-//         Proc()
-//         globalEditor.evaluate();
-//     }
-// }
-
-// export function Proc() {
-
-//     let proc_text = document.getElementById('proc').value
-//     let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-//     ProcessText(proc_text);
-//     globalEditor.setCode(proc_text_replaced)
-// }
-
-// export function ProcessText(match, ...args) {
-
-//     //let replace = ""
-//     //if (document.getElementById('flexRadioDefault2').checked) {
-//     //    replace = "_"
-//     //}
-
-//     //return replace
-// }
+//     return replace
 
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
 
     const handlePlay = () => {
+        let outputText = preProcess({ inputText: procText, volume: volume });
+        globalEditor.setCode(outputText);
         globalEditor.evaluate()
     }
 
@@ -78,7 +43,18 @@ export default function StrudelDemo() {
         globalEditor.stop()
     }
 
-    const [songText, setSongText] = useState(stranger_tune);
+    const [procText, setProcText] = useState(stranger_tune);
+
+    const [volume, setVolume] = useState(1);
+
+    const [state, setState] = useState("stop");
+
+    useEffect(() => {
+
+        if (state === "play") {
+            handlePlay();
+        }
+    }, [volume])
 
     useEffect(() => {
 
@@ -113,12 +89,10 @@ export default function StrudelDemo() {
                 },
             });
 
-            document.getElementById('proc').value = stranger_tune
-            // SetupButtons()
-            // Proc()
+            document.getElementById('proc').value = procText
+            globalEditor.setCode(procText);
         }
-        globalEditor.setCode(songText);
-    }, [songText]);
+    }, [procText]);
 
 
     return (
@@ -129,14 +103,12 @@ export default function StrudelDemo() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                            <PreProcText defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                            <PreProcText defaultValue={procText} onChange={(e) => setProcText(e.target.value)} />
                         </div>
                         <div className="col-md-4">
 
                             <nav>
-                                <Proc_Buttons />
-                                <br />
-                                <Play_Buttons onPlay={handlePlay} onStop={handleStop} />
+                                <Play_Buttons onPlay={() => { setState("play"); handlePlay() }} onStop={() => { setState("stop"); handleStop() }} />
                             </nav>
                         </div>
                     </div>
@@ -146,7 +118,7 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <DJ_Controls />
+                            <DJ_Controls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)} />
                         </div>
                     </div>
                 </div>
