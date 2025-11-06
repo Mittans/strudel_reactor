@@ -1,49 +1,39 @@
-.App {
-  text-align: center;
+
+:root {
+  --bg: #0b0e14;
+  --panel: #111418;
+  --panel-2: #0d1014;
+  --text: #e8e9ef;
+  --muted: #9da5b4;
+  --border: #1e232c;
+  --accent: #8b5cf6;   
+  --accent2:#22c55e;   
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+html, body { background: var(--bg); color: var(--text); margin: 0; }
+* { box-sizing: border-box; }
+
+.app-root { max-width: 1200px; margin: 0 auto; padding: 20px 26px; }
+
+.app-header { text-align: center; margin-bottom: 14px; }
+.app-title  { font-size: clamp(30px,3vw,46px); font-weight: 700; color: var(--accent); margin: 0; }
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
+.control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+label, .form-label { color: var(--muted); font-size: .9rem; }
+.form-control, .form-select {
+  background: var(--panel-2); color: var(--text);
+  border: 1px solid var(--border); border-radius: 8px;
 }
+.form-control:focus, .form-select:focus { border-color: var(--accent); outline: none; }
 
-body {
-   background: black;
-}
 
-.App-title1 {
-  font-size: clamp(22px, 2.2vw, 28px);
-  letter-spacing: .3px;
-  margin: 0;
 
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

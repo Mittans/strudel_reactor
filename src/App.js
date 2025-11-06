@@ -97,51 +97,58 @@ export default function StrudelDemo() {
   }
 }, [procText, volume, cpm, lpf, state]);
 
-  return (
-    <div>
-      <h2>Strudel Demo</h2>
-      <main>
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-              <PreProTextArea
-                value={procText}                              // controlled input
-                onChange={(e) => setProcText(e.target.value)} />
-            </div>
-            <div className="col-md-4">
-              <nav>
-                <ProcControls
-                  onProc={handlePlay}
-                  onProcPlay={() => { setState("play"); handlePlay(); }}
-                />
-                <br />
-                <PlayControls
-                  onPlay={() => { setState("play"); handlePlay(); }}
-                  onStop={() => { setState("stop"); handleStop(); }}
-                />
-              </nav>
-            </div>
-          </div>
 
-          <div className="row">
-            <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-              <div id="editor" />
-              <div id="output" />
-            </div>
-            <div className="col-md-4">
-              <DJControls
-                cpmValue={cpm}
-                onCpmChange={(e) => setCpm(Number(e.target.value))}
-                volumeChange={volume}
-                onVolumeChange={(e) => setVolume(Number(e.target.value))}
-              />
+return (
+  <div className="app-root">
+    <header className="app-header container-fluid">
+      <h1 className="app-title">Strudel Demo</h1>
+    </header>
 
-              <LpfSelect value={lpf} onChange={setLpf} />
-            </div>
-          </div>
+    <main className="app-main container-fluid">
+
+
+      <div className="row section-top">
+        <div className="col-md-8 panel panel-preproc">
+          <PreProTextArea
+            value={procText}
+            onChange={(e) => setProcText(e.target.value)}
+          />
         </div>
-        <canvas id="roll"></canvas>
-      </main>
-    </div>
-  );
+
+        <div className="col-md-4 panel panel-actions">
+          <nav className="action-grid">
+            <ProcControls
+              onProc={handlePlay}
+              onProcPlay={() => { setState("play"); handlePlay(); }}
+            />
+            <PlayControls
+              onPlay={() => { setState("play"); handlePlay(); }}
+              onStop={() => { setState("stop"); handleStop(); }}
+            />
+          </nav>
+        </div>
+      </div>
+
+    
+      <div className="row section-bottom">
+        <div className="col-md-8 panel panel-editor">
+          <div id="editor" />
+          <div id="output" />
+        </div>
+
+        <div className="col-md-4 panel panel-controls">
+          <DJControls
+            cpmValue={cpm}
+            onCpmChange={(e) => setCpm(Number(e.target.value))}
+            volumeChange={volume}
+            onVolumeChange={(e) => setVolume(Number(e.target.value))}
+          />
+          <LpfSelect value={lpf} onChange={setLpf} />
+        </div>
+      </div>
+
+      <canvas id="roll"></canvas>
+    </main>
+  </div>
+);
 }
