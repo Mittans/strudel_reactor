@@ -23,9 +23,10 @@ export default function StrudelDemo() {
   const [procText, setProcText] = useState(stranger_tune);   // fixed name
   const [volume, setVolume] = useState(1);
   const [state, setState] = useState("stop");
+  const [cpm, setCpm] = useState(120);
 
   const handlePlay = () => {
-    const outputText = Preprocess({ inputText: procText, volume });
+    const outputText = Preprocess({ inputText: procText, volume, cpm });
     if (!globalEditor) return;
     globalEditor.setCode(outputText);
     globalEditor.evaluate();
@@ -77,10 +78,17 @@ export default function StrudelDemo() {
     }
 
     // keep editor code in sync with procText
-    if (globalEditor) {
-      globalEditor.setCode(procText);
-    }
-  }, [procText]); // runs on mount (after hasRun) and when procText changes
+    if (!globalEditor) return;
+
+  const code = Preprocess({ inputText: procText, volume, cpm });
+
+  if (state === "play") {
+    globalEditor.setCode(code);
+    globalEditor.evaluate();
+  } else {
+    globalEditor.setCode(code);
+  }
+}, [procText, volume, cpm, state]); // runs on mount (after hasRun) and when procText changes
 
   return (
     <div>
@@ -115,6 +123,8 @@ export default function StrudelDemo() {
             </div>
             <div className="col-md-4">
               <DJControls
+                cpmValue={cpm}
+                onCpmChange={(e) => setCpm(Number(e.target.value))}
                 volumeChange={volume}
                 onVolumeChange={(e) => setVolume(Number(e.target.value))}
               />

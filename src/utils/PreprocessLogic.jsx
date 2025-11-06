@@ -1,4 +1,4 @@
-export function Preprocess({ inputText, volume }) {
+export function Preprocess({ inputText, volume, cpm }) {
 
 
 
@@ -7,6 +7,10 @@ export function Preprocess({ inputText, volume }) {
     outputText += `\n\nall(x => x.gain(${volume}))`
 
     outputText = outputText.replaceAll("${VOLUME}", volume)
+
+      if (typeof cpm !== "undefined") {
+    outputText = outputText.replaceAll("${CPM}", cpm);
+    }
 
     let regex = /[a-zA-Z0-9_]+:\s*\n[\s\S]+?\r?\n(?=[a-zA-Z0-9_]+[:\s/])/gm;
 
