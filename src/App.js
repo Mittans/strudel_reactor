@@ -19,51 +19,6 @@ let globalEditor = null;
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
-
-//export function SetupButtons() {
-
-//    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-//    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-//    document.getElementById('process').addEventListener('click', () => {
-//        Proc()
-//    }
-//    )
-//    document.getElementById('process_play').addEventListener('click', () => {
-//        if (globalEditor != null) {
-//            Proc()
-//            globalEditor.evaluate()
-//        }
-//    }
-//    )
-//}
-
-
-//export function ProcAndPlay() {
-//    if (globalEditor != null && globalEditor.repl.state.started == true) {
-//        console.log(globalEditor)
-//        Proc()
-//        globalEditor.evaluate();
-//    }
-//}
-
-//export function Proc() {
-
-//    let proc_text = document.getElementById('proc').value
-//    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-//    ProcessText(proc_text);
-//    globalEditor.setCode(proc_text_replaced)
-//}
-
-//export function ProcessText(match, ...args) {
-
-//    let replace = ""
-//    //if (document.getElementById('flexRadioDefault2').checked) {
-//    //    replace = "_"
-//    //}
-
-//    return replace
-//}
-
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
@@ -102,11 +57,11 @@ export default function StrudelDemo() {
             .replaceAll("<melody>", melody ? "" : "_")
             .replaceAll("<guitar>", guitar ? "" : "_")
             .replaceAll("<drums1>", drums1 ? "" : "_")
-            .replaceAll("<drums2>", drums2 ? "" : "_")
-            .replaceAll("<reverbFX>", reverbFX ? "" : "_");
+            .replaceAll("<drums2>", drums2 ? "" : "_");
 
         globalEditor.setCode(processedText);
         globalEditor.evaluate();
+        
     };
 
     const handlePreprocess = () => {
@@ -115,14 +70,15 @@ export default function StrudelDemo() {
 
     const handleProcPlay = () => {
         updateStrudelCode(songText);
+        globalEditor.evaluate();
     };
 
     const handleVolumeChange = (e) => {
         const newVolume = e.target.value;
         setVolume(newVolume);
         updateStrudelCode(songText);
+        globalEditor.evaluate();
     };
-
 
     useEffect(() => {
 
@@ -152,7 +108,6 @@ export default function StrudelDemo() {
                         import('@strudel/mini'),
                         import('@strudel/tonal'),
                         import('@strudel/webaudio'),
-                        //{volume}
                     );
 
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
@@ -162,23 +117,19 @@ export default function StrudelDemo() {
 
             document.getElementById('proc').value = stranger_tune;
             updateStrudelCode(stranger_tune);
-
-            //SetupButtons()
-            //Proc()
             globalEditor.setCode(songText);
-        }
+        }  
 
         else {
             updateStrudelCode(songText);
         }
         
-    }, [songText, bass, melody, guitar, drums1, drums2, reverbFX, volume, cpm]);
+    }, [bass, melody, guitar, drums1, drums2, reverbFX, volume, cpm]);
 
     return (
         <div>
             <h2 id="h2">Strudel Demo</h2>
             <main>
-
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-6">
@@ -207,12 +158,27 @@ export default function StrudelDemo() {
                                 onChange={handleVolumeChange}
                                 cpm={cpm}
                                 onCpmChange={(e) => setCpm(e.target.value)}
-                                bass={bass} onBassChange={() => setBass(!bass)}
-                                melody={melody} onMelodyChange={() => setMelody(!melody)}
-                                guitar={guitar} onGuitarChange={() => setGuitar(!guitar)}
-                                drums1={drums1} onDrums1Change={() => setDrums1(!drums1)}
-                                drums2={drums2} onDrums2Change={() => setDrums2(!drums2)}
-                                reverbFX={reverbFX} onReverbFXChange={() => setReverbFX(!reverbFX)}                            />
+                                bass={bass}
+                                onBassChange={() => {
+                                    setBass(!bass);                               
+                                }}
+                                melody={melody}
+                                onMelodyChange={() => {
+                                    setMelody(!melody);
+                                }}
+                                guitar={guitar}
+                                onGuitarChange={() => {
+                                    setGuitar(!guitar);
+                                }}
+                                drums1={drums1}
+                                onDrums1Change={() => {
+                                    setDrums1(!drums1);
+                                }}
+                                drums2={drums2}
+                                onDrums2Change={() => {
+                                    setDrums2(!drums2);
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
@@ -220,6 +186,5 @@ export default function StrudelDemo() {
             </main >
         </div >
     );
-
 
 }

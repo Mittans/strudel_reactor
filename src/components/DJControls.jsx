@@ -3,8 +3,7 @@ function DJControls({ volume, cpm, onCpmChange,
     melody, onMelodyChange,
     guitar, onGuitarChange,
     drums1, onDrums1Change,
-    drums2, onDrums2Change,
-    reverbFX, onReverbFXChange }) {
+    drums2, onDrums2Change}) {
     return (
         <>
             {/* --- CPM Input --- */}
@@ -63,14 +62,6 @@ function DJControls({ volume, cpm, onCpmChange,
                     Guitar
                 </label>
             </div>
-
-            <div className="form-check">
-                <input className="form-check-input" type="checkbox" value="" id="reverbFX" checked={reverbFX} onChange={onReverbFXChange} />
-                <label className="form-check-label" htmlFor="reverbFX">
-                    Reverb FX
-                </label>
-            </div>
-
         </>
     );
 }

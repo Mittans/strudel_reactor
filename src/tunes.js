@@ -147,8 +147,8 @@ const guitar_patterns = [
 // --------------------- INSTRUMENTS -------------------------
 
 // BASS
-bassline:
-<bass> note(pick(basslines, bass))
+<bass>bassline:
+note(pick(basslines, bass))
 .sound("supersaw")
 .lpf(750)
 .lpenv(3.0)
@@ -157,8 +157,8 @@ bassline:
 .postgain(pick(gain_patterns, pattern))
 
 // HOOK
-lead_hook:
-<melody> note(pick(hook_arp, "<0 1 2 3>/2"))
+<melody>lead_hook:
+note(pick(hook_arp, "<0 1 2 3>/2"))
 .sound("supersaw")
 .lpf(3000)
 .lpenv(2.0)
@@ -168,9 +168,9 @@ lead_hook:
 .rarely(jux(rev))
 
 // GUITAR
-guitar_strums:
+<guitar>guitar_strums:
 stack(
-  <guitar> s("acg:0").struct(pick(guitar_patterns, 0))
+   s("acg:0").struct(pick(guitar_patterns, 0))
   .gain(0.4)
   .room(0.25)
   .speed(1.02),
@@ -183,18 +183,18 @@ stack(
 )
 
 // ------------------------- DRUMS -------------------------
-drums:
+<drums1>drums:
 stack(
-  <drums1> s(pick(drum_structure, pattern)).bank("RolandTR808")
-  .postgain(1.0),
+   s(pick(drum_structure, pattern)).bank("RolandTR808")
+  .postgain(2.0),
 
   s("~ cp ~ cp").bank("RolandTR808")
-  .postgain(0.75),
+  .postgain(1.0),
 
   s("hh*8").bank("RolandTR808")
   .gain(0.6)
   .room(sine.range(0.1,0.3))
-  .postgain(0.5),
+  .postgain(0.8),
 
   s("~ sh ~ ~").bank("RolandTR808")
   .postgain(0.4)
@@ -202,13 +202,13 @@ stack(
   .speed(0.95),
 
   s("lt ~ lt ~").bank("RolandTR808")
-  .postgain(0.35)
+  .postgain(0.55)
 )
 
-drums2:
-<drums2> s("tech:5")
+<drums2>drums2:
+ s("tech:5")
 .struct("~ ~ ~ ~ x ~ ~ ~")
-.postgain(0.5)
+.postgain(2)
 .pcurve(2)
 .pdec(1)
 
