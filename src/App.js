@@ -155,7 +155,6 @@ export default function StrudelDemo() {
                         //{volume}
                     );
 
-
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
 
                 },
@@ -177,15 +176,15 @@ export default function StrudelDemo() {
 
     return (
         <div>
-            <h2>Strudel Demo</h2>
+            <h2 id="h2">Strudel Demo</h2>
             <main>
 
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                        <div className="col-md-6">
                             <PreprocessEditor defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
                         </div>
-                        <div className="col-md-4">
+                        <div className="col-md-6">
                             <nav>
 
                                 <ProcButtons onPreprocess={handlePreprocess} onProcPlay={handleProcPlay} />
@@ -198,7 +197,7 @@ export default function StrudelDemo() {
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                        <div className="col-md-6">
                             <div id="editor" />
                             <div id="output" />
                         </div>

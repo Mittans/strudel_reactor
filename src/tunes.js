@@ -121,9 +121,9 @@ const gain_patterns = [
 ]
 
 const drum_structure = [
-  "bd bd bd_bd",                                        
-  "bd bd bd_bd",                                       
-  "{bd !7 bd ~!3 < bd> ~}%8",                         
+  "bd bd bd_bd",
+  "bd bd bd_bd",
+  "{bd !7 bd ~!3 < bd> ~}%8",
 ]
 
 const basslines = [
@@ -147,62 +147,70 @@ const guitar_patterns = [
 // --------------------- INSTRUMENTS -------------------------
 
 // BASS
-<bass>
 bassline:
-note(pick(basslines, bass))
+<bass> note(pick(basslines, bass))
 .sound("supersaw")
-.lpf(750).lpenv(3.0)
+.lpf(750)
+.lpenv(3.0)
 .adsr("0:0:.34:.14")
 .room(0.28)
 .postgain(pick(gain_patterns, pattern))
 
 // HOOK
-<melody>
 lead_hook:
-note(pick(hook_arp, "<0 1 2 3>/2"))
+<melody> note(pick(hook_arp, "<0 1 2 3>/2"))
 .sound("supersaw")
-.lpf(3000).lpenv(2.0)
+.lpf(3000)
+.lpenv(2.0)
 .adsr("0:0:.3:.18")
 .room(0.45)
 .postgain(0.9)
 .rarely(jux(rev))
 
 // GUITAR
-<guitar>
 guitar_strums:
 stack(
-  s("acg:0").struct(pick(guitar_patterns, 0))
-  .gain(0.4).room(0.25).speed(1.02),
+  <guitar> s("acg:0").struct(pick(guitar_patterns, 0))
+  .gain(0.4)
+  .room(0.25)
+  .speed(1.02),
 
-  s("acg:2").struct(pick(guitar_patterns, 1))
-  .gain(0.33).room(0.22).speed(0.98)
+  s("acg:2")
+  .struct(pick(guitar_patterns, 1))
+  .gain(0.33)
+  .room(0.22)
+  .speed(0.98)
 )
 
 // ------------------------- DRUMS -------------------------
-<drums1>
 drums:
 stack(
-  s(pick(drum_structure, pattern)).bank("RolandTR808")     
+  <drums1> s(pick(drum_structure, pattern)).bank("RolandTR808")
   .postgain(1.0),
 
-  s("~ cp ~ cp").bank("RolandTR808")                       
+  s("~ cp ~ cp").bank("RolandTR808")
   .postgain(0.75),
 
-  s("hh*8").bank("RolandTR808")                           
+  s("hh*8").bank("RolandTR808")
   .gain(0.6)
   .room(sine.range(0.1,0.3))
   .postgain(0.5),
 
-  s("~ sh ~ ~").bank("RolandTR808")                        
-  .postgain(0.4).lpf(7000).speed(0.95),
+  s("~ sh ~ ~").bank("RolandTR808")
+  .postgain(0.4)
+  .lpf(7000)
+  .speed(0.95),
 
-  s("lt ~ lt ~").bank("RolandTR808")                       
+  s("lt ~ lt ~").bank("RolandTR808")
   .postgain(0.35)
 )
 
-<drums2>
 drums2:
-s("tech:5").struct("~ ~ ~ ~ x ~ ~ ~")
-.postgain(0.5).pcurve(2).pdec(1)
+<drums2> s("tech:5")
+.struct("~ ~ ~ ~ x ~ ~ ~")
+.postgain(0.5)
+.pcurve(2)
+.pdec(1)
 
-// @version 1.0 — “MySong”`;
+// @version 1.0 — “MySong”
+`;
