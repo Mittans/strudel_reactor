@@ -36,8 +36,8 @@ const arpeggiator2 = [
 ]
 
 
-const pattern = 0
-const bass = 0
+const pattern = &PATTERN_INDEX&
+const bass = &BASS_INDEX&
 
 &BASSLINE&bassline:
 note(pick(basslines, bass))
@@ -50,7 +50,7 @@ note(pick(basslines, bass))
 
 
 &MAIN_ARP&main_arp:
-note(pick(arpeggiator1, "<0 1 2 3>/2"))
+note(pick(&ARP_PLAYED&, "<0 1 2 3>/2"))
 .sound("supersaw")
 .lpf(300)
 .adsr("0:0:.5:.1")
@@ -95,6 +95,6 @@ stack(
 )
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
-// all(x => x.log())
+all(x => x.log())
 
 // @version 1.2`;

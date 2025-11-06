@@ -25,6 +25,9 @@ export default function StrudelDemo() {
     const hasRun = useRef(false);
 
     const initialCPS = 140
+    const initialPatternIndex = 0
+    const initialBassIndex = 0
+    const initialArpeggiator = "arpeggiator1"
 
     // States
     const [songText, setSongText] = useState(stranger_tune);
@@ -36,6 +39,9 @@ export default function StrudelDemo() {
     });
     const [CPS, setCPS] = useState(initialCPS);
     const [volumeMultiplier, setVolumeMultiplier] = useState(1);
+    const [patternIndex, setPatternIndex] = useState(initialPatternIndex);
+    const [bassIndex, setBassIndex] = useState(initialBassIndex);
+    const [arpeggiator, setArpeggiator] = useState(initialArpeggiator);
 
     // Handlers
     const handlePlay = useCallback(() => {
@@ -68,6 +74,21 @@ export default function StrudelDemo() {
             processed = processed.replaceAll("&CPS&", CPS);
         }
 
+        //Replace Pattern
+        if (processed.includes("&PATTERN_INDEX&")) {
+            processed = processed.replaceAll("&PATTERN_INDEX&", patternIndex);
+        }
+
+        //Replace Bass
+        if (processed.includes("&BASS_INDEX&")) {
+            processed = processed.replaceAll("&BASS_INDEX&", bassIndex);
+        }
+
+        //Replace Arpeggiator
+        if (processed.includes("&ARP_PLAYED&")) {
+            processed = processed.replaceAll("&ARP_PLAYED&", arpeggiator);
+        }
+
         // Multiply gain_patterns numbers
         processed = processed.replace(
             /const\s+gain_patterns\s*=\s*\[([\s\S]*?)\]/,
@@ -85,7 +106,7 @@ export default function StrudelDemo() {
         });
 
         return processed;
-    }, [songText, checkedInstruments, CPS, volumeMultiplier]);
+    }, [songText, checkedInstruments, CPS, volumeMultiplier, patternIndex, bassIndex, arpeggiator]);
 
 
     const handleProcess = useCallback(() => {
@@ -154,7 +175,12 @@ export default function StrudelDemo() {
                         </div>
                         <div className="col-5">
                             <h3 className="text-center">Controls</h3>
-                            <ControlsSection CPS={CPS} onChange={setCPS} volume={volumeMultiplier} onVolumeChange={setVolumeMultiplier} />
+                            <ControlsSection CPS={CPS} onChange={setCPS}
+                                volume={volumeMultiplier} onVolumeChange={setVolumeMultiplier}
+                                pattern={patternIndex} onPatternChange={setPatternIndex}
+                                bass={bassIndex} onBassChange={setBassIndex}
+                                arp={arpeggiator} onArpChange={setArpeggiator}
+                            />
                         </div>
                         <div className="col-4">
                             <h3 className="text-center">Toggle Instruments</h3>
