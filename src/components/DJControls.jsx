@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Dropdown } from 'bootstrap';
 function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
     // State variable to store the current CPM value
     const [localCpm, setLocalCpm] = useState(cpm ?? 140);
@@ -94,6 +95,7 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
 
             {/* CheckBox for select instruments */}
             <hr className="my-3" />
+            <span className="input-group-text" id="instru_label">Select Instrument</span>
             <div className="input-group mb-3">
                 <div className="form-check">
                     <input className="form-check-input" type="checkbox" value="" id="s1" />
@@ -135,6 +137,7 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
             </div>
 
             {/* Effects Selector Card */}
+            <hr className="my-3" />
             <div className="card mb-3">
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <span className="fw-semibold">Effects</span>
@@ -174,6 +177,80 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
                 </div>
             </div>
 
+
+            {/* User settings */}
+            <hr className="my-3" />
+            <div className="btn-toolbar mb-3" role="toolbar" aria-label="Music Style Toolbar">
+
+                <div className="btn-group me-2" role="group" aria-label="Pop Style">
+                    <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Pop
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
+                    </ul>
+                </div>
+
+                <div className="btn-group me-2" role="group" aria-label="Jazz Style">
+                    <button type="button" className="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Jazz
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
+                    </ul>
+                </div>
+
+                <div className="btn-group me-2" role="group" aria-label="Electronic Style">
+                    <button type="button" className="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Elec
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
+                    </ul>
+                </div>
+                
+
+                <div className="btn-group me-2" role="group" aria-label="Classic Style">
+                    <button type="button" className="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Classic
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
+                    </ul>
+                </div>
+                <div className="btn-group me-2" role="group" aria-label="Rock Style">
+                    <button type="button" className="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Rock
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
+                    </ul>
+                </div>
+
+
+                <div className="btn-group me-2" role="group" aria-label="Custome Style">
+                    <button type="button" className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                        Custome
+                    </button>
+                    <ul className="dropdown-menu">
+                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
+                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
+                    </ul>
+                </div>
+
+
+            </div>
 
       </>
   );
