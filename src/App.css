@@ -1,5 +1,5 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Baloo+2:wght@600&family=Poppins:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rubik+Glitch&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shojumaru&display=swap');
 
 
 body {
@@ -18,7 +18,7 @@ body::before {
 }
 
 #h2 {
-    font-family: 'Rubik Glitch', cursive;
+    font-family: 'Shojumaru', cursive;
     text-transform: uppercase;
     color: springgreen;
     font-size: 3rem;
@@ -94,13 +94,15 @@ nav {
 }
 
 .volume-container {
-    position: relative;
+    position: relative !important;
     font-family: 'Orbitron', sans-serif;
-    top: -19rem;
-    margin-left: -10%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    top: -20rem !important;
+    margin-bottom: 1rem !important;
+    margin-left: -2.5rem;
+    z-index: 10 !important;
 }
 
 #volume_range {
@@ -149,7 +151,7 @@ h2 {
     align-items: flex-start;
     gap: 20px;
     flex-wrap: nowrap;
-    margin-top: 20px;
+    margin-top: 80px;
 }
 
 .dj-item {
@@ -279,4 +281,37 @@ label[for="guitar"]::after {
 
 #guitar:checked ~ label[for="guitar"]::after {
     box-shadow: 0 0 15px #ffcc00;
+}
+
+nav {
+    margin-bottom: 1rem !important;
+    padding-bottom: 0 !important;
+}
+
+.graph-wrapper {
+    margin-top: -10rem;
+    transform: translateX(36px);
+    display: flex;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.graph-wrapper svg path {
+    stroke-width: 3.5px !important; 
+    stroke-linecap: round !important;
+    filter: drop-shadow(0 0 6px #00ffcc); 
+}
+
+.input-group {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    transform: translateX(36px);
+    padding: 2px !important;
+}
+
+.dj-toggles {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    justify-content: space-evenly;
 }

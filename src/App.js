@@ -13,6 +13,7 @@ import DJControls from './components/DJControls';
 import Buttons from './components/Buttons';
 import ProcButtons from './components/ProcButtons';
 import PreprocessEditor from './components/PreprocessEditor';
+import Graph from './components/Graph';
 
 let globalEditor = null;
 
@@ -26,10 +27,12 @@ export default function StrudelDemo() {
 
     const handlePlay = () => {
         globalEditor.evaluate()
+        setIsPlaying(true);
     }
 
     const handleStop = () => {
         globalEditor.stop()
+        setIsPlaying(false);
     }
 
     const [songText, setSongText] = useState(stranger_tune)
@@ -47,6 +50,8 @@ export default function StrudelDemo() {
     const [drums1, setDrums1] = useState(true);
 
     const [drums2, setDrums2] = useState(true);
+
+    const [isPlaying, setIsPlaying] = useState(false);
 
     const updateStrudelCode = (text) => {
         const processedText = text
@@ -79,6 +84,9 @@ export default function StrudelDemo() {
         globalEditor.evaluate();
     };
 
+    
+
+   
     useEffect(() => {
 
         if (!hasRun.current) {
@@ -142,16 +150,22 @@ export default function StrudelDemo() {
                                 <br />
 
                                 <Buttons onPlay={handlePlay} onStop={handleStop} />
+                                <br/>
 
                             </nav>
                         </div>
                     </div>
+
                     <div className="row">
                         <div className="col-md-6">
                             <div id="editor" />
                             <div id="output" />
                         </div>
+
                         <div className="col-md-5">
+                            <div className="graph-wrapper">
+                                <Graph isPlaying={isPlaying} />
+                            </div>
                             <DJControls
                                 volume={volume}
                                 onChange={handleVolumeChange}
@@ -177,9 +191,12 @@ export default function StrudelDemo() {
                                 onDrums2Change={() => {
                                     setDrums2(!drums2);
                                 }}
-                            />
+                            /> 
+                            
                         </div>
-                    </div>
+                        
+
+                    </div>      
                 </div>
                 <canvas id="roll"></canvas>
             </main >
