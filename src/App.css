@@ -38,56 +38,33 @@ body::before {
     margin: 2rem;
 }
 
-#process, #process_play, #play, #stop {
-    width: 170px;
-    height: 40px;
-    color: white;
-    font-family: 'Rubik Glitch', cursive;
-    font-size: 1.3rem;
-    text-transform: uppercase;
-    border: 2px solid rgba(255, 255, 255, 0.6);
-    border-radius: 10px;
-    background: transparent;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
 nav {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-#process:hover {
-    background: linear-gradient(135deg, #5ca9ff, #335fff);
-    box-shadow: 0 0 30px rgba(46, 126, 255, 0.7);
-    transform: translateY(-2px);
+#play, #stop, #process, #process_play {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: dashed;
+    background: #0e0e0e;
+    color: #00ffcc;
+    font-size: 26px;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
+    margin: 8px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
-#process_play:hover {
-    background: linear-gradient(135deg, #ffcc33, #ffa733);
-    box-shadow: 0 0 30px rgba(255, 180, 50, 0.7);
-    transform: translateY(-2px);
+#play:hover, #stop:hover, #process:hover, #process_play:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
 }
 
-#play:hover {
-    background: linear-gradient(135deg, #00d9ff, #00f5b0);
-    box-shadow: 0 0 30px rgba(0, 255, 220, 0.7);
-    transform: translateY(-2px);
-}
-
-#stop:hover {
-    background: linear-gradient(135deg, #ff5f7f, #ff3b6e);
-    box-shadow: 0 0 30px rgba(255, 100, 120, 0.7);
-    transform: translateY(-2px);
-}
-
-#process::before {
-    content: "🌀";
-}
-
-#process_play::before {
-    content: "🎧";
+#play:active, #stop:active, #process:active, #process_play:active {
+    transform: scale(0.95);
 }
 
 #play::before {
@@ -98,6 +75,23 @@ nav {
     content: "⏹️";
 }
 
+#process::before {
+    content: "🔄";
+}
+
+#process_play::before {
+    content: "🔁";
+}
+
+#play, #stop, #process, #process_play {
+    font-size: 0;
+}
+
+#play::before, #stop::before, #process::before, #process_play::before {
+    font-size: 28px; 
+    display: inline-block;
+    line-height: 50px;
+}
 
 .volume-container {
     display: flex;
