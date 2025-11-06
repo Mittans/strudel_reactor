@@ -94,32 +94,34 @@ return (
             <div className="container-fluid p-0">
 
                 <section className="vh-100 d-flex flex-column justify-content-center align-items-center bg-dark text-white">
-                    <h1>Strudel Demo</h1>
-                    <div className="card shadow" style={{ width: '70%' }}>
-                        <div className="card-body">
-                            <div className="d-flex justify-content-between align-items-center mb-3">
-                                <div>
-                                    <PlayButtons onPlay={() => { setState("play"); handlePlay(); }}
-                                        onStop={() => { setState("stop"); handleStop(); }} />
+                    <div className="row w-100 align-items-center">
+                        <div className="col-8 d-flex flex-column justify-content-center align-items-center">
+                            <h1>Strudel Demo</h1>
+                            <div className="card shadow" style={{ width: '70%' }}>
+                                <div className="card-body">
+                                    <div className="d-flex justify-content-between align-items-center mb-3">
+                                        <div>
+                                            <PlayButtons onPlay={() => { setState("play"); handlePlay(); }}
+                                                onStop={() => { setState("stop"); handleStop(); }} />
+                                        </div>
+
+                                    </div>
+
+                                    <DJControls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)}
+                                        bpm={bpm} onBpmChange={(e) => setBpm(Number(e.target.value || 0))}
+                                    />
                                 </div>
-
                             </div>
-
-                            <DJControls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)}
-                                bpm={bpm} onBpmChange={(e) => setBpm(Number(e.target.value || 0))}
-                            />
                         </div>
+                        <div className="col-4 d-flex flex-column justify-content-center align-items-center">
+                            <canvas id="roll" className="w-100 border rounded shadow-sm"></canvas>
+                        </div>
+
                     </div>
-
                 </section>
 
 
-                <section className="vh-100 overflow-auto bg-light">
-                    <canvas id="roll" className="w-100 border rounded shadow-sm"></canvas>
-                </section>
-
-
-                <section className="vh-100 overflow-auto bg-light">
+                <section className="vh-100 overflow-auto bg-dark text-white">
                     <div className="container py-4">
                         <h2>Editor & Output</h2>
                         <div>
