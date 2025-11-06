@@ -14,6 +14,7 @@ import PlayControls from './components/PlayControls';
 import ProcControls from './components/ProcControls';
 import PreProTextArea from './components/PreProTextArea';
 import { Preprocess } from './utils/PreprocessLogic';
+import LpfSelect from './components/LpfSelect';
 
 let globalEditor = null;
 
@@ -24,6 +25,7 @@ export default function StrudelDemo() {
   const [volume, setVolume] = useState(1);
   const [state, setState] = useState("stop");
   const [cpm, setCpm] = useState(120);
+  const [lpf, setLpf] = useState(null);
 
   const handlePlay = () => {
     const outputText = Preprocess({ inputText: procText, volume, cpm });
@@ -77,18 +79,23 @@ export default function StrudelDemo() {
       });
     }
 
-    // keep editor code in sync with procText
-    if (!globalEditor) return;
+    // Re-run whenever text or control values change
 
-  const code = Preprocess({ inputText: procText, volume, cpm });
+   if (!globalEditor) return; //editor not ready yet
 
+     //Build final Strudel code w upd settings
+  const code = Preprocess({ inputText: procText, volume, cpm, lpf });
   if (state === "play") {
+
+    //realtime update while playing
     globalEditor.setCode(code);
     globalEditor.evaluate();
   } else {
+
+    //update editor text
     globalEditor.setCode(code);
   }
-}, [procText, volume, cpm, state]); // runs on mount (after hasRun) and when procText changes
+}, [procText, volume, cpm, lpf, state]);
 
   return (
     <div>
@@ -128,6 +135,8 @@ export default function StrudelDemo() {
                 volumeChange={volume}
                 onVolumeChange={(e) => setVolume(Number(e.target.value))}
               />
+
+              <LpfSelect value={lpf} onChange={setLpf} />
             </div>
           </div>
         </div>

@@ -1,4 +1,4 @@
-export function Preprocess({ inputText, volume, cpm }) {
+export function Preprocess({ inputText, volume, cpm, lpf }) {
 
 
 
@@ -7,10 +7,23 @@ export function Preprocess({ inputText, volume, cpm }) {
     outputText += `\n\nall(x => x.gain(${volume}))`
 
     outputText = outputText.replaceAll("${VOLUME}", volume)
+    
+if (Number.isFinite(cpm)) {
+  outputText = outputText.replaceAll("${CPM}", cpm);
+}
 
-      if (typeof cpm !== "undefined") {
-    outputText = outputText.replaceAll("${CPM}", cpm);
-    }
+
+  if (lpf === null || typeof lpf === "undefined") {
+     // if no lpf selected replace with safe high value
+    outputText = outputText.replaceAll("${LPF}", 20000);
+  } else if (Number.isFinite(lpf)) {
+    // replace with chosen value
+    outputText = outputText.replaceAll("${LPF}", lpf);
+
+
+    // global lpf
+    outputText += `\n\nall(x => x.lpf(${lpf}))`;
+  }
 
     let regex = /[a-zA-Z0-9_]+:\s*\n[\s\S]+?\r?\n(?=[a-zA-Z0-9_]+[:\s/])/gm;
 
