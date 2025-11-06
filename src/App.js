@@ -73,8 +73,9 @@ useEffect(() => {
 
 return (
     <div>
-
-        <h2>Strudel Demo</h2>
+        <div className="text-center">
+            <h2>Strudel Demo</h2>
+        </div>
         <main>
 
             <div className="container-fluid">

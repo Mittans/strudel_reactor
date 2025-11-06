@@ -50,8 +50,12 @@
       "DocumentGroups": [
         {
           "DockedHeight": 285,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -60,14 +64,10 @@
               "RelativeDocumentMoniker": "src\\tunes.js",
               "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\tunes.js",
               "RelativeToolTip": "src\\tunes.js",
-              "ViewState": "AgIAAEsAAAAAAAAAAAAAAGUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-11-03T07:07:48.156Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
             },
             {
               "$type": "Document",
@@ -79,8 +79,7 @@
               "RelativeToolTip": "src\\utils\\buttons.js",
               "ViewState": "AgIAAAUAAAAAAAAAAAAUwCAAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-02T00:11:03.319Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-02T00:11:03.319Z"
             },
             {
               "$type": "Document",
@@ -92,8 +91,7 @@
               "RelativeToolTip": "src\\utils\\proc.js",
               "ViewState": "AgIAAA0AAAAAAAAAAAAQwBEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-02T00:06:35.379Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-02T00:06:35.379Z"
             },
             {
               "$type": "Document",
@@ -141,8 +139,7 @@
               "RelativeToolTip": "src\\App.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-31T05:19:36.505Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T05:19:36.505Z"
             },
             {
               "$type": "Document",
@@ -166,8 +163,7 @@
               "RelativeToolTip": "src\\components\\DJControls.js",
               "ViewState": "AgIAABcAAAAAAAAAAAAAwCwAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-10-31T05:18:59.324Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T05:18:59.324Z"
             },
             {
               "$type": "Document",

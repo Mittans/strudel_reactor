@@ -23,11 +23,12 @@ nav,
 
 button {
     border-radius: 0.75rem !important;
-    background-color: #1c2029 !important;
+    background-color: #1db954 !important;
     border: 1px solid #2a2f3a !important;
     color: #ffffff !important;
     box-shadow: 0 0 0 transparent;
     transition: 0.15s ease;
+    margin-right: 0.5rem !important;
 }
 
     button:hover {
@@ -60,7 +61,7 @@ button {
 
 input[type="range"]::-webkit-slider-runnable-track {
     height: 6px;
-    background: linear-gradient(90deg, #0d6efd, #3b4150);
+    background: linear-gradient(90deg, #00b96b, #145c3a);
     border-radius: 999px;
 }
 
@@ -68,11 +69,11 @@ input[type="range"]::-webkit-slider-thumb {
     width: 18px;
     height: 18px;
     background: #fff;
-    border: 2px solid #0d6efd;
+    border: 2px solid #00b96b;
     border-radius: 50%;
     margin-top: -6px;
 }
 
 input[type="range"]:focus {
-    box-shadow: 0 0 0 0.25rem rgba(110,168,254,0.35) !important;
+    box-shadow: 0 0 0 0.25rem rgba(0,185,107,0.35) !important;
 }
