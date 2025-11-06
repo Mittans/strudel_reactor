@@ -144,6 +144,7 @@ export default function StrudelDemo() {
 
     }, [songData, volume, cpm]); // Runs again when songData or volume updates and the cpm
 
+
     return (
         <div>
             <h2>Strudel Demo</h2>
@@ -192,6 +193,4 @@ export default function StrudelDemo() {
             </main >
         </div >
     );
-
-
 }
