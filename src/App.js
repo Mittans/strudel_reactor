@@ -13,7 +13,7 @@ import BasicControls  from './components/basic_controls';
 import PlayButtons from './components/play_buttons';
 import PreProcTextArea from './components/preproc_textarea';
 import LoadSettingsButtons from './components/load_settings_buttons';
-import { PreProcess } from './utils/PreProcLogic'
+import { PreProcess } from './utils/PreProcLogic';
 
 let globalEditor = null;
 
@@ -25,6 +25,7 @@ export default function StrudelDemo() {
 
     const hasRun = useRef(false);
 
+    // preprocess text on play
     const handlePlay = () => {
         let outputText = PreProcess({ inputText: procText, volume: volume });
         globalEditor.setCode(outputText);
@@ -35,10 +36,13 @@ export default function StrudelDemo() {
         globalEditor.stop()
     }
 
+    // text to process
     const [procText, setProcText] = useState(stranger_tune)
 
+    // volume
     const [volume, setVolume] = useState(1);
 
+    // state for play and stop
     const [state, setState] = useState("stop");
 
     useEffect(() => {
