@@ -1,4 +1,4 @@
-export const stranger_tune = `setcps(140/60/4)
+export const stranger_tune = `setcps(140/60/4 * 1)
 
 samples('github:algorave-dave/samples')
 samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
@@ -40,7 +40,7 @@ note(pick(basslines, bass))
 .room(0.6)
 .lpf(700)
 .room(0.4)
-.postgain(0.5)
+.postgain(0.5 * 1)
 
 
 main_arp: 
@@ -50,18 +50,18 @@ note(pick(<Radio>, "<0 1 2 3>/2"))
 .adsr("0:0:.5:.1")
 .room(0.6)
 .lpenv(3.3)
-.postgain(0.5)
+.postgain(0.5 * 1)
 
 
 drums:
 stack(
   s("sh").struct("[x!3 ~!2 x!10 ~]").bank("OberheimDmx")
-  .postgain(0.5).lpf(7000)
-  .speed(0.8).jux(rev).room(sine.range(0.1,0.4)).gain(0.6),
+  .postgain(0.5 * 1).lpf(7000)
+  .speed(0.8).jux(rev).room(sine.range(0.1,0.4)).gain(0.5),
 
   s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2").bank("OberheimDmx")
    .speed(1.2)
-  .postgain(.25),
+  .postgain(0.5 * 1),
 )
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))

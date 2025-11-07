@@ -1,3 +1,4 @@
+import { IoIosAddCircle } from "react-icons/io";
 
 export function MainSong({ProcAndPlay}) {
     return (

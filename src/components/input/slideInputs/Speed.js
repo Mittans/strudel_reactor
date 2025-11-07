@@ -6,8 +6,8 @@ export function Speed({text, updateEditor}){
 
     /* Function updated the Speed*/
     function updateSpeedInCode(newSpeed, prodvidedText) {
-        // Replace all existing setcps(speed number)
-        const updatedText = prodvidedText.replace( /setcps\([^)]*\)/, `setcps(${newSpeed})`);
+        // Updated the speed.
+        const updatedText = prodvidedText.replace(/setcps\([^)]*\)/, `setcps(140/60/4 * ${newSpeed})`);
         updateEditor(updatedText);
     }
 

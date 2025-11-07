@@ -7,8 +7,10 @@ export function Volume({text, updateEditor}) {
 
     /* Function updated the volume */
     function updateGainInCode(newGain, providedText) {
-      // Replace all existing .gain(number)
-      const updatedText = providedText.replace(/\.postgain\(\s*[\d.]+\s*\)/g, `.postgain(${newGain})`);
+      // Update the volume
+      const updatedText = providedText.replace( 
+        /\.postgain\(\s*0\.5\s*\*\s*[\d.]+\s*\)/g,
+        `.postgain(0.5 * ${newGain})`);
       updateEditor(updatedText);
     }
 
