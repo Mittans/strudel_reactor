@@ -9,7 +9,7 @@ export function Effects({updateEditor, text}){
         if (selectedEffect === "reverse") effectString = ".rev()";
         else if (selectedEffect === "coarse") effectString = `.coarse("<1 4>")`;
         else if (selectedEffect === "pan") effectString = `.pan("<.5 1 .5 0>")`;
-        else if (selectedEffect === "crush") effectString = `.crush("<16 8 7 6 5 4 3 2>")`;
+        else if (selectedEffect === "crush") effectString = `.crush("<16 8 7 6 5 4 3>")`;
 
         // Split text into lines and process
         const lines = text.split("\n").map(line => {

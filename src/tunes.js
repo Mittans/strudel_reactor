@@ -40,7 +40,7 @@ note(pick(basslines, bass))
 .room(0.6)
 .lpf(700)
 .room(0.4)
-.postgain(pick(gain_patterns, pattern))
+.postgain(0.5)
 
 
 main_arp: 
@@ -50,7 +50,7 @@ note(pick(<Radio>, "<0 1 2 3>/2"))
 .adsr("0:0:.5:.1")
 .room(0.6)
 .lpenv(3.3)
-.postgain(pick(gain_patterns, pattern))
+.postgain(0.5)
 
 
 drums:

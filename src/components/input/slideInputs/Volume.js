@@ -2,19 +2,26 @@ import { CiVolumeHigh, CiVolumeMute } from "react-icons/ci";
 import { FaVolumeDown, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
-export function Volume(props) {
+export function Volume({text, updateEditor}) {
     const [volume, setVolumeState] = useState(0.5); 
+
+    /* Function updated the volume */
+    function updateGainInCode(newGain, providedText) {
+      // Replace all existing .gain(number)
+      const updatedText = providedText.replace(/\.postgain\(\s*[\d.]+\s*\)/g, `.postgain(${newGain})`);
+      updateEditor(updatedText);
+    }
 
     const handleVolumeChange = (e) => {
         const newVolume = parseFloat(e.target.value);
         setVolumeState(newVolume);
-        if (props.onVolumeChange) {
-            props.onVolumeChange(newVolume); // updates the gain in the Strudel text
+        if (updateGainInCode) {
+            updateGainInCode(newVolume, text); // updates the gain in the Strudel text
         }
     };
 
     return (
-        <div className="m-3 flex items-center border border-black rounded-lg bg-black p-2">
+        <div className="m-3 flex items-center border border-black rounded-lg bg-zinc-900 p-2">
             <label className="mr-2 font-medium"> 
                 {volume === 0 ? (
                 <FaVolumeMute className="text-xl text-yellow-500" />

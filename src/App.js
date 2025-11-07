@@ -47,38 +47,13 @@ export function ProcessText(match, ...args) {
 }
 
 export default function StrudelDemo() {
-
-  /* Function updated the volume */
-  function updateGainInCode(newGain) {
-  const procText = document.getElementById("proc").value;
-
-  // Replace all existing .gain(number)
-  const updatedText = procText.replace(/\.gain\(\s*[\d.]+\s*\)/g, `.gain(${newGain})`);
-
-  document.getElementById("proc").value = updatedText;
-  globalEditor.setCode(updatedText);
-  setText(updatedText);
-  ProcAndPlay();
-}
-
-  /* Function updated the Speed*/
-  function updateSpeedInCode(newSpeed) {
-  const procText = document.getElementById("proc").value;
-
-  // Replace all existing setcps(speed number)
-  const updatedText = procText.replace( /setcps\([^)]*\)/, `setcps(${newSpeed})`);
-
-  document.getElementById("proc").value = updatedText;
-  globalEditor.setCode(updatedText);
-  setText(updatedText);
-  ProcAndPlay();
-}
-
   function updateEditor(newText) {
     setText(newText);
-    if (globalEditor) globalEditor.setCode(newText);
+ 
+    if (globalEditor) {
+      globalEditor.setCode(newText); 
+    }
   }
-
 
   const hasRun = useRef(false);
   const [isPlay,setIsPlay] = useState(false);
@@ -117,6 +92,7 @@ export default function StrudelDemo() {
             });
           }
           Proc();
+          ProcAndPlay();
       });
 
   const handlePlay = () => {
@@ -155,10 +131,13 @@ export default function StrudelDemo() {
   }
   // Variable to save text.
   const [text, setText] = useState(stranger_tune);
+
+  // Variable to handle the open button.
   const [isOpenSetting,setIsOpenSetting] = useState(false);
   const [isOpenShowTime, setIsOpenShowTime] = useState(false);
   const [isOpenTextToProcess, setIsOpenTextToProcess] = useState(false);
 
+  // Function to open the editor
   const handleOpenShowTime = () => {
     if (isOpenShowTime === false) {
       setIsOpenShowTime(true);
@@ -167,6 +146,7 @@ export default function StrudelDemo() {
     }
   };
 
+  // Function to open the text box to process
   const handleOpenTextToProcess = () => {
     if (isOpenTextToProcess === false) {
       setIsOpenTextToProcess(true);
@@ -186,7 +166,7 @@ export default function StrudelDemo() {
 
   return (
     <div className="min-h-screen bg-yellow-500">
-      <div name="components-bar" className="bg-black p-2 mb-2 flex justify-between">
+      <div name="components-bar" className="bg-zinc-900 p-2 mb-2 flex justify-between">
 
         {/* The title */}
         <div className='flex'>
@@ -220,7 +200,7 @@ export default function StrudelDemo() {
                 isOpenSetting={isOpenSetting}
                 modalOpenControl={modalOpenControl} 
                 />   
-              <SlideInputs onVolumeChange={updateGainInCode} onSpeedChange={updateSpeedInCode} />      
+              <SlideInputs text={text} updateEditor={updateEditor}/>      
             </div>
 
             <div>

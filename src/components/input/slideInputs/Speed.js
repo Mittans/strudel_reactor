@@ -1,20 +1,27 @@
 import { useState } from "react";
 import { IoMdSpeedometer, IoIosSpeedometer } from "react-icons/io";
 
-export function Speed(props){
+export function Speed({text, updateEditor}){
     const [speed, setSpeed] = useState(0.5); 
+
+    /* Function updated the Speed*/
+    function updateSpeedInCode(newSpeed, prodvidedText) {
+        // Replace all existing setcps(speed number)
+        const updatedText = prodvidedText.replace( /setcps\([^)]*\)/, `setcps(${newSpeed})`);
+        updateEditor(updatedText);
+    }
 
     const handleSpeedChange = (e) => {
         const newSpeed = parseFloat(e.target.value);
         setSpeed(newSpeed);
-        if (props.onSpeedChange) {
+        if (updateSpeedInCode) {
             // updates the speed in the text to process.
-            props.onSpeedChange(newSpeed); 
+            updateSpeedInCode(newSpeed, text); 
         }
     };
 
     return (
-        <div className="m-3 flex items-center border border-black rounded-lg bg-black p-2">
+        <div className="m-3 flex items-center border border-black rounded-lg bg-zinc-900 p-2">
             <label className="mr-2 font-medium">
                 {speed < 0.5 ? 
                 (<IoMdSpeedometer className="text-xl text-yellow-500"/>) : 

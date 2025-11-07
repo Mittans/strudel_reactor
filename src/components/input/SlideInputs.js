@@ -1,12 +1,12 @@
 import {Speed} from './slideInputs/Speed';
 import {Volume} from './slideInputs/Volume';
 
-export function SlideInputs(props){
+export function SlideInputs({text, updateEditor}){
 
     return (
         <div className='flex justify-center'>
-            <Speed onSpeedChange={props.onSpeedChange}/>
-            <Volume onVolumeChange={props.onVolumeChange} />
+            <Speed text={text} updateEditor={updateEditor}/>
+            <Volume text={text} updateEditor={updateEditor}/>
         </div>
     );
 }
