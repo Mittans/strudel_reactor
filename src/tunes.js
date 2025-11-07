@@ -1,100 +1,114 @@
-export const stranger_tune = `setcps(140/60/4)
+export const stranger_tune = `setcps(<cpm>/60/4)
+
+all(x => x.postgain(<volume>))
 
 samples('github:algorave-dave/samples')
 samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
 samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')
 
+// --------------------- SIMPLE SWITCHES ---------------------
+const pattern = 1   // 0=verse, 1=groove, 2=busier
+const bass    = 0   // choose a bassline
+
+// --------------------- SHAPE ARRAYS ------------------------
 const gain_patterns = [
-  "2",
-  "{0.75 2.5}*4",
-    "{0.75 2.5!9 0.75 2.5!5 0.75 2.5 0.75 2.5!7 0.75 2.5!3 <2.5 0.75> 2.5}%16",
+  "1",
+  "{0.9 1.2}*4",
+  "{0.85 1.35!7 0.85 1.35!5 <1.1 0.95> 1.35}%16",
 ]
 
 const drum_structure = [
-"~",
-"x*4",
-"{x ~!9 x ~!5 x ~ x ~!7 x ~!3 < ~ x > ~}%16",
+  "bd bd bd_bd",
+  "bd bd bd_bd",
+  "{bd !7 bd ~!3 < bd> ~}%8",
 ]
 
 const basslines = [
-  "[[eb1, eb2]!16 [f2, f1]!16 [g2, g1]!16 [f2, f1]!8 [bb2, bb1]!8]/8",
-  "[[eb1, eb2]!16 [bb2, bb1]!16 [g2, g1]!16 [f2, f1]!4 [bb1, bb2]!4 [eb1, eb2]!4 [f1, f2]!4]/8"
+  "[[c2, c1]!8 [g2, g1]!8 [a2, a1]!8 [f2, f1]!8]/8",
+  "[[c2, c1]!12 [g2, g1]!4 [a2, a1]!8 [f2, f1]!4]/8",
 ]
 
-const arpeggiator1 = [
-"{d4 bb3 eb3 d3 bb2 eb2}%16",
-"{c4 bb3 f3 c3 bb2 f2}%16",
-"{d4 bb3 g3 d3 bb2 g2}%16",
-"{c4 bb3 f3 c3 bb2 f2}%16",
+const hook_arp = [
+  "{e5 g5 a5 g5 e5 d5 c5 g4}%8",
+  "{d5 g5 b5 g5 d5 c5 b4 g4}%8",
+  "{c5 e5 g5 a5 g5 e5 d5 c5}%8",
+  "{a4 c5 e5 g5 e5 d5 c5 a4}%8",
 ]
 
-const arpeggiator2 = [
-"{d4 bb3 eb3 d3 bb2 eb2}%16",
-"{c4 bb3 f3 c3 bb2 f2}%16",
-"{d4 bb3 g3 d3 bb2 g2}%16",
-"{d5 bb4 g4 d4 bb3 g3 d4 bb3 eb3 d3 bb2 eb2}%16",
+const guitar_patterns = [
+  "x ~ x ~ x ~ x ~",
+  "~ x ~ ~ ~ x ~ ~",
+  "x ~ ~ x x ~ ~ x",
 ]
 
+// --------------------- INSTRUMENTS -------------------------
 
-const pattern = 0
-const bass = 0
-
-bassline:
+// BASS
+<bass>bassline:
 note(pick(basslines, bass))
 .sound("supersaw")
-.postgain(2)
-.room(0.6)
-.lpf(700)
-.room(0.4)
+.lpf(750)
+.lpenv(3.0)
+.adsr("0:0:.34:.14")
+.room(0.28)
 .postgain(pick(gain_patterns, pattern))
 
-
-main_arp: 
-note(pick(arpeggiator1, "<0 1 2 3>/2"))
+// HOOK
+<melody>lead_hook:
+note(pick(hook_arp, "<0 1 2 3>/2"))
 .sound("supersaw")
-.lpf(300)
-.adsr("0:0:.5:.1")
-.room(0.6)
-.lpenv(3.3)
-.postgain(pick(gain_patterns, pattern))
+.lpf(3000)
+.lpenv(2.0)
+.adsr("0:0:.3:.18")
+.room(0.45)
+.postgain(0.9)
+.rarely(jux(rev))
 
-
-drums:
+// GUITAR
+<guitar>guitar_strums:
 stack(
-  s("tech:5")
-  .postgain(6)
-  .pcurve(2)
-  .pdec(1)
-  .struct(pick(drum_structure, pattern)),
+   s("acg:0").struct(pick(guitar_patterns, 0))
+  .gain(0.4)
+  .room(0.25)
+  .speed(1.02),
 
-  s("sh").struct("[x!3 ~!2 x!10 ~]")
-  .postgain(0.5).lpf(7000)
-  .bank("RolandTR808")
-  .speed(0.8).jux(rev).room(sine.range(0.1,0.4)).gain(0.6),
-
-  s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2")
-  .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
-  .postgain(.25),
+  s("acg:2")
+  .struct(pick(guitar_patterns, 1))
+  .gain(0.33)
+  .room(0.22)
+  .speed(0.98)
 )
 
-drums2: 
+// ------------------------- DRUMS -------------------------
+<drums1>drums:
 stack(
-  s("[~ hh]*4").bank("RolandTR808").room(0.3).speed(0.75).gain(1.2),
-  s("hh").struct("x*16").bank("RolandTR808")
+   s(pick(drum_structure, pattern)).bank("RolandTR808")
+  .postgain(2.0),
+
+  s("~ cp ~ cp").bank("RolandTR808")
+  .postgain(1.0),
+
+  s("hh*8").bank("RolandTR808")
   .gain(0.6)
-  .jux(rev)
-  .room(sine.range(0.1,0.4))
-  .postgain(0.5),
-  
-  s("[psr:[2|5|6|7|8|9|12|24|25]*16]?0.1")
-  .gain(0.1)
-  .postgain(pick(gain_patterns, pattern))
-  .hpf(1000)
-  .speed(0.5)
-  .rarely(jux(rev)),
-)
-//Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
-// all(x => x.gain(mouseX.range(0,1)))
-// all(x => x.log())
+  .room(sine.range(0.1,0.3))
+  .postgain(0.8),
 
-// @version 1.2`;
+  s("~ sh ~ ~").bank("RolandTR808")
+  .postgain(0.4)
+  .lpf(7000)
+  .speed(0.95),
+
+  s("lt ~ lt ~").bank("RolandTR808")
+  .postgain(0.55)
+)
+
+<drums2>drums2:
+ s("tech:5")
+.struct("~ ~ ~ ~ x ~ ~ ~")
+.postgain(2)
+.pcurve(2)
+.pdec(1)
+
+all(x => x.log())
+// @version 1.0 — “MySong”
+`;

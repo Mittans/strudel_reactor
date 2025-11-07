@@ -1,38 +1,334 @@
-.App {
-  text-align: center;
+﻿@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Baloo+2:wght@600&family=Poppins:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shojumaru&display=swap');
+
+
+body {
+    background: url('https://i.pinimg.com/originals/f7/5a/ac/f75aacc562988cdbd0e6c73633696469.gif') no-repeat center center fixed;
+    background-size: cover;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+html, body {
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#roll {
+    display: block;
+    margin: 0 auto -3rem auto !important; 
+    max-height: 100px;
+    width: 85%;
+    overflow: hidden;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+main, label, span, p, input, .volume-container, .col-md-4, .col-md-6, nav, .row {
+    color: white;
 }
 
-.App-link {
-  color: #61dafb;
+body::before {
+    position: fixed;
+    backdrop-filter: blur(1px);
+    z-index: -1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#h2 {
+    font-family: 'Shojumaru', cursive;
+    text-transform: uppercase;
+    color: springgreen;
+    font-size: 3rem;
+    text-align: center;
+    letter-spacing: 4px;
+    text-shadow: 0 0 8px #00ffff, 0 0 18px rgba(255,255,255,0.3);
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 2rem;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    margin-left: -15%;
+    align-items: center;
+}
+
+#play, #stop, #process, #process_play {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: dashed;
+    background: #0e0e0e;
+    color: #00ffcc;
+    font-size: 26px;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
+    margin: 8px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#play:hover, #stop:hover, #process:hover, #process_play:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+}
+
+#play:active, #stop:active, #process:active, #process_play:active {
+    transform: scale(0.95);
+}
+
+#play::before {
+    content: "▶️";
+}
+
+#stop::before {
+    content: "⏹️";
+}
+
+#process::before {
+    content: "🔄";
+}
+
+#process_play::before {
+    content: "🔁";
+}
+
+#play, #stop, #process, #process_play {
+    font-size: 0;
+}
+
+#play::before, #stop::before, #process::before, #process_play::before {
+    font-size: 28px;
+    display: inline-block;
+    line-height: 50px;
+}
+
+.volume-container {
+    position: relative !important;
+    font-family: 'Orbitron', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    top: -20rem !important;
+    margin-bottom: 1rem !important;
+    margin-left: -2.5rem;
+    z-index: 10 !important;
+}
+
+#volume_range {
+    appearance: none;
+    width: 90%;
+    margin-left: 12%;
+    height: 12px;
+    background: linear-gradient(90deg, #00e676 var(--fill, 100%), #e0e0e0 0%);
+    background: #00e676;
+    border-radius: 20%;
+    cursor: pointer;
+    box-shadow: 0 0 20px #00e676;
+    transition: all 0.25s ease;
+}
+
+/* Title Glow Animation */
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 0 0 10px #00ffff, 0 0 40px #ff00ff;
+    }
+
+    50% {
+        text-shadow: 0 0 20px #ff8b00, 0 0 100px #00ffff;
+    }
+}
+
+h2 {
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+#proc, textarea.form-control {
+    height: 40vh;
+    width: 70%;
+    overflow-y: auto;
+}
+
+#editor {
+    max-height: 40vh;
+    width: 70%;
+    overflow-y: auto;
+}
+
+.dj-toggles {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+    gap: 20px;
+    flex-wrap: nowrap;
+    margin-top: 80px;
+}
+
+.dj-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 10px 15px;
+    width: 110px;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+    backdrop-filter: blur(6px);
+    transition: all 0.3s ease;
+}
+
+.dj-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+}
+
+#drums1, #drums2, #bass, #melody, #guitar {
+    appearance: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    border: 2px solid #ff3b3b;
+    background: rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.25s ease-in-out;
+    margin-bottom: 8px;
+}
+
+#drums1:checked {
+    background: radial-gradient(circle, #ff3030, #ff8080);
+    box-shadow: 0 0 12px #ff0000;
+}
+
+#drums2:checked {
+    background: radial-gradient(circle, #ff3030, #ff8080);
+    box-shadow: 0 0 12px #ff0000;
+}
+
+#bass:checked {
+    background: radial-gradient(circle, #00bfff, #66e0ff);
+    box-shadow: 0 0 12px #00ffff;
+}
+
+#melody:checked {
+    background: radial-gradient(circle, #ff69b4, #ffb6c1);
+    box-shadow: 0 0 12px #ff69b4;
+}
+
+#guitar:checked {
+    background: radial-gradient(circle, #ffaa00, #ffdd55);
+    box-shadow: 0 0 12px #ffcc00;
+}
+
+label[for="drums1"],
+label[for="drums2"],
+label[for="bass"],
+label[for="melody"],
+label[for="guitar"] {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1rem;
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-left: 1.5rem;
+    text-shadow: 0 0 10px #ff3b3b;
+}
+
+label[for="drums1"]::after {
+    content: "🥁";
+    font-size: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+label[for="drums2"]::after {
+    content: "🎧";
+    font-size: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+label[for="bass"]::after {
+    content: "🎸";
+    font-size: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+label[for="melody"]::after {
+    content: "🎵";
+    font-size: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+label[for="guitar"]::after {
+    content: "🎶";
+    font-size: 50px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 5px;
+}
+
+#drums1:checked ~ label[for="drums1"]::after,
+#drums2:checked ~ label[for="drums2"]::after {
+    box-shadow: 0 0 15px #ff0000;
+}
+
+#bass:checked ~ label[for="bass"]::after {
+    box-shadow: 0 0 15px #00ffff;
+}
+
+#melody:checked ~ label[for="melody"]::after {
+    box-shadow: 0 0 15px #ff69b4;
+}
+
+#guitar:checked ~ label[for="guitar"]::after {
+    box-shadow: 0 0 15px #ffcc00;
+}
+
+nav {
+    margin-bottom: 1rem !important;
+    padding-bottom: 0 !important;
+}
+
+.graph-wrapper {
+    margin-top: -10rem;
+    transform: translateX(36px);
+    display: flex;
+    justify-content: center;
+    font-family: 'Orbitron', sans-serif;
+}
+
+.graph-wrapper svg path {
+    stroke-width: 3.5px !important; 
+    stroke-linecap: round !important;
+    filter: drop-shadow(0 0 6px #00ffcc); 
+}
+
+.input-group {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0.5rem !important;
+    transform: translateX(36px);
+    padding: 2px !important;
+}
+
+.dj-toggles {
+    margin-top: 0.5rem !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    justify-content: space-evenly;
 }

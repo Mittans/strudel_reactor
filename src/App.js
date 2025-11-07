@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState} from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -9,69 +9,98 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import DJControls from './components/DJControls';
+import Buttons from './components/Buttons';
+import ProcButtons from './components/ProcButtons';
+import PreprocessEditor from './components/PreprocessEditor';
+import Graph from './components/Graph';
 
 let globalEditor = null;
 
+// Handles custom event for visual data (used by D3 graph)
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-export function SetupButtons() {
-
-    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-    document.getElementById('process').addEventListener('click', () => {
-        Proc()
-    }
-    )
-    document.getElementById('process_play').addEventListener('click', () => {
-        if (globalEditor != null) {
-            Proc()
-            globalEditor.evaluate()
-        }
-    }
-    )
-}
-
-
-
-export function ProcAndPlay() {
-    if (globalEditor != null && globalEditor.repl.state.started == true) {
-        console.log(globalEditor)
-        Proc()
-        globalEditor.evaluate();
-    }
-}
-
-export function Proc() {
-
-    let proc_text = document.getElementById('proc').value
-    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-    ProcessText(proc_text);
-    globalEditor.setCode(proc_text_replaced)
-}
-
-export function ProcessText(match, ...args) {
-
-    let replace = ""
-    if (document.getElementById('flexRadioDefault2').checked) {
-        replace = "_"
-    }
-
-    return replace
-}
-
 export default function StrudelDemo() {
 
-const hasRun = useRef(false);
+    // ensures init only happens once
+    const hasRun = useRef(false);
 
-useEffect(() => {
+    // Handling Play and Stop buttons
+    const handlePlay = () => {
+        globalEditor.evaluate()
+        setIsPlaying(true);
+    }
 
-    if (!hasRun.current) {
-        document.addEventListener("d3Data", handleD3Data);
-        console_monkey_patch();
-        hasRun.current = true;
-        //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
+    const handleStop = () => {
+        globalEditor.stop()
+        setIsPlaying(false);
+    }
+
+    // State variables for all controls
+    const [songText, setSongText] = useState(stranger_tune)
+
+    const [volume, setVolume] = useState(0.8)
+
+    const [cpm, setCpm] = useState(120);
+
+    const [bass, setBass] = useState(true);
+
+    const [melody, setMelody] = useState(true);
+
+    const [guitar, setGuitar] = useState(true);
+
+    const [drums1, setDrums1] = useState(true);
+
+    const [drums2, setDrums2] = useState(true);
+
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    // Updates the Strudel code whenever any value or toggle changes
+    const updateStrudelCode = (text) => {
+        const processedText = text
+            .replaceAll("<volume>", volume)
+            .replaceAll("<cpm>", cpm)
+            .replaceAll("<bass>", bass ? "" : "_")
+            .replaceAll("<melody>", melody ? "" : "_")
+            .replaceAll("<guitar>", guitar ? "" : "_")
+            .replaceAll("<drums1>", drums1 ? "" : "_")
+            .replaceAll("<drums2>", drums2 ? "" : "_");
+
+        globalEditor.setCode(processedText);
+
+        // replays updated tune
+        globalEditor.evaluate();
+        
+    };
+
+    // Preprocess button resets text
+    const handlePreprocess = () => {
+        globalEditor.setCode(songText);
+    };
+
+    // Preprocess + Play button
+    const handleProcPlay = () => {
+        updateStrudelCode(songText);
+        globalEditor.evaluate();
+    };
+
+    // Volume slider control
+    const handleVolumeChange = (e) => {
+        const newVolume = e.target.value;
+        setVolume(newVolume);
+        updateStrudelCode(songText);
+        globalEditor.evaluate();
+    };
+
+    useEffect(() => {
+
+        if (!hasRun.current) {
+            document.addEventListener("d3Data", handleD3Data);
+            console_monkey_patch();
+            hasRun.current = true;
+            //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
             //init canvas
             const canvas = document.getElementById('roll');
             canvas.width = canvas.width * 2;
@@ -94,65 +123,91 @@ useEffect(() => {
                         import('@strudel/tonal'),
                         import('@strudel/webaudio'),
                     );
+
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+
                 },
             });
-            
-        document.getElementById('proc').value = stranger_tune
-        SetupButtons()
-        Proc()
-    }
 
-}, []);
+            document.getElementById('proc').value = stranger_tune;
+            //updateStrudelCode(stranger_tune);
+            globalEditor.setCode(stranger_tune);
+        }  
 
+        else {
+            updateStrudelCode(songText);
+        }
+        
+    }, [bass, melody, guitar, drums1, drums2, volume, cpm]);
 
-return (
-    <div>
-        <h2>Strudel Demo</h2>
-        <main>
-
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
-                        <textarea className="form-control" rows="15" id="proc" ></textarea>
-                    </div>
-                    <div className="col-md-4">
-
-                        <nav>
-                            <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                            <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
-                            <br />
-                            <button id="play" className="btn btn-outline-primary">Play</button>
-                            <button id="stop" className="btn btn-outline-primary">Stop</button>
-                        </nav>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                            <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                p1: ON
-                            </label>
+    return (
+        <div>
+            <h2 id="h2">Strudel Demo</h2>
+            <main>
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <PreprocessEditor defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
                         </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                            <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                p1: HUSH
-                            </label>
+                        <div className="col-md-6">
+                            <nav>
+
+                                <ProcButtons onPreprocess={handlePreprocess} onProcPlay={handleProcPlay} />
+
+                                <br />
+
+                                <Buttons onPlay={handlePlay} onStop={handleStop} />
+                                <br/>
+
+                            </nav>
                         </div>
                     </div>
-                </div>
-            </div>
-            <canvas id="roll"></canvas>
-        </main >
-    </div >
-);
 
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div id="editor" />
+                            <div id="output" />
+                        </div>
+
+                        <div className="col-md-5">
+                            <div className="graph-wrapper">
+                                <Graph isPlaying={isPlaying} />
+                            </div>
+                            <DJControls
+                                volume={volume}
+                                onChange={handleVolumeChange}
+                                cpm={cpm}
+                                onCpmChange={(e) => setCpm(e.target.value)}
+                                bass={bass}
+                                onBassChange={() => {
+                                    setBass(!bass);                               
+                                }}
+                                melody={melody}
+                                onMelodyChange={() => {
+                                    setMelody(!melody);
+                                }}
+                                guitar={guitar}
+                                onGuitarChange={() => {
+                                    setGuitar(!guitar);
+                                }}
+                                drums1={drums1}
+                                onDrums1Change={() => {
+                                    setDrums1(!drums1);
+                                }}
+                                drums2={drums2}
+                                onDrums2Change={() => {
+                                    setDrums2(!drums2);
+                                }}
+                            /> 
+                            
+                        </div>
+                        
+
+                    </div>      
+                </div>
+                <canvas id="roll"></canvas>
+            </main >
+        </div >
+    );
 
 }
