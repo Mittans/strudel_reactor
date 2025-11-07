@@ -75,10 +75,12 @@ export default function StrudelDemo() {
     const [keyShift, setKeyShift] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [masterVolume, setMasterVolume] = useState(1);
-    const [muteBass, setMuteBass] = useState(false);
-    const [muteArp, setMuteArp] = useState(false);
-    const [muteDrums, setMuteDrums] = useState(false);
-    const [muteDrums2, setMuteDrums2] = useState(false);
+    const [tracksEnabled, setTracksEnabled] = useState({
+        bass: true,
+        arp: true,
+        drums: true,
+        drums2: true,
+    });
     const handlePlay = () => {
         globalEditor.evaluate()
         setIsPlaying(true);
@@ -89,6 +91,9 @@ export default function StrudelDemo() {
         setIsPlaying(false);
     }
 
+    const handleToggleTrack = (name, enabled) => {
+        setTracksEnabled((prev) => ({ ...prev, [name]: enabled }));
+    };
 useEffect(() => {
 
     if (!hasRun.current) {
@@ -131,10 +136,10 @@ useEffect(() => {
         .replaceAll("<cpm>", cpm.toString())
         .replaceAll("<keyshift>", keyShift.toString())
         .replaceAll("<volume>", masterVolume.toString())
-        .replaceAll("<muteBass>", muteBass ? "true" : "false")
-        .replaceAll("<muteArp>", muteArp ? "true" : "false")
-        .replaceAll("<muteDrums>", muteDrums ? "true" : "false")
-        .replaceAll("<muteDrums2>", muteDrums2 ? "true" : "false");
+        .replaceAll("<gain_bass>", tracksEnabled.bass ? "1" : "0")
+        .replaceAll("<gain_arp>", tracksEnabled.arp ? "1" : "0")
+        .replaceAll("<gain_drums>", tracksEnabled.drums ? "1" : "0")
+        .replaceAll("<gain_drums2>", tracksEnabled.drums2 ? "1" : "0");
 
     //globalEditor.setCode(songText);
     globalEditor?.setCode(processed);
@@ -143,7 +148,7 @@ useEffect(() => {
         globalEditor.evaluate();
     }
 
-}, [songText, cpm, keyShift, masterVolume, muteBass, muteArp, muteDrums, muteDrums2, isPlaying]);
+}, [songText, cpm, keyShift, masterVolume, tracksEnabled]);
 
 
 return (
@@ -173,14 +178,8 @@ return (
                     <div className="col-md-4">
                         <DJControls cpm={cpm} onCpmChange={(val) => setCpm(val)} keyShift={keyShift} onKeyShiftChange={(val) => setKeyShift(val)}
                             volume={masterVolume} onVolumeChange={(val) => setMasterVolume(val)}
-                            muteBass={muteBass}
-                            setMuteBass={setMuteBass}
-                            muteArp={muteArp}
-                            setMuteArp={setMuteArp}
-                            muteDrums={muteDrums}
-                            setMuteDrums={setMuteDrums}
-                            muteDrums2={muteDrums2}
-                            setMuteDrums2={setMuteDrums2}/>
+                            tracksEnabled={tracksEnabled}
+                            onToggleTrack={handleToggleTrack}                        />
                     </div>
                 </div>
             </div>

@@ -1,10 +1,6 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 import { Dropdown } from 'bootstrap';
-function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVolumeChange,
-    muteBass, setMuteBass,
-    muteArp, setMuteArp,
-    muteDrums, setMuteDrums,
-    muteDrums2, setMuteDrums2 }) {
+function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVolumeChange, onToggleTrack, tracksEnabled }) {
     // State variable to store the current CPM value
     const [localCpm, setLocalCpm] = useState(cpm ?? 140);
     // State variable to store the current Key shitf value
@@ -24,6 +20,11 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
             setLocalShift(keyShift);
         }
     }, [keyShift]);
+
+    useEffect(() => {
+        const dropdowns = document.querySelectorAll('[data-bs-toggle="dropdown"]');
+        dropdowns.forEach((el) => new Dropdown(el));
+    }, []);
 
     const handleCpmChange = (e) => {
         let value = e.target.valueAsNumber;
@@ -50,24 +51,8 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         onVolumeChange?.(value);
     };
 
-    const handleBassToggle = (e) => {
-        const enabled = e.target.checked; 
-        setMuteBass(!enabled);          
-    };
-
-    const handleArpToggle = (e) => {
-        const enabled = e.target.checked;
-        setMuteArp(!enabled);
-    };
-
-    const handleDrumsToggle = (e) => {
-        const enabled = e.target.checked;
-        setMuteDrums(!enabled);
-    };
-
-    const handleDrums2Toggle = (e) => {
-        const enabled = e.target.checked;
-        setMuteDrums2(!enabled);
+    const handleToggle = (trackName, checked) => {
+        onToggleTrack?.(trackName, checked);
     };
 
     const quickCpms = [30, 60, 90, 120, 140];
@@ -99,6 +84,10 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         setLocalShift(value);
         if (typeof onKeyShiftChange === "function") onKeyShiftChange(value);
     };
+    const muteBass = !tracksEnabled?.bass;
+    const muteArp = !tracksEnabled?.arp;
+    const muteDrums = !tracksEnabled?.drums;
+    const muteDrums2 = !tracksEnabled?.drums2;
 
     return (
         <>
@@ -131,25 +120,29 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
             <h6>Instrument Tracks</h6>
             <div className="mb-3">
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="s1" checked={!muteBass} onChange={handleBassToggle} />
+                    <input className="form-check-input" type="checkbox" id="s1" checked={!muteBass}
+                        onChange={(e) => handleToggle("bass", e.target.checked)} />
                     <label className="form-check-label" htmlFor="s1">
                         Bassline
                         </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="a1" checked={!muteArp} onChange={handleArpToggle}/>
+                    <input className="form-check-input" type="checkbox" id="a1" checked={!muteArp}
+                        onChange={(e) => handleToggle("arp", e.target.checked)} />
                     <label className="form-check-label" htmlFor="a1">
                         Main Arp
                     </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="d1" checked={!muteDrums} onChange={handleDrumsToggle} />
+                    <input className="form-check-input" type="checkbox" id="d1" checked={!muteDrums}
+                        onChange={(e) => handleToggle("drums", e.target.checked)} />
                     <label className="form-check-label" htmlFor="d1">
                         Drums
                         </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="d1" checked={!muteDrums2} onChange={handleDrums2Toggle} />
+                    <input className="form-check-input" type="checkbox" id="d1" checked={!muteDrums2}
+                        onChange={(e) => handleToggle("drums2", e.target.checked)} />
                     <label className="form-check-label" htmlFor="d2">
                         Drums 2
                         </label>
