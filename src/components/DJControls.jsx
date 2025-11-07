@@ -1,4 +1,4 @@
-function DJControls({ volume, onVolumeChange, bpm, onBpmChange }) {
+function DJControls({ volume, onVolumeChange, bpm, onBpmChange, reverbOn, delayOn, underwaterOn, onToggleReverb, onToggleDelay, onToggleUnderwater }) {
     return (
         <>
             <div className="card p-3 shadow-sm">
@@ -30,6 +30,34 @@ function DJControls({ volume, onVolumeChange, bpm, onBpmChange }) {
                         <label className="form-check-label" htmlFor="d2">
                             d2
                         </label>
+                    </div>
+                    
+                </div>
+                <br />
+
+                <div className="mb-3">
+                    <div className="btn-group" role="group" aria-label="Effects">
+                        <button
+                            type="button"
+                            className={`btn btn-outline-danger ${reverbOn ? 'active' : ''}`}
+                            onClick={onToggleReverb}
+                        >
+                            Reverb
+                        </button>
+                        <button
+                            type="button"
+                            className={`btn btn-outline-warning ${delayOn ? 'active' : ''}`}
+                            onClick={onToggleDelay}
+                        >
+                            Delay
+                        </button>
+                        <button
+                            type="button"
+                            className={`btn btn-outline-success ${underwaterOn ? 'active' : ''}`}
+                            onClick={onToggleUnderwater}
+                        >
+                            Underwater
+                        </button>
                     </div>
                 </div>
             </div>

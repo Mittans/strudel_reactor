@@ -27,7 +27,12 @@ export default function StrudelDemo() {
     const hasRun = useRef(false);
 
     const handlePlay = () => {
-        let outputText = Preprocess({ inputText: procText, volume: volume, bpm });
+        let outputText = Preprocess({
+            inputText: procText,
+            volume: volume,
+            bpm,
+            effects: { reverbOn, delayOn, underwaterOn }
+        });
         globalEditor.setCode(outputText);
         globalEditor.evaluate();
     };
@@ -40,12 +45,15 @@ export default function StrudelDemo() {
     const [volume, setVolume] = useState(1);
     const [state, setState] = useState("stop");
     const [bpm, setBpm] = useState(120);
+    const [reverbOn, setReverbOn] = useState(false);
+    const [delayOn, setDelayOn] = useState(false);
+    const [underwaterOn, setUnderwaterOn] = useState(false);
 
     useEffect(() => {
         if (state === "play") {
             handlePlay();
         }
-    }, [volume, bpm]);
+    }, [volume, bpm, reverbOn, delayOn, underwaterOn]);
 
 useEffect(() => {
 
@@ -107,8 +115,17 @@ return (
 
                                     </div>
 
-                                    <DJControls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)}
-                                        bpm={bpm} onBpmChange={(e) => setBpm(Number(e.target.value || 0))}
+                                    <DJControls
+                                        volume={volume}
+                                        onVolumeChange={(e) => setVolume(e.target.value)}
+                                        bpm={bpm}
+                                        onBpmChange={(e) => setBpm(Number(e.target.value || 0))}
+                                        reverbOn={reverbOn}
+                                        delayOn={delayOn}
+                                        underwaterOn={underwaterOn}
+                                        onToggleReverb={() => setReverbOn(prev => !prev)}
+                                        onToggleDelay={() => setDelayOn(prev => !prev)}
+                                        onToggleUnderwater={() => setUnderwaterOn(prev => !prev)}
                                     />
                                 </div>
                             </div>

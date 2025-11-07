@@ -1,4 +1,4 @@
-export function Preprocess({ inputText, volume, bpm }) {
+export function Preprocess({ inputText, volume, bpm, effects = {}}) {
     let outputText = inputText;
 
     outputText += `\n// all(x => x.gain(${volume}))`;
@@ -7,6 +7,15 @@ export function Preprocess({ inputText, volume, bpm }) {
     if (Number.isFinite(Number(bpm))) {
         //In Strudel, the last tempo setting takes effect, so this overrides the earlier setcps
         outputText += `\nsetcps(${Number(bpm)}/60/4)`;
+    }
+    if (effects.reverbOn) {
+        outputText += `\nall(x => x.room(0.8))`;
+    }
+    if (effects.delayOn) {
+        outputText += `\nall(x => x.delay(1))`;
+    }
+    if (effects.underwaterOn) {
+        outputText += `\nall(x => x.lpf(1000))`;
     }
 
     let regex = /[a-zA-Z0-9_]+:\s*\n[\s\S]+?\r?\n(?=[a-zA-Z0-9_]*[:\/])/gm;
