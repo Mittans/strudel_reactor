@@ -17,14 +17,17 @@ import Graph from './components/Graph';
 
 let globalEditor = null;
 
+// Handles custom event for visual data (used by D3 graph)
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
 export default function StrudelDemo() {
 
+    // ensures init only happens once
     const hasRun = useRef(false);
 
+    // Handling Play and Stop buttons
     const handlePlay = () => {
         globalEditor.evaluate()
         setIsPlaying(true);
@@ -35,6 +38,7 @@ export default function StrudelDemo() {
         setIsPlaying(false);
     }
 
+    // State variables for all controls
     const [songText, setSongText] = useState(stranger_tune)
 
     const [volume, setVolume] = useState(0.8)
@@ -53,6 +57,7 @@ export default function StrudelDemo() {
 
     const [isPlaying, setIsPlaying] = useState(false);
 
+    // Updates the Strudel code whenever any value or toggle changes
     const updateStrudelCode = (text) => {
         const processedText = text
             .replaceAll("<volume>", volume)
@@ -64,19 +69,24 @@ export default function StrudelDemo() {
             .replaceAll("<drums2>", drums2 ? "" : "_");
 
         globalEditor.setCode(processedText);
+
+        // replays updated tune
         globalEditor.evaluate();
         
     };
 
+    // Preprocess button resets text
     const handlePreprocess = () => {
         globalEditor.setCode(songText);
     };
 
+    // Preprocess + Play button
     const handleProcPlay = () => {
         updateStrudelCode(songText);
         globalEditor.evaluate();
     };
 
+    // Volume slider control
     const handleVolumeChange = (e) => {
         const newVolume = e.target.value;
         setVolume(newVolume);
@@ -84,9 +94,6 @@ export default function StrudelDemo() {
         globalEditor.evaluate();
     };
 
-    
-
-   
     useEffect(() => {
 
         if (!hasRun.current) {
@@ -123,8 +130,8 @@ export default function StrudelDemo() {
             });
 
             document.getElementById('proc').value = stranger_tune;
-            updateStrudelCode(stranger_tune);
-            globalEditor.setCode(songText);
+            //updateStrudelCode(stranger_tune);
+            globalEditor.setCode(stranger_tune);
         }  
 
         else {

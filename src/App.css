@@ -7,6 +7,22 @@ body {
     background-size: cover;
 }
 
+html, body {
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#roll {
+    display: block;
+    margin: 0 auto -3rem auto !important; 
+    max-height: 100px;
+    width: 85%;
+    overflow: hidden;
+}
+
 main, label, span, p, input, .volume-container, .col-md-4, .col-md-6, nav, .row {
     color: white;
 }
@@ -223,6 +239,7 @@ label[for="guitar"] {
     flex-direction: column;
     align-items: center;
     gap: 10px;
+    margin-left: 1.5rem;
     text-shadow: 0 0 10px #ff3b3b;
 }
 

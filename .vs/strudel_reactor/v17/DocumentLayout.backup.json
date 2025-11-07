@@ -3,28 +3,36 @@
   "WorkspaceRootPath": "C:\\Users\\drall\\strudel_reactor\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\App.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\components\\Graph.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Graph.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\components\\DJControls.jsx||{8B382828-6202-11D1-8870-0000F87579D2}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\DJControls.jsx||{8B382828-6202-11D1-8870-0000F87579D2}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\components\\Buttons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Buttons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\console-monkey-patch.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\console-monkey-patch.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\components\\ProcButtons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\ProcButtons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\components\\Buttons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Buttons.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\components\\PreprocessEditor.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -55,12 +63,37 @@
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "App.css",
+              "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\App.css",
+              "RelativeDocumentMoniker": "src\\App.css",
+              "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\App.css",
+              "RelativeToolTip": "src\\App.css",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-10-31T09:40:04.73Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "console-monkey-patch.js",
+              "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\console-monkey-patch.js",
+              "RelativeDocumentMoniker": "src\\console-monkey-patch.js",
+              "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\console-monkey-patch.js",
+              "RelativeToolTip": "src\\console-monkey-patch.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-06T19:24:35.808Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "App.js",
               "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\App.js",
               "RelativeDocumentMoniker": "src\\App.js",
               "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\App.js",
               "RelativeToolTip": "src\\App.js",
-              "ViewState": "AgIAALMAAAAAAAAAAAAAAMgAAAAwAAAAAAAAAA==",
+              "ViewState": "AgIAAGoAAAAAAAAAAAAowIAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-10-31T04:06:13.619Z",
               "EditorCaption": ""
@@ -73,66 +106,37 @@
               "RelativeDocumentMoniker": "src\\components\\DJControls.jsx",
               "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\components\\DJControls.jsx",
               "RelativeToolTip": "src\\components\\DJControls.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAKAAAAAAAAAA==",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAcwDMAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-10-31T08:58:27.52Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "App.css",
-              "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\App.css",
-              "RelativeDocumentMoniker": "src\\App.css",
-              "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\App.css",
-              "RelativeToolTip": "src\\App.css",
-              "ViewState": "AgIAAEwAAAAAAAAAAAAmwGwAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-10-31T09:40:04.73Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T08:58:27.52Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
+              "Title": "Graph.js",
+              "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\components\\Graph.js",
+              "RelativeDocumentMoniker": "src\\components\\Graph.js",
+              "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\components\\Graph.js",
+              "RelativeToolTip": "src\\components\\Graph.js",
+              "ViewState": "AgIAACgAAAAAAAAAAAAQwCgAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-06T14:11:08.708Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
               "Title": "tunes.js",
               "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\tunes.js",
               "RelativeDocumentMoniker": "src\\tunes.js",
               "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\tunes.js",
               "RelativeToolTip": "src\\tunes.js",
-              "ViewState": "AgIAAJ8AAAAAAAAAAAAAANgAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAAG8AAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-04T17:55:40.919Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-04T17:55:40.919Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ProcButtons.jsx",
-              "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\components\\ProcButtons.jsx",
-              "RelativeDocumentMoniker": "src\\components\\ProcButtons.jsx",
-              "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\components\\ProcButtons.jsx",
-              "RelativeToolTip": "src\\components\\ProcButtons.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAALAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-11-04T14:34:26.546Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "PreprocessEditor.jsx",
-              "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\components\\PreprocessEditor.jsx",
-              "RelativeDocumentMoniker": "src\\components\\PreprocessEditor.jsx",
-              "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\components\\PreprocessEditor.jsx",
-              "RelativeToolTip": "src\\components\\PreprocessEditor.jsx",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-11-04T11:12:33.573Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "Buttons.jsx",
               "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\components\\Buttons.jsx",
               "RelativeDocumentMoniker": "src\\components\\Buttons.jsx",
@@ -140,8 +144,31 @@
               "RelativeToolTip": "src\\components\\Buttons.jsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-11-04T10:48:59.538Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-04T10:48:59.538Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "ProcButtons.jsx",
+              "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\components\\ProcButtons.jsx",
+              "RelativeDocumentMoniker": "src\\components\\ProcButtons.jsx",
+              "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\components\\ProcButtons.jsx",
+              "RelativeToolTip": "src\\components\\ProcButtons.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-11-04T14:34:26.546Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "PreprocessEditor.jsx",
+              "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\components\\PreprocessEditor.jsx",
+              "RelativeDocumentMoniker": "src\\components\\PreprocessEditor.jsx",
+              "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\components\\PreprocessEditor.jsx",
+              "RelativeToolTip": "src\\components\\PreprocessEditor.jsx",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
+              "WhenOpened": "2025-11-04T11:12:33.573Z"
             }
           ]
         }

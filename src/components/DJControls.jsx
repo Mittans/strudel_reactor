@@ -13,11 +13,14 @@ function DJControls({ volume, cpm, onCpmChange,
                     type="text"
                     className="form-control"
                     id="cpm_text_input"
-                    placeholder="120"
+                    placeholder="Enter CPM (60 to 200)"
                     aria-label="cpm"
                     aria-describedby="cpm_label"
                     value={cpm}
                     onChange={onCpmChange}
+                    min="60"
+                    max="200"
+                    step="1"
                 />
             </div>
 
