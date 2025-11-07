@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Dropdown } from 'bootstrap';
-function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
+function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVolumeChange }) {
     // State variable to store the current CPM value
     const [localCpm, setLocalCpm] = useState(cpm ?? 140);
     // State variable to store the current Key shitf value
     const [localShift, setLocalShift] = useState(keyShift ?? 0);
+    // State variable to store the current master volume
+    const [localVolume, setLocalVolume] = useState(volume ?? 1);
 
     //  Sync the local CPM value
     useEffect(() => {
@@ -36,6 +38,12 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
         setLocalShift(value);
         onKeyShiftChange?.(value);
 
+    };
+
+    const handleVolumeChange = (e) => {
+        const value = parseFloat(e.target.value);
+        setLocalVolume(value);
+        onVolumeChange?.(value);
     };
 
     const quickCpms = [30, 60, 90, 120, 140];
@@ -90,7 +98,8 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift }) {
             <hr className="my-3" />
             <div className="input-group mb-3">
                 <label htmlFor="volume_range" className="form-label">Volume</label>
-                <input type="range" className="form-range" min="0" max="1" step="0.01" id="volume_range" />
+                <input type="range" className="form-range" min="0" max="2" step="0.01" value={localVolume}
+                    onChange={handleVolumeChange} id="volume_range" />
             </div>
 
             {/* CheckBox for select instruments */}

@@ -74,6 +74,7 @@ export default function StrudelDemo() {
     const [cpm, setCpm] = useState(140);
     const [keyShift, setKeyShift] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [masterVolume, setMasterVolume] = useState(1);
 
     const handlePlay = () => {
         globalEditor.evaluate()
@@ -125,7 +126,8 @@ useEffect(() => {
 
     const processed = songText
         .replaceAll("<cpm>", cpm.toString())
-        .replaceAll("<keyshift>", keyShift.toString());
+        .replaceAll("<keyshift>", keyShift.toString())
+        .replaceAll("<volume>", masterVolume.toString());
 
     //globalEditor.setCode(songText);
     globalEditor?.setCode(processed);
@@ -134,7 +136,7 @@ useEffect(() => {
         globalEditor.evaluate();
     }
 
-}, [songText, cpm, keyShift]);
+}, [songText, cpm, keyShift, masterVolume]);
 
 
 return (
@@ -162,7 +164,8 @@ return (
                         <div id="output" />
                     </div>
                     <div className="col-md-4">
-                        <DJControls cpm={cpm} onCpmChange={(val) => setCpm(val)} keyShift={keyShift} onKeyShiftChange={(val) => setKeyShift(val)} />
+                        <DJControls cpm={cpm} onCpmChange={(val) => setCpm(val)} keyShift={keyShift} onKeyShiftChange={(val) => setKeyShift(val)}
+                            volume={masterVolume} onVolumeChange={(val) => setMasterVolume(val)}/>
                     </div>
                 </div>
             </div>

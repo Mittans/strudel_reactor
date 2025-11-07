@@ -40,7 +40,7 @@ const pattern = 0
 const bass = 0
 
 bassline:
-note(pick(basslines, bass).add("<keyshift>"))
+note(pick(basslines, bass).add(<keyshift>))
 .sound("supersaw")
 .postgain(2)
 .room(0.6)
@@ -51,7 +51,7 @@ note(pick(basslines, bass).add("<keyshift>"))
 
 
 main_arp: 
-note(pick(arpeggiator1, "<0 1 2 3>/2").add("<keyshift>"))
+note(pick(arpeggiator1, "<0 1 2 3>/2").add(<keyshift>))
 .sound("supersaw")
 .lpf(300)
 .adsr("0:0:.5:.1")
@@ -97,5 +97,7 @@ stack(
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())
+
+all(x => x.postgain(<volume>))
 
 // @version 1.2`;
