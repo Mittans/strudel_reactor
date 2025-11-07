@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Dropdown } from 'bootstrap';
-function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVolumeChange }) {
+function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVolumeChange,
+    muteBass, setMuteBass,
+    muteArp, setMuteArp,
+    muteDrums, setMuteDrums,
+    muteDrums2, setMuteDrums2 }) {
     // State variable to store the current CPM value
     const [localCpm, setLocalCpm] = useState(cpm ?? 140);
     // State variable to store the current Key shitf value
@@ -44,6 +48,26 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         const value = parseFloat(e.target.value);
         setLocalVolume(value);
         onVolumeChange?.(value);
+    };
+
+    const handleBassToggle = (e) => {
+        const enabled = e.target.checked; 
+        setMuteBass(!enabled);          
+    };
+
+    const handleArpToggle = (e) => {
+        const enabled = e.target.checked;
+        setMuteArp(!enabled);
+    };
+
+    const handleDrumsToggle = (e) => {
+        const enabled = e.target.checked;
+        setMuteDrums(!enabled);
+    };
+
+    const handleDrums2Toggle = (e) => {
+        const enabled = e.target.checked;
+        setMuteDrums2(!enabled);
     };
 
     const quickCpms = [30, 60, 90, 120, 140];
@@ -104,24 +128,30 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
 
             {/* CheckBox for select instruments */}
             <hr className="my-3" />
-            <span className="input-group-text" id="instru_label">Select Instrument</span>
-            <div className="input-group mb-3">
+            <h6>Instrument Tracks</h6>
+            <div className="mb-3">
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="s1" />
+                    <input className="form-check-input" type="checkbox" id="s1" checked={!muteBass} onChange={handleBassToggle} />
                     <label className="form-check-label" htmlFor="s1">
-                            s1
+                        Bassline
                         </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="d1" />
+                    <input className="form-check-input" type="checkbox" id="a1" checked={!muteArp} onChange={handleArpToggle}/>
+                    <label className="form-check-label" htmlFor="a1">
+                        Main Arp
+                    </label>
+                </div>
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" id="d1" checked={!muteDrums} onChange={handleDrumsToggle} />
                     <label className="form-check-label" htmlFor="d1">
-                            d1
+                        Drums
                         </label>
                 </div>
                 <div className="form-check">
-                    <input className="form-check-input" type="checkbox" value="" id="d1" />
+                    <input className="form-check-input" type="checkbox" id="d1" checked={!muteDrums2} onChange={handleDrums2Toggle} />
                     <label className="form-check-label" htmlFor="d2">
-                            d2
+                        Drums 2
                         </label>
                 </div>
             </div>

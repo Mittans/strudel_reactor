@@ -75,7 +75,10 @@ export default function StrudelDemo() {
     const [keyShift, setKeyShift] = useState(0);
     const [isPlaying, setIsPlaying] = useState(false);
     const [masterVolume, setMasterVolume] = useState(1);
-
+    const [muteBass, setMuteBass] = useState(false);
+    const [muteArp, setMuteArp] = useState(false);
+    const [muteDrums, setMuteDrums] = useState(false);
+    const [muteDrums2, setMuteDrums2] = useState(false);
     const handlePlay = () => {
         globalEditor.evaluate()
         setIsPlaying(true);
@@ -127,7 +130,11 @@ useEffect(() => {
     const processed = songText
         .replaceAll("<cpm>", cpm.toString())
         .replaceAll("<keyshift>", keyShift.toString())
-        .replaceAll("<volume>", masterVolume.toString());
+        .replaceAll("<volume>", masterVolume.toString())
+        .replaceAll("<muteBass>", muteBass ? "true" : "false")
+        .replaceAll("<muteArp>", muteArp ? "true" : "false")
+        .replaceAll("<muteDrums>", muteDrums ? "true" : "false")
+        .replaceAll("<muteDrums2>", muteDrums2 ? "true" : "false");
 
     //globalEditor.setCode(songText);
     globalEditor?.setCode(processed);
@@ -136,7 +143,7 @@ useEffect(() => {
         globalEditor.evaluate();
     }
 
-}, [songText, cpm, keyShift, masterVolume]);
+}, [songText, cpm, keyShift, masterVolume, muteBass, muteArp, muteDrums, muteDrums2, isPlaying]);
 
 
 return (
@@ -165,7 +172,15 @@ return (
                     </div>
                     <div className="col-md-4">
                         <DJControls cpm={cpm} onCpmChange={(val) => setCpm(val)} keyShift={keyShift} onKeyShiftChange={(val) => setKeyShift(val)}
-                            volume={masterVolume} onVolumeChange={(val) => setMasterVolume(val)}/>
+                            volume={masterVolume} onVolumeChange={(val) => setMasterVolume(val)}
+                            muteBass={muteBass}
+                            setMuteBass={setMuteBass}
+                            muteArp={muteArp}
+                            setMuteArp={setMuteArp}
+                            muteDrums={muteDrums}
+                            setMuteDrums={setMuteDrums}
+                            muteDrums2={muteDrums2}
+                            setMuteDrums2={setMuteDrums2}/>
                     </div>
                 </div>
             </div>
