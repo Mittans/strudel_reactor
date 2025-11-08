@@ -8,13 +8,14 @@ import { stranger_tune } from './tunes';
 import Controls from "./components/controls"; // Importing the nessesary buttons
 import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
 import { FaVolumeUp } from "react-icons/fa"; // Useful for button icons
+import { gain } from "@strudel/webaudio";
 
 
 
 
 let globalEditor = null;
 
-
+let globalGain = gain(0.3); // default master volume 30%
 
 
 //export function SetupButtons() {
@@ -99,7 +100,7 @@ export default function StrudelDemo() {
         await initStrudel();
 
         globalEditor = new StrudelMirror({
-          defaultOutput: webaudioOutput,
+          defaultOutput: webaudioOutput.connect(globalGain),
           getTime: () => getAudioContext().currentTime,
           transpiler,
           root: document.getElementById('editor'),
@@ -172,17 +173,13 @@ export default function StrudelDemo() {
                                   className="form-range"
                                   style={{ display: "none" }}
                                   onChange={(e) => {
-                                      const procArea = document.getElementById("proc");
-                                      procArea.value = procArea.value.replace(
-                                          /\.gain\([^)]*\)/,
-                                          `.gain(${e.target.value})`
-                                      );
-                                      ProcAndPlay();
+                                      const value = parseFloat(e.target.value);
+                                      if (globalGain?.gain) {
+                                          globalGain.gain.value = value; //update the whole/ master volumn in real time
+                                      }
                                   }}
                               />
                           </div>
-
-    
             </div>
           </div>
         </div>
