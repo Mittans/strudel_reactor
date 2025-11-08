@@ -13,6 +13,7 @@ import DJControls from './components/DJControls';
 import PlayButtons from './components/PlayButtons';
 import ProcButtons from './components/ProcButtons';
 import PreprocessTextarea from './components/PreprocessTextarea';
+import JsonButtons from "./components/JsonButtons";
 
 
 let globalEditor = null;
@@ -94,6 +95,46 @@ export default function StrudelDemo() {
     const handleToggleTrack = (name, enabled) => {
         setTracksEnabled((prev) => ({ ...prev, [name]: enabled }));
     };
+
+    const handleSaveJson = () => {
+        const settingsObject = { cpm, keyShift, masterVolume, tracksEnabled, songText };
+
+        const jsonBlob = new Blob([JSON.stringify(settingsObject, null, 2)], {
+            type: "application/json"
+        });
+
+        const jsonUrl = URL.createObjectURL(jsonBlob);
+        const downloadLink = document.createElement("a");
+        downloadLink.href = jsonUrl;
+        downloadLink.download = "strudel-settings.json";
+        downloadLink.click();
+        URL.revokeObjectURL(jsonUrl);
+    };
+
+    const handleLoadJson = (event) => {
+        const selectedFile = event.target.files[0];
+        if (!selectedFile) return;
+
+        const fileReader = new FileReader();
+        fileReader.onload = (e) => {
+            try {
+                const data = JSON.parse(e.target.result);
+
+                // Restore each setting if present
+                if (typeof data.cpm === "number") setCpm(data.cpm);
+                if (typeof data.keyShift === "number") setKeyShift(data.keyShift);
+                if (typeof data.masterVolume === "number") setMasterVolume(data.masterVolume);
+                if (typeof data.songText === "string") setSongText(data.songText);
+                if (typeof data.tracksEnabled === "object") setTracksEnabled(data.tracksEnabled);
+
+                alert("JSON load successfully");
+            } catch {
+                alert("Invalid JSON file.");
+            }
+        };
+        fileReader.readAsText(selectedFile);
+    };
+
 useEffect(() => {
 
     if (!hasRun.current) {
@@ -165,8 +206,14 @@ return (
 
                         <nav>
                             <ProcButtons />
+                            <JsonButtons
+                                onSaveJson={handleSaveJson}
+                                onLoadJson={handleLoadJson}
+                            />
                             <br />
                             <PlayButtons onPlay={handlePlay} onStop={handleStop} />
+
+
                         </nav>
                     </div>
                 </div>
