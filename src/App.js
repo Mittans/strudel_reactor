@@ -100,7 +100,7 @@ export default function StrudelDemo() {
         await initStrudel();
 
         globalEditor = new StrudelMirror({
-          defaultOutput: webaudioOutput.connect(globalGain),
+          defaultOutput: webaudioOutput,
           getTime: () => getAudioContext().currentTime,
           transpiler,
           root: document.getElementById('editor'),
@@ -118,6 +118,7 @@ export default function StrudelDemo() {
         });
         Proc()
       })();
+
       document.getElementById('proc').value = stranger_tune
     }
 
