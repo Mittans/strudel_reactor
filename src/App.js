@@ -8,15 +8,11 @@ import { stranger_tune } from './tunes';
 import Controls from "./components/controls"; // Importing the nessesary buttons
 import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
 import { FaVolumeUp } from "react-icons/fa"; // Useful for button icons
-import { gainNode } from "@strudel/webaudio";
 
 
 
 
 let globalEditor = null;
-
-let globalGain = gainNode(0.3); // default master volume 30%
-
 
 //export function SetupButtons() {
 
@@ -175,9 +171,21 @@ export default function StrudelDemo() {
                                   style={{ display: "none" }}
                                   onChange={(e) => {
                                       const value = parseFloat(e.target.value);
-                                      if (globalGain?.gain) {
-                                          globalGain.gain.value = value; //update the whole/ master volumn in real time
+                                      const procArea = document.getElementById("proc");
+                                      let text = procArea.value;
+
+                                      // Update gain for p1 (if it exists)
+                                      if (/p1:/.test(text)) {
+                                          text = text.replace(/(p1:[\s\S]*?\.gain\()[^)]+(\))/, `$1${value}$2`);
                                       }
+
+                                      // Update gain for p2 (if it exists)
+                                      if (/p2:/.test(text)) {
+                                          text = text.replace(/(p2:[\s\S]*?\.gain\()[^)]+(\))/, `$1${value}$2`);
+                                      }
+
+                                      procArea.value = text;
+                                      ProcAndPlay(); // apply and play immediately
                                   }}
                               />
                           </div>
