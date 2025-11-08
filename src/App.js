@@ -6,9 +6,9 @@ import { StrudelMirror } from '@strudel/codemirror';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import Controls from "./components/controls"; // Importing the nessesary buttons
-import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
-import P2Toggle from "./components/p2toggle"; // Importing p2toggle comp
-import VolumeControl from "./components/volumeControl"; //Importing Volume Controll
+//import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
+//import P2Toggle from "./components/p2toggle"; // Importing p2toggle comp
+//import VolumeControl from "./components/volumeControl"; //Importing Volume Controll
 import TrackControls from "./components/trackControl"; // Importing newly combine volume and toggle trackcontrol
 
 
