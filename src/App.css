@@ -38,7 +38,7 @@
 }
 /* ---------- Global Layout ---------- */
 body {
-    background: linear-gradient(135deg, #2b5876, #4e4376);
+    background: linear-gradient(135deg, #89f7fe, #66a6ff);
     color: #f4f4f4;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
@@ -47,6 +47,7 @@ body {
 }
 
 h2 {
+    color: #003b73;
     text-align: center;
     margin: 1.5rem 0;
     font-weight: 600;
@@ -58,7 +59,7 @@ h2 {
 .container-fluid {
     max-width: 1200px;
     margin: auto;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.25);
     border-radius: 16px;
     padding: 2rem;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
@@ -66,8 +67,8 @@ h2 {
 
 /* ---------- Textarea ---------- */
 textarea#proc {
-    background-color: #1b1b2f;
-    color: #f1f1f1;
+    background-color: #f4f8ff;
+    color: #222;
     border: none;
     border-radius: 8px;
     padding: 1rem;
@@ -84,7 +85,7 @@ textarea#proc {
 
 /* ---------- RIGHT COLUMN (Control Panel) ---------- */
 .col-md-4 {
-    background: rgba(255, 255, 255, 0.07);
+    background: rgba(255, 255, 255, 0.35);
     border-radius: 16px;
     padding: 1.5rem;
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
