@@ -8,14 +8,14 @@ import { stranger_tune } from './tunes';
 import Controls from "./components/controls"; // Importing the nessesary buttons
 import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
 import { FaVolumeUp } from "react-icons/fa"; // Useful for button icons
-import { gain } from "@strudel/webaudio";
+import { gainNode } from "@strudel/webaudio";
 
 
 
 
 let globalEditor = null;
 
-let globalGain = gain(0.3); // default master volume 30%
+let globalGain = gainNode(0.3); // default master volume 30%
 
 
 //export function SetupButtons() {
