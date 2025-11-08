@@ -7,6 +7,8 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import Controls from "./components/controls"; // Importing the nessesary buttons
 import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
+import P2Toggle from "./components/p2toggle"; // Importing p2toggle comp
+
 import { FaVolumeUp } from "react-icons/fa"; // Useful for button icons
 
 
@@ -43,18 +45,26 @@ export function ProcAndPlay() {
 
 export function Proc() {
 
-  let proc_text = document.getElementById('proc').value
-  let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-  ProcessText(proc_text);
-  globalEditor.setCode(proc_text_replaced)
+    let proc_text = document.getElementById('proc').value
+
+    // Replace both placeholders independently
+    let proc_text_replaced = proc_text
+        .replaceAll('<p1_Radio>', ProcessText('p1'))
+        .replaceAll('<p2_Radio>', ProcessText('p2'));
+
+    globalEditor.setCode(proc_text_replaced)
 }
 
-export function ProcessText(match, ...args) {
+export function ProcessText(radio) {
 
   let replace = ""
-  if (document.getElementById('flexRadioDefault2').checked) {
-    replace = "_"
-  }
+    if (radio === "p1" && document.getElementById('flexRadioDefault2')?.checked) {
+        replace = "_"; // mute P1
+    }
+
+    if (radio === "p2" && document.getElementById('flexRadioP2Default2')?.checked) {
+        replace = "_"; // mute P2
+    }
 
   return replace
 }
@@ -148,6 +158,7 @@ export default function StrudelDemo() {
             </div>
             <div className="col-md-4">
                           <P1Toggle onChange={() => ProcAndPlay()} />
+                          <P2Toggle onChange={() => ProcAndPlay()} />
                          
                           <div style={{ marginTop: "1rem" }}>
                               <button
