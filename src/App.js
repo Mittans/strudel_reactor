@@ -1,16 +1,10 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import VolumeControl from "./components/VolumeControl";
-import ProcessingButtons from "./components/ProcessingButtons";
-import PlayButtons from "./components/PlayButtons";
 import Processor from "./components/Processor";
 import Strudel from "./components/Strudel";
 import SaveAndLoadButtons from "./components/SaveAndLoadButtons";
-import LowPassFilter from "./components/LowPassFilter";
-import MediumPassFilter from "./components/MediumPassFilter";
-import HighPassFilter from "./components/HighPassFilter";
-import Track from "./components/Track";
 import Reverb from "./components/Reverb";
+import Navigation from "./components/Navigation";
 
 export default function StrudelDemo() {
     const [globalEditor, setGlobalEditor] = useState(null);
@@ -98,7 +92,8 @@ export default function StrudelDemo() {
     const ProcessText = (match, track) => {
         console.log(track);
         let replace = "";
-        if (MuteState && match === "Mute") {
+        console.log(MuteState);
+        if (!MuteState && match === "Mute") {
             replace = "_";
         }
         if (volumeState["AllTrackVolume"] && match === "Volume" && track === "") {
@@ -134,15 +129,6 @@ export default function StrudelDemo() {
 
         return replace;
     };
-
-    // const ProcAndPlay = () => {
-    //     console.log(globalEditor.repl.state.started);
-    //     if (globalEditor != null) {
-    //         console.log(globalEditor);
-    //         Proc();
-    //         globalEditor.evaluate();
-    //     }
-    // };
 
     const Volume = (track, value) => {
         setVolumeState((prevState) => ({
@@ -190,42 +176,30 @@ export default function StrudelDemo() {
                                 overflowY: "auto",
                             }}
                         >
-                            <nav className="row w-100 " style={{ maxHeight: "100vh" }}>
-                                <ProcessingButtons globalEditor={globalEditor} Proc={Proc} />
-                                <br />
-                                <PlayButtons globalEditor={globalEditor} />
-                                <br />
-                                <h6 className="text-center">Volume Controls:</h6>
-                                <VolumeControl
-                                    Proc={Proc}
-                                    MuteState={MuteState}
-                                    setMuteState={setMuteState}
-                                    Volume={Volume}
-                                />
-                                <br />
-                                <h6 className="text-center">Track Volume Control:</h6>
-                                {Array.from(
-                                    { length: Tracks.length },
-                                    (_, i) => (
-                                        <Track trackName={Tracks[i]} Volume={Volume} />
-                                    ),
-                                    <br />
-                                )}
-                                <h6 className="text-center">Filters:</h6>
-                                <LowPassFilter setLowPassState={setLowPassState} Proc={Proc} />
-                                <br />
-                                <MediumPassFilter
-                                    setMediumPassState={setMediumPassState}
-                                    Proc={Proc}
-                                />
-                                <br />
-                                <HighPassFilter setHighPassState={setHighPassState} Proc={Proc} />
-                            </nav>
+                            <Navigation
+                                globalEditor={globalEditor}
+                                Proc={Proc}
+                                Tracks={Tracks}
+                                setLowPassState={setLowPassState}
+                                setHighPassState={setHighPassState}
+                                setMediumPassState={setMediumPassState}
+                                Volume={Volume}
+                                MuteState={MuteState}
+                                setMuteState={setMuteState}
+                            />
                         </div>
                     </div>
                     <div className="row mt-3 pb-3">
-                        <div style={{ width: "66.3%" }}></div>
                         <div
+                            className="ms-3 me-2"
+                            style={{
+                                width: "64%",
+                                backgroundColor: "white",
+                                border: "2px solid yellow",
+                            }}
+                        ></div>
+                        <div
+                            className="ms-1"
                             style={{
                                 width: "33%",
                                 backgroundColor: "white",

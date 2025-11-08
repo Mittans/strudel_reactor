@@ -1,3 +1,5 @@
+import ToggleButton from "react-bootstrap/ToggleButton";
+
 function VolumeControl({ Proc, MuteState, setMuteState, Volume }) {
     const MuteStateSetter = () => {
         setMuteState(!MuteState);
@@ -6,18 +8,13 @@ function VolumeControl({ Proc, MuteState, setMuteState, Volume }) {
 
     return (
         <div className="col-12 mb-3">
-            <div className="form-check form-switch">
-                <input
-                    className="form-check-input"
-                    type="checkbox"
-                    id="MuteSwitch"
-                    switch={`${MuteState}`}
-                    onChange={() => MuteStateSetter()}
-                />
-                <label className="form-check-label mb-3" htmlFor="MuteSwitch">
-                    Mute
-                </label>
-            </div>
+            <ToggleButton
+                variant={MuteState ? "primary" : "outline-primary"}
+                onClick={MuteStateSetter}
+            >
+                Mute
+            </ToggleButton>
+
             <div>
                 <label htmlFor="Volume" className="form-label">
                     Volume:

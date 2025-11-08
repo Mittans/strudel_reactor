@@ -1,4 +1,11 @@
+import { useState } from "react";
+import Modal from "react-bootstrap/Modal";
+
 function SaveAndLoadButtons({ MuteState, setMuteState }) {
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     const saveState = () => {
         let State = {};
         let value = document.getElementById("proc").value;
@@ -9,9 +16,17 @@ function SaveAndLoadButtons({ MuteState, setMuteState }) {
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
         link.href = url;
-        link.download = "data.json";
+
+        let filename = document.getElementById("filename").value;
+
+        if (!filename) {
+            filename = "data";
+        }
+
+        link.download = filename + ".json";
         link.click();
         URL.revokeObjectURL(url);
+        handleClose();
     };
 
     const loadState = () => {
@@ -36,28 +51,50 @@ function SaveAndLoadButtons({ MuteState, setMuteState }) {
         State.click();
     };
     return (
-        <div className="d-flex mb-3 pt-2">
-            <div className="col-6 text-center pe-2">
-                <button
-                    id="save"
-                    className="btn btn-outline-primary"
-                    style={{ width: "97.5%" }}
-                    onClick={() => saveState()}
-                >
-                    Save
-                </button>
+        <>
+            <div className="d-flex mb-3 pt-2">
+                <div className="col-6 text-center pe-2">
+                    <button
+                        id="save"
+                        className="btn btn-outline-primary"
+                        style={{ width: "97.5%" }}
+                        onClick={() => handleShow()}
+                    >
+                        Save
+                    </button>
+                </div>
+                <div className="col-6 text-center">
+                    <button
+                        id="load"
+                        className="btn btn-outline-primary"
+                        style={{ width: "97.5%" }}
+                        onClick={() => loadState()}
+                    >
+                        Load
+                    </button>
+                </div>
             </div>
-            <div className="col-6 text-center">
-                <button
-                    id="load"
-                    className="btn btn-outline-primary"
-                    style={{ width: "97.5%" }}
-                    onClick={() => loadState()}
-                >
-                    Load
-                </button>
-            </div>
-        </div>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Save Strudel</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <label htmlFor="filename">Strudel File Name:</label>
+                    <div className="input-group col-12">
+                        <input type="text" className="form-control" id="filename"></input>
+                        <span className="input-group-text">.json</span>
+                    </div>
+                </Modal.Body>
+                <Modal.Footer>
+                    <button className="btn btn-secondary" onClick={handleClose}>
+                        Close
+                    </button>
+                    <button className="btn btn-primary" onClick={saveState}>
+                        Save
+                    </button>
+                </Modal.Footer>
+            </Modal>
+        </>
     );
 }
 
