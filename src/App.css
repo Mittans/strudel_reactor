@@ -96,3 +96,62 @@ textarea#proc {
         margin-bottom: 1rem;
     }
 
+/* --- Controls buttons --- */
+.music-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin: 0.8rem 0 0.5rem 0;
+}
+
+.control-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid #6c63ff;
+    color: #6c63ff;
+    border-radius: 50%;
+    width: 55px;
+    height: 55px;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+
+    .control-btn:hover {
+        background: #6c63ff;
+        color: white;
+        box-shadow: 0 0 10px #6c63ff;
+        transform: scale(1.1);
+    }
+
+/* --- Emphasized buttons (play, stop, redo, process, proc --- */
+.play-btn {
+    background: #2ecc71;
+    color: #fff;
+}
+
+    .play-btn:hover {
+        background: #2ecc71;
+        border-color: #2ecc71;
+    }
+.stop-btn {
+    background: #dd0d0d;
+    color: #fff;
+}
+
+    .stop-btn:hover {
+        background: #dd0d0d;
+        border-color: #2ecc71;
+    }
+
+.redo-btn {
+    background: #676161;
+    color: #525151;
+}
+
+    .redo-btn:hover {
+        background: #676161;
+        border-color: #2ecc71;
+    }
