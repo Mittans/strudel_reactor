@@ -8,8 +8,7 @@ import { stranger_tune } from './tunes';
 import Controls from "./components/controls"; // Importing the nessesary buttons
 import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
 import P2Toggle from "./components/p2toggle"; // Importing p2toggle comp
-
-import { FaVolumeUp } from "react-icons/fa"; // Useful for button icons
+import VolumeControl from "./components/volumeControl"; // add this import
 
 
 
@@ -159,47 +158,23 @@ export default function StrudelDemo() {
             <div className="col-md-4">
                           <P1Toggle onChange={() => ProcAndPlay()} />
                           <P2Toggle onChange={() => ProcAndPlay()} />
-                         
-                          <div style={{ marginTop: "1rem" }}>
-                              <button
-                                  onClick={() => {
-                                      const slider = document.getElementById("gainControl");
-                                      slider.style.display =
-                                          slider.style.display === "none" ? "block" : "none";
-                                  }}
-                              >
-                                  <FaVolumeUp />
-                              </button>
 
-                              <input
-                                  id="gainControl"
-                                  type="range"
-                                  min="0"
-                                  max="1"
-                                  step="0.05"
-                                  defaultValue="0.3"
-                                  className="form-range"
-                                  style={{ display: "none" }}
-                                  onChange={(e) => {
-                                      const value = parseFloat(e.target.value);
-                                      const procArea = document.getElementById("proc");
-                                      let text = procArea.value;
+                          <VolumeControl
+                              defaultValue={0.3}
+                              onVolumeChange={(value) => {
+                                  const procArea = document.getElementById("proc");
+                                  let text = procArea.value;
 
-                                      // Update gain for p1 (if it exists)
-                                      if (/p1:/.test(text)) {
-                                          text = text.replace(/(p1:[\s\S]*?\.gain\()[^)]+(\))/, `$1${value}$2`);
-                                      }
+                                  // Update gain for both p1 and p2 dynamically
+                                  text = text
+                                      .replace(/(p1:[\s\S]*?\.gain\()[^)]+(\))/, `$1${value}$2`)
+                                      .replace(/(p2:[\s\S]*?\.gain\()[^)]+(\))/, `$1${value}$2`);
 
-                                      // Update gain for p2 (if it exists)
-                                      if (/p2:/.test(text)) {
-                                          text = text.replace(/(p2:[\s\S]*?\.gain\()[^)]+(\))/, `$1${value}$2`);
-                                      }
+                                  procArea.value = text;
+                                  ProcAndPlay(); // re-run tune with updated gain
+                              }}
+                          />
 
-                                      procArea.value = text;
-                                      ProcAndPlay(); // apply and play immediately
-                                  }}
-                              />
-                          </div>
             </div>
           </div>
         </div>
