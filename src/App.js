@@ -8,8 +8,8 @@ import { stranger_tune } from './tunes';
 import Controls from "./components/controls"; // Importing the nessesary buttons
 import P1Toggle from "./components/p1toggle"; // Importing p1toggle comp
 import P2Toggle from "./components/p2toggle"; // Importing p2toggle comp
-import VolumeControl from "./components/volumeControl"; // add this import
-
+import VolumeControl from "./components/volumeControl"; //Importing Volume Controll
+import TrackControls from "./components/trackControl"; // Importing newly combine volume and toggle trackcontrol
 
 
 
@@ -156,11 +156,11 @@ export default function StrudelDemo() {
               <div id="editor" />
             </div>
             <div className="col-md-4">
-                          <P1Toggle onChange={() => ProcAndPlay()} />
-                          <P2Toggle onChange={() => ProcAndPlay()} />
+                          {/*<P1Toggle onChange={() => ProcAndPlay()} />*/}
+                          {/*<P2Toggle onChange={() => ProcAndPlay()} />*/}
 
-                          <VolumeControl
-                              defaultValue={0.3}
+                          <TrackControls
+                              onTrackChange={() => ProcAndPlay()}
                               onVolumeChange={(value) => {
                                   const procArea = document.getElementById("proc");
                                   let text = procArea.value;
