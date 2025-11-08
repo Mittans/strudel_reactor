@@ -2,6 +2,8 @@ import { FaPlayCircle, FaVolumeMute } from "react-icons/fa";
 export default function P1Toggle({ onChange }) {
     return (
         <div style={{ marginTop: '1rem' }}>
+            <h5>P1 Toggle</h5>
+
             <div className="form-check">
                 <input className="form-check-input"
                     type="radio"
