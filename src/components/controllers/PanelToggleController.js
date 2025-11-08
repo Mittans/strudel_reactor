@@ -19,11 +19,11 @@ export function PanelToggleController({
                         </button>
                     </span>
                     <nav>
-                        <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
+                        <input className="hidden peer" type="radio" name="flexRadio-Add" id="flexRadio-Add" onChange={ProcAndPlay} />
                         
                         <label 
                             className="block text-center cursor-pointer peer-checked:bg-yellow-400 bg-zinc-800 text-yellow-200 hover:bg-yellow-500 hover:text-black rounded-lg px-2 py-2 font-semibold transition-all duration-200" 
-                            htmlFor="flexRadioDefault2">
+                            htmlFor="flexRadio-Add">
                         <div className="flex justify-center items-center">
                             <IoIosAddCircle className="text-xl"/>
                         </div>
