@@ -9,6 +9,7 @@ function VolumeControl({ Proc, MuteState, setMuteState, Volume }) {
     return (
         <div className="col-12 mb-3">
             <ToggleButton
+                className="mb-2"
                 variant={MuteState ? "primary" : "outline-primary"}
                 onClick={MuteStateSetter}
             >
