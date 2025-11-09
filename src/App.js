@@ -82,6 +82,8 @@ export default function StrudelDemo() {
         drums: true,
         drums2: true,
     });
+    const [effectChain, setEffectChain] = useState("");
+
     const handlePlay = () => {
         globalEditor.evaluate()
         setIsPlaying(true);
@@ -135,6 +137,11 @@ export default function StrudelDemo() {
         fileReader.readAsText(selectedFile);
     };
 
+    const handleEffectChange = (newEffectChain) => {
+        setEffectChain(newEffectChain);
+    };
+
+
 useEffect(() => {
 
     if (!hasRun.current) {
@@ -180,7 +187,8 @@ useEffect(() => {
         .replaceAll("<gain_bass>", tracksEnabled.bass ? "1" : "0")
         .replaceAll("<gain_arp>", tracksEnabled.arp ? "1" : "0")
         .replaceAll("<gain_drums>", tracksEnabled.drums ? "1" : "0")
-        .replaceAll("<gain_drums2>", tracksEnabled.drums2 ? "1" : "0");
+        .replaceAll("<gain_drums2>", tracksEnabled.drums2 ? "1" : "0")
+        .replaceAll("<effect_chain>", effectChain);
 
     //globalEditor.setCode(songText);
     globalEditor?.setCode(processed);

@@ -206,6 +206,38 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
                         </div>
                         <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxDistAmount" />
                     </div>
+                    {/* Low-pass Filter */}
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                        <div className="form-check m-0">
+                            <input className="form-check-input" type="checkbox" id="fxReverb" />
+                            <label className="form-check-label" htmlFor="fxReverb">Low-pass Filter</label>
+                        </div>
+                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxReverbMix" />
+                    </div>
+                    {/* High-pass Filter */}
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                        <div className="form-check m-0">
+                            <input className="form-check-input" type="checkbox" id="fxReverb" />
+                            <label className="form-check-label" htmlFor="fxReverb"> High-pass Filter</label>
+                        </div>
+                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxReverbMix" />
+                    </div>
+                    {/* Chorus */}
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                        <div className="form-check m-0">
+                            <input className="form-check-input" type="checkbox" id="fxReverb" />
+                            <label className="form-check-label" htmlFor="fxReverb">Chorus</label>
+                        </div>
+                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxReverbMix" />
+                    </div>
+                    {/* WOW */}
+                    <div className="d-flex align-items-center justify-content-between mb-2">
+                        <div className="form-check m-0">
+                            <input className="form-check-input" type="checkbox" id="fxReverb" />
+                            <label className="form-check-label" htmlFor="fxReverb">WOW</label>
+                        </div>
+                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxReverbMix" />
+                    </div>
                 </div>
             </div>
 

@@ -112,7 +112,7 @@ muteIf(<gain_drums2>,
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())
-
-all(x => x.postgain(<volume>))
+all(x => x.<effect_chain>)
+.all(x => x.postgain(<volume>))
 
 // @version 1.2`;
