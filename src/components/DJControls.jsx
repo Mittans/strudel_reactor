@@ -1,13 +1,40 @@
 ﻿import { useState, useEffect } from 'react';
 import { Dropdown } from 'bootstrap';
-function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVolumeChange, onToggleTrack, tracksEnabled }) {
+function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVolumeChange, onToggleTrack, tracksEnabled, onEffectChange }) {
     // State variable to store the current CPM value
     const [localCpm, setLocalCpm] = useState(cpm ?? 140);
     // State variable to store the current Key shitf value
     const [localShift, setLocalShift] = useState(keyShift ?? 0);
     // State variable to store the current master volume
     const [localVolume, setLocalVolume] = useState(volume ?? 1);
+    // Tracks Mute
+    const muteBass = !tracksEnabled?.bass;
+    const muteArp = !tracksEnabled?.arp;
+    const muteDrums = !tracksEnabled?.drums;
+    const muteDrums2 = !tracksEnabled?.drums2;
+    // Effects State
+    const [enableReverb, setEnableReverb] = useState(false);
+    const [reverbAmount, setReverbAmount] = useState(0.3);
 
+    const [enableDelay, setEnableDelay] = useState(false);
+    const [delayAmount, setDelayAmount] = useState(0.15);
+
+    const [enableDistortion, setEnableDistortion] = useState(false);
+    const [distortionAmount, setDistortionAmount] = useState(0.2);
+
+    const [enableLowPass, setEnableLowPass] = useState(false);
+    const [lowPassFreq, setLowPassFreq] = useState(2000);
+
+    const [enableHighPass, setEnableHighPass] = useState(false);
+    const [highPassFreq, setHighPassFreq] = useState(500);
+
+    const [enableChorus, setEnableChorus] = useState(false);
+    const [chorusAmount, setChorusAmount] = useState(0.4);
+
+    const [enableWow, setEnableWow] = useState(false);
+    const [wowAmount, setWowAmount] = useState(2);
+    // Master Effect control
+    const [enableMasterFx, setEnableMasterFx] = useState(false);
     //  Sync the local CPM value
     useEffect(() => {
         if (typeof cpm === 'number' && !Number.isNaN(cpm)) {
@@ -25,6 +52,60 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         const dropdowns = document.querySelectorAll('[data-bs-toggle="dropdown"]');
         dropdowns.forEach((el) => new Dropdown(el));
     }, []);
+
+    // Create Effect Chain
+    useEffect(() => {
+        let chainParts = [];
+
+        // Strudel reverb = room(level)
+        if (enableReverb) {
+            chainParts.push(`room(${Number(reverbAmount).toFixed(2)})`);
+        }
+
+        // Strudel delay = delay(level)
+        if (enableDelay) {
+            chainParts.push(`delay(${Number(delayAmount).toFixed(2)})`);
+            // optional:
+            // chainParts.push(`delaytime(0.25)`);
+            // chainParts.push(`delayfeedback(0.4)`);
+        }
+
+        // Strudel distortion = shape(amount)
+        if (enableDistortion) {
+            chainParts.push(`shape(${Number(distortionAmount).toFixed(2)})`);
+        }
+
+        // Strudel low-pass = cutoff(freq)
+        if (enableLowPass) {
+            chainParts.push(`cutoff(${Math.round(lowPassFreq)})`);
+        }
+
+        // Strudel high-pass = hcutoff(freq)
+        if (enableHighPass) {
+            chainParts.push(`hcutoff(${Math.round(highPassFreq)})`);
+        }
+
+        // Strudel chorus (approx) = pan(sine.range(-d, d))
+        if (enableChorus) {
+            chainParts.push(`pan(sine.range(-${Number(chorusAmount).toFixed(2)}, ${Number(chorusAmount).toFixed(2)}))`);
+        }
+
+        // Strudel wow (pitch wobble) = speed(sine.range(1-d, 1+d))
+        if (enableWow) {
+            const depth = Number(wowAmount) * 0.05;
+            chainParts.push(`speed(sine.range(${1 - depth}, ${1 + depth}))`);
+        }
+
+        onEffectChange?.(chainParts.join('.'));
+    }, [
+        enableReverb, reverbAmount,
+        enableDelay, delayAmount,
+        enableDistortion, distortionAmount,
+        enableLowPass, lowPassFreq,
+        enableHighPass, highPassFreq,
+        enableChorus, chorusAmount,
+        enableWow, wowAmount
+    ]);
 
     const handleCpmChange = (e) => {
         let value = e.target.valueAsNumber;
@@ -84,10 +165,39 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         setLocalShift(value);
         if (typeof onKeyShiftChange === "function") onKeyShiftChange(value);
     };
-    const muteBass = !tracksEnabled?.bass;
-    const muteArp = !tracksEnabled?.arp;
-    const muteDrums = !tracksEnabled?.drums;
-    const muteDrums2 = !tracksEnabled?.drums2;
+
+    const handleEnableReverb = (event) => setEnableReverb(event.target.checked);
+    const handleReverbAmountChange = (event) => setReverbAmount(event.target.value);
+
+    const handleEnableDelay = (event) => setEnableDelay(event.target.checked);
+    const handleDelayAmountChange = (event) => setDelayAmount(event.target.value);
+
+    const handleEnableDistortion = (event) => setEnableDistortion(event.target.checked);
+    const handleDistortionAmountChange = (event) => setDistortionAmount(event.target.value);
+
+    const handleEnableLowPass = (event) => setEnableLowPass(event.target.checked);
+    const handleLowPassFreqChange = (event) => setLowPassFreq(event.target.value);
+
+    const handleEnableHighPass = (event) => setEnableHighPass(event.target.checked);
+    const handleHighPassFreqChange = (event) => setHighPassFreq(event.target.value);
+
+    const handleEnableChorus = (event) => setEnableChorus(event.target.checked);
+    const handleChorusAmountChange = (event) => setChorusAmount(event.target.value);
+
+    const handleEnableWow = (event) => setEnableWow(event.target.checked);
+    const handleWowAmountChange = (event) => setWowAmount(event.target.value);
+
+    const handleMasterFxToggle = (event) => {
+        const enabled = event.target.checked;
+        setEnableMasterFx(enabled);
+        setEnableReverb(enabled);
+        setEnableDelay(enabled);
+        setEnableDistortion(enabled);
+        setEnableLowPass(enabled);
+        setEnableHighPass(enabled);
+        setEnableChorus(enabled);
+        setEnableWow(enabled);
+    };
 
     return (
         <>
@@ -174,69 +284,89 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <span className="fw-semibold">Effects</span>
                     <div className="form-check form-switch m-0">
-                        <input className="form-check-input" type="checkbox" role="switch" id="fxMasterEnable" />
+                        <input className="form-check-input" type="checkbox" role="switch" id="fxMasterEnable" checked={enableMasterFx} onChange={handleMasterFxToggle} />
                         <label className="form-check-label small" htmlFor="fxMasterEnable">Master</label>
                     </div>
                 </div>
 
                 <div className="card-body">
                     {/* Reverb */}
-                    <div className="d-flex align-items-center justify-content-between mb-2">
+                    <div className="mb-3">
                         <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxReverb" />
+                            <input className="form-check-input" type="checkbox" id="fxReverb" checked={enableReverb} onChange={handleEnableReverb}/>
                             <label className="form-check-label" htmlFor="fxReverb">Reverb</label>
                         </div>
-                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxReverbMix" />
+                        {enableReverb && (
+                            <input type="range" min="0" max="1" step="0.01" className="form-range mt-1" value={reverbAmount}  onChange={handleReverbAmountChange} />
+                        )}
                     </div>
 
                     {/* Delay */}
-                    <div className="d-flex align-items-center justify-content-between mb-2">
+                    <div className="mb-3">
                         <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxDelay" />
-                            <label className="form-check-label" htmlFor="fxDelay">Delay</label>
+                            <input className="form-check-input" type="checkbox" id="fxDelay" checked={enableDelay} onChange={handleEnableDelay} />
+                            <label className="form-check-label" htmlFor="fxDelay"> Delay</label>
                         </div>
-                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxDelayMix" />
+                        {enableDelay && (
+                            <input type="range"  min="0" max="1" step="0.01" className="form-range mt-1" value={delayAmount} onChange={handleDelayAmountChange}/>
+                        )}
                     </div>
 
                     {/* Distortion */}
-                    <div className="d-flex align-items-center justify-content-between">
+                    <div className="mb-3">
                         <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxDist" />
-                            <label className="form-check-label" htmlFor="fxDist">Distortion</label>
+                            <input className="form-check-input" type="checkbox" id="fxDistortion" checked={enableDistortion} onChange={handleEnableDistortion}/>
+                            <label className="form-check-label" htmlFor="fxDistortion">Distortion</label>
                         </div>
-                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxDistAmount" />
+                        {enableDistortion && (
+                            <input type="range" min="0"  max="1" step="0.01" className="form-range mt-1" value={distortionAmount} onChange={handleDistortionAmountChange}/>
+                        )}
                     </div>
+
                     {/* Low-pass Filter */}
-                    <div className="d-flex align-items-center justify-content-between mb-2">
+                    <div className="mb-3">
                         <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxReverb" />
-                            <label className="form-check-label" htmlFor="fxReverb">Low-pass Filter</label>
+                            <input className="form-check-input" type="checkbox" id="fxLowPass" checked={enableLowPass} onChange={handleEnableLowPass} />
+                            <label className="form-check-label" htmlFor="fxLowPass">Low-pass Filter</label>
                         </div>
-                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxReverbMix" />
+                        {enableLowPass && (
+                            <input type="range"  min="200" max="8000" step="50"  className="form-range mt-1" value={lowPassFreq} onChange={handleLowPassFreqChange} />
+                        )}
                     </div>
+
                     {/* High-pass Filter */}
-                    <div className="d-flex align-items-center justify-content-between mb-2">
+                    <div className="mb-3">
                         <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxReverb" />
-                            <label className="form-check-label" htmlFor="fxReverb"> High-pass Filter</label>
+                            <input className="form-check-input" type="checkbox" id="fxHighPass" checked={enableHighPass} onChange={handleEnableHighPass}/>
+                            <label className="form-check-label" htmlFor="fxHighPass">High-pass Filter</label>
                         </div>
-                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxReverbMix" />
+                        {enableHighPass && (
+                            <input type="range" min="100"  max="3000" step="50" className="form-range mt-1" value={highPassFreq} onChange={handleHighPassFreqChange}/>
+                        )}
                     </div>
+
                     {/* Chorus */}
-                    <div className="d-flex align-items-center justify-content-between mb-2">
+                    <div className="mb-3">
                         <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxReverb" />
-                            <label className="form-check-label" htmlFor="fxReverb">Chorus</label>
+                            <input className="form-check-input" type="checkbox" id="fxChorus" checked={enableChorus} onChange={handleEnableChorus}/>
+                            <label className="form-check-label" htmlFor="fxChorus">Chorus</label>
                         </div>
-                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxReverbMix" />
+                        {enableChorus && (
+                            <input type="range" min="0" max="1" step="0.01" className="form-range mt-1" value={chorusAmount} onChange={handleChorusAmountChange}/>
+                        )}
                     </div>
+
                     {/* WOW */}
-                    <div className="d-flex align-items-center justify-content-between mb-2">
+                    <div className="mb-1">
                         <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxReverb" />
-                            <label className="form-check-label" htmlFor="fxReverb">WOW</label>
+                            <input className="form-check-input" type="checkbox" id="fxWow" checked={enableWow} onChange={handleEnableWow}/>
+                            <label className="form-check-label" htmlFor="fxWow">
+                                WOW
+                            </label>
                         </div>
-                        <input type="range" className="form-range w-50 ms-3" min="0" max="1" step="0.01" id="fxReverbMix" />
+                        {enableWow && (
+                            <input type="range" min="0" max="10" step="0.1" className="form-range mt-1" value={wowAmount} onChange={handleWowAmountChange}/>
+                        )}
                     </div>
                 </div>
             </div>

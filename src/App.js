@@ -188,7 +188,7 @@ useEffect(() => {
         .replaceAll("<gain_arp>", tracksEnabled.arp ? "1" : "0")
         .replaceAll("<gain_drums>", tracksEnabled.drums ? "1" : "0")
         .replaceAll("<gain_drums2>", tracksEnabled.drums2 ? "1" : "0")
-        .replaceAll("<effect_chain>", effectChain);
+        .replaceAll("<effect_chain>", effectChain ? `.${effectChain}` : "");
 
     //globalEditor.setCode(songText);
     globalEditor?.setCode(processed);
@@ -197,7 +197,7 @@ useEffect(() => {
         globalEditor.evaluate();
     }
 
-}, [songText, cpm, keyShift, masterVolume, tracksEnabled]);
+}, [songText, cpm, keyShift, masterVolume, tracksEnabled, effectChain, isPlaying]);
 
 
 return (
@@ -234,7 +234,8 @@ return (
                         <DJControls cpm={cpm} onCpmChange={(val) => setCpm(val)} keyShift={keyShift} onKeyShiftChange={(val) => setKeyShift(val)}
                             volume={masterVolume} onVolumeChange={(val) => setMasterVolume(val)}
                             tracksEnabled={tracksEnabled}
-                            onToggleTrack={handleToggleTrack}                        />
+                            onToggleTrack={handleToggleTrack}
+                            onEffectChange={handleEffectChange} />
                     </div>
                 </div>
             </div>
