@@ -17,7 +17,7 @@ function LogToNum(input) {
 }
 
 export default function Graph({ rngArray }) {
-    const maxValue = 1;
+    const maxValue = 1.5;
 
     useEffect(() => {
         const svg = d3.select("svg");
