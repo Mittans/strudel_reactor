@@ -13,7 +13,7 @@ function VolumeControl({ Proc, MuteState, setMuteState, Volume }) {
                 variant={MuteState ? "primary" : "outline-primary"}
                 onClick={MuteStateSetter}
             >
-                Mute
+                {MuteState ? "UnMute" : "Mute"}
             </ToggleButton>
 
             <div>

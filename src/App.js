@@ -44,6 +44,9 @@ export default function StrudelDemo() {
     };
 
     const Proc = () => {
+        if (!globalEditor) {
+            return;
+        }
         console.log(document.getElementById("proc"));
         let proc_text = document.getElementById("proc").value;
         let proc_text_replaced = proc_text.replaceAll("<Mute>", ProcessText("Mute", ""));
@@ -91,11 +94,15 @@ export default function StrudelDemo() {
         globalEditor.setCode(proc_text_replaced);
     };
 
+    useEffect(() => {
+        Proc();
+    }, [MuteState]);
+
     const ProcessText = (match, track) => {
         console.log(track);
         let replace = "";
         console.log(MuteState);
-        if (!MuteState && match === "Mute") {
+        if (MuteState && match === "Mute") {
             replace = "_";
         }
         if (volumeState["AllTrackVolume"] && match === "Volume" && track === "") {
