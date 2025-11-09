@@ -39,7 +39,7 @@ const arpeggiator2 = [
 const pattern = 0
 const bass = 0
 
-<Mute> bassline:
+<Mute>bassline:
 note(pick(basslines, bass))
 .sound("supersaw")
 .postgain(2)
@@ -49,7 +49,7 @@ note(pick(basslines, bass))
 .postgain(pick(gain_patterns, pattern))<bassline_Volume>
 
 
-<Mute> main_arp: 
+<Mute>main_arp: 
 note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .sound("supersaw")
 .lpf(300)
@@ -59,7 +59,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .postgain(pick(gain_patterns, pattern))<main_arp_Volume>
 
 
-<Mute> drums:
+<Mute>drums:
 stack(
   s("tech:5")
   .postgain(6)
@@ -77,7 +77,7 @@ stack(
   .postgain(.25),
 )<drums_Volume>
 
-<Mute> drums2: 
+<Mute>drums2: 
 stack(
   s("[~ hh]*4").bank("RolandTR808").room(0.3).speed(0.75).gain(1.2),
   s("hh").struct("x*16").bank("RolandTR808")
@@ -104,6 +104,6 @@ stack(
 <Decay>
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
-// all(x => x.log())
+all(x => x.log())
 
 // @version 1.2`;

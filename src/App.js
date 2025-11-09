@@ -5,6 +5,7 @@ import Strudel from "./components/Strudel";
 import SaveAndLoadButtons from "./components/SaveAndLoadButtons";
 import Reverb from "./components/Reverb";
 import Navigation from "./components/Navigation";
+import Graph from "./components/Graph";
 
 export default function StrudelDemo() {
     const [globalEditor, setGlobalEditor] = useState(null);
@@ -19,6 +20,7 @@ export default function StrudelDemo() {
     const [RoomFadeState, setRoomFadeState] = useState(0);
     const [RoomDecayState, setRoomDecayState] = useState(0);
     const [RoomSustainState, setRoomSustainState] = useState(0);
+    const [rngArray, setRngArray] = useState([]);
 
     useEffect(() => {
         if (globalEditor) {
@@ -162,7 +164,11 @@ export default function StrudelDemo() {
                     <div className="row">
                         <div style={{ width: "66.3%" }}>
                             <div className="row">
-                                <Processor Proc={Proc} setGlobalEditor={setGlobalEditor} />
+                                <Processor
+                                    setGlobalEditor={setGlobalEditor}
+                                    rngArray={rngArray}
+                                    setRngArray={setRngArray}
+                                />
                             </div>
                             <div className="row ps-3 pt-2">
                                 <Strudel />
@@ -196,8 +202,11 @@ export default function StrudelDemo() {
                                 width: "64%",
                                 backgroundColor: "white",
                                 border: "2px solid yellow",
+                                marginTop: 0,
                             }}
-                        ></div>
+                        >
+                            <Graph rngArray={rngArray} />
+                        </div>
                         <div
                             className="ms-1"
                             style={{
@@ -221,7 +230,6 @@ export default function StrudelDemo() {
                         </div>
                     </div>
                 </div>
-                {/* <canvas id="roll"></canvas> */}
             </main>
         </div>
     );
