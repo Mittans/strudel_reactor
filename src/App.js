@@ -16,6 +16,8 @@ import { SongSelectorController } from './components/controllers/SongSelectorCon
 import { PanelToggleController } from './components/controllers/PanelToggleController';
 import { OpenShowTimeButton } from './components/buttons/OpenShowTimeButton';
 import { OpenTextToProcessButton } from './components/buttons/OpenTextToProcessButton';
+import { OpenD3GraphButton } from './components/buttons/OpenD3GraphButton';
+import { Graph } from './components/graph/Graph';
 
 let globalEditor = null;
 
@@ -136,6 +138,7 @@ export default function StrudelDemo() {
   const [isOpenSetting,setIsOpenSetting] = useState(false);
   const [isOpenShowTime, setIsOpenShowTime] = useState(false);
   const [isOpenTextToProcess, setIsOpenTextToProcess] = useState(false);
+  const [isOpenD3Graph, setIsOpenD3Graph] = useState(false);
 
   // Function to open the editor
   const handleOpenShowTime = () => {
@@ -161,6 +164,15 @@ export default function StrudelDemo() {
       setIsOpenSetting(true);
     } else {
       setIsOpenSetting(false);
+    }
+  };
+
+  // Function to open the D3 Graph
+  const handleOpenD3Graph = () => {
+    if (isOpenD3Graph === false) {
+      setIsOpenD3Graph(true);
+    } else {
+      setIsOpenD3Graph(false);
     }
   };
 
@@ -234,8 +246,11 @@ export default function StrudelDemo() {
             </div>
           </div>
         </div>
-        <div className='w-full h-full'>
-          <canvas id="roll"></canvas>
+        <div className='mx-10 mt-4'>
+          <OpenD3GraphButton isOpenD3Graph={isOpenD3Graph} handleOpenD3Graph={handleOpenD3Graph}/>
+
+          <canvas className={`bg-zinc-800 w-full hidden`} id="roll"></canvas>
+          <Graph className={`bg-zinc-800 w-full ${isOpenD3Graph ? "" : "hidden"}`}/>
         </div>
       </main >
     </div >
