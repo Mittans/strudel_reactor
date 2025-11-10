@@ -40,42 +40,48 @@ export default function StrudelDemo() {
     const [isPlaying, setIsPlaying] = useState(false);
 
     // Function runs when the Play button is clicked
+    /* MOVED TO PlayButtons COMPONENT
     const handlePlay = () => {
         // Plays the current Strudel code in the editor
         editorRef.current?.evaluate();
         setIsPlaying(true); // Update state to indicate music is playing
 
     };
+    */
 
 
     //Safely play only if editor exists, avoid errors by checking if editorRef.current is not null
     //works even without the null check but just to be safe
+    /* MOVED TO PlayButtons COMPONENT
     const handleStop = () => {
         editorRef.current?.stop();
         setIsPlaying(false); // Update state to indicate music has stopped
     }
+    */
 
     //Ref for the editor root element
     //Ref for the Strudel editor container div where the editor will appear
     const editorRootRef = useRef(null);
 
     // preprocess copies current songData into the editor
+    /* MOVED TO ProcessButtons COMPONENT
     const handlePreprocess = () => {
         if (!editorRef.current) return;
 
         // Replace the 140 with our CPM value in the existing setcps
-        /* MOVED TO PlayControl COMPONENT
         const updatedSongData = songData.replace("setcps(140/60/4)", `setcps(${cpm}/60/4)`);
         const volumeController = `${updatedSongData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
         editorRef.current.setCode(volumeController);
-        */
     };
+    */
 
     // preprocess then play
+    /* MOVED TO ProcessButtons COMPONENT
     const handlePreprocessPlay = () => {
         handlePreprocess();
         handlePlay();
     };
+    */
 
     //created a varible called song data and used songData as a setter and songData as getter
     //used it like that so that all react hooks are fired when we call the function
@@ -171,11 +177,26 @@ export default function StrudelDemo() {
                             <MusicSearch /> {/* calls the MusicSearch class*/}
                             <nav>
                                 {/* calls the ProcessButtons class*/}
-                                <ProcessButtons onPreprocess={handlePreprocess} onPreprocessPlay={handlePreprocessPlay} />
+                                <ProcessButtons
+                                    /* MOVED TO ProcessButtons COMPONENT
+                                    onPreprocess={handlePreprocess} 
+                                    onPreprocessPlay={handlePreprocessPlay} 
+                                    */
+                                    editorRef={editorRef}
+                                    songData={songData}
+                                    setIsPlaying={setIsPlaying}
+                                />
 
 
                                 <br />
-                                <PlayButtons onPlay={handlePlay} onStop={handleStop} />  {/* calls the button class and the handle stop and handlePlay function created eariler*/}
+                                <PlayButtons
+                                    /* MOVED TO PlayButtons COMPONENT
+                                    onPlay={handlePlay} 
+                                    onStop={handleStop} 
+                                    */
+                                    editorRef={editorRef}
+                                    setIsPlaying={setIsPlaying}
+                                />  {/* calls the button class and the handle stop and handlePlay function created eariler*/}
                             </nav>
                         </div>
                     </div>
