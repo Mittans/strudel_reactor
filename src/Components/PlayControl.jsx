@@ -61,22 +61,20 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                     />
                 </div>
 
-
-
                 <div className="p-3 rounded-3 glass-inner-card fw-semibold mb-3">
                     <p className="fw-semibold mb-2 text-light text-center">Tracks</p>
-                    <div className="d-flex justify-content-center flex-wrap gap-3">
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input glass-checkbox" type="checkbox" id="s1" />
-                            <label className="form-check-label text-light" htmlFor="s1">Drum2</label>
+                    <div className="d-flex justify-content-center flex-wrap gap-4">
+                        <div className="form-check form-switch">
+                            <input className="form-check-input" type="checkbox" id="drum2Switch" />
+                            <label className="form-check-label text-light" htmlFor="drum2Switch">Drum 2</label>
                         </div>
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input glass-checkbox" type="checkbox" id="d1" />
-                            <label className="form-check-label text-light" htmlFor="d1">Drums</label>
+                        <div className="form-check form-switch">
+                            <input className="form-check-input" type="checkbox" id="drumsSwitch" />
+                            <label className="form-check-label text-light" htmlFor="drumsSwitch">Drums</label>
                         </div>
-                        <div className="form-check form-check-inline">
-                            <input className="form-check-input glass-checkbox" type="checkbox" id="d2" />
-                            <label className="form-check-label text-light" htmlFor="d2">Bass</label>
+                        <div className="form-check form-switch">
+                            <input className="form-check-input" type="checkbox" id="bassSwitch" />
+                            <label className="form-check-label text-light" htmlFor="bassSwitch">Bass</label>
                         </div>
                     </div>
                 </div>
