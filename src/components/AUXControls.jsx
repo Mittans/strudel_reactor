@@ -1,7 +1,7 @@
 import VolumeSlider from './VolumeSlider';
 import { useState } from 'react';
 
-function AUXControls({ onToggleChange }) { // Calls back on onToggleChange
+function AUXControls({ onToggleChange, onBpmChange }) { 
   // Sets default as all instruments "On"
   const [toggles, setToggles] = useState({
     Baseline: true,
@@ -9,6 +9,9 @@ function AUXControls({ onToggleChange }) { // Calls back on onToggleChange
     Drums: true,
     Drums2: true,
   });
+
+  // BPM state with default value of 140
+  const [bpm, setBpm] = useState(140);
 
   // Handles individual instrument toggle change
   const handleCheck = (e) => {
@@ -19,6 +22,18 @@ function AUXControls({ onToggleChange }) { // Calls back on onToggleChange
     // Update to new changes
     if (onToggleChange) {
       onToggleChange(updated);
+    }
+  };
+
+  // Handles BPM input change
+  const handleBpmChange = (e) => {
+    const value = e.target.value;
+    // Only allow numbers and limit from 1 to 300
+    if (value === '' || (Number(value) >= 1 && Number(value) <= 300)) {
+      setBpm(value);
+      if (onBpmChange && value !== '') {
+        onBpmChange(Number(value));
+      }
     }
   };
 
@@ -79,9 +94,31 @@ function AUXControls({ onToggleChange }) { // Calls back on onToggleChange
             </span>
           </div>
         </div>
-          <div className="d-flex align-items-center mt-2 px-3">
-              <VolumeSlider />
+        
+        <div className="px-3 mt-2">
+          <VolumeSlider />
+          
+          {/* BPM Input */}
+          <div className="mt-3 mb-2">
+            <label htmlFor="bpmInput" className="form-label text-muted small mb-1">
+              BPM (Beats Per Minute)
+            </label>
+            <div className="input-group input-group-sm">
+              <input
+                type="number"
+                className="form-control"
+                id="bpmInput"
+                value={bpm}
+                onChange={handleBpmChange}
+                min="1"
+                max="300"
+                placeholder="140"
+              />
+              <span className="input-group-text">BPM</span>
+            </div>
           </div>
+        </div>
+
         <div className="card-body p-3">
           <div className='d-grid gap-2 mb-3'>
             <button
