@@ -39,7 +39,6 @@ export default function StrudelDemo() {
     // State to track if music is playing
     const [isPlaying, setIsPlaying] = useState(false);
 
-
     // Function runs when the Play button is clicked
     const handlePlay = () => {
         // Plays the current Strudel code in the editor
@@ -65,9 +64,11 @@ export default function StrudelDemo() {
         if (!editorRef.current) return;
 
         // Replace the 140 with our CPM value in the existing setcps
+        /* MOVED TO PlayControl COMPONENT
         const updatedSongData = songData.replace("setcps(140/60/4)", `setcps(${cpm}/60/4)`);
         const volumeController = `${updatedSongData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
         editorRef.current.setCode(volumeController);
+        */
     };
 
     // preprocess then play
@@ -76,18 +77,20 @@ export default function StrudelDemo() {
         handlePlay();
     };
 
-    //music code takes too much space, reduce the space and expand the space to the right, make it 50/50
-
     //created a varible called song data and used songData as a setter and songData as getter
     //used it like that so that all react hooks are fired when we call the function
-    //use empty string as initial value
+
     const [songData, setSongData] = useState(stranger_tune) //there is only one music called stranger_tune in the storage folder. Inital music 
 
     //volume state and setter. Initially set to 50.
+    /* MOVED TO PlayControl COMPONENT
     const [volume, setVolume] = useState(50);
+    */
 
     //cpm setter. Initially set to 120 by default.
+    /* MOVED TO PlayControl COMPONENT
     const [cpm, setCpm] = useState(120);
+    */
 
     useEffect(() => {
         if (!hasRun.current) {
@@ -130,6 +133,7 @@ export default function StrudelDemo() {
         }
 
         // Combines and updates songData with CPM, volume and log functions
+        /* MOVED TO PlayControl COMPONENT
         const updatedSongData = songData.replace("setcps(140/60/4)", `setcps(${cpm}/60/4)`);
         const volumeController = `${updatedSongData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
 
@@ -141,8 +145,12 @@ export default function StrudelDemo() {
             editorRef.current.stop();
             editorRef.current.evaluate();
         }
+        */
 
+    }, [songData]); // Runs again when songData or volume updates and the cpm
+    /* REMOVED volume, cpm FROM DEPENDENCIES - MOVED TO PlayControl COMPONENT
     }, [songData, volume, cpm]); // Runs again when songData or volume updates and the cpm
+    */
 
 
     return (
@@ -179,10 +187,15 @@ export default function StrudelDemo() {
                         </div>
                         <div className="col-md-4">
                             <PlayControl
+                                /* MOVED TO PlayControl COMPONENT
                                 volume={volume}
                                 onVolumeChange={setVolume}
                                 cpm={cpm}
                                 onCpmChange={setCpm}
+                                */
+                                songData={songData}
+                                editorRef={editorRef}
+                                isPlaying={isPlaying}
                             /> {/* calls the play control class*/}
                         </div>
                     </div>

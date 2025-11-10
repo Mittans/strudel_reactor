@@ -1,8 +1,44 @@
-function PlayControl({ volume, onVolumeChange, cpm, onCpmChange }) {
+import { useState, useEffect } from 'react';
 
+function PlayControl({ songData, editorRef, isPlaying }) {
     const DEFAULT_VOLUME = 50;
 
+    // MOVED FROM StrudelDemo: volume state and setter. Initially set to 50.
+    const [volume, setVolume] = useState(50);
 
+    // MOVED FROM StrudelDemo: cpm setter. Initially set to 120 by default.
+    const [cpm, setCpm] = useState(120);
+
+    // Function to update the editor with current volume and CPM settings
+    const updateEditorWithControls = () => {
+        if (!editorRef.current) return;
+
+        // MOVED FROM StrudelDemo: Replace the 140 with our CPM value in the existing setcps
+        const updatedSongData = songData.replace("setcps(140/60/4)", `setcps(${cpm}/60/4)`);
+        const volumeController = `${updatedSongData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
+        editorRef.current.setCode(volumeController);
+
+        // MOVED FROM StrudelDemo: Updates Strudel editor with new code song and volume
+        if (isPlaying) {
+            editorRef.current.stop();
+            editorRef.current.evaluate();
+        }
+    };
+
+    // Handle volume change
+    const handleVolumeChange = (newVolume) => {
+        setVolume(newVolume);
+    };
+
+    // Handle CPM change
+    const handleCpmChange = (newCpm) => {
+        setCpm(newCpm);
+    };
+
+    // Update editor when volume or CPM changes
+    useEffect(() => {
+        updateEditorWithControls();
+    }, [volume, cpm, songData, isPlaying]);
 
     return (
         <> {/* React Fragment lets us group elements without an extra div */}
@@ -16,12 +52,12 @@ function PlayControl({ volume, onVolumeChange, cpm, onCpmChange }) {
 
                 <div className="input-group mb-3">
                     <span className="input-group-text glass-input" id="cpm_label">SetTempo</span>
-                    <input type="number" className="form-control glass-input" id="cpm_text_input" min="0" max="500" step="10" placeholder="120" aria-label="120" aria-describedby="cpm_label" value={cpm} onChange={(e) => onCpmChange(Number(e.target.value))} />
+                    <input type="number" className="form-control glass-input" id="cpm_text_input" min="0" max="500" step="10" placeholder="120" aria-label="120" aria-describedby="cpm_label" value={cpm} onChange={(e) => handleCpmChange(Number(e.target.value))} />
                 </div>
 
                 <div className="p-3 rounded-3 glass-inner-card fw-semibold mb-3">
                     <label htmlFor="volume_range" className="form-label text-light">Volume Slider {volume}%</label>
-                    <input type="range" className="form-range glass-input" min="0" max="100" value={volume} id="volume_range" onChange={(e) => onVolumeChange(Number(e.target.value))}
+                    <input type="range" className="form-range glass-input" min="0" max="100" value={volume} id="volume_range" onChange={(e) => handleVolumeChange(Number(e.target.value))}
                     />
                 </div>
 
@@ -46,11 +82,11 @@ function PlayControl({ volume, onVolumeChange, cpm, onCpmChange }) {
                 </div>
 
                 <div className="d-flex justify-content-center gap-3 mt-3 my-5">
-                    <button className="btn btn-secondary glass-btn " onClick={() => onVolumeChange(0)}>
+                    <button className="btn btn-secondary glass-btn " onClick={() => handleVolumeChange(0)}>
                         <i className="bi bi-mic-mute-fill"></i> Mute
                     </button>
 
-                    <button className="btn btn-primary glass-btn" onClick={() => onVolumeChange(DEFAULT_VOLUME)}>
+                    <button className="btn btn-primary glass-btn" onClick={() => handleVolumeChange(DEFAULT_VOLUME)}>
                         <i className="bi bi-mic-fill"></i> Unmute
                     </button>
 
@@ -58,6 +94,7 @@ function PlayControl({ volume, onVolumeChange, cpm, onCpmChange }) {
                         <i className="bi bi-shuffle"></i> Shuffle
                     </button>
                 </div>
+
             </div >
 
         </>
