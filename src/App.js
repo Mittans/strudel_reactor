@@ -91,6 +91,12 @@ export default function StrudelDemo() {
         return processed;
     };
 
+    const applyBpm = (text, bpm) => {
+        // Replaces the BPM value in setcps(140/60/4) from tunes.js
+        const cpsPattern = /setcps\((\d+)\/60\/4\)/; // Matches exactly from tunes.js
+        return text.replace(cpsPattern, `setcps(${bpm}/60/4)`);
+    };
+
     // Live updates the toggle state
     const handleToggleChange = (newToggles) => {
         setToggles(newToggles);
@@ -104,7 +110,19 @@ export default function StrudelDemo() {
         }
     };
 
-
+    const handleBpmChange = (newBpm) => {
+        // Apply BPM to the current song text
+        let processedText = applyBpm(songText, newBpm);
+        // Also apply current toggles to maintain their state
+        processedText = applyToggles(processedText, toggles);
+        
+        globalEditor.setCode(processedText);
+        
+        // If already playing, re-evaluate to apply changes immediately
+        if (globalEditor.repl.state.started) {
+            globalEditor.evaluate();
+        }
+    };
 
     useEffect(() => {
 
@@ -162,7 +180,7 @@ return (
                     <div className="col-md-4">
                         <nav>
                             <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-                            <AUXControls onToggleChange={handleToggleChange} />
+                            <AUXControls onToggleChange={handleToggleChange} onBpmChange={handleBpmChange}/>
                         </nav>
                     </div>
                 </div>
