@@ -57,6 +57,18 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                     <label htmlFor="volume_range" className="form-label text-light">Volume Slider {volume}%</label>
                     <input type="range" className="form-range glass-input" min="0" max="100" value={volume} id="volume_range" onChange={(e) => handleVolumeChange(Number(e.target.value))}
                     />
+                    <div className="d-flex justify-content-center flex-wrap gap-2 mb-3">
+                        {[0, 25, 50, 75, 100].map((vol) => (
+                            <button
+                                key={vol}
+                                className="btn btn-sm btn-outline-light"
+                                onClick={() => handleVolumeChange(vol)} >
+                                {vol}%
+                            </button>
+                        ))}
+                    </div>
+
+
                 </div>
 
                 <div className="p-3 rounded-3 glass-inner-card fw-semibold mb-3">
