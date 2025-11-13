@@ -42,13 +42,11 @@ function PlayControl({ songData, editorRef, isPlaying }) {
 
     return (
         <> {/* React Fragment lets us group elements without an extra div */}
-
-            <div className="container p-4 rounded-4 shadow-sm glass-card">
-
+            <div className="container p-4 rounded-4 shadow glass-card border border-light-subtle">
                 <h5 className="text-center mb-4 fw-bold text-light">
-                    <i className="bi bi-file-earmark-music me-2"></i>
-                    Play Control Panel
+                    <i className="bi bi-sliders me-2"></i> Play Control Panel
                 </h5>
+
 
                 <div className="input-group mb-3">
                     <span className="input-group-text glass-input" id="cpm_label">SetTempo</span>
