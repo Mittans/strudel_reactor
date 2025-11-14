@@ -80,30 +80,31 @@ return (
 
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto', display: 'none' }}>
                         <ControlsTextArea />
                     </div>
-                    <div className="col-md-4">
+                    <div className="row">
+                        <div
+                            className="col-md-8"
+                            style={{ maxHeight: '80vh', overflowY: 'auto' }}
+                        >
+                            <div id="editor" />
+                            <div id="output" />
+                            <canvas id="roll"></canvas>
+                        </div>
 
-                        <nav>
-                            <ProcButtons />
-                            <br />
-                            <PauseAndPlay/>
-                            
-                        </nav>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                        <DJControls />
+                        <div className="col-md-4">
+                            <nav className="mb-3">
+                                <ProcButtons />
+                                <br />
+                                <PauseAndPlay />
+                            </nav>
+
+                            <DJControls />
+                        </div>
                     </div>
                 </div>
             </div>
-            <canvas id="roll"></canvas>
         </main >
     </div >
 );
