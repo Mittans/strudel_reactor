@@ -1,7 +1,7 @@
 import VolumeSlider from './VolumeSlider';
 import { useState } from 'react';
 
-function AUXControls({ onToggleChange, onBpmChange }) { 
+function AUXControls({ onToggleChange, onBpmChange, onVolumeChange }) { 
   // Sets default as all instruments "On"
   const [toggles, setToggles] = useState({
     Baseline: true,
@@ -36,6 +36,13 @@ function AUXControls({ onToggleChange, onBpmChange }) {
       }
     }
   };
+
+  // Handle volume change from VolumeSlider
+   const handleVolumeChange = (gainValue) => {
+     if (onVolumeChange) {
+       onVolumeChange(gainValue);
+     }
+   };
 
   // Mute all
   const handleMuteAll = () => {
@@ -96,7 +103,7 @@ function AUXControls({ onToggleChange, onBpmChange }) {
         </div>
         
         <div className="px-3 mt-2">
-          <VolumeSlider />
+          <VolumeSlider onVolumeChange={handleVolumeChange} />
           
           {/* BPM Input */}
           <div className="mt-3 mb-2">

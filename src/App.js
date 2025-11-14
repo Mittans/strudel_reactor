@@ -48,6 +48,8 @@ export default function StrudelDemo() {
         Drums: true,
         Drums2: true
     });
+    const [currentBpm, setCurrentBpm] = useState(140);
+    const [currentVolume, setCurrentVolume] = useState(0.7);
 
  
     const handlePlay = () => {
@@ -92,37 +94,76 @@ export default function StrudelDemo() {
     };
 
     const applyBpm = (text, bpm) => {
-        // Replaces the BPM value in setcps(140/60/4) from tunes.js
-        const cpsPattern = /setcps\((\d+)\/60\/4\)/; // Matches exactly from tunes.js
+        // Replace the BPM value in setcps(140/60/4) pattern
+        const cpsPattern = /setcps\((\d+)\/60\/4\)/;
         return text.replace(cpsPattern, `setcps(${bpm}/60/4)`);
+    };
+
+    const applyVolume = (text, gainValue) => {
+        // Replace the gain value in all(x => x.gain(0.7)) pattern
+        const gainPattern = /all\(x => x\.gain\([\d.]+\)\)/;
+        return text.replace(gainPattern, `all(x => x.gain(${gainValue}))`);
+    };
+
+    // Unified function to apply all current settings to the song text
+    const applyAllSettings = (text, bpm, volume, toggleState) => {
+        let processed = text;
+        processed = applyBpm(processed, bpm);
+        processed = applyVolume(processed, volume);
+        processed = applyToggles(processed, toggleState);
+        return processed;
+    };
+
+    // Update editor with current settings
+    const updateEditor = () => {
+        if (!globalEditor) return;
+        const processedText = applyAllSettings(songText, currentBpm, currentVolume, toggles);
+        globalEditor.setCode(processedText);
+        
+        // If already playing, re-evaluate to apply changes immediately
+        if (globalEditor.repl.state.started) {
+            globalEditor.evaluate();
+        }
     };
 
     // Live updates the toggle state
     const handleToggleChange = (newToggles) => {
         setToggles(newToggles);
-        // Apply toggles to the current song text
-        const processedText = applyToggles(songText, newToggles);
+        if (!globalEditor) return;
+        
+        const processedText = applyAllSettings(songText, currentBpm, currentVolume, newToggles);
         globalEditor.setCode(processedText);
         
-        // If already playing, re-evaluate to apply changes immediately
         if (globalEditor.repl.state.started) {
             globalEditor.evaluate();
         }
     };
 
     const handleBpmChange = (newBpm) => {
-        // Apply BPM to the current song text
-        let processedText = applyBpm(songText, newBpm);
-        // Also apply current toggles to maintain their state
-        processedText = applyToggles(processedText, toggles);
+        setCurrentBpm(newBpm);
+        if (!globalEditor) return;
         
+        const processedText = applyAllSettings(songText, newBpm, currentVolume, toggles);
         globalEditor.setCode(processedText);
         
-        // If already playing, re-evaluate to apply changes immediately
         if (globalEditor.repl.state.started) {
             globalEditor.evaluate();
         }
     };
+
+    const handleVolumeChange = (gainValue) => {
+        setCurrentVolume(gainValue);
+        if (!globalEditor) return;
+        
+        const processedText = applyAllSettings(songText, currentBpm, gainValue, toggles);
+        globalEditor.setCode(processedText);
+        
+        if (globalEditor.repl.state.started) {
+            globalEditor.evaluate();
+        }
+    };
+
+
 
     useEffect(() => {
 
@@ -180,7 +221,11 @@ return (
                     <div className="col-md-4">
                         <nav>
                             <PlayButtons onPlay={handlePlay} onStop={handleStop} />
-                            <AUXControls onToggleChange={handleToggleChange} onBpmChange={handleBpmChange}/>
+                            <AUXControls 
+                                onToggleChange={handleToggleChange}
+                                onBpmChange={handleBpmChange}
+                                onVolumeChange={handleVolumeChange}
+                            />
                         </nav>
                     </div>
                 </div>
