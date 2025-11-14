@@ -1,7 +1,7 @@
 import VolumeSlider from './VolumeSlider';
 import { useState } from 'react';
 
-function AUXControls({ onToggleChange, onBpmChange, onVolumeChange }) { 
+function AUXControls({ onToggleChange, onBpmChange, onVolumeChange }) {
   // Sets default as all instruments "On"
   const [toggles, setToggles] = useState({
     Baseline: true,
@@ -38,11 +38,11 @@ function AUXControls({ onToggleChange, onBpmChange, onVolumeChange }) {
   };
 
   // Handle volume change from VolumeSlider
-   const handleVolumeChange = (gainValue) => {
-     if (onVolumeChange) {
-       onVolumeChange(gainValue);
-     }
-   };
+  const handleVolumeChange = (gainValue) => {
+    if (onVolumeChange) {
+      onVolumeChange(gainValue);
+    }
+  };
 
   // Mute all
   const handleMuteAll = () => {
@@ -84,7 +84,7 @@ function AUXControls({ onToggleChange, onBpmChange, onVolumeChange }) {
 
   const handleToggleAll = () => {
     if (allMuted) { // If all muted, unmute all
-      handleUnmuteAll(); 
+      handleUnmuteAll();
     } else { // Mute all
       handleMuteAll();
     }
@@ -92,56 +92,55 @@ function AUXControls({ onToggleChange, onBpmChange, onVolumeChange }) {
 
   return (
     <>
-      <div className="card border-0 shadow-sm">
-        <div className='card-header bg-white pt-3'>
-          <div className="d-flex justify-content-between align-items-center">
-            <h6 className="text-muted text-uppercase mb-3 mt-2" style={{ fontSize: '1rem' }}>Instruments</h6>
-            <span className='badge bg-light text-dark'>
-              {activeCount} / 4
-            </span>
+
+      <div className="px-3 mt-2">
+        <VolumeSlider onVolumeChange={handleVolumeChange} />
+
+        {/* BPM Input */}
+        <div className="mt-3 mb-2">
+          <label htmlFor="bpmInput" className="form-label text-muted small mb-1">
+            BPM (Beats Per Minute)
+          </label>
+          <div className="input-group input-group-sm">
+            <input
+              type="number"
+              className="form-control"
+              id="bpmInput"
+              value={bpm}
+              onChange={handleBpmChange}
+              min="1"
+              max="300"
+              placeholder="140"
+            />
+            <span className="input-group-text">BPM</span>
           </div>
         </div>
-        
-        <div className="px-3 mt-2">
-          <VolumeSlider onVolumeChange={handleVolumeChange} />
-          
-          {/* BPM Input */}
-          <div className="mt-3 mb-2">
-            <label htmlFor="bpmInput" className="form-label text-muted small mb-1">
-              BPM (Beats Per Minute)
-            </label>
-            <div className="input-group input-group-sm">
-              <input
-                type="number"
-                className="form-control"
-                id="bpmInput"
-                value={bpm}
-                onChange={handleBpmChange}
-                min="1"
-                max="300"
-                placeholder="140"
-              />
-              <span className="input-group-text">BPM</span>
+      </div>
+
+      <div className="card-body p-3">
+        <div className='d-grid gap-2 mb-3'>
+          <button
+            className={`btn btn-sm ${allMuted ? 'btn-success' : 'btn-danger'}`}
+            onClick={handleToggleAll}
+          >
+            <i className={`bi ${allMuted ? 'bi-volume-up-fill' : 'bi-volume-mute-fill'} me-1`}></i>
+            {allMuted ? 'Unmute All' : 'Mute All'}
+          </button>
+        </div>
+
+
+        <div className="card border-0 shadow-sm">
+          <div className='card-header bg-white pt-3'>
+            <div className="d-flex justify-content-between align-items-center">
+              <h6 className="text-muted text-uppercase mb-3 mt-2" style={{ fontSize: '1rem' }}>Instruments</h6>
+              <span className='badge bg-light text-dark'>
+                {activeCount} / 4
+              </span>
             </div>
           </div>
-        </div>
-
-        <div className="card-body p-3">
-          <div className='d-grid gap-2 mb-3'>
-            <button
-              className={`btn btn-sm ${allMuted ? 'btn-success' : 'btn-danger'}`}
-              onClick={handleToggleAll}
-            >
-              <i className={`bi ${allMuted ? 'bi-volume-up-fill' : 'bi-volume-mute-fill'} me-1`}></i>
-              {allMuted ? 'Unmute All' : 'Mute All'}
-            </button>
-          </div>
-
-          <hr className="my-3" />
-
           <div className="list-group list-group-flush">
             {["Baseline", "MainArp", "Drums", "Drums2"].map((id) => (
-              <div 
+              <div
                 key={id}
                 className="list-group-item d-flex justify-content-between align-items-center px-0 border-0 py-2"
               >
@@ -168,7 +167,7 @@ function AUXControls({ onToggleChange, onBpmChange, onVolumeChange }) {
                 </span>
 
               </div>
-              
+
             ))}
           </div>
         </div>
