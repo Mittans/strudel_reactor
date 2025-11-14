@@ -1,9 +1,12 @@
 function LowPassFilter({ setLowPassState, Proc }) {
+    // Sets the filter value to the value matched on the range
+    //Processes change
     const AllLowPassFilter = (value) => {
         setLowPassState(value);
         Proc();
     };
 
+    // Displays a range for the filter value to be changed by.
     return (
         <div>
             <div>

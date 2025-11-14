@@ -1,19 +1,21 @@
 import { StrudelMirror } from "@strudel/codemirror";
 import { evalScope } from "@strudel/core";
-import { drawPianoroll } from "@strudel/draw";
 import { initAudioOnFirstClick } from "@strudel/webaudio";
 import { transpiler } from "@strudel/transpiler";
 import { getAudioContext, webaudioOutput, registerSynthSounds } from "@strudel/webaudio";
 import { registerSoundfonts } from "@strudel/soundfonts";
 import { stranger_tune } from "../tunes";
-import console_monkey_patch, { getD3Data } from "../console-monkey-patch";
-import { useEffect, useRef, useState } from "react";
+import console_monkey_patch from "../console-monkey-patch";
+import { useEffect, useRef } from "react";
 
 function Processor({ setGlobalEditor, rngArray, setRngArray }) {
+    // Used to check if the strudel has been processed
     const hasRun = useRef(false);
 
+    // Adds new data to array
     const handleD3Data = (event) => {
         let tempArray = [...rngArray, ...event.detail];
+        // ensures that a maximum of 30 data points are accessible to the graph
         if (tempArray.length > 30) {
             tempArray.shift();
         }
@@ -56,6 +58,7 @@ function Processor({ setGlobalEditor, rngArray, setRngArray }) {
         }
     }, []);
 
+    // Creates a text area to hold processing information
     return (
         <div className="mb-3 ps-3" style={{ maxHeight: "50vh" }}>
             <textarea

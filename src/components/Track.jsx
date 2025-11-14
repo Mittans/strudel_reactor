@@ -1,4 +1,5 @@
 function Track({ trackName, Volume }) {
+    // Creates a range for each track to change volume.
     return (
         <div>
             <label htmlFor="Track" className="form-label">

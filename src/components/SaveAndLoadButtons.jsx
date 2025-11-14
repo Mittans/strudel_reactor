@@ -2,10 +2,15 @@ import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
 function SaveAndLoadButtons({ MuteState, setMuteState }) {
+    // Variables and functions used to show modal when save is clicked and
+    // close modal once user has saved the name chosen
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    // Saves the json file to downloads
+    // Names file the name given by user
+    // if no name given by user names the file a default name.
     const saveState = () => {
         let State = {};
         let value = document.getElementById("proc").value;
@@ -29,6 +34,7 @@ function SaveAndLoadButtons({ MuteState, setMuteState }) {
         handleClose();
     };
 
+    // Allows user to load json file from file system when load button is pressed.
     const loadState = () => {
         let State = document.createElement("input");
         State.type = "file";
@@ -50,6 +56,9 @@ function SaveAndLoadButtons({ MuteState, setMuteState }) {
         };
         State.click();
     };
+
+    // Creates the buttons to save and load a json file.
+    // Creates a modal to name the file being saved.
     return (
         <>
             <div className="d-flex mb-3 pt-2">

@@ -6,27 +6,38 @@ function Reverb({
     setRoomDecayState,
     setRoomSustainState,
 }) {
+    // Sets the value for the room
     const Room = (value) => {
         setRoomState(value);
         Proc();
     };
+
+    // Sets the value for the room low pass
     const RoomLowPass = (value) => {
         setRoomLowPassState(value);
         Proc();
     };
+
+    // Sets the value for the room fade
     const Fade = (value) => {
         setRoomFadeState(value);
         Proc();
     };
+
+    // Sets the value for the room decay
     const Decay = (value) => {
         setRoomDecayState(value);
         Proc();
     };
+
+    // Sets the value for time that the song decays for
     const Sustain = (value) => {
         setRoomSustainState(value);
         Proc();
     };
 
+    // Creates a loncation to hold the filters and their controls
+    // Creates the control and sets the value of the respective filter to value of control.
     return (
         <div>
             <div>

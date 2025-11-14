@@ -1,4 +1,5 @@
 function PlayButtons({ globalEditor }) {
+    // Creates buttons to play and stop the song
     return (
         <div className="d-flex w-100 mb-3">
             <div className="col-6 text-center me-1">

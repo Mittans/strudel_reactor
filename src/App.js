@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import Graph from "./components/Graph";
 
 export default function StrudelDemo() {
+    // creates a global variable for each filter of volume control
     const [globalEditor, setGlobalEditor] = useState(null);
     const [Tracks, setTracks] = useState([]);
     const [MuteState, setMuteState] = useState(false);
@@ -22,6 +23,8 @@ export default function StrudelDemo() {
     const [RoomSustainState, setRoomSustainState] = useState(0);
     const [rngArray, setRngArray] = useState([]);
 
+    // Process text on lood and pulls all the tracks from the song
+    // Uses the tracks pulled creates a range for each track to set volume.
     useEffect(() => {
         if (globalEditor) {
             Proc();
@@ -32,6 +35,7 @@ export default function StrudelDemo() {
         }
     }, [globalEditor]);
 
+    // Pulls the tracks from the song and stores them in an array.
     const getTrack = () => {
         let code = globalEditor.code;
         code = code.split("\n");
@@ -44,35 +48,58 @@ export default function StrudelDemo() {
     };
 
     const Proc = () => {
+        // Check if there is a global editor
+        // If no global editor return as the code can't be set
         if (!globalEditor) {
             return;
         }
-        console.log(document.getElementById("proc"));
+
+        // gets the process information to process
         let proc_text = document.getElementById("proc").value;
+
+        // Process mute tag
         let proc_text_replaced = proc_text.replaceAll("<Mute>", ProcessText("Mute", ""));
+
+        // Process volume tag
         proc_text_replaced = proc_text_replaced.replaceAll(
             "<Volume_Control>",
             ProcessText("Volume", "")
         );
+
+        // Process low pass filter tag
         proc_text_replaced = proc_text_replaced.replaceAll(
             "<Low_Pass_Filter>",
             ProcessText("lpf", "")
         );
+
+        // Process medium pass filter tag
         proc_text_replaced = proc_text_replaced.replaceAll(
             "<Medium_Pass_Filter>",
             ProcessText("mpf", "")
         );
+
+        // Process high pass filter tag
         proc_text_replaced = proc_text_replaced.replaceAll(
             "<High_Pass_Filter>",
             ProcessText("hpf", "")
         );
+
+        // Process room filter tag
         proc_text_replaced = proc_text_replaced.replaceAll("<Room>", ProcessText("Room", ""));
+
+        // Process room low pass filter tag
         proc_text_replaced = proc_text_replaced.replaceAll(
             "<Room_Low_Pass>",
             ProcessText("rlp", "")
         );
+
+        // Process Decay tag
         proc_text_replaced = proc_text_replaced.replaceAll("<Decay>", ProcessText("Decay", ""));
+
+        //Process room fade tag
         proc_text_replaced = proc_text_replaced.replaceAll("<Room_Fade>", ProcessText("Fade", ""));
+
+        // Process volume tag for each track
         if (Tracks.length === 0) {
             proc_text_replaced = proc_text_replaced.replaceAll(
                 /<([A-Za-z][_0-9A-Za-z]*\s?)_Volume>/g,
@@ -94,44 +121,66 @@ export default function StrudelDemo() {
         globalEditor.setCode(proc_text_replaced);
     };
 
+    //sets the mute state when it changes and processes change
     useEffect(() => {
         Proc();
     }, [MuteState]);
 
     const ProcessText = (match, track) => {
-        console.log(track);
+        // Creating variable to replace tag
         let replace = "";
-        console.log(MuteState);
+
+        // replace mute variable when mute state is changed
         if (MuteState && match === "Mute") {
             replace = "_";
         }
+
+        // updates the all volume tag with the volume state value
         if (volumeState["AllTrackVolume"] && match === "Volume" && track === "") {
             replace = `all(x => x.postgain(${volumeState["AllTrackVolume"]}))`;
         }
+
+        // updates respective track volume with the volume provided by the track volume state
         if (volumeState[track] && match === "Volume") {
             replace = `.postgain(${volumeState[track]})`;
         }
+
+        // updates the all low pass tag with the low pass state value
         if (LowPassState && match === "lpf") {
             replace = `all(x => x.lpf(${LowPassState}))`;
         }
+
+        // updates the all medium pass tag with the medium pass state value
         if (MediumPassState && match === "mpf") {
             replace = `all(x => x.bpf(${MediumPassState}))`;
         }
+
+        // updates the all high pass tag with the high pass state value
         if (HighPassState && match === "hpf") {
             replace = `all(x => x.hpf(${HighPassState}))`;
         }
+
+        // updates the all room tag with the room state value
         if (RoomState && match === "Room") {
             replace = `all(x => x.room(${RoomState}))`;
         }
+
+        // updates the all room low pass tag with the room low pass state value
         if (RoomLowPassState && match === "rlp") {
             replace = `all(x => x.room(${RoomState}).rlp(${RoomLowPassState}))`;
         }
+
+        // updates the all room fade tag with the room fade state value
         if (RoomFadeState && match === "Fade") {
             replace = `all(x => x.room(${RoomState}).rlp(${RoomLowPassState}).rfade(${RoomFadeState}))`;
         }
+
+        // updates the all room decay tag with the room decay state value
         if (RoomDecayState && match === "Decay") {
             replace = `all(x => x.decay(${RoomDecayState}).sustain(${RoomSustainState}))`;
         }
+
+        // updates the all room sustain tag with the room sustain state value
         if (RoomSustainState && match === "Decay") {
             replace = `all(x => x.decay(${RoomDecayState}).sustain(${RoomSustainState}))`;
         }
@@ -139,6 +188,8 @@ export default function StrudelDemo() {
         return replace;
     };
 
+    // changes the volume when a volume range has been set
+    // Processes change
     const Volume = (track, value) => {
         setVolumeState((prevState) => ({
             ...prevState,
@@ -147,6 +198,7 @@ export default function StrudelDemo() {
         Proc();
     };
 
+    // Creates layout of webpage
     return (
         <div style={{ backgroundColor: "#020a4aff" }}>
             <div className="row" style={{ maxWidth: "100vw", marginRight: "0" }}>

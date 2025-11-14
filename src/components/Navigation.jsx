@@ -17,7 +17,10 @@ function Navigation({
     MuteState,
     setMuteState,
 }) {
+    // Creates a group to display all filters and controls
+    // Displays controls
     return (
+        // Creates tabs and buttons to scroll to specified filter or control
         <div>
             <nav className="row w-100 " style={{ maxHeight: "100vh" }}>
                 <nav id="navbar-example2" className="navbar navbar-light bg-light px-3 ms-3">

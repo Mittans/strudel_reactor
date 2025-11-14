@@ -1,4 +1,5 @@
 function Strudel() {
+    // Creates the strudel editor
     return (
         <div
             className="mt-3"

@@ -1,11 +1,13 @@
 import ToggleButton from "react-bootstrap/ToggleButton";
 
 function VolumeControl({ Proc, MuteState, setMuteState, Volume }) {
+    // Sets the state of Mute
     const MuteStateSetter = () => {
         setMuteState(!MuteState);
         Proc();
     };
 
+    // Creates a range to change volume and a toggle button to mute.
     return (
         <div className="col-12 mb-3">
             <ToggleButton
