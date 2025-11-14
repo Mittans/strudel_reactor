@@ -114,17 +114,6 @@ export default function StrudelDemo() {
         return processed;
     };
 
-    // Update editor with current settings
-    const updateEditor = () => {
-        if (!globalEditor) return;
-        const processedText = applyAllSettings(songText, currentBpm, currentVolume, toggles);
-        globalEditor.setCode(processedText);
-        
-        // If already playing, re-evaluate to apply changes immediately
-        if (globalEditor.repl.state.started) {
-            globalEditor.evaluate();
-        }
-    };
 
     // Live updates the toggle state
     const handleToggleChange = (newToggles) => {
