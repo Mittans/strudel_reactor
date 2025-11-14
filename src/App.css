@@ -77,3 +77,28 @@ input[type="range"]::-webkit-slider-thumb {
 input[type="range"]:focus {
     box-shadow: 0 0 0 0.25rem rgba(0,185,107,0.35) !important;
 }
+
+/* Collapsible control sections on the right-hand panel */
+.control-section {
+    border-radius: 0.75rem;
+    border: 1px solid #2a2f3a;
+    background-color: #151922;
+    padding: 0.5rem 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+    .control-section summary {
+        list-style: none;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+        .control-section summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .control-section summary span:first-child {
+            font-weight: 500;
+        }
