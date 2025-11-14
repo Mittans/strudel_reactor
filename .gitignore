@@ -27,3 +27,4 @@ yarn-error.log*
 /.vs/ReactAssignment/v17
 /.vs
 /ReactAssignment.esproj
+/obj/Debug/package.g.props

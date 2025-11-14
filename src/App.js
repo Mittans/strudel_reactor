@@ -14,6 +14,7 @@ import PlayButtons from './components/PlayButtons';
 import ProcButtons from './components/ProcButtons';
 import PreprocessTextarea from './components/PreprocessTextarea';
 import JsonButtons from "./components/JsonButtons";
+import D3Graph from "./components/D3Graph";
 
 
 let globalEditor = null;
@@ -236,6 +237,7 @@ return (
                             tracksEnabled={tracksEnabled}
                             onToggleTrack={handleToggleTrack}
                             onEffectChange={handleEffectChange} />
+                        <D3Graph />
                     </div>
                 </div>
             </div>
