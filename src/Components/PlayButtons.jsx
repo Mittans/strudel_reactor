@@ -41,8 +41,18 @@ function PlayButtons({ editorRef, setIsPlaying }) {
                     <button id="stop" className="btn btn-danger px-4" onClick={handleStop}>
                         <i className="bi bi-stop-fill"></i> Stop
                     </button>
+
+
+                </div>
+
+                <div className="text-center my-2">
+                    <small className="text-light opacity-75">
+                        <i className="bi bi-info-circle me-1"></i>
+                        Hotkeys: Enter = Play, Space = Stop
+                    </small>
                 </div>
             </div >
+
         </>
     );
 }

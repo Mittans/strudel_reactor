@@ -68,39 +68,37 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                         ))}
                     </div>
 
-
-                </div>
-
-                <div className="p-3 rounded-3 glass-inner-card fw-semibold mb-3">
-                    <p className="fw-semibold mb-2 text-light text-center">Tracks</p>
-                    <div className="d-flex justify-content-center flex-wrap gap-4">
-                        <div className="form-check form-switch">
-                            <input className="form-check-input" type="checkbox" id="drum2Switch" />
-                            <label className="form-check-label text-light" htmlFor="drum2Switch">Drum 2</label>
-                        </div>
-                        <div className="form-check form-switch">
-                            <input className="form-check-input" type="checkbox" id="drumsSwitch" />
-                            <label className="form-check-label text-light" htmlFor="drumsSwitch">Drums</label>
-                        </div>
-                        <div className="form-check form-switch">
-                            <input className="form-check-input" type="checkbox" id="bassSwitch" />
-                            <label className="form-check-label text-light" htmlFor="bassSwitch">Bass</label>
+                    <div className="p-3 rounded-3 glass-inner-card fw-semibold mb-3">
+                        <h5 className="fw-semibold mb-2 text-light text-center">Tracks</h5>
+                        <div className="d-flex justify-content-center flex-wrap gap-4">
+                            <div className="form-check form-switch">
+                                <input className="form-check-input" type="checkbox" id="drum2Switch" />
+                                <label className="form-check-label text-light" htmlFor="drum2Switch">Drum 2</label>
+                            </div>
+                            <div className="form-check form-switch">
+                                <input className="form-check-input" type="checkbox" id="drumsSwitch" />
+                                <label className="form-check-label text-light" htmlFor="drumsSwitch">Drums</label>
+                            </div>
+                            <div className="form-check form-switch">
+                                <input className="form-check-input" type="checkbox" id="bassSwitch" />
+                                <label className="form-check-label text-light" htmlFor="bassSwitch">Bass</label>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div className="d-flex justify-content-center gap-3 mt-3 my-5">
-                    <button className="btn btn-secondary glass-btn " onClick={() => handleVolumeChange(0)}>
-                        <i className="bi bi-mic-mute-fill"></i> Mute
-                    </button>
+                    <div className="d-flex justify-content-center gap-3 mt-3 my-5">
+                        <button className="btn btn-secondary glass-btn " onClick={() => handleVolumeChange(0)}>
+                            <i className="bi bi-mic-mute-fill"></i> Mute
+                        </button>
 
-                    <button className="btn btn-primary glass-btn" onClick={() => handleVolumeChange(DEFAULT_VOLUME)}>
-                        <i className="bi bi-mic-fill"></i> Unmute
-                    </button>
+                        <button className="btn btn-primary glass-btn" onClick={() => handleVolumeChange(DEFAULT_VOLUME)}>
+                            <i className="bi bi-mic-fill"></i> Unmute
+                        </button>
 
-                    <button className="btn btn-warning glass-btn">
-                        <i className="bi bi-shuffle"></i> Shuffle
-                    </button>
+                        <button className="btn btn-warning glass-btn">
+                            <i className="bi bi-shuffle"></i> Shuffle
+                        </button>
+                    </div>
                 </div>
 
             </div >
