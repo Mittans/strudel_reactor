@@ -1,6 +1,7 @@
 **Strudel Music Demo**
 A web-based music player built with React and Strudel that provides real-time control over multiple instruments, tempo, and volume.
-Features:
+
+**Features:**
 
 **Control Instruments with individual sliders**
 Toggle each individual instruments on/off in real-time:
@@ -19,7 +20,6 @@ Visual Control: Interactive D3.js slider for precise volume adjustment
 Range: 0% (mute) to 100% (maximum volume)
 Gain Display: Shows both percentage and decimal gain value (0.0 - 1.0)
 Volume History Graph: Real-time line graph
-Responsive Design: Automatically adjusts to browser width
 
 __BPM Control__
 
@@ -37,7 +37,7 @@ Stops audio playback immediately
 Settings are preserved for next playback
 
 **Quick Actions**
-Mute/Unmute All
+__Mute/Unmute All__
 
 Mute All Button: Mutes all four instruments
 Unmute All Button: Unmutes all instruments to active state
