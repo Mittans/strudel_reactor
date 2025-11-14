@@ -9,9 +9,7 @@ export function SetupButtons() {
     document.getElementById('stop')?.addEventListener('click', () => editor?.stop());
     document.getElementById('process')?.addEventListener('click', () => {
         Proc()
-    }
-
-    )
+    })
     document.getElementById('process_play')?.addEventListener('click', () => {
         if (editor != null) {
             Proc()
@@ -20,6 +18,8 @@ export function SetupButtons() {
 
     }
     )
+
+
     const vol = document.getElementById('volume_slider');
     const cpm = document.getElementById('cpm_input');
 
@@ -32,4 +32,8 @@ export function SetupButtons() {
 
     vol?.addEventListener('input', reevalIfPlaying);   
     cpm?.addEventListener('change', reevalIfPlaying);
+
+    const patternSelect = document.getElementById('pattern_select');
+    patternSelect?.addEventListener('change', reevalIfPlaying);
+
 }

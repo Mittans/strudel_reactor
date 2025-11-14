@@ -22,12 +22,20 @@ export function Proc() {
     const cpmEl = document.getElementById('cpm_input');
     const currentVolume = volumeEl ? volumeEl.value : "0.8";
     const currentCPM = cpmEl ? cpmEl.value : "120";
+    
+
 
     let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
+
 
     proc_text_replaced = proc_text_replaced
         .replaceAll('<VOLUME>', currentVolume)
         .replaceAll('<CPM>', currentCPM);
+
+    const patternElement = document.getElementById('pattern_select');
+    const patternValue = patternElement ? patternElement.value : "0";
+    proc_text_replaced = proc_text_replaced.replaceAll('<PATTERN>', patternValue);
+
 
     ProcessText(proc_text);
     editor.setCode(proc_text_replaced)

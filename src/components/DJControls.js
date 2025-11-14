@@ -64,6 +64,21 @@ function DJControls() {
                 <input class="form-check-input" type="radio" name="p3Radio" id="p3_hush" />
                 <label class="form-check-label" for="p3_hush">p3: Hush</label>
             </div>
+
+
+            <div className="mb-3">
+                <label htmlFor="pattern_select" className="form-label">Pattern</label>
+                <select
+                    id="pattern_select"
+                    className="form-select"
+                    defaultValue="0"
+                >
+                    <option value="0">Pattern A</option>
+                    <option value="1">Pattern B</option>
+                    <option value="2">Pattern C</option>
+                </select>
+            </div>
+
         </>
 );
 }

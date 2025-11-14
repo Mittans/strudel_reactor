@@ -36,7 +36,7 @@ const arpeggiator2 = [
 ]
 
 
-const pattern = 0
+const pattern = <PATTERN>
 const bass = 0
 
 bassline:
