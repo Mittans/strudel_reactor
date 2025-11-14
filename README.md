@@ -21,10 +21,10 @@ Range: 0% (mute) to 100% (maximum volume)
 Gain Display: Shows both percentage and decimal gain value (0.0 - 1.0)  
 Volume History Graph: Real-time line graph  
 
-__Additional Feature__
-Visual display for volume slider using d3 graph
-Dynamically adjusts based on users volume inputs
-Maximum 30 bars shown
+__Additional Feature__  
+Visual display for volume slider using d3 graph  
+Dynamically adjusts based on users volume inputs  
+Maximum 30 bars shown  
 
 __BPM Control__  
 
