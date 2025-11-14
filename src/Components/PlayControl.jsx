@@ -57,7 +57,7 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                     <label htmlFor="volume_range" className="form-label text-light">Volume Slider {volume}%</label>
                     <input type="range" className="form-range glass-input" min="0" max="100" value={volume} id="volume_range" onChange={(e) => handleVolumeChange(Number(e.target.value))}
                     />
-                    <div className="d-flex justify-content-center flex-wrap gap-2 mb-3">
+                    <div className="d-flex justify-content-between flex-wrap gap-1 mb-3">
                         {[0, 25, 50, 75, 100].map((vol) => (
                             <button
                                 key={vol}
@@ -67,6 +67,9 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                             </button>
                         ))}
                     </div>
+
+
+
 
                     <div className="p-3 rounded-3 glass-inner-card fw-semibold mb-3">
                         <h5 className="fw-semibold mb-2 text-light text-center">Tracks</h5>
@@ -86,22 +89,47 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                         </div>
                     </div>
 
-                    <div className="d-flex justify-content-center gap-3 mt-3 my-5">
-                        <button className="btn btn-secondary glass-btn " onClick={() => handleVolumeChange(0)}>
-                            <i className="bi bi-mic-mute-fill"></i> Mute
-                        </button>
+                    {/* ACTION BUTTON BAR */}
+                    <div className="mt-4">
+                        <div className="d-flex w-100 rounded-3 overflow-hidden border border-light-subtle">
 
-                        <button className="btn btn-primary glass-btn" onClick={() => handleVolumeChange(DEFAULT_VOLUME)}>
-                            <i className="bi bi-mic-fill"></i> Unmute
-                        </button>
+                            {/* MUTE */}
+                            <button
+                                className="btn glass-btn flex-fill py-2 border-end"
+                                onClick={() => handleVolumeChange(0)}
+                            >
+                                <i className="bi bi-volume-mute-fill text-danger"></i>
+                            </button>
 
-                        <button className="btn btn-warning glass-btn">
-                            <i className="bi bi-shuffle"></i> Shuffle
-                        </button>
+                            {/* UNMUTE */}
+                            <button
+                                className="btn glass-btn flex-fill py-2 border-end"
+                                onClick={() => handleVolumeChange(DEFAULT_VOLUME)}
+                            >
+                                <i className="bi bi-volume-up-fill text-success"></i>
+                            </button>
+
+                            {/* SHUFFLE */}
+                            <button className="btn glass-btn flex-fill py-2 border-end">
+                                <i className="bi bi-shuffle text-warning"></i>
+                            </button>
+
+                            {/* RESET BUTTON */}
+                            <button
+                                className="btn glass-btn flex-fill py-2"
+                                onClick={() => {
+                                    setVolume(50);
+                                    setCpm(120);
+                                }}
+                            >
+                                <i className="bi bi-arrow-clockwise text-info"></i>
+                            </button>
+
+                        </div>
                     </div>
-                </div>
 
-            </div >
+                </div>
+            </div>
 
         </>
     );
