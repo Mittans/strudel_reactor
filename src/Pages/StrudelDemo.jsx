@@ -10,7 +10,7 @@ import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from '../Storage/tunes';
 import console_monkey_patch, { getD3Data } from '../console-monkey-patch';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-
+import D3 from '../Components/D3';
 
 //Components
 import PlayControl from '../Components/PlayControl';

@@ -9,9 +9,50 @@ function PlayControl({ songData, editorRef, isPlaying }) {
     // MOVED FROM StrudelDemo: cpm setter. Initially set to 120 by default.
     const [cpm, setCpm] = useState(120);
 
+    //Tracks
+    const [tracks, setTracks] = useState({
+        drum2: true,
+        drums: true,
+        bass: true
+    });
+
+    const toggleTrack = (trackName) => {
+        if (trackName === 'drum2') {
+            setTracks({
+                drum2: !tracks.drum2,
+                drums: tracks.drums,
+                bass: tracks.bass
+            });
+        } else if (trackName === 'drums') {
+            setTracks({
+                drum2: tracks.drum2,
+                drums: !tracks.drums,
+                bass: tracks.bass
+            });
+        } else if (trackName === 'bass') {
+            setTracks({
+                drum2: tracks.drum2,
+                drums: tracks.drums,
+                bass: !tracks.bass
+            });
+        }
+    };
+
+
     // Function to update the editor with current volume and CPM settings
     const updateEditorWithControls = () => {
         if (!editorRef.current) return;
+
+        if (!tracks.drum2) {
+            updatedSongData = updatedSongData.replace(/drums2:/g, '// drums2:');
+        }
+        if (!tracks.drums) {
+            updatedSongData = updatedSongData.replace(/drums:/g, '// drums:');
+        }
+        if (!tracks.bass) {
+            updatedSongData = updatedSongData.replace(/bassline:/g, '// bassline:');
+        }
+
 
         // MOVED FROM StrudelDemo: Replace the 140 with our CPM value in the existing setcps
         const updatedSongData = songData.replace("setcps(140/60/4)", `setcps(${cpm}/60/4)`);
@@ -24,6 +65,8 @@ function PlayControl({ songData, editorRef, isPlaying }) {
             editorRef.current.evaluate();
         }
     };
+
+
 
     // Handle volume change
     const handleVolumeChange = (newVolume) => {
@@ -38,7 +81,7 @@ function PlayControl({ songData, editorRef, isPlaying }) {
     // Update editor when volume or CPM changes
     useEffect(() => {
         updateEditorWithControls();
-    }, [volume, cpm, songData, isPlaying]);
+    }, [volume, cpm, songData, isPlaying, tracks]);
 
     return (
         <> {/* React Fragment lets us group elements without an extra div */}
@@ -69,25 +112,43 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                     </div>
 
 
-
-
                     <div className="p-3 rounded-3 glass-inner-card fw-semibold mb-3">
                         <h5 className="fw-semibold mb-2 text-light text-center">Tracks</h5>
                         <div className="d-flex justify-content-center flex-wrap gap-4">
                             <div className="form-check form-switch">
-                                <input className="form-check-input" type="checkbox" id="drum2Switch" />
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="drum2Switch"
+                                    checked={tracks.drum2}
+                                    onChange={() => toggleTrack('drum2')}
+                                />
                                 <label className="form-check-label text-light" htmlFor="drum2Switch">Drum 2</label>
                             </div>
                             <div className="form-check form-switch">
-                                <input className="form-check-input" type="checkbox" id="drumsSwitch" />
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="drumsSwitch"
+                                    checked={tracks.drums}
+                                    onChange={() => toggleTrack('drums')}
+                                />
                                 <label className="form-check-label text-light" htmlFor="drumsSwitch">Drums</label>
                             </div>
                             <div className="form-check form-switch">
-                                <input className="form-check-input" type="checkbox" id="bassSwitch" />
+                                <input
+                                    className="form-check-input"
+                                    type="checkbox"
+                                    id="bassSwitch"
+                                    checked={tracks.bass}
+                                    onChange={() => toggleTrack('bass')}
+                                />
                                 <label className="form-check-label text-light" htmlFor="bassSwitch">Bass</label>
                             </div>
                         </div>
                     </div>
+
+
 
                     {/* ACTION BUTTON BAR */}
                     <div className="mt-4">
