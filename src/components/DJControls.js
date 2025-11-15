@@ -61,7 +61,24 @@ function DJControls() {
                     />
                     <small>Cutoff: <span id="lpf_value">5000</span> Hz</small>
                 </div>
-
+                <div className="mb-3">
+                    <label htmlFor="room_slider" className="form-label">Reverb / Space</label>
+                    <input
+                        type="range"
+                        id="room_slider"
+                        className="form-range"
+                        min="0"
+                        max="1"
+                        step="0.05"
+                        defaultValue="0.6"
+                        onInput={(e) => {
+                            const val = Number(e.target.value).toFixed(2);
+                            const el = document.getElementById('room_value');
+                            if (el) el.textContent = val;
+                        }}
+                    />
+                    <small>Amount: <span id="room_value">0.60</span></small>
+                </div>
             </details>
 
             <details className="control-section" open>

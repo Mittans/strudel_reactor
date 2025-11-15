@@ -29,6 +29,9 @@ export function Proc() {
     const basslineElement = document.getElementById('bassline_select');
     const basslineValue = basslineElement ? basslineElement.value : "0";
     const lpfValue = document.getElementById("lpf_slider")?.value || "5000";
+    const roomElement = document.getElementById('room_slider');
+    const roomValue = roomElement ? roomElement.value : "0.6";
+
 
 
 
@@ -42,6 +45,7 @@ export function Proc() {
         .replaceAll('<VOLUME>', currentVolume)
         .replaceAll('<CPM>', currentCPM)
         .replaceAll('<BASSLINE>', basslineValue)
+        .replaceAll('<ROOM>', roomValue)
         .replaceAll("<LPF>", lpfValue);
 
 

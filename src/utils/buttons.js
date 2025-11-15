@@ -25,6 +25,8 @@ export function SetupButtons() {
     const masterVol = document.getElementById('master_volume_slider');
     const basslineSelect = document.getElementById('bassline_select');
     const lpf = document.getElementById('lpf_slider');
+    const room = document.getElementById('room_slider');
+
 
 
 
@@ -44,6 +46,8 @@ export function SetupButtons() {
     masterVol?.addEventListener('input', reevalIfPlaying);
     basslineSelect?.addEventListener('change', reevalIfPlaying);
     lpf?.addEventListener('input', reevalIfPlaying);
+    room?.addEventListener('input', reevalIfPlaying);
+
 
 
 

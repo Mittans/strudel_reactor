@@ -100,7 +100,7 @@ stack(
 
 all(x => x.gain(<MASTER_VOLUME>))
 all(x => x.lpf(<LPF>))
-
+all(x => x.room(<ROOM>))
 
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
