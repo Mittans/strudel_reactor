@@ -36,7 +36,7 @@ const arpeggiator2 = [
 ]
 
 
-const pattern = <PATTERN>
+const pattern = "<PATTERN>";
 const bass = 0
 
 bassline:
@@ -47,6 +47,7 @@ note(pick(basslines, bass))
 .lpf(700)
 .room(0.4)
 .postgain(pick(gain_patterns, pattern))
+.gain(<VOLUME>)
 
 
 main_arp: 
@@ -57,6 +58,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .room(0.6)
 .lpenv(3.3)
 .postgain(pick(gain_patterns, pattern))
+.gain(<VOLUME>)
 
 
 drums:
@@ -76,6 +78,7 @@ stack(
   .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
   .postgain(.25),
 )
+.gain(<VOLUME>)
 
 drums2: 
 stack(
@@ -93,8 +96,9 @@ stack(
   .speed(0.5)
   .rarely(jux(rev)),
 )
+.gain(<VOLUME>)
 
-all(x => x.gain(<VOLUME>))
+all(x => x.gain(<MASTER_VOLUME>))
 
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))

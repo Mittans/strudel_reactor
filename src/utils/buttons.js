@@ -22,6 +22,8 @@ export function SetupButtons() {
 
     const vol = document.getElementById('volume_slider');
     const cpm = document.getElementById('cpm_input');
+    const masterVol = document.getElementById('master_volume_slider');
+
 
     const reevalIfPlaying = () => {
         if (editor && editor.repl?.state?.started) {
@@ -35,5 +37,8 @@ export function SetupButtons() {
 
     const patternSelect = document.getElementById('pattern_select');
     patternSelect?.addEventListener('change', reevalIfPlaying);
+
+    masterVol?.addEventListener('input', reevalIfPlaying);
+
 
 }

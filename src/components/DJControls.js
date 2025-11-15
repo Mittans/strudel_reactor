@@ -12,10 +12,10 @@ function DJControls() {
 
                 <div className="mt-3">
                     <div className="mb-3">
-                        <label htmlFor="volume_slider" className="form-label">Volume</label>
+                        <label htmlFor="master_volume_slider" className="form-label">Master Volume</label>
                         <input
                             type="range"
-                            id="volume_slider"
+                            id="master_volume_slider"
                             className="form-range"
                             min="0"
                             max="1"
@@ -23,11 +23,11 @@ function DJControls() {
                             defaultValue="0.8"
                             onInput={(e) => {
                                 const val = Number(e.target.value).toFixed(2);
-                                const el = document.getElementById('volume_value');
+                                const el = document.getElementById('master_volume_value');
                                 if (el) el.textContent = val;
                             }}
                         />
-                        <small>Current: <span id="volume_value">0.80</span></small>
+                        <small>Current: <span id="master_volume_value">0.80</span></small>
                     </div>
 
                     <div className="mb-1">
