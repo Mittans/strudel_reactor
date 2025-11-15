@@ -38,10 +38,12 @@ function PlayControl({ songData, editorRef, isPlaying }) {
         }
     };
 
-
     // Function to update the editor with current volume and CPM settings
     const updateEditorWithControls = () => {
         if (!editorRef.current) return;
+
+        // MOVED FROM StrudelDemo: Replace the 140 with our CPM value in the existing setcps
+        let updatedSongData = songData.replace("setcps(140/60/4)", `setcps(${cpm}/60/4)`);
 
         if (!tracks.drum2) {
             updatedSongData = updatedSongData.replace(/drums2:/g, '// drums2:');
@@ -53,9 +55,6 @@ function PlayControl({ songData, editorRef, isPlaying }) {
             updatedSongData = updatedSongData.replace(/bassline:/g, '// bassline:');
         }
 
-
-        // MOVED FROM StrudelDemo: Replace the 140 with our CPM value in the existing setcps
-        const updatedSongData = songData.replace("setcps(140/60/4)", `setcps(${cpm}/60/4)`);
         const volumeController = `${updatedSongData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
         editorRef.current.setCode(volumeController);
 
@@ -65,8 +64,6 @@ function PlayControl({ songData, editorRef, isPlaying }) {
             editorRef.current.evaluate();
         }
     };
-
-
 
     // Handle volume change
     const handleVolumeChange = (newVolume) => {
@@ -111,7 +108,6 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                         ))}
                     </div>
 
-
                     <div className="p-3 rounded-3 glass-inner-card fw-semibold mb-3">
                         <h5 className="fw-semibold mb-2 text-light text-center">Tracks</h5>
                         <div className="d-flex justify-content-center flex-wrap gap-4">
@@ -147,7 +143,6 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                             </div>
                         </div>
                     </div>
-
 
 
                     {/* ACTION BUTTON BAR */}
