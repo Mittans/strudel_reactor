@@ -113,6 +113,21 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         enableWow, wowAmount
     ]);
 
+    useEffect(() => {
+        const anyFxEnabled = enableReverb || enableDelay || enableDistortion || enableLowPass || enableHighPass || enableChorus || enableWow;
+
+        // If any FX is enabled, master on automaticly
+        if (anyFxEnabled && !enableMasterFx) {
+            setEnableMasterFx(true);
+        }
+
+        // If all FX disabled, master off auto
+        if (!anyFxEnabled && enableMasterFx) {
+            setEnableMasterFx(false);
+        }
+
+    }, [enableReverb, enableDelay, enableDistortion, enableLowPass, enableHighPass, enableChorus, enableWow,enableMasterFx]);
+
     const handleCpmChange = (e) => {
         let value = e.target.valueAsNumber;
         if (Number.isNaN(value)) value = 140;
@@ -235,10 +250,29 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
                 enableWow={enableWow}
                 wowAmount={wowAmount}
                 handleEnableWow={handleEnableWow}
-                handleWowAmountChange={handleWowAmountChange}
-            />
+                handleWowAmountChange={handleWowAmountChange}/>
 
-            <SettingsControls />
+            <SettingsControls
+                setEnableReverb={setEnableReverb}
+                setReverbAmount={setReverbAmount}
+
+                setEnableDelay={setEnableDelay}
+                setDelayAmount={setDelayAmount}
+
+                setEnableDistortion={setEnableDistortion}
+                setDistortionAmount={setDistortionAmount}
+
+                setEnableLowPass={setEnableLowPass}
+                setLowPassFreq={setLowPassFreq}
+
+                setEnableHighPass={setEnableHighPass}
+                setHighPassFreq={setHighPassFreq}
+
+                setEnableChorus={setEnableChorus}
+                setChorusAmount={setChorusAmount}
+
+                setEnableWow={setEnableWow}
+                setWowAmount={setWowAmount} />
 
       </>
   );
