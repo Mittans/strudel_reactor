@@ -223,6 +223,7 @@ export default function StrudelDemo() {
                 </div>
                 {/*by using ref={canvasRef}, we link the canvas element to the canvasRef defined earlier*/}
                 <canvas id="roll" ref={canvasRef}></canvas>
+                <D3>Graph</D3>
 
             </main >
         </div >
