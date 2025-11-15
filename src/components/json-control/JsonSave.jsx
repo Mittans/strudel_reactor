@@ -17,7 +17,7 @@ function JsonSave({strudelCode, cpm, volume}) {
             title: "Save Application Preset",
             input: "text",
             inputLabel: "Enter a name for your preset",
-            inputPlaceholder: "e.g. My Cool Song!",
+            inputPlaceholder: "e.g. Project 1",
             confirmButtonText: 'Save',
             showCancelButton: true,
             inputValidator: (value) => {
