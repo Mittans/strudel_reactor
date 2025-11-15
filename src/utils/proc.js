@@ -28,6 +28,8 @@ export function Proc() {
     const patternValue = patternElement ? patternElement.value : "0";
     const basslineElement = document.getElementById('bassline_select');
     const basslineValue = basslineElement ? basslineElement.value : "0";
+    const lpfValue = document.getElementById("lpf_slider")?.value || "5000";
+
 
 
 
@@ -39,7 +41,8 @@ export function Proc() {
         .replaceAll('<PATTERN>', patternValue)
         .replaceAll('<VOLUME>', currentVolume)
         .replaceAll('<CPM>', currentCPM)
-        .replaceAll('<BASSLINE>', basslineValue);
+        .replaceAll('<BASSLINE>', basslineValue)
+        .replaceAll("<LPF>", lpfValue);
 
 
 

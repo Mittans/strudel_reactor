@@ -43,6 +43,25 @@ function DJControls() {
                         />
                     </div>
                 </div>
+                <div className="mb-3">
+                    <label htmlFor="lpf_slider" className="form-label">Low Pass Filter</label>
+                    <input
+                        type="range"
+                        id="lpf_slider"
+                        className="form-range"
+                        min="300"
+                        max="20000"
+                        step="100"
+                        defaultValue="5000"
+                        onInput={(e) => {
+                            const val = Number(e.target.value);
+                            const el = document.getElementById('lpf_value');
+                            if (el) el.textContent = val;
+                        }}
+                    />
+                    <small>Cutoff: <span id="lpf_value">5000</span> Hz</small>
+                </div>
+
             </details>
 
             <details className="control-section" open>
