@@ -1,4 +1,4 @@
-export function toggleSectionPrefix(ProcText, sectionId, checked) {
+export function toggleSectionPrefix(codeText, sectionId, checked) {
     const regex = new RegExp(`^_?${sectionId}:`, "m");
-    return ProcText.replace(regex, checked ? `_${sectionId}:` : `${sectionId}:`);
+    return codeText.replace(regex, checked ? `_${sectionId}:` : `${sectionId}:`);
 }
