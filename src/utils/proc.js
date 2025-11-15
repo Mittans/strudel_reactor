@@ -26,6 +26,9 @@ export function Proc() {
     const currentCPM = cpmEl ? cpmEl.value : "120";
     const patternElement = document.getElementById('pattern_select');
     const patternValue = patternElement ? patternElement.value : "0";
+    const basslineElement = document.getElementById('bassline_select');
+    const basslineValue = basslineElement ? basslineElement.value : "0";
+
 
 
     let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
@@ -35,7 +38,9 @@ export function Proc() {
         .replaceAll('<MASTER_VOLUME>', masterVolValue)
         .replaceAll('<PATTERN>', patternValue)
         .replaceAll('<VOLUME>', currentVolume)
-        .replaceAll('<CPM>', currentCPM);
+        .replaceAll('<CPM>', currentCPM)
+        .replaceAll('<BASSLINE>', basslineValue);
+
 
 
 

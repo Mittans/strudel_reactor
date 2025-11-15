@@ -23,6 +23,8 @@ export function SetupButtons() {
     const vol = document.getElementById('volume_slider');
     const cpm = document.getElementById('cpm_input');
     const masterVol = document.getElementById('master_volume_slider');
+    const basslineSelect = document.getElementById('bassline_select');
+
 
 
     const reevalIfPlaying = () => {
@@ -39,6 +41,8 @@ export function SetupButtons() {
     patternSelect?.addEventListener('change', reevalIfPlaying);
 
     masterVol?.addEventListener('input', reevalIfPlaying);
+    basslineSelect?.addEventListener('change', reevalIfPlaying);
+
 
 
 }

@@ -127,6 +127,18 @@ function DJControls() {
                                     p3: Hush
                                 </label>
                             </div>
+                            <div className="mb-2">
+                                <p className="mb-1">Bassline</p>
+                                <select
+                                    id="bassline_select"
+                                    className="form-select form-select-sm"
+                                    defaultValue="0"
+                                >
+                                    <option value="0">Bassline A</option>
+                                    <option value="1">Bassline B</option>
+                                </select>
+                            </div>
+
                         </div>
                     </div>
                 </div>
