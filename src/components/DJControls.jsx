@@ -1,5 +1,11 @@
 ﻿import { useState, useEffect } from 'react';
 import { Dropdown } from 'bootstrap';
+import CPMControls from "./DJcomponents/CPMControls";
+import VolumeControls from "./DJcomponents/VolumeControls";
+import TrackControls from "./DJcomponents/TrackControls";
+import KeyShiftControls from "./DJcomponents/KeyShiftControls";
+import EffectControls from "./DJcomponents/EffectControls";
+import SettingsControls from "./DJcomponents/SettingsControls";
 function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVolumeChange, onToggleTrack, tracksEnabled, onEffectChange }) {
     // State variable to store the current CPM value
     const [localCpm, setLocalCpm] = useState(cpm ?? 140);
@@ -136,25 +142,8 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         onToggleTrack?.(trackName, checked);
     };
 
-    const quickCpms = [30, 60, 90, 120, 140];
-    const cpmStyles = {
-        30: 'btn-outline-secondary',
-        60: 'btn-outline-info',
-        90: 'btn-outline-success',
-        120: 'btn-outline-warning',
-        140: 'btn-outline-danger',
-    };
+   
 
-    const quickKeys = [-24, -12, -6, 0, 6, 12, 24];
-    const keyStyles = {
-        [-24]: 'btn-outline-danger',
-        [-12]: 'btn-outline-warning',
-        [-6]: 'btn-outline-info',
-        [0]: 'btn-outline-secondary',
-        [6]: 'btn-outline-success',
-        [12]: 'btn-outline-info',
-        [24]: 'btn-outline-primary',
-    };
 
     const handleQuickCpm = (value) => {
         setLocalCpm(value);
@@ -201,250 +190,55 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
 
     return (
         <>
-            <hr className="my-3" />
-            <div className="input-group mb-3">
-                <span className="input-group-text" id="cpm_label">setCPM</span>
-                <input type="number" className="form-control" id="cpm_text_input" value={cpm} onChange={handleCpmChange} min="1"  max="300" step="1" />
-                {/*<input type="text" className="form-control" id="cpm_text_input" placeholder="120" aria-label="Username" aria-describedby="cpm_label" />*/}
-            </div>
+            <CPMControls cpm={cpm} localCpm={localCpm} handleCpmChange={handleCpmChange} handleQuickCpm={handleQuickCpm}/>
 
-            {/* Button for quick change cpm */}
-            <div className="btn-group mb-3 w-100" role="group" aria-label="Quick CPM Buttons">
-                {quickCpms.map((val) => (
-                    <button key={val} type="button" className={`btn ${cpmStyles[val]} ${localCpm === val ? 'active' : ''} btn-sm`} onClick={() => handleQuickCpm(val)} >
-                        {val}
-                    </button>
-                ))}
-            </div>
+            <VolumeControls localVolume={localVolume} handleVolumeChange={handleVolumeChange} />
 
-            {/* Volume */}
-            <hr className="my-3" />
-            <div className="input-group mb-3">
-                <label htmlFor="volume_range" className="form-label">Volume</label>
-                <input type="range" className="form-range" min="0" max="2" step="0.01" value={localVolume}
-                    onChange={handleVolumeChange} id="volume_range" />
-            </div>
+            <TrackControls muteBass={muteBass} muteArp={muteArp} muteDrums={muteDrums} muteDrums2={muteDrums2} handleToggle={handleToggle}/>
 
-            {/* CheckBox for select instruments */}
-            <hr className="my-3" />
-            <h6>Instrument Tracks</h6>
-            <div className="mb-3">
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="s1" checked={!muteBass}
-                        onChange={(e) => handleToggle("bass", e.target.checked)} />
-                    <label className="form-check-label" htmlFor="s1">
-                        Bassline
-                        </label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="a1" checked={!muteArp}
-                        onChange={(e) => handleToggle("arp", e.target.checked)} />
-                    <label className="form-check-label" htmlFor="a1">
-                        Main Arp
-                    </label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="d1" checked={!muteDrums}
-                        onChange={(e) => handleToggle("drums", e.target.checked)} />
-                    <label className="form-check-label" htmlFor="d1">
-                        Drums
-                        </label>
-                </div>
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" id="d1" checked={!muteDrums2}
-                        onChange={(e) => handleToggle("drums2", e.target.checked)} />
-                    <label className="form-check-label" htmlFor="d2">
-                        Drums 2
-                        </label>
-                </div>
-            </div>
+            <KeyShiftControls localShift={localShift} handleKeyShiftChange={handleKeyShiftChange} handleQuickShift={handleQuickShift}/>
 
-            {/* Key shifter */}
-            <hr className="my-3" />
-            <h6>Key Shift</h6>
+            <EffectControls
+                enableMasterFx={enableMasterFx}
+                handleMasterFxToggle={handleMasterFxToggle}
 
-            <div className="input-group mb-3">
-                <span className="input-group-text">Semitones</span>
-                <input type="number" className="form-control" id="key_shift_input" value={localShift} onChange={handleKeyShiftChange} placeholder="0" min="-12" max="12" step="1" />
-            </div>
+                enableReverb={enableReverb}
+                reverbAmount={reverbAmount}
+                handleEnableReverb={handleEnableReverb}
+                handleReverbAmountChange={handleReverbAmountChange}
 
-            {/* Button for quick change cpm */}
-            <div className="btn-group mb-3 w-100" role="group" aria-label="Quick Key Buttons">
-                {quickKeys.map((val) => (
-                    <button key={val} type="button" className={`btn ${keyStyles[val]} ${localShift === val ? 'active' : ''} btn-sm`} onClick={() => handleQuickShift(val)} >
-                        {val > 0 ? `+${val}` : val}
-                    </button>
+                enableDelay={enableDelay}
+                delayAmount={delayAmount}
+                handleEnableDelay={handleEnableDelay}
+                handleDelayAmountChange={handleDelayAmountChange}
 
-                ))}
-            </div>
+                enableDistortion={enableDistortion}
+                distortionAmount={distortionAmount}
+                handleEnableDistortion={handleEnableDistortion}
+                handleDistortionAmountChange={handleDistortionAmountChange}
 
-            {/* Effects Selector Card */}
-            <hr className="my-3" />
-            <div className="card mb-3">
-                <div className="card-header d-flex align-items-center justify-content-between">
-                    <span className="fw-semibold">Effects</span>
-                    <div className="form-check form-switch m-0">
-                        <input className="form-check-input" type="checkbox" role="switch" id="fxMasterEnable" checked={enableMasterFx} onChange={handleMasterFxToggle} />
-                        <label className="form-check-label small" htmlFor="fxMasterEnable">Master</label>
-                    </div>
-                </div>
+                enableLowPass={enableLowPass}
+                lowPassFreq={lowPassFreq}
+                handleEnableLowPass={handleEnableLowPass}
+                handleLowPassFreqChange={handleLowPassFreqChange}
 
-                <div className="card-body">
-                    {/* Reverb */}
-                    <div className="mb-3">
-                        <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxReverb" checked={enableReverb} onChange={handleEnableReverb}/>
-                            <label className="form-check-label" htmlFor="fxReverb">Reverb</label>
-                        </div>
-                        {enableReverb && (
-                            <input type="range" min="0" max="1" step="0.01" className="form-range mt-1" value={reverbAmount}  onChange={handleReverbAmountChange} />
-                        )}
-                    </div>
+                enableHighPass={enableHighPass}
+                highPassFreq={highPassFreq}
+                handleEnableHighPass={handleEnableHighPass}
+                handleHighPassFreqChange={handleHighPassFreqChange}
 
-                    {/* Delay */}
-                    <div className="mb-3">
-                        <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxDelay" checked={enableDelay} onChange={handleEnableDelay} />
-                            <label className="form-check-label" htmlFor="fxDelay"> Delay</label>
-                        </div>
-                        {enableDelay && (
-                            <input type="range"  min="0" max="1" step="0.01" className="form-range mt-1" value={delayAmount} onChange={handleDelayAmountChange}/>
-                        )}
-                    </div>
+                enableChorus={enableChorus}
+                chorusAmount={chorusAmount}
+                handleEnableChorus={handleEnableChorus}
+                handleChorusAmountChange={handleChorusAmountChange}
 
-                    {/* Distortion */}
-                    <div className="mb-3">
-                        <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxDistortion" checked={enableDistortion} onChange={handleEnableDistortion}/>
-                            <label className="form-check-label" htmlFor="fxDistortion">Distortion</label>
-                        </div>
-                        {enableDistortion && (
-                            <input type="range" min="0"  max="1" step="0.01" className="form-range mt-1" value={distortionAmount} onChange={handleDistortionAmountChange}/>
-                        )}
-                    </div>
+                enableWow={enableWow}
+                wowAmount={wowAmount}
+                handleEnableWow={handleEnableWow}
+                handleWowAmountChange={handleWowAmountChange}
+            />
 
-                    {/* Low-pass Filter */}
-                    <div className="mb-3">
-                        <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxLowPass" checked={enableLowPass} onChange={handleEnableLowPass} />
-                            <label className="form-check-label" htmlFor="fxLowPass">Low-pass Filter</label>
-                        </div>
-                        {enableLowPass && (
-                            <input type="range"  min="200" max="8000" step="50"  className="form-range mt-1" value={lowPassFreq} onChange={handleLowPassFreqChange} />
-                        )}
-                    </div>
-
-                    {/* High-pass Filter */}
-                    <div className="mb-3">
-                        <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxHighPass" checked={enableHighPass} onChange={handleEnableHighPass}/>
-                            <label className="form-check-label" htmlFor="fxHighPass">High-pass Filter</label>
-                        </div>
-                        {enableHighPass && (
-                            <input type="range" min="100"  max="3000" step="50" className="form-range mt-1" value={highPassFreq} onChange={handleHighPassFreqChange}/>
-                        )}
-                    </div>
-
-                    {/* Chorus */}
-                    <div className="mb-3">
-                        <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxChorus" checked={enableChorus} onChange={handleEnableChorus}/>
-                            <label className="form-check-label" htmlFor="fxChorus">Chorus</label>
-                        </div>
-                        {enableChorus && (
-                            <input type="range" min="0" max="1" step="0.01" className="form-range mt-1" value={chorusAmount} onChange={handleChorusAmountChange}/>
-                        )}
-                    </div>
-
-                    {/* WOW */}
-                    <div className="mb-1">
-                        <div className="form-check m-0">
-                            <input className="form-check-input" type="checkbox" id="fxWow" checked={enableWow} onChange={handleEnableWow}/>
-                            <label className="form-check-label" htmlFor="fxWow">
-                                WOW
-                            </label>
-                        </div>
-                        {enableWow && (
-                            <input type="range" min="0" max="10" step="0.1" className="form-range mt-1" value={wowAmount} onChange={handleWowAmountChange}/>
-                        )}
-                    </div>
-                </div>
-            </div>
-
-
-            {/* User settings */}
-            <hr className="my-3" />
-            <div className="btn-toolbar mb-3" role="toolbar" aria-label="Music Style Toolbar">
-
-                <div className="btn-group me-2" role="group" aria-label="Pop Style">
-                    <button type="button" className="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Pop
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
-                    </ul>
-                </div>
-
-                <div className="btn-group me-2" role="group" aria-label="Jazz Style">
-                    <button type="button" className="btn btn-info dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Jazz
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
-                    </ul>
-                </div>
-
-                <div className="btn-group me-2" role="group" aria-label="Electronic Style">
-                    <button type="button" className="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Elec
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
-                    </ul>
-                </div>
-                
-
-                <div className="btn-group me-2" role="group" aria-label="Classic Style">
-                    <button type="button" className="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Classic
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
-                    </ul>
-                </div>
-                <div className="btn-group me-2" role="group" aria-label="Rock Style">
-                    <button type="button" className="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Rock
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
-                    </ul>
-                </div>
-
-
-                <div className="btn-group me-2" role="group" aria-label="Custome Style">
-                    <button type="button" className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        Custome
-                    </button>
-                    <ul className="dropdown-menu">
-                        <li><button className="dropdown-item" type="button">Setting 1</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 2</button></li>
-                        <li><button className="dropdown-item" type="button">Setting 3</button></li>
-                    </ul>
-                </div>
-
-
-            </div>
+            <SettingsControls />
 
       </>
   );
