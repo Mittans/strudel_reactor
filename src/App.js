@@ -15,6 +15,7 @@ import ProcButtons from './components/ProcButtons';
 import PreprocessTextarea from './components/PreprocessTextarea';
 import JsonButtons from "./components/JsonButtons";
 import D3Graph from "./components/D3Graph";
+import D3GraphScope from "./components/D3GraphScope";
 
 
 let globalEditor = null;
@@ -238,6 +239,7 @@ return (
                             onToggleTrack={handleToggleTrack}
                             onEffectChange={handleEffectChange} />
                         <D3Graph />
+                        <D3GraphScope />
                     </div>
                 </div>
             </div>
