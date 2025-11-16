@@ -18,20 +18,11 @@ export default function StrudelDemo() {
     // Volume (Gain) Edit
     const [volume, setVolume] = useState(0.5);
 
-    function handlePreprocess() {
-        const processed = strudelCode.replaceAll("<p1_Radio>", "_");
-        setStrudelCode(processed);
-    }
-
     function handlePlay() {
         strudelRef.current?.evaluate();
     }
     function handleStop() {
         strudelRef.current?.stop();
-    }
-    function handleProcPlay() {
-        handlePreprocess();
-        strudelRef.current?.evaluate();
     }
 
     function handleProc() {
@@ -98,8 +89,6 @@ export default function StrudelDemo() {
                             <AudioControls
                                 handlePlay={handlePlay}
                                 handleStop={handleStop}
-                                handlePreprocess={handlePreprocess}
-                                handleProcPlay={handleProcPlay}
                                 cpm={cpm}
                                 setCpm={setCpm}
                                 volume={volume}

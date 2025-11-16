@@ -8,7 +8,6 @@ function AudioControls({ handlePlay, handleStop, handlePreprocess, handleProcPla
         <div className="container-fluid audio-controls">
             <div className="row g-3 mb-4">
                 <PlaybackControls handlePlay={handlePlay} handleStop={handleStop}/>
-                <ProcessControls handlePreprocess={handlePreprocess} handleProcPlay={handleProcPlay}/>
             </div>
             <div className="row g-3 mb-4">
                 <TempoInput cpm={cpm} setCpm={setCpm}/>    
