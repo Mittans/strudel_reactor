@@ -1,13 +1,13 @@
-function DJ_Controls({ volume, onVolumeChange, onToggle }) {
+function DJ_Controls({ onVolumeChange, onToggle, onSetCpm }) {
 
     return (
         //cpm input
         <>
             <div className="input-group mb-3">
                 <span className="input-group-text" id="cpm_label">SetCPM</span>
-
-                <input type="text" className="form-control" id="cpm_label_text" placeholder="CPM" aria-label="CPM" aria-describedby="cpm_label" />
+                <input type="number" className="form-control" id="cpm_label_text" placeholder="CPM" aria-label="CPM" aria-describedby="cpm_label" onChange={onSetCpm} />
             </div>
+
             {/*volume slider*/}
             <label htmlFor="volume_range" className="form-label">Volume</label>
             <input type="range" className="form-range" min="0" max="1" step="0.05" onMouseUp={onVolumeChange} id="volume_range" />

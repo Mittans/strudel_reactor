@@ -50,6 +50,14 @@ export default function StrudelDemo() {
     });
     };
 
+    const handleSetCpm = (e) => {
+        const value = e.target.valueAsNumber;
+        if (isNaN(value)) return;
+
+        // Update procText only, editor/playback will pick it up when next Play is clicked
+        setProcText(prev => prev.replace(/setcps\([^)]+\)/, `setcps(${value}/60/4)`));
+    };
+
     useEffect(() => {
 
         if (state === "play") {
@@ -135,6 +143,7 @@ export default function StrudelDemo() {
                                 volume={volume} 
                                 onVolumeChange={(e) => setVolume(e.target.value)} 
                                 onToggle={handleToggle} 
+                                onSetCpm={handleSetCpm}
                             />
                         </div>
                     </div>
