@@ -101,3 +101,24 @@ stack(
 // all(x => x.log())
 
 // @version 1.2`;
+
+export const dash_on_the_train = `setcps(120/60/4)
+
+$: note("[C G], <D Fb B C A>*[0.5,2]")
+  // .rev()
+  .sound("sawtooth").cpm(30).gain(.4)
+.lpf("<100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1300 1200 1100 1000 900 800 700 600 500 400 300 200>/4")
+  .room(1)
+  // .jux(pan)
+  .pan("<0 1>/2")  
+.delay(1)
+.roomsize("10")
+// .slow("1, .5, .25") // swap to this
+
+  // $: note("F")
+  //   .sound("piano").cpm(30)
+  //  .lpf(800)
+
+  
+.slow(".1275").gain(.8)
+`;

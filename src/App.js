@@ -7,12 +7,13 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import { stranger_tune, algorave_dave_tune } from './tunes';
+import { dash_on_the_train, algorave_dave_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import DJControls from './components/DJControls';
 import PlayButtons from './components/PlayButtons';
 import ProcButtons from './components/ProcButtons';
 import PreTextArea from './components/PreTextArea';
+import TunesDropdown from './components/TunesDropdown';
 import { Preprocess } from './utils/PreprocessLogic'
 
 let globalEditor = null;
@@ -96,28 +97,36 @@ useEffect(() => {
 }, [procText]);
 
 
-return (
-    <div>
-        <main>
-            <div className="container-fluid p-0">
+    return (
+        <div>
+            <main>
+                <div className="container-fluid p-0">
 
-                <section className="vh-100 d-flex flex-column justify-content-center align-items-center bg-dark text-white">
-                    <div className="row w-100 align-items-center">
-                        <div className="col-8 d-flex flex-column justify-content-center align-items-center">
-                            <h1>Strudel Demo</h1>
-                            <div className="card shadow" style={{ width: '70%' }}>
-                                <div className="card-body">
-                                    <div className="d-flex justify-content-between align-items-center mb-3">
-                                        <div>
-                                            <PlayButtons onPlay={() => { setState("play"); handlePlay(); }}
-                                                onStop={() => { setState("stop"); handleStop(); }} />
+                    <section className="vh-100 d-flex flex-column justify-content-center align-items-center bg-dark text-white">
+                        <div className="row w-100 align-items-center">
+                            <div className="col-8 d-flex flex-column justify-content-center align-items-center">
+                                <h1>Strudel Demo</h1>
+                                <div className="card shadow" style={{ width: '70%' }}>
+                                    <div className="card-body">
+                                        <div className="d-flex justify-content-between align-items-center mb-3">
+                                            <div>
+                                                <PlayButtons onPlay={() => { setState("play"); handlePlay(); }}
+                                                    onStop={() => { setState("stop"); handleStop(); }} />
+                                            </div>
+                                            <div>
+                                                <TunesDropdown
+                                                    options={[
+                                                        { label: 'Algorave Dave', code: algorave_dave_tune },
+                                                        { label: 'Dash on the Train', code: dash_on_the_train },
+                                                    ]}
+                                                    onSelect={(code) => setProcText(code)}
+                                                />
+                                            </div>
                                         </div>
 
-                                    </div>
-
-                                    <DJControls
-                                        volume={volume}
-                                        onVolumeChange={(e) => setVolume(e.target.value)}
+                                        <DJControls
+                                            volume={volume}
+                                            onVolumeChange={(e) => setVolume(e.target.value)}
                                         bpm={bpm}
                                         onBpmChange={(e) => setBpm(Number(e.target.value || 0))}
                                         reverbOn={reverbOn}
