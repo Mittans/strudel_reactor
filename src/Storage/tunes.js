@@ -61,7 +61,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 
 drums:
 stack(
-  s("tech:5")
+  s("tech:5").log()
   .postgain(6)
   .pcurve(2)
   .pdec(1)

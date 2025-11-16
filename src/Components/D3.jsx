@@ -1,20 +1,33 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import * as d3 from "d3";
 
 function D3Graph() {
     const svgRef = useRef(null);
 
-    // used the drum pattern
-    const drumPattern = [1, 0, 1, 0, 1, 1, 0, 1];
-    const drumData = drumPattern.map(val => val * 50);
+    // this will hold the live Strudel data
+    const [drumData, setDrumData] = useState([]);
 
+    const handleD3Data = useCallback((event) => {
+        setDrumData(event.detail);
+    }, []);
+
+    // Listen for live data from Strudel
     useEffect(() => {
-        const svg = d3.select(svgRef.current);
+        document.addEventListener("d3Data", handleD3Data);
+        return () => {
+            document.removeEventListener("d3Data", handleD3Data);
+        };
+    }, [handleD3Data]);
+
+    // Draw / update the graph when data changes
+    useEffect(() => {
+        if (!svgRef.current || drumData.length === 0) return;
 
         const width = 500;
         const height = 200;
         const margin = { top: 10, right: 10, bottom: 25, left: 30 };
 
+        const svg = d3.select(svgRef.current);
         // Clear old content 
         svg.selectAll("*").remove();
 
@@ -33,8 +46,9 @@ function D3Graph() {
             .domain([0, drumData.length - 1])
             .range([0, innerWidth]);
 
+        const maxY = d3.max(drumData) || 1;
         const yScale = d3.scaleLinear()
-            .domain([0, 50])
+            .domain([0, maxY])
             .range([innerHeight, 0]);
 
         // Axes
@@ -56,8 +70,7 @@ function D3Graph() {
             .attr("stroke", "steelblue")
             .attr("stroke-width", 2)
             .attr("d", line);
-
-    }, []);
+    }, [drumData]);
 
     return (
         <div className="p-3 rounded-3 glass-inner-card mt-4">
