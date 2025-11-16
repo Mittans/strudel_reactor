@@ -42,11 +42,3 @@ function DJ_Controls({ volume, onVolumeChange, onToggle }) {
 }
 
 export default DJ_Controls;
-
-
-
-//     let replace = ""
-//     if (document.getElementById('flexRadioDefault2').checked) {
-//         replace = "_"
-//     }
-//     return replace

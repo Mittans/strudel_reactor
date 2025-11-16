@@ -33,7 +33,17 @@ export default function StrudelDemo() {
 
     const handleToggle = (e) => {
         const { id, checked } = e.target;
-        setProcText(prev => toggleSectionPrefix(prev, id, checked));
+
+
+        setProcText(prev => {
+            const newText = toggleSectionPrefix(prev, id, checked);
+
+            if (state === "play" && globalEditor) {
+                startPlayback(globalEditor, newText, volume, preProcess);
+            }
+
+        return newText
+    });
     };
 
     useEffect(() => {
