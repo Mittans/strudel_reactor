@@ -1,4 +1,4 @@
-function DJ_Controls({ onVolumeChange, onToggle, onSetCpm }) {
+function DJ_Controls({ onVolumeChange, onToggle, onSetCpm, cpmError }) {
 
     return (
         //cpm input
@@ -7,6 +7,12 @@ function DJ_Controls({ onVolumeChange, onToggle, onSetCpm }) {
                 <span className="input-group-text" id="cpm_label">SetCPM</span>
                 <input type="number" className="form-control" id="cpm_label_text" placeholder="CPM" aria-label="CPM" aria-describedby="cpm_label" onChange={onSetCpm} />
             </div>
+
+            {cpmError && (
+                <div className="alert alert-danger mt-2" role="alert">
+                    Invalid CPM entered! Please enter a valid CPM.
+                </div>
+            )}
 
             {/*volume slider*/}
             <label htmlFor="volume_range" className="form-label">Volume</label>

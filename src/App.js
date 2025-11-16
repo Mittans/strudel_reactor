@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
-import { evalScope, set } from '@strudel/core';
+import { cpm, evalScope, set } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
 import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
@@ -30,6 +30,8 @@ export default function StrudelDemo() {
     const [procText, setProcText] = useState(stranger_tune);
     const [volume, setVolume] = useState(1);
     const [state, setState] = useState("stop");
+    const [cpmError, setCpmError] = useState(false);
+
 
     const handlePlay = () => {
         startPlayback(globalEditor, procText, volume, preProcess);
@@ -52,9 +54,15 @@ export default function StrudelDemo() {
 
     const handleSetCpm = (e) => {
         const value = e.target.valueAsNumber;
-        if (isNaN(value)) return;
+        if (isNaN(value)|| value <= 0) { // invalid CPM
+            setCpmError(true);
+            return;
+        }
 
-        // Update procText only, editor/playback will pick it up when next Play is clicked
+        // valid CPM, hide alert
+        setCpmError(false);
+
+        // Update procText only, playback will pick it up when next Play is clicked
         setProcText(prev => prev.replace(/setcps\([^)]+\)/, `setcps(${value}/60/4)`));
     };
 
@@ -144,6 +152,7 @@ export default function StrudelDemo() {
                                 onVolumeChange={(e) => setVolume(e.target.value)} 
                                 onToggle={handleToggle} 
                                 onSetCpm={handleSetCpm}
+                                cpmError={cpmError}
                             />
                         </div>
                     </div>
