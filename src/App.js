@@ -7,6 +7,7 @@ import EditorArea from './components/EditorArea';
 import StrudelPlayer from "./components/StrudelPlayer";
 import { useState, useRef, useEffect } from "react";
 import Swal from 'sweetalert2';
+import D3Graph from './components/D3Graph';
 
 export default function StrudelDemo() {
 
@@ -98,7 +99,7 @@ export default function StrudelDemo() {
                     </div>
                 </div>
                 <div className="col-md-7 col-sm-10">
-                    <div className="card h-100">
+                    <div className="card mb-3">
                         <div className="card-header text-white">
                             Strudel Player
                         </div>
@@ -107,6 +108,14 @@ export default function StrudelDemo() {
                                 strudelCode={strudelCode} 
                                 strudelRef={strudelRef} 
                             />
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className="card-header text-white">
+                            D3 Graph
+                        </div>
+                        <div className="card-body">
+                            <D3Graph/>
                         </div>
                     </div>
                 </div>

@@ -35,7 +35,16 @@ function StrudelPlayer({strudelCode, strudelRef}) {
                 transpiler,
                 root: document.getElementById('editor'),
                 drawTime,
-                onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
+                onDraw: (haps, time) =>  {
+                    drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 })
+
+                   // Allow d3 graph to generate gain values
+                   if (haps.length > 0) {
+                        // Grab the gain from the last note
+                        const lastGain = haps[haps.length - 1].value.gain ?? 0;
+                        document.dispatchEvent(new CustomEvent("d3Data", { detail: `gain:${lastGain}` }));
+                    }
+                },
                 prebake: async () => {
                     initAudioOnFirstClick(); // needed to make the browser happy (don't await this here..)
                     const loadModules = evalScope(
