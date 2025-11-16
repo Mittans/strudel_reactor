@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
-import { stranger_tune } from "../Storage/tunes";
 
-
-const DRUM_DATA = [0, 4, 6];
-
-function D3Graph({ data = DRUM_DATA }) {
+function D3Graph() {
     const svgRef = useRef(null);
+
+    // used the drum pattern
+    const drumPattern = [1, 0, 1, 0, 1, 1, 0, 1];
+    const drumData = drumPattern.map(val => val * 50);
 
     useEffect(() => {
         const svg = d3.select(svgRef.current);
@@ -30,35 +30,34 @@ function D3Graph({ data = DRUM_DATA }) {
 
         // Scales
         const xScale = d3.scaleLinear()
-            .domain([0, data.length - 1])
+            .domain([0, drumData.length - 1])
             .range([0, innerWidth]);
 
         const yScale = d3.scaleLinear()
-            .domain([0, d3.max(data)])
+            .domain([0, 50])
             .range([innerHeight, 0]);
 
         // Axes
         g.append("g")
             .attr("transform", `translate(0, ${innerHeight})`)
-            .call(d3.axisBottom(xScale).ticks(data.length));
+            .call(d3.axisBottom(xScale));
 
         g.append("g").call(d3.axisLeft(yScale));
 
         // Line generator
         const line = d3.line()
             .x((d, i) => xScale(i))
-            .y((d) => yScale(d))
-            .curve(d3.curveMonotoneX);
+            .y(d => yScale(d));
 
         // Path
         g.append("path")
-            .datum(data)
+            .datum(drumData)
             .attr("fill", "none")
             .attr("stroke", "steelblue")
             .attr("stroke-width", 2)
             .attr("d", line);
 
-    }, [data]);
+    }, []);
 
     return (
         <div className="p-3 rounded-3 glass-inner-card mt-4">
