@@ -54,7 +54,7 @@ function PlayControl({ songData, editorRef, isPlaying }) {
         if (!tracks.bass) {
             updatedSongData = updatedSongData.replace(/bassline:/g, '// bassline:');
         }
-
+        
         const volumeController = `${updatedSongData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
         editorRef.current.setCode(volumeController);
 

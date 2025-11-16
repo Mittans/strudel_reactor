@@ -1,7 +1,11 @@
 import { useEffect, useRef } from "react";
 import * as d3 from "d3";
+import { stranger_tune } from "../Storage/tunes";
 
-function D3Graph({ data = [10, 30, 20, 50, 40] }) {
+
+const DRUM_DATA = [0, 4, 6];
+
+function D3Graph({ data = DRUM_DATA }) {
     const svgRef = useRef(null);
 
     useEffect(() => {
@@ -63,4 +67,5 @@ function D3Graph({ data = [10, 30, 20, 50, 40] }) {
         </div>
     );
 }
+
 export default D3Graph;
