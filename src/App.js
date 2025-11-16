@@ -26,14 +26,14 @@ export default function StrudelDemo() {
         strudelRef.current?.stop();
     }
 
-    function handleProc() {
-        const replace = document.getElementById('flexRadioDefault2').checked ? "_" : "";
-        const processed = strudelCode.replaceAll("<p1_Radio>", replace);
-        setStrudelCode(processed);
+    // function handleProc() {
+    //     const replace = document.getElementById('flexRadioDefault2').checked ? "_" : "";
+    //     const processed = strudelCode.replaceAll("<p1_Radio>", replace);
+    //     setStrudelCode(processed);
 
-        strudelRef.current?.setCode(processed);
-        strudelRef.current?.evaluate();
-    }
+    //     strudelRef.current?.setCode(processed);
+    //     strudelRef.current?.evaluate();
+    // }
 
     // Updates the REPL when changes in the text preprocessor are entered
     // Updates the CPM in the REPL
@@ -120,12 +120,12 @@ export default function StrudelDemo() {
                     </div>
                 </div>
                 <div className="col-md-5 col-sm-10">
-                    <div className="card h-100">
+                    <div className="card">
                         <div className="card-header text-white">
                             Editor Area
                         </div>
                         <div className="card-body d-flex align-items-center justify-content-center">
-                            <EditorArea onProc={handleProc}/>
+                            <EditorArea/>
                         </div>
                     </div>
                 </div>
