@@ -18,6 +18,8 @@ export default function StrudelDemo() {
     const [cpm, setCpm] = useState(120);
     // Volume (Gain) Edit
     const [volume, setVolume] = useState(0.5);
+    // Track instrument on and hush state
+    const [cardData, setCardData] = useState({});
 
     function handlePlay() {
         strudelRef.current?.evaluate();
@@ -25,15 +27,6 @@ export default function StrudelDemo() {
     function handleStop() {
         strudelRef.current?.stop();
     }
-
-    // function handleProc() {
-    //     const replace = document.getElementById('flexRadioDefault2').checked ? "_" : "";
-    //     const processed = strudelCode.replaceAll("<p1_Radio>", replace);
-    //     setStrudelCode(processed);
-
-    //     strudelRef.current?.setCode(processed);
-    //     strudelRef.current?.evaluate();
-    // }
 
     // Updates the REPL when changes in the text preprocessor are entered
     // Updates the CPM in the REPL
@@ -47,6 +40,22 @@ export default function StrudelDemo() {
         // Update gain()
         updatedCode = updatedCode.replace(/\.gain\([^)]*\)/g, `.gain(${volume})`);
 
+        // Add On and Hush logic
+        Object.values(cardData).forEach(({ instrument, mode }) => {
+            if (!instrument) {
+                return;
+            }
+            
+            // Use regex to determine instrument
+            const pattern = new RegExp(`\\b${instrument}\\b`, "g");
+
+            if (mode === "HUSH") {
+                updatedCode = updatedCode.replace(pattern, `_${instrument}`)
+            } else {
+                updatedCode = updatedCode.replace(new RegExp(`_${instrument}\\b`, "g"), instrument);
+            }
+        });
+
         setStrudelCode(updatedCode);
         strudelRef.current.setCode(updatedCode);
 
@@ -54,7 +63,7 @@ export default function StrudelDemo() {
         strudelRef.current.evaluate();
         }
     }
-    }, [cpm, volume]);
+    }, [cpm, volume, cardData]);
 
     return (
         <div className="container-fluid main-container py-12 px-4">
@@ -125,7 +134,7 @@ export default function StrudelDemo() {
                             Editor Area
                         </div>
                         <div className="card-body d-flex align-items-center justify-content-center">
-                            <EditorArea/>
+                            <EditorArea cardData={cardData} setCardData={setCardData}/>
                         </div>
                     </div>
                 </div>
