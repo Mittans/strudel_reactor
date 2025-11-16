@@ -15,6 +15,7 @@ import Play_Buttons from './components/Play_Buttons';
 import PreProcText from './components/PreProcText';
 import { preProcess } from './utils/preProcessLogic';
 import { toggleSectionPrefix } from './utils/MuteLogic';
+import { startPlayback, stopPlayback } from './services/PlaybackServices';
 
 let globalEditor = null;
 
@@ -25,21 +26,9 @@ const handleD3Data = (event) => {
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
-
-    const handlePlay = () => {
-        let outputText = preProcess({ inputText: procText, volume: volume });
-        globalEditor.setCode(outputText);
-        globalEditor.evaluate()
-    }
-
-    const handleStop = () => {
-        globalEditor.stop()
-    }
-
+    
     const [procText, setProcText] = useState(stranger_tune);
-
     const [volume, setVolume] = useState(1);
-
     const [state, setState] = useState("stop");
 
     const handleToggle = (e) => {
@@ -50,7 +39,7 @@ export default function StrudelDemo() {
     useEffect(() => {
 
         if (state === "play") {
-            handlePlay();
+            startPlayback(globalEditor, procText, volume, preProcess);
         }
     }, [volume])
 
@@ -101,12 +90,24 @@ export default function StrudelDemo() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                            <PreProcText defaultValue={procText} onChange={(e) => setProcText(e.target.value)} />
+                            <PreProcText 
+                                defaultValue={procText} 
+                                onChange={(e) => setProcText(e.target.value)} 
+                            />
                         </div>
                         <div className="col-md-4">
 
                             <nav>
-                                <Play_Buttons onPlay={() => { setState("play"); handlePlay() }} onStop={() => { setState("stop"); handleStop() }} />
+                                <Play_Buttons 
+                                    onPlay={() => { 
+                                        setState("play"); 
+                                        startPlayback(globalEditor, procText, volume, preProcess) 
+                                    }} 
+                                    onStop={() => { 
+                                        setState("stop"); 
+                                        stopPlayback(globalEditor); 
+                                    }} 
+                                />
                             </nav>
                         </div>
                     </div>
@@ -116,7 +117,11 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
                         <div className="col-md-4">
-                            <DJ_Controls volume={volume} onVolumeChange={(e) => setVolume(e.target.value)} onToggle={handleToggle} />
+                            <DJ_Controls 
+                                volume={volume} 
+                                onVolumeChange={(e) => setVolume(e.target.value)} 
+                                onToggle={handleToggle} 
+                            />
                         </div>
                     </div>
                 </div>
