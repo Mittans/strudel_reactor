@@ -31,6 +31,10 @@ export default function StrudelDemo() {
     const [volume, setVolume] = useState(1);
     const [state, setState] = useState("stop");
 
+    const handlePlay = () => {
+        startPlayback(globalEditor, procText, volume, preProcess);
+    }
+
     const handleToggle = (e) => {
         const { id, checked } = e.target;
 
@@ -39,7 +43,7 @@ export default function StrudelDemo() {
             const newText = toggleSectionPrefix(prev, id, checked);
 
             if (state === "play" && globalEditor) {
-                startPlayback(globalEditor, newText, volume, preProcess);
+                handlePlay();
             }
 
         return newText
@@ -49,7 +53,7 @@ export default function StrudelDemo() {
     useEffect(() => {
 
         if (state === "play") {
-            startPlayback(globalEditor, procText, volume, preProcess);
+            handlePlay();
         }
     }, [volume])
 
@@ -111,7 +115,7 @@ export default function StrudelDemo() {
                                 <Play_Buttons 
                                     onPlay={() => { 
                                         setState("play"); 
-                                        startPlayback(globalEditor, procText, volume, preProcess) 
+                                        handlePlay() 
                                     }} 
                                     onStop={() => { 
                                         setState("stop"); 
