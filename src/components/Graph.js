@@ -37,11 +37,14 @@ export default function Graph() {
         return () => clearInterval(timer);
     }, []);
 
+ 
     useEffect(() => {
         const svg = d3.select("#d3graph");
         svg.selectAll("*").remove();
 
-        const w = 600, h = 150, margin = 20;
+        const w = 600;
+        const h = 260;              
+        const margin = 20;
 
         const xScale = d3.scaleLinear()
             .domain([0, logArray.length - 1])
@@ -49,25 +52,34 @@ export default function Graph() {
 
         const yScale = d3.scaleLinear()
             .domain([0, maxValue])
-            .range([h - margin, margin]);
+            .range([h - margin - 35, margin + 55]);
 
         const chart = svg.append("g");
 
-        // --- Background BOX ---
+        chart.append("text")
+            .attr("x", w / 2)
+            .attr("y", 32)
+            .attr("text-anchor", "middle")
+            .attr("fill", "#ff4fe6")               
+            .attr("font-size", "26px")
+            .attr("font-weight", "700")
+            .attr("font-family", "'Orbitron', sans-serif")
+            .style("text-shadow", "0 0 10px #ff4fe6, 0 0 22px #ff2dcf")
+            .text("Midnight in Motion – Live Gain Visualizer");
+
+
         chart.append("rect")
             .attr("x", 10)
-            .attr("y", 5)
+            .attr("y", 45)
             .attr("width", w - 20)
-            .attr("height", h - 10)
+            .attr("height", h - 70)
             .attr("rx", 15)
             .attr("ry", 15)
-            .attr("fill", "rgba(0,0,0,0.55)")     
-            .attr("stroke", "#ff3b3b")            
+            .attr("fill", "rgba(0,0,0,0.55)")
+            .attr("stroke", "#ff3b3b")
             .attr("stroke-width", 2.5)
             .style("filter", "drop-shadow(0 0 8px #ff3b3b)");
-            
 
-        // --- Y-AXIS ---
         const yAxis = d3.axisLeft(yScale)
             .ticks(5)
             .tickSize(3)
@@ -80,16 +92,14 @@ export default function Graph() {
             .call(g => g.selectAll("line").attr("stroke", "#00ffc8"))
             .call(g => g.selectAll(".domain").attr("stroke", "#00ffc8"));
 
-        // --- Line colour (NEON CYAN) ---
         const numericData = logArray.map(LogToNum);
 
         chart.append("path")
             .datum(numericData)
             .attr("fill", "none")
-            .attr("stroke", "#ff3b3b")                  
-            .style("filter", "drop-shadow(0 0 8px #ff4f4f)")             
-            .attr("stroke-width", 2.5)
-            .style("filter", "drop-shadow(0 0 6px #00ffe1)")
+            .attr("stroke", "#ff3b3b")
+            .attr("stroke-width", 3)
+            .style("filter", "drop-shadow(0 0 6px #ff4f4f)")
             .attr("d",
                 d3.line()
                     .x((d, i) => xScale(i))
@@ -101,11 +111,10 @@ export default function Graph() {
 
     return (
         <div className="App container text-center mt-3">
-            <h6 id="graphTitle">Midnight in Motion – Live Gain Visualizer</h6>
             <svg
                 id="d3graph"
                 width="600"
-                height="150"
+                height="260"   
             ></svg>
         </div>
     );
