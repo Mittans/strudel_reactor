@@ -132,7 +132,7 @@ export default function StrudelDemo() {
                     </div>
                 </div>
             </div>
-            <canvas id="roll"></canvas>
+            <canvas id="roll" hidden></canvas>
         </div>
     );
 }
