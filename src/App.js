@@ -65,7 +65,7 @@ export default function StrudelDemo() {
     }, [cpm, volume]);
 
     return (
-        <div className="container-fluid main-container py-4 px-4">
+        <div className="container-fluid main-container py-12 px-4">
             <PageHeader 
                 strudelCode={strudelCode}
                 cpm={cpm}
