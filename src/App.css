@@ -3,7 +3,7 @@
 
 
 body {
-    background: url('https://i.pinimg.com/originals/f7/5a/ac/f75aacc562988cdbd0e6c73633696469.gif') no-repeat center center fixed;
+    background: url('https://i.pinimg.com/originals/43/ca/d1/43cad165e4d87e1f20747e68cf1dd6f6.gif') no-repeat center center fixed;
     background-size: cover;
 }
 
@@ -67,7 +67,6 @@ nav {
     border: dashed;
     background: #0e0e0e;
     color: #00ffcc;
-    font-size: 26px;
     cursor: pointer;
     box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
     margin: 8px;
@@ -76,7 +75,7 @@ nav {
 
 #play:hover, #stop:hover, #process:hover, #process_play:hover {
     transform: scale(1.08);
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
+    box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
 }
 
 #play:active, #stop:active, #process:active, #process_play:active {
@@ -110,12 +109,16 @@ nav {
 }
 
 .volume-container {
+    color: #ff4fe6 !important;
+    font-weight: 700;
     position: relative !important;
     font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
     display: flex;
     flex-direction: column;
     align-items: center;
-    top: -20rem !important;
+    top: -28rem !important;
     margin-bottom: 1rem !important;
     margin-left: -2.5rem;
     z-index: 10 !important;
@@ -124,7 +127,7 @@ nav {
 #volume_range {
     appearance: none;
     width: 90%;
-    margin-left: 12%;
+    margin-left: 12%;   
     height: 12px;
     background: linear-gradient(90deg, #00e676 var(--fill, 100%), #e0e0e0 0%);
     background: #00e676;
@@ -159,6 +162,10 @@ h2 {
     max-height: 40vh;
     width: 70%;
     overflow-y: auto;
+}
+
+#roll {
+    height: 45px;
 }
 
 .dj-toggles {
@@ -232,8 +239,8 @@ label[for="bass"],
 label[for="melody"],
 label[for="guitar"] {
     font-family: 'Orbitron', sans-serif;
-    font-size: 1rem;
-    color: white;
+    font-size: 1.5rem;
+    color: lightcoral;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -309,8 +316,6 @@ nav {
     margin-top: -10rem;
     transform: translateX(36px);
     display: flex;
-    justify-content: center;
-    font-family: 'Orbitron', sans-serif;
 }
 
 .graph-wrapper svg path {
@@ -331,4 +336,23 @@ nav {
     margin-bottom: 0 !important;
     padding: 0 !important;
     justify-content: space-evenly;
+}
+
+#setCPMBox {
+    background: rgba(0, 0, 0, 0.45);
+    color: #00ffe7;
+    font-weight: 600;
+    font-size: 1.4rem;
+    border: 3px solid #00ffe7;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+#graphTitle {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    font-weight: bolder;
+    text-shadow: 0 0 20px #ff4f4f;
+    margin-top: 7px;
+    margin-bottom: 3px;
 }

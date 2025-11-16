@@ -67,17 +67,16 @@ note(pick(hook_arp, "<0 1 2 3>/2"))
 // GUITAR
 <guitar>guitar_strums:
 stack(
-   s("acg:0").struct(pick(guitar_patterns, 0))
-  .gain(0.4)
-  .room(0.25)
-  .speed(1.02),
-
   s("acg:2")
+  .sound("pluck")      
   .struct(pick(guitar_patterns, 1))
-  .gain(0.33)
+  .gain(1.1)
+  .postgain(2.1)
+  .hpf(500)
   .room(0.22)
   .speed(0.98)
 )
+
 
 // ------------------------- DRUMS -------------------------
 <drums1>drums:
@@ -105,7 +104,7 @@ stack(
 <drums2>drums2:
  s("tech:5")
 .struct("~ ~ ~ ~ x ~ ~ ~")
-.postgain(2)
+.postgain(7)
 .pcurve(2)
 .pdec(1)
 

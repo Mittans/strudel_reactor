@@ -3,12 +3,12 @@
   "WorkspaceRootPath": "C:\\Users\\drall\\strudel_reactor\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\components\\Graph.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Graph.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\App.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\App.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\components\\Graph.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:src\\components\\Graph.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\drall\\strudel_reactor\\src\\components\\DJControls.jsx||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
@@ -57,10 +57,6 @@
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "App.css",
@@ -70,8 +66,7 @@
               "RelativeToolTip": "src\\App.css",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAE4AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2025-11-16T05:56:27.665Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-16T05:56:27.665Z"
             },
             {
               "$type": "Document",
@@ -83,8 +78,7 @@
               "RelativeToolTip": "src\\tunes.js",
               "ViewState": "AgIAAFcAAAAAAAAAAAAAAHAAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-16T05:48:30.228Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-16T05:48:30.228Z"
             },
             {
               "$type": "Document",
@@ -96,8 +90,7 @@
               "RelativeToolTip": "src\\components\\DJControls.jsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-11-16T05:17:58.387Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-16T05:17:58.387Z"
             },
             {
               "$type": "Document",
@@ -109,31 +102,30 @@
               "RelativeToolTip": "src\\console-monkey-patch.js",
               "ViewState": "AgIAABYAAAAAAAAAAAAowC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-11-16T05:47:02.895Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-16T05:47:02.895Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Graph.js",
               "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\components\\Graph.js",
               "RelativeDocumentMoniker": "src\\components\\Graph.js",
               "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\components\\Graph.js",
               "RelativeToolTip": "src\\components\\Graph.js",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAQwEIAAAA9AAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAQwBAAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-11-16T05:44:58.433Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "App.js",
               "DocumentMoniker": "C:\\Users\\drall\\strudel_reactor\\src\\App.js",
               "RelativeDocumentMoniker": "src\\App.js",
               "ToolTip": "C:\\Users\\drall\\strudel_reactor\\src\\App.js",
               "RelativeToolTip": "src\\App.js",
-              "ViewState": "AgIAADoAAAAAAAAAAAAkwDsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAFsAAAAAAAAAAAAkwDsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2025-11-16T05:33:25.03Z",
               "EditorCaption": ""
@@ -148,8 +140,7 @@
               "RelativeToolTip": "src\\components\\ProcButtons.jsx",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003663|",
-              "WhenOpened": "2025-11-16T05:18:30.14Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-16T05:18:30.14Z"
             },
             {
               "$type": "Document",

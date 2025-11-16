@@ -42,6 +42,7 @@ export default function Graph() {
         const svg = d3.select("#d3graph");
         svg.selectAll("*").remove();
 
+
         const w = 600;
         const h = 260;              
         const margin = 20;
