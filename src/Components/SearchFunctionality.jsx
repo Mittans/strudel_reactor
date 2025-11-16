@@ -21,8 +21,7 @@ function MusicSearch() {
 
             <div className="d-flex justify-content-center gap-2 mt-3">
                 <button className="btn btn-primary">Search</button>
-                <button type="button" className="btn btn-info">Save</button>
-                <button type="button" className="btn btn-success">Load</button>
+
             </div>
         </div>
 

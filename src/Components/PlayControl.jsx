@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Storage from './StorageControl';
 
 function PlayControl({ songData, editorRef, isPlaying }) {
     const DEFAULT_VOLUME = 50;
@@ -54,7 +55,7 @@ function PlayControl({ songData, editorRef, isPlaying }) {
         if (!tracks.bass) {
             updatedSongData = updatedSongData.replace(/bassline:/g, '// bassline:');
         }
-        
+
         const volumeController = `${updatedSongData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
         editorRef.current.setCode(volumeController);
 
@@ -181,11 +182,23 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                                 <i className="bi bi-arrow-clockwise text-info"></i>
                             </button>
 
+
                         </div>
                     </div>
 
                 </div>
             </div>
+
+
+
+            <Storage
+                volume={volume}
+                tempo={cpm}
+                tracks={tracks}
+                setVolume={setVolume}
+                setTempo={setCpm}
+                setTracks={setTracks}
+            />
 
         </>
     );

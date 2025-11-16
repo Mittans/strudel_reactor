@@ -225,6 +225,7 @@ export default function StrudelDemo() {
                 <canvas id="roll" ref={canvasRef}></canvas>
                 <D3>Graph</D3>
 
+
             </main >
         </div >
     );

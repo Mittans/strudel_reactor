@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
+import console_monkey_patch from "../console-monkey-patch";
 
 function D3Graph() {
     const svgRef = useRef(null);
@@ -7,17 +8,30 @@ function D3Graph() {
     // this will hold the live Strudel data
     const [drumData, setDrumData] = useState([]);
 
-    const handleD3Data = useCallback((event) => {
-        setDrumData(event.detail);
-    }, []);
-
     // Listen for live data from Strudel
     useEffect(() => {
+        console_monkey_patch();
+
+        const handleD3Data = (event) => {
+            // this is what the tutor showed us to use
+            console.log("d3Data event detail:", event.detail);
+
+            const rawArray = event.detail;
+
+            // turn event.detail values into numbers
+            const numericData = rawArray
+                .map(v => parseFloat(String(v).split(" ")[0])) // first part as number
+                .filter(v => !Number.isNaN(v));
+
+            setDrumData(numericData);
+        };
+
         document.addEventListener("d3Data", handleD3Data);
+
         return () => {
             document.removeEventListener("d3Data", handleD3Data);
         };
-    }, [handleD3Data]);
+    }, []);
 
     // Draw / update the graph when data changes
     useEffect(() => {
@@ -28,10 +42,8 @@ function D3Graph() {
         const margin = { top: 10, right: 10, bottom: 25, left: 30 };
 
         const svg = d3.select(svgRef.current);
-        // Clear old content 
         svg.selectAll("*").remove();
 
-        // Main group
         const g = svg
             .attr("width", width)
             .attr("height", height)
@@ -41,7 +53,6 @@ function D3Graph() {
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
 
-        // Scales
         const xScale = d3.scaleLinear()
             .domain([0, drumData.length - 1])
             .range([0, innerWidth]);
@@ -51,19 +62,17 @@ function D3Graph() {
             .domain([0, maxY])
             .range([innerHeight, 0]);
 
-        // Axes
         g.append("g")
             .attr("transform", `translate(0, ${innerHeight})`)
             .call(d3.axisBottom(xScale));
 
-        g.append("g").call(d3.axisLeft(yScale));
+        g.append("g")
+            .call(d3.axisLeft(yScale));
 
-        // Line generator
         const line = d3.line()
             .x((d, i) => xScale(i))
             .y(d => yScale(d));
 
-        // Path
         g.append("path")
             .datum(drumData)
             .attr("fill", "none")
