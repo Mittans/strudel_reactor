@@ -48,6 +48,7 @@ note(pick(basslines, bass))
 .room(0.4)
 .postgain(pick(gain_patterns, pattern))
 .gain(<VOLUME>)
+.gain(<P2_GAIN>)
 
 
 main_arp: 
@@ -59,6 +60,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .lpenv(3.3)
 .postgain(pick(gain_patterns, pattern))
 .gain(<VOLUME>)
+.gain(<P1_GAIN>)
 
 
 drums:
@@ -79,6 +81,7 @@ stack(
   .postgain(.25),
 )
 .gain(<VOLUME>)
+.gain(<P3_GAIN>)
 
 drums2: 
 stack(
@@ -97,13 +100,15 @@ stack(
   .rarely(jux(rev)),
 )
 .gain(<VOLUME>)
+.gain(<P3_GAIN>)
 
 all(x => x.gain(<MASTER_VOLUME>))
 all(x => x.lpf(<LPF>))
 all(x => x.room(<ROOM>))
+all(x => x.log())
 
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
-// all(x => x.log())
+
 
 // @version 1.2`;

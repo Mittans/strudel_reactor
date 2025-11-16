@@ -13,6 +13,7 @@ import DJControls from './components/DJControls';
 import PauseAndPlay from './components/PauseAndPlay';
 import ProcButtons from './components/ProcButtons';
 import ControlsTextArea from './components/ControlsTextArea';
+import StrudelGraph from './components/StrudelGraph';
 
 
 import { handleD3Data } from './utils/d3Handler';
@@ -101,6 +102,7 @@ return (
                             </nav>
 
                             <DJControls />
+                            <StrudelGraph />
                         </div>
                     </div>
                 </div>
