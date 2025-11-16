@@ -12,7 +12,7 @@ function DJControls({ volume, cpm, onCpmChange,
                 <input
                     type="text"
                     className="form-control"
-                    id="cpm_text_input"
+                    id="setCPMBox"
                     placeholder="Enter CPM (60 to 200)"
                     aria-label="cpm"
                     aria-describedby="cpm_label"

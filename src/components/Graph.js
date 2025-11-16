@@ -4,12 +4,11 @@ import { getD3Data } from "../console-monkey-patch";
 
 export default function Graph() {
 
-    const [logArray, setLogArray] = useState([]);     // stores strings
-    const maxItems = 50;                              // number of points to show
-    const maxValue = 1.0;                             // gain range 0–1
-    const updateInterval = 400;                       // ms refresh rate
+    const [logArray, setLogArray] = useState([]);
+    const maxItems = 50;
+    const maxValue = 1.0;
+    const updateInterval = 400;
 
-    // Convert log string to number (extract gain value)
     function LogToNum(input) {
         if (!input) return 0;
         const parts = input.split(/\s+/);
@@ -22,11 +21,11 @@ export default function Graph() {
         return 0;
     }
 
-    // Fetch data every few ms
     useEffect(() => {
         const timer = setInterval(() => {
-            const data = getD3Data();        // get all Strudel logs
+            const data = getD3Data();
             if (!data || data.length === 0) return;
+
             const latest = data[data.length - 1];
             setLogArray(prev => {
                 const updated = [...prev, latest];
@@ -38,16 +37,15 @@ export default function Graph() {
         return () => clearInterval(timer);
     }, []);
 
-    // Draw D3 line graph
     useEffect(() => {
         const svg = d3.select("#d3graph");
         svg.selectAll("*").remove();
 
-        const w = 600, h = 150, margin = 10;
+        const w = 600, h = 150, margin = 20;
 
         const xScale = d3.scaleLinear()
             .domain([0, logArray.length - 1])
-            .range([margin, w - margin]);
+            .range([margin + 30, w - margin]);
 
         const yScale = d3.scaleLinear()
             .domain([0, maxValue])
@@ -55,30 +53,43 @@ export default function Graph() {
 
         const chart = svg.append("g");
 
-        // gradient
-        const gradient = chart.append("linearGradient")
-            .attr("id", "line-gradient")
-            .attr("gradientUnits", "userSpaceOnUse")
-            .attr("x1", 0).attr("y1", yScale(0))
-            .attr("x2", 0).attr("y2", yScale(maxValue));
+        // --- Background BOX ---
+        chart.append("rect")
+            .attr("x", 10)
+            .attr("y", 5)
+            .attr("width", w - 20)
+            .attr("height", h - 10)
+            .attr("rx", 15)
+            .attr("ry", 15)
+            .attr("fill", "rgba(0,0,0,0.55)")     
+            .attr("stroke", "#ff3b3b")            
+            .attr("stroke-width", 2.5)
+            .style("filter", "drop-shadow(0 0 8px #ff3b3b)");
+            
 
-        gradient.selectAll("stop")
-            .data([
-                { offset: "0%", color: "green" },
-                { offset: "100%", color: "red" },
-            ])
-            .enter()
-            .append("stop")
-            .attr("offset", d => d.offset)
-            .attr("stop-color", d => d.color);
+        // --- Y-AXIS ---
+        const yAxis = d3.axisLeft(yScale)
+            .ticks(5)
+            .tickSize(3)
+            .tickFormat(d3.format(".1f"));
 
+        chart.append("g")
+            .attr("transform", `translate(${margin + 30},0)`)
+            .call(yAxis)
+            .call(g => g.selectAll("text").attr("fill", "#00ffc8"))
+            .call(g => g.selectAll("line").attr("stroke", "#00ffc8"))
+            .call(g => g.selectAll(".domain").attr("stroke", "#00ffc8"));
+
+        // --- Line colour (NEON CYAN) ---
         const numericData = logArray.map(LogToNum);
 
         chart.append("path")
             .datum(numericData)
             .attr("fill", "none")
-            .attr("stroke", "url(#line-gradient)")
-            .attr("stroke-width", 1.5)
+            .attr("stroke", "#ff3b3b")                  
+            .style("filter", "drop-shadow(0 0 8px #ff4f4f)")             
+            .attr("stroke-width", 2.5)
+            .style("filter", "drop-shadow(0 0 6px #00ffe1)")
             .attr("d",
                 d3.line()
                     .x((d, i) => xScale(i))
@@ -90,12 +101,11 @@ export default function Graph() {
 
     return (
         <div className="App container text-center mt-3">
-            <h6 style={{ color: "white" }}>🎵 Live D3 Music Graph</h6>
+            <h6 id="graphTitle">Midnight in Motion – Live Gain Visualizer</h6>
             <svg
                 id="d3graph"
                 width="600"
                 height="150"
-                className="border border-info rounded"
             ></svg>
         </div>
     );
