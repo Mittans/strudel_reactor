@@ -35,28 +35,38 @@ const arpeggiator2 = [
 "{d5 bb4 g4 d4 bb3 g3 d4 bb3 eb3 d3 bb2 eb2}%16",
 ]
 
-
 const pattern = 0
 const bass = 0
+const volume = 0.80
+const reverb = 0.25
+const randomHits = 0
+const shapeValue = 0
+const crushValue = 8
 
 bassline:
 note(pick(basslines, bass))
 .sound("supersaw")
 .postgain(2)
-.room(0.6)
+.room(reverb)
 .lpf(700)
 .room(0.4)
 .postgain(pick(gain_patterns, pattern))
+.gain(volume)
+.degradeBy(randomHits)
+.shape(shapeValue)
 
 
 main_arp: 
-note(pick(arpeggiator1, "<0 1 2 3>/2"))
+note(pick(arpeggiator2, "<0 1 2 3>/2"))
 .sound("supersaw")
 .lpf(300)
 .adsr("0:0:.5:.1")
-.room(0.6)
+.room(reverb)
 .lpenv(3.3)
 .postgain(pick(gain_patterns, pattern))
+.gain(volume)
+.degradeBy(randomHits)
+.shape(shapeValue)
 
 
 drums:
@@ -70,12 +80,20 @@ stack(
   s("sh").struct("[x!3 ~!2 x!10 ~]")
   .postgain(0.5).lpf(7000)
   .bank("RolandTR808")
-  .speed(0.8).jux(rev).room(sine.range(0.1,0.4)).gain(0.6),
+  .speed(0.8)
+  .jux(rev)
+  .room(reverb)
+  .gain(0.6),
 
   s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2")
   .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
   .postgain(.25),
 )
+  .gain(volume)
+  .degradeBy(randomHits)
+  .shape(shapeValue)
+  .crush(crushValue) 
+
 
 drums2: 
 stack(
@@ -83,7 +101,7 @@ stack(
   s("hh").struct("x*16").bank("RolandTR808")
   .gain(0.6)
   .jux(rev)
-  .room(sine.range(0.1,0.4))
+  .room(reverb)
   .postgain(0.5),
   
   s("[psr:[2|5|6|7|8|9|12|24|25]*16]?0.1")
@@ -93,6 +111,10 @@ stack(
   .speed(0.5)
   .rarely(jux(rev)),
 )
+  .postgain(volume)
+  .degradeBy(randomHits)
+  .shape(shapeValue)
+  
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())
