@@ -215,7 +215,7 @@ return (
                     <div className="col-md-4">
 
                         <nav>
-                            <ProcButtons />
+                            {/*<ProcButtons />*/}
                             <JsonButtons
                                 onSaveJson={handleSaveJson}
                                 onLoadJson={handleLoadJson}

@@ -4,13 +4,6 @@ samples('github:algorave-dave/samples')
 samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
 samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')
 
-const muteIf = (cond, pattern) => {
-  if (cond == 0) {
-    return silence;
-  } else {
-    return pattern;
-  }
-};
 
 const gain_patterns = [
   "2",
@@ -43,6 +36,13 @@ const arpeggiator2 = [
 "{d5 bb4 g4 d4 bb3 g3 d4 bb3 eb3 d3 bb2 eb2}%16",
 ]
 
+const muteIf = (cond, pattern) => {
+  if (cond == 0) {
+    return silence;
+  } else {
+    return pattern;
+  }
+};
 
 const pattern = 0
 const bass = 0
@@ -112,6 +112,6 @@ muteIf(<gain_drums2>,
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
 // all(x => x.log())
-all(x => x<effect_chain>.postgain(<volume>)._scope().log().analyze("d3scope"))
+all(x => x<effect_chain>.postgain(<volume>).log().analyze("d3scope"))
 
 // @version 1.2`;

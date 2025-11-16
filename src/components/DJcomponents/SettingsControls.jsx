@@ -1,227 +1,190 @@
-function SettingsControls({ setEnableReverb, setReverbAmount,
-    setEnableDelay, setDelayAmount,
-    setEnableDistortion, setDistortionAmount,
-    setEnableLowPass, setLowPassFreq,
-    setEnableHighPass, setHighPassFreq,
-    setEnableChorus, setChorusAmount,
-    setEnableWow, setWowAmount }) {
+function SettingsControls({ effectSetters }) {
     const applyPreset = (preset) => {
+        // loop to set preset 
+        Object.entries(preset).forEach(([key, config]) => {
+            if (!effectSetters[key]) return;
 
-        // Reverb
-        if (preset.reverb !== undefined) {
-            setEnableReverb(preset.reverb.enable);
-            setReverbAmount(preset.reverb.amount);
-        }
+            // enable trigger
+            if (typeof config.enable === "boolean") {
+                effectSetters[key].setEnable(config.enable);
+            }
 
-        // Delay
-        if (preset.delay !== undefined) {
-            setEnableDelay(preset.delay.enable);
-            setDelayAmount(preset.delay.amount);
-        }
-
-        // Distortion
-        if (preset.dist !== undefined) {
-            setEnableDistortion(preset.dist.enable);
-            setDistortionAmount(preset.dist.amount);
-        }
-
-        // Low-pass
-        if (preset.lp !== undefined) {
-            setEnableLowPass(preset.lp.enable);
-            setLowPassFreq(preset.lp.freq);
-        }
-
-        // High-pass
-        if (preset.hp !== undefined) {
-            setEnableHighPass(preset.hp.enable);
-            setHighPassFreq(preset.hp.freq);
-        }
-
-        // Chorus
-        if (preset.chorus !== undefined) {
-            setEnableChorus(preset.chorus.enable);
-            setChorusAmount(preset.chorus.amount);
-        }
-
-        // Wow
-        if (preset.wow !== undefined) {
-            setEnableWow(preset.wow.enable);
-            setWowAmount(preset.wow.amount);
-        }
+            // amount, freq value
+            if (config.amount !== undefined) {
+                effectSetters[key].setAmount(config.amount);
+            }
+            if (config.freq !== undefined) {
+                effectSetters[key].setAmount(config.freq);
+            }
+        });
     };
 
-    // ============================
-    // Preset Definitions
-    // ============================
 
     const PRESETS = {
-
         pop: [
             {
-                name: "Setting 1",
-                reverb: { enable: true, amount: 0.25 },
-                delay: { enable: false, amount: 0.0 },
-                dist: { enable: false, amount: 0.0 },
-                lp: { enable: true, freq: 5000 },
-                hp: { enable: false, freq: 200 },
-                chorus: { enable: true, amount: 0.3 },
-                wow: { enable: false, amount: 0 }
+                name: "Bright Studio",
+                reverb: { enable: true, amount: 0.30 },
+                delay: { enable: true, amount: 0.18 },
+                distortion: { enable: false, amount: 0.10 },
+                lowpass: { enable: true, freq: 6200 },
+                highpass: { enable: true, freq: 180 },
+                chorus: { enable: true, amount: 0.28 },
+                wow: { enable: false, amount: 0.5 }
             },
             {
-                name: "Setting 2",
-                reverb: { enable: true, amount: 0.45 },
+                name: "Modern Wide",
+                reverb: { enable: true, amount: 0.42 },
                 delay: { enable: true, amount: 0.25 },
-                dist: { enable: false, amount: 0.0 },
-                lp: { enable: true, freq: 4000 },
-                hp: { enable: false, freq: 200 },
-                chorus: { enable: true, amount: 0.5 },
-                wow: { enable: false, amount: 0 }
+                distortion: { enable: false, amount: 0.15 },
+                lowpass: { enable: true, freq: 6800 },
+                highpass: { enable: true, freq: 220 },
+                chorus: { enable: true, amount: 0.35 },
+                wow: { enable: true, amount: 1.2 }
             },
             {
-                name: "Setting 3",
-                reverb: { enable: true, amount: 0.6 },
-                delay: { enable: true, amount: 0.3 },
-                dist: { enable: false, amount: 0.0 },
-                lp: { enable: true, freq: 3500 },
-                hp: { enable: false, freq: 250 },
-                chorus: { enable: true, amount: 0.6 },
-                wow: { enable: false, amount: 0 }
+                name: "Airy Chorus",
+                reverb: { enable: true, amount: 0.50 },
+                delay: { enable: true, amount: 0.28 },
+                distortion: { enable: false, amount: 0.12 },
+                lowpass: { enable: true, freq: 7000 },
+                highpass: { enable: true, freq: 260 },
+                chorus: { enable: true, amount: 0.55 },
+                wow: { enable: true, amount: 2.0 }
             }
         ],
-
         jazz: [
             {
-                name: "Setting 1",
-                reverb: { enable: true, amount: 0.35 },
-                delay: { enable: false, amount: 0.0 },
-                dist: { enable: false, amount: 0.0 },
-                lp: { enable: true, freq: 4500 },
-                hp: { enable: true, freq: 250 },
-                chorus: { enable: false, amount: 0.0 },
-                wow: { enable: true, amount: 1 }
+                name: "Small Lounge",
+                reverb: { enable: true, amount: 0.38 },
+                delay: { enable: false, amount: 0 },
+                distortion: { enable: false, amount: 0.05 },
+                lowpass: { enable: true, freq: 4600 },
+                highpass: { enable: true, freq: 220 },
+                chorus: { enable: false, amount: 0 },
+                wow: { enable: true, amount: 1.0 }
             },
             {
-                name: "Setting 2",
-                reverb: { enable: true, amount: 0.5 },
-                delay: { enable: true, amount: 0.15 },
-                dist: { enable: false, amount: 0.0 },
-                lp: { enable: true, freq: 4200 },
-                hp: { enable: true, freq: 300 },
-                chorus: { enable: false, amount: 0.0 },
-                wow: { enable: true, amount: 2 }
+                name: "Blue Note",
+                reverb: { enable: true, amount: 0.55 },
+                delay: { enable: true, amount: 0.12 },
+                distortion: { enable: false, amount: 0.07 },
+                lowpass: { enable: true, freq: 4200 },
+                highpass: { enable: true, freq: 300 },
+                chorus: { enable: false, amount: 0 },
+                wow: { enable: true, amount: 1.8 }
             },
             {
-                name: "Setting 3",
-                reverb: { enable: true, amount: 0.65 },
-                delay: { enable: true, amount: 0.25 },
-                dist: { enable: false, amount: 0.0 },
-                lp: { enable: true, freq: 4000 },
-                hp: { enable: true, freq: 350 },
-                chorus: { enable: false, amount: 0.0 },
-                wow: { enable: true, amount: 3 }
+                name: "Grand Hall",
+                reverb: { enable: true, amount: 0.68 },
+                delay: { enable: true, amount: 0.20 },
+                distortion: { enable: false, amount: 0.08 },
+                lowpass: { enable: true, freq: 3800 },
+                highpass: { enable: true, freq: 330 },
+                chorus: { enable: false, amount: 0 },
+                wow: { enable: true, amount: 2.5 }
             }
         ],
-
         elec: [
             {
-                name: "Setting 1",
-                reverb: { enable: false, amount: 0.0 },
-                delay: { enable: true, amount: 0.4 },
-                dist: { enable: true, amount: 0.4 },
-                lp: { enable: false, freq: 8000 },
-                hp: { enable: true, freq: 500 },
-                chorus: { enable: true, amount: 0.5 },
-                wow: { enable: true, amount: 4 }
+                name: "Basic Lead",
+                reverb: { enable: true, amount: 0.20 },
+                delay: { enable: true, amount: 0.40 },
+                distortion: { enable: true, amount: 0.35 },
+                lowpass: { enable: false, freq: 8000 },
+                highpass: { enable: true, freq: 450 },
+                chorus: { enable: true, amount: 0.35 },
+                wow: { enable: true, amount: 3 }
             },
             {
-                name: "Setting 2",
-                reverb: { enable: false, amount: 0.0 },
-                delay: { enable: true, amount: 0.5 },
-                dist: { enable: true, amount: 0.6 },
-                lp: { enable: false, freq: 8000 },
-                hp: { enable: true, freq: 700 },
-                chorus: { enable: true, amount: 0.6 },
-                wow: { enable: true, amount: 6 }
+                name: "Festival Drop",
+                reverb: { enable: true, amount: 0.30 },
+                delay: { enable: true, amount: 0.55 },
+                distortion: { enable: true, amount: 0.65 },
+                lowpass: { enable: false, freq: 8000 },
+                highpass: { enable: true, freq: 650 },
+                chorus: { enable: true, amount: 0.45 },
+                wow: { enable: true, amount: 5 }
             },
             {
-                name: "Setting 3",
-                reverb: { enable: true, amount: 0.3 },
-                delay: { enable: true, amount: 0.6 },
-                dist: { enable: true, amount: 0.7 },
-                lp: { enable: false, freq: 8000 },
-                hp: { enable: true, freq: 900 },
-                chorus: { enable: true, amount: 0.7 },
-                wow: { enable: true, amount: 8 }
+                name: "Hardstyle Bass",
+                reverb: { enable: true, amount: 0.25 },
+                delay: { enable: true, amount: 0.60 },
+                distortion: { enable: true, amount: 0.80 },
+                lowpass: { enable: false, freq: 8000 },
+                highpass: { enable: true, freq: 900 },
+                chorus: { enable: true, amount: 0.60 },
+                wow: { enable: true, amount: 7 }
             }
         ],
-
         classic: [
             {
-                name: "Setting 1",
-                reverb: { enable: true, amount: 0.5 },
+                name: "Chamber",
+                reverb: { enable: true, amount: 0.52 },
                 delay: { enable: false, amount: 0 },
-                dist: { enable: false, amount: 0 },
-                lp: { enable: true, freq: 3500 },
-                hp: { enable: false, freq: 200 },
+                distortion: { enable: false, amount: 0.05 },
+                lowpass: { enable: true, freq: 3600 },
+                highpass: { enable: false, freq: 200 },
                 chorus: { enable: false, amount: 0 },
-                wow: { enable: false, amount: 0 }
+                wow: { enable: false, amount: 0.5 }
             },
             {
-                name: "Setting 2",
-                reverb: { enable: true, amount: 0.65 },
+                name: "Concert Hall",
+                reverb: { enable: true, amount: 0.70 },
                 delay: { enable: false, amount: 0 },
-                dist: { enable: false, amount: 0 },
-                lp: { enable: true, freq: 3000 },
-                hp: { enable: false, freq: 200 },
+                distortion: { enable: false, amount: 0.05 },
+                lowpass: { enable: true, freq: 3200 },
+                highpass: { enable: false, freq: 200 },
                 chorus: { enable: false, amount: 0 },
-                wow: { enable: false, amount: 0 }
+                wow: { enable: true, amount: 1.0 }
             },
             {
-                name: "Setting 3",
-                reverb: { enable: true, amount: 0.75 },
-                delay: { enable: false, amount: 0 },
-                dist: { enable: false, amount: 0 },
-                lp: { enable: true, freq: 2500 },
-                hp: { enable: false, freq: 200 },
+                name: "Cathedral",
+                reverb: { enable: true, amount: 0.82 },
+                delay: { enable: true, amount: 0.15 },
+                distortion: { enable: false, amount: 0.05 },
+                lowpass: { enable: true, freq: 2500 },
+                highpass: { enable: false, freq: 150 },
                 chorus: { enable: false, amount: 0 },
-                wow: { enable: false, amount: 0 }
+                wow: { enable: true, amount: 1.4 }
             }
         ],
 
         rock: [
             {
-                name: "Setting 1",
-                reverb: { enable: true, amount: 0.3 },
+                name: "Stage Drive",
+                reverb: { enable: true, amount: 0.30 },
                 delay: { enable: false, amount: 0 },
-                dist: { enable: true, amount: 0.4 },
-                lp: { enable: false, freq: 8000 },
-                hp: { enable: true, freq: 300 },
+                distortion: { enable: true, amount: 0.40 },
+                lowpass: { enable: false, freq: 8000 },
+                highpass: { enable: true, freq: 280 },
                 chorus: { enable: false, amount: 0 },
-                wow: { enable: false, amount: 0 }
+                wow: { enable: false, amount: 0.5 }
             },
             {
-                name: "Setting 2",
-                reverb: { enable: true, amount: 0.4 },
-                delay: { enable: false, amount: 0 },
-                dist: { enable: true, amount: 0.5 },
-                lp: { enable: false, freq: 8000 },
-                hp: { enable: true, freq: 350 },
+                name: " Arena",
+                reverb: { enable: true, amount: 0.45 },
+                delay: { enable: true, amount: 0.22 },
+                distortion: { enable: true, amount: 0.55 },
+                lowpass: { enable: false, freq: 8000 },
+                highpass: { enable: true, freq: 380 },
                 chorus: { enable: false, amount: 0 },
-                wow: { enable: false, amount: 0 }
+                wow: { enable: true, amount: 1.0 }
             },
             {
-                name: "Setting 3",
-                reverb: { enable: true, amount: 0.5 },
-                delay: { enable: true, amount: 0.2 },
-                dist: { enable: true, amount: 0.7 },
-                lp: { enable: false, freq: 8000 },
-                hp: { enable: true, freq: 400 },
+                name: " Heavy Drive",
+                reverb: { enable: true, amount: 0.38 },
+                delay: { enable: true, amount: 0.20 },
+                distortion: { enable: true, amount: 0.70 },
+                lowpass: { enable: false, freq: 8000 },
+                highpass: { enable: true, freq: 450 },
                 chorus: { enable: false, amount: 0 },
-                wow: { enable: false, amount: 0 }
+                wow: { enable: true, amount: 0.8 }
             }
         ]
-
     };
+
+
     return (
         <>
             {/* User settings */}

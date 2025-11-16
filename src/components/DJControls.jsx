@@ -41,6 +41,7 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
     const [wowAmount, setWowAmount] = useState(2);
     // Master Effect control
     const [enableMasterFx, setEnableMasterFx] = useState(false);
+    
     //  Sync the local CPM value
     useEffect(() => {
         if (typeof cpm === 'number' && !Number.isNaN(cpm)) {
@@ -103,15 +104,8 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         }
 
         onEffectChange?.(chainParts.join('.'));
-    }, [
-        enableReverb, reverbAmount,
-        enableDelay, delayAmount,
-        enableDistortion, distortionAmount,
-        enableLowPass, lowPassFreq,
-        enableHighPass, highPassFreq,
-        enableChorus, chorusAmount,
-        enableWow, wowAmount
-    ]);
+    }, [enableReverb, reverbAmount, enableDelay, delayAmount, enableDistortion, distortionAmount,
+        enableLowPass, lowPassFreq, enableHighPass, highPassFreq, enableChorus, chorusAmount, enableWow, wowAmount]);
 
     useEffect(() => {
         const anyFxEnabled = enableReverb || enableDelay || enableDistortion || enableLowPass || enableHighPass || enableChorus || enableWow;
@@ -120,12 +114,10 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         if (anyFxEnabled && !enableMasterFx) {
             setEnableMasterFx(true);
         }
-
         // If all FX disabled, master off auto
         if (!anyFxEnabled && enableMasterFx) {
             setEnableMasterFx(false);
         }
-
     }, [enableReverb, enableDelay, enableDistortion, enableLowPass, enableHighPass, enableChorus, enableWow,enableMasterFx]);
 
     const handleCpmChange = (e) => {
@@ -193,14 +185,34 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
 
     const handleMasterFxToggle = (event) => {
         const enabled = event.target.checked;
-        setEnableMasterFx(enabled);
-        setEnableReverb(enabled);
-        setEnableDelay(enabled);
-        setEnableDistortion(enabled);
-        setEnableLowPass(enabled);
-        setEnableHighPass(enabled);
-        setEnableChorus(enabled);
-        setEnableWow(enabled);
+        setEnableMasterFx(enabled); setEnableReverb(enabled); setEnableDelay(enabled); setEnableDistortion(enabled);
+        setEnableLowPass(enabled); setEnableHighPass(enabled); setEnableChorus(enabled); setEnableWow(enabled);
+    };
+    const effects = [
+        { key: "reverb", label: "Reverb", enable: enableReverb, amount: reverbAmount, min: 0, max: 1, step: 0.01,
+            onToggle: handleEnableReverb, onAmountChange: handleReverbAmountChange },
+        {
+            key: "delay", label: "Delay", enable: enableDelay, amount: delayAmount, min: 0, max: 1, step: 0.01,
+            onToggle: handleEnableDelay, onAmountChange: handleDelayAmountChange},
+        { key: "distortion", label: "Distortion", enable: enableDistortion, amount: distortionAmount, min: 0, max: 1, step: 0.01,
+            onToggle: handleEnableDistortion, onAmountChange: handleDistortionAmountChange},
+        { key: "lowpass", label: "Low-pass Filter", enable: enableLowPass, amount: lowPassFreq, min: 200, max: 8000, step: 50,
+            onToggle: handleEnableLowPass, onAmountChange: handleLowPassFreqChange},
+        { key: "highpass", label: "High-pass Filter", enable: enableHighPass, amount: highPassFreq, min: 100, max: 3000, step: 50,
+            onToggle: handleEnableHighPass, onAmountChange: handleHighPassFreqChange},
+        { key: "chorus", label: "Chorus", enable: enableChorus, amount: chorusAmount, min: 0, max: 1, step: 0.01,
+            onToggle: handleEnableChorus, onAmountChange: handleChorusAmountChange},
+        { key: "wow", label: "WOW", enable: enableWow, amount: wowAmount, min: 0, max: 10, step: 0.1,
+            onToggle: handleEnableWow, onAmountChange: handleWowAmountChange}
+    ];
+    const effectSetters = {
+        reverb: { setEnable: setEnableReverb, setAmount: setReverbAmount },
+        delay: { setEnable: setEnableDelay, setAmount: setDelayAmount },
+        distortion: { setEnable: setEnableDistortion, setAmount: setDistortionAmount },
+        lowpass: { setEnable: setEnableLowPass, setAmount: setLowPassFreq },
+        highpass: { setEnable: setEnableHighPass, setAmount: setHighPassFreq },
+        chorus: { setEnable: setEnableChorus, setAmount: setChorusAmount },
+        wow: { setEnable: setEnableWow, setAmount: setWowAmount }
     };
 
     return (
@@ -213,66 +225,9 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
 
             <KeyShiftControls localShift={localShift} handleKeyShiftChange={handleKeyShiftChange} handleQuickShift={handleQuickShift}/>
 
-            <EffectControls
-                enableMasterFx={enableMasterFx}
-                handleMasterFxToggle={handleMasterFxToggle}
+            <EffectControls enableMasterFx={enableMasterFx} handleMasterFxToggle={handleMasterFxToggle} effects={effects}/>
 
-                enableReverb={enableReverb}
-                reverbAmount={reverbAmount}
-                handleEnableReverb={handleEnableReverb}
-                handleReverbAmountChange={handleReverbAmountChange}
-
-                enableDelay={enableDelay}
-                delayAmount={delayAmount}
-                handleEnableDelay={handleEnableDelay}
-                handleDelayAmountChange={handleDelayAmountChange}
-
-                enableDistortion={enableDistortion}
-                distortionAmount={distortionAmount}
-                handleEnableDistortion={handleEnableDistortion}
-                handleDistortionAmountChange={handleDistortionAmountChange}
-
-                enableLowPass={enableLowPass}
-                lowPassFreq={lowPassFreq}
-                handleEnableLowPass={handleEnableLowPass}
-                handleLowPassFreqChange={handleLowPassFreqChange}
-
-                enableHighPass={enableHighPass}
-                highPassFreq={highPassFreq}
-                handleEnableHighPass={handleEnableHighPass}
-                handleHighPassFreqChange={handleHighPassFreqChange}
-
-                enableChorus={enableChorus}
-                chorusAmount={chorusAmount}
-                handleEnableChorus={handleEnableChorus}
-                handleChorusAmountChange={handleChorusAmountChange}
-
-                enableWow={enableWow}
-                wowAmount={wowAmount}
-                handleEnableWow={handleEnableWow}
-                handleWowAmountChange={handleWowAmountChange}/>
-
-            <SettingsControls
-                setEnableReverb={setEnableReverb}
-                setReverbAmount={setReverbAmount}
-
-                setEnableDelay={setEnableDelay}
-                setDelayAmount={setDelayAmount}
-
-                setEnableDistortion={setEnableDistortion}
-                setDistortionAmount={setDistortionAmount}
-
-                setEnableLowPass={setEnableLowPass}
-                setLowPassFreq={setLowPassFreq}
-
-                setEnableHighPass={setEnableHighPass}
-                setHighPassFreq={setHighPassFreq}
-
-                setEnableChorus={setEnableChorus}
-                setChorusAmount={setChorusAmount}
-
-                setEnableWow={setEnableWow}
-                setWowAmount={setWowAmount} />
+            <SettingsControls effectSetters={effectSetters}/>
 
       </>
   );
