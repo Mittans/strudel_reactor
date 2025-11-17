@@ -20,11 +20,26 @@ import { OpenD3GraphButton } from './components/buttons/OpenD3GraphButton';
 import { Graph } from './components/graph/Graph';
 
 let globalEditor = null;
+let currentArp = "arpeggiator1";
 
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
+export function validateArpeggiators(tuneText) {
+    const regex = /const\s+(arpeggiator\d+)\s*=/g;
+    const found = [];
+    let match;
+
+    while ((match = regex.exec(tuneText)) !== null) {
+        if (found.includes(match[1])) {
+            return false; 
+        }
+        found.push(match[1]);
+    }
+    return true; 
+  }
+  
 export function ProcAndPlay() {
   if (globalEditor != null && globalEditor.repl.state.started == true) {
     console.log(globalEditor)
@@ -35,17 +50,11 @@ export function ProcAndPlay() {
 
 export function Proc() {
   let proc_text = document.getElementById("proc").value;
-  let proc_text_replaced = proc_text.replaceAll('<Radio>', ProcessText);
-  ProcessText(proc_text);
+  if (!validateArpeggiators(proc_text)){
+     return;
+  } 
+  let proc_text_replaced = proc_text.replaceAll('<Radio>', currentArp);
   globalEditor.setCode(proc_text_replaced)
-}
-
-export function ProcessText(match, ...args) {
-  let replace = "arpeggiator1"
-  if (document.getElementById('flexRadioDefault2').checked) {
-    replace = "arpeggiator2"
-  }
-  return replace
 }
 
 export default function StrudelDemo() {
@@ -57,6 +66,12 @@ export default function StrudelDemo() {
     }
   }
 
+  function handleChangeArp(e) {
+    currentArp = e.target.value;
+    ProcAndPlay();
+  }
+
+  
   const hasRun = useRef(false);
   const [isPlay,setIsPlay] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -221,6 +236,7 @@ export default function StrudelDemo() {
                 text={text}
                 updateEditor={updateEditor}
                 ProcAndPlay={ProcAndPlay}
+                handleChangeArp={handleChangeArp}
               />
             </div>
 
@@ -232,7 +248,12 @@ export default function StrudelDemo() {
                   rows="15" 
                   id="proc" 
                   value={text}
-                  onChange={(e) => setText(e.target.value)}
+                  onChange={(e) => {
+                    if (validateArpeggiators(e.target.value)) {
+                      setText(e.target.value);
+                    } else {
+                        alert("Duplicate arpeggiator name detected! Update cancelled.");
+                    }}}
                   ></textarea>
             </div>
           </div>

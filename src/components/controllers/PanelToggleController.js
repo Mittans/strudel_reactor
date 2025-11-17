@@ -6,7 +6,8 @@ import { IoIosAddCircle } from "react-icons/io";
 export function PanelToggleController({
     updateEditor,
     text,
-    ProcAndPlay
+    ProcAndPlay,
+    handleChangeArp
 }) {
     return (
         <div className='flex mx-8'>
@@ -32,7 +33,7 @@ export function PanelToggleController({
                 </div>
 
 
-                <MainSong ProcAndPlay={ProcAndPlay} />
+                <MainSong text={text} handleChangeArp={handleChangeArp}/>
             </div>
 
             <div className={`w-full outline-2 outline-offset-2 outline-solid p-4 mx-4 bg-zinc-900 rounded-2xl border border-zinc-700 shadow-lg`}>

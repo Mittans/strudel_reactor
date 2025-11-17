@@ -1,24 +1,36 @@
-import { IoIosAddCircle } from "react-icons/io";
+import {useEffect, useState} from "react";
 
-export function MainSong({ProcAndPlay}) {
+export function MainSong({text, handleChangeArp}) {
+    const [arpeggiators, setArpeggiators] = useState([]);
+
+    // Automatically get the arpeggiators in the text.
+    useEffect(() => {
+        extractArpeggiatorNames(text);
+    },[text])
+
+    // Allow to get all the arpggiators in tune.js
+    function extractArpeggiatorNames(tuneText) {
+        const regex = /const\s+(arpeggiator\d+)\s*=/g;
+            let match;
+            const found = [];
+            while ((match = regex.exec(tuneText)) !== null) {
+                found.push(match[1]); 
+            }
+            setArpeggiators(found);
+        }
+
     return (
         <div className={`flex mx-2`}>
-            <div className="m-2 p-2">
-                <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
+            {arpeggiators.map((arp) => (
+                <div className="m-2 p-2">
+                    <input className="hidden peer" type="radio" name="flexRadioDefault" id={`flexRadioDefault${arp}`} value={arp} onChange={handleChangeArp}/>
                 <label 
                     className="block text-center cursor-pointer peer-checked:bg-yellow-400 bg-zinc-800 text-yellow-200 hover:bg-yellow-500 hover:text-black rounded-lg px-4 py-3 font-semibold transition-all duration-200" 
-                    htmlFor="flexRadioDefault1">
-                Arpeggiator 1
+                    htmlFor={`flexRadioDefault${arp}`}>
+                {arp}
                 </label>
             </div>
-            <div className="m-2 p-2">
-                <input className="hidden peer" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                <label 
-                    className="block text-center cursor-pointer peer-checked:bg-yellow-400 bg-zinc-800 text-yellow-200 hover:bg-yellow-500 hover:text-black rounded-lg px-4 py-3 font-semibold transition-all duration-200" 
-                    htmlFor="flexRadioDefault2">
-                Arpeggiator 2
-                </label>
-            </div>
+            ))}
         </div>
     )
 }
