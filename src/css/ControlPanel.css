@@ -38,6 +38,41 @@
   box-shadow: 0 2px 6px rgba(91, 163, 115, 0.15);
 }
 
+/* Different colors for each action */
+
+#process {
+  background: #4CAF50;
+}
+
+#process:hover {
+  background: #3d9442;
+}
+
+#process_play {
+  background: #2196F3;
+}
+
+#process_play:hover {
+  background: #1b7fcc;
+}
+
+#play {
+  background: #FF9800;
+}
+
+#play:hover {
+  background: #e08600;
+}
+
+#graph {
+  background: #9C27B0;
+}
+
+#graph:hover {
+  background: #7d1f8e;
+}
+
+
 .controlPanel #stop {
   background: #c46868;
 }
