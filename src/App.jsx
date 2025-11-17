@@ -15,6 +15,7 @@ import BassPanel from "./components/controllers/BassPanel";
 import InstrumentsPanel from "./components/controllers/InstrumentsPanel";
 import EffectPanel from "./components/controllers/EffectPanel";
 import DrumKitPanel from "./components/controllers/DrumKitPanel";
+import Graph from "./components/Graph";
 
 export default function App() {
   const {
@@ -105,6 +106,8 @@ export default function App() {
           procValue={procValue}
           handleProcChange={handleProcChange}
         />
+
+        <Graph />
       </div>
     </div>
   );

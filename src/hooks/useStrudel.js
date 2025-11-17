@@ -12,6 +12,11 @@ import {
   VOLUME_DEFAULT,
 } from "../config/audioDefaults";
 import { DRUM_KITS } from "../config/drumKits";
+import console_monkey_patch, {
+  getD3Data,
+  subscribe,
+  unsubscribe,
+} from "../console-monkey-patch";
 
 export function useStrudel(initialTune) {
   const [procValue, setProcValue] = useState(initialTune);
