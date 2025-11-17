@@ -2,8 +2,7 @@ import { CiVolumeHigh, CiVolumeMute } from "react-icons/ci";
 import { FaVolumeDown, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
 import { useEffect, useState } from "react";
 
-export function Volume({text, updateEditor}) {
-    const [volume, setVolumeState] = useState(0.5); 
+export function Volume({text, updateEditor, volume, setVolumeState}) {
 
     /* Function updated the volume */
     function updateGainInCode(newGain, providedText) {

@@ -11,7 +11,7 @@ import { stranger_tune } from './tunes';
 import { PlaybackController } from './components/controllers/PlaybackController';
 import { SlideInputs } from './components/input/SlideInputs';
 import SaveModal from './components/modal/saveModal';
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import console_monkey_patch, { GetD3Data } from './console-monkey-patch';
 import { SongSelectorController } from './components/controllers/SongSelectorController';
 import { PanelToggleController } from './components/controllers/PanelToggleController';
 import { OpenShowTimeButton } from './components/buttons/OpenShowTimeButton';
@@ -60,6 +60,7 @@ export default function StrudelDemo() {
   const hasRun = useRef(false);
   const [isPlay,setIsPlay] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [volume, setVolumeState] = useState(0.5); 
 
   useEffect(() => {
     if (!hasRun.current) {
@@ -212,7 +213,7 @@ export default function StrudelDemo() {
                 isOpenSetting={isOpenSetting}
                 modalOpenControl={modalOpenControl} 
                 />   
-              <SlideInputs text={text} updateEditor={updateEditor}/>      
+              <SlideInputs text={text} updateEditor={updateEditor} volume={volume} setVolumeState={setVolumeState}/>      
             </div>
 
             <div>
@@ -250,7 +251,7 @@ export default function StrudelDemo() {
           <OpenD3GraphButton isOpenD3Graph={isOpenD3Graph} handleOpenD3Graph={handleOpenD3Graph}/>
 
           <canvas className={`bg-zinc-800 w-full hidden`} id="roll"></canvas>
-          <Graph className={`bg-zinc-800 w-full ${isOpenD3Graph ? "" : "hidden"}`}/>
+          <Graph className={`bg-zinc-800 w-full ${isOpenD3Graph ? "" : "hidden"}`} volume={volume} isPlay={isPlay}/>
         </div>
       </main >
     </div >
