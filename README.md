@@ -1,70 +1,145 @@
-# Getting Started with Create React App
+# Stefan Control Studio - README
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+Stefan Control Studio is a music controller that allows user to adjust and play music with different pre-settings in real-time using the Strudel.cc
 
-In the project directory, you can run:
+## Control Descriptions
 
-### `npm start`
+### Top Bar Controls
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+**Load Button** (Top Left)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Loads previously saved settings from browser localStorage
+- Automatically applies all saved parameters including BPM, volume, reverb, drum patterns, bass lines, instrument combinations, effects, and drum kit selection
 
-### `npm test`
+**Save Button** (Top Right - Green)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- Saves current session settings to browser localStorage
+- Preserves all mixer settings, pattern selections, and effect states for future reviews
 
-### `npm run build`
+### Status Bar
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Displays three key metrics:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **BPM**: Current tempo (beats per minute) - default 140
+- **Status**: Shows "Playing" (green) or "Stopped" (red)
+- **Volume**: Current master volume level (0.0 to 3.0) - default 0.8
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Main Control Buttons
 
-### `npm run eject`
+**Stop Button** (Red - Left)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Stops playback immediately
+- Updates status indicator to "Stopped"
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+**Play Button** (Green - Center)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Starts/resumes playback with current settings
+- Updates status indicator to "Playing"
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**Settings Button** (Yellow - Right)
 
-## Learn More
+- Preprocesses and compiles the current Strudel code
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Mixer Panel
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Volume Slider**
 
-### Code Splitting
+- Range: 0.0 to 3.0
+- Controls output volume
+- Real-time adjustment
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Tempo Slider**
 
-### Analyzing the Bundle Size
+- Range: 40 to 240 BPM
+- Adjusts playback speed
+- Changes reflect immediately in the status bar and music
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Reverb Slider**
 
-### Making a Progressive Web App
+- Range: 0.0 to 10.0
+- Controls reverb/room effect intensity
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Drum Pattern Section
 
-### Advanced Configuration
+Three preset drum patterns:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- **Steady**: Basic 4/4 beat pattern
+- **Up & Down**: Up and down beat pattern
+- **Complex**: Complex beat pattern
 
-### Deployment
+Click any button to switch patterns instantly.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### Bass Section
 
-### `npm run build` fails to minify
+Two bass line options:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- **Smooth**: Melodic, flowing bass line
+- **Drive**: Punchy bass line
+
+### Instrument Combinations
+
+Pre-configured mute/solo combinations:
+
+- **All**: All instruments active (default)
+- **BeatsOnly**: Drums only
+- **BassDrum**: Bass and drums only
+- **NoDrums**: All instruments except drums
+- **BassOnly**: Bass only
+- **ArpOnly**: Arpeggiated synth only
+- **DrumsOnly**: Drums only
+- **Drums2Only**: Secondary drum pattern only
+
+### Special Effects
+
+Toggle switches for additional effects:
+
+- **Add distortion**: Adds grit and harmonic saturation
+- **Skip Notes**: Creates a stuttering/glitch effect by randomly skipping notes
+- **Reduce Bit**: Bit-crushing effect
+
+### Drum Kit Selection
+
+Four drum sound banks:
+
+- **Classic**: RolandTR808
+- **Acoustic**: AcousticKit
+- **Vintage**: LinnDrum
+- **Retro**: OberheimDmx
+- **Digital**: RolandTR606
+
+### Accordians
+
+**Input** (Expandable)
+
+- Displays the raw Strudel code
+- Code updates immediately when controls are changed
+- Can be manually edited (use Settings button to apply changes or play directly)
+
+**Editor/Output** (Expandable)
+
+- Alternative view of the Strudel code with more colors
+- Users can modify patterns directly
+
+**Canvas Display** (Expandable)
+
+- Visual piano roll representation
+- Shows note patterns
+
+## Usage Guidelines
+
+### Getting Started
+
+1. Click the green **Play** button to start with default settings
+2. Adjust **Mixer Panel** sliders to set your preferred volume, tempo, and reverb
+3. Try different **Drum Patterns** and **Bass** options
+4. Try various **Instrument Combinations** to create different textures
+
+### Music Source
+
+- The song from Algorave Dave's code: https://www.youtube.com/watch?v=ZCcpWzhekEY
+
+## Music Video Link
+
+Video Link:
