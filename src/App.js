@@ -215,7 +215,29 @@ export default function StrudelDemo() {
                     </label>
                 </div>
                 <div className="col-md-3">
-                    <SaveAndLoadButtons MuteState={MuteState} setMuteState={setMuteState} />
+                    <SaveAndLoadButtons
+                        MuteState={MuteState}
+                        setMuteState={setMuteState}
+                        volumeState={volumeState}
+                        setVolumeState={setVolumeState}
+                        Tracks={Tracks}
+                        lowPassState={LowPassState}
+                        setLowPassState={setLowPassState}
+                        mediumPassState={MediumPassState}
+                        setMediumPassState={setMediumPassState}
+                        highPassState={HighPassState}
+                        setHighPassState={setHighPassState}
+                        roomState={RoomState}
+                        setRoomState={setRoomState}
+                        roomLowPassState={RoomLowPassState}
+                        setRoomLowPassState={setRoomLowPassState}
+                        roomFadeState={RoomFadeState}
+                        setRoomFadeState={setRoomFadeState}
+                        roomDecayState={RoomDecayState}
+                        setRoomDecayState={setRoomDecayState}
+                        roomSustainState={RoomSustainState}
+                        SetRoomSustainState={setRoomSustainState}
+                    />
                 </div>
             </div>
             <main>

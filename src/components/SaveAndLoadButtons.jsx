@@ -1,7 +1,29 @@
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 
-function SaveAndLoadButtons({ MuteState, setMuteState }) {
+function SaveAndLoadButtons({
+    MuteState,
+    setMuteState,
+    volumeState,
+    setVolumeState,
+    Tracks,
+    lowPassState,
+    setLowPassState,
+    mediumPassState,
+    setMediumPassState,
+    highPassState,
+    setHighPassState,
+    roomState,
+    setRoomState,
+    roomLowPassState,
+    setRoomLowPassState,
+    roomFadeState,
+    setRoomFadeState,
+    roomDecayState,
+    setRoomDecayState,
+    roomSustainState,
+    SetRoomSustainState,
+}) {
     // Variables and functions used to show modal when save is clicked and
     // close modal once user has saved the name chosen
     const [show, setShow] = useState(false);
@@ -16,6 +38,16 @@ function SaveAndLoadButtons({ MuteState, setMuteState }) {
         let value = document.getElementById("proc").value;
         State["music"] = value;
         State["Mute"] = MuteState;
+        State["Volume"] = volumeState;
+        State["lowPass"] = lowPassState;
+        State["mediumPass"] = mediumPassState;
+        State["highPass"] = highPassState;
+        State["Room"] = roomState;
+        State["RoomLowPass"] = roomLowPassState;
+        State["RoomFade"] = roomFadeState;
+        State["RoomDecay"] = roomDecayState;
+        State["RoomSustain"] = roomSustainState;
+        Tracks.map((track) => (State[`${track}_volume`] = volumeState[track]));
         State = JSON.stringify(State);
         const blob = new Blob([State], { type: "application/json" });
         const url = URL.createObjectURL(blob);
@@ -51,6 +83,34 @@ function SaveAndLoadButtons({ MuteState, setMuteState }) {
                 if (json.Mute) {
                     setMuteState(json.Mute);
                 }
+                if (json.Volume) {
+                    setVolumeState(json.Volume);
+                }
+                if (json.lowPass) {
+                    setLowPassState(json.lowPass);
+                }
+                if (json.mediumPass) {
+                    setMediumPassState(json.mediumPass);
+                }
+                if (json.highPass) {
+                    setHighPassState(json.highPass);
+                }
+                if (json.Room) {
+                    setRoomState(json.Room);
+                }
+                if (json.RoomLowPass) {
+                    setRoomLowPassState(json.RoomLowPass);
+                }
+                if (json.RoomFade) {
+                    setRoomFadeState(json.RoomFade);
+                }
+                if (json.RoomDecay) {
+                    setRoomDecayState(json.RoomDecay);
+                }
+                if (json.RoomSustain) {
+                    SetRoomSustainState(json.RoomSustain);
+                }
+                Tracks.map((track) => (volumeState[track] = json.$track_volume));
             };
             reader.readAsText(file);
         };
