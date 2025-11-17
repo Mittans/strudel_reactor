@@ -117,7 +117,7 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                                     className="form-check-input"
                                     type="checkbox"
                                     id="drum2Switch"
-                                    checked={tracks.drum2}
+                                    //checked={tracks.drum2}
                                     onChange={() => toggleTrack('drum2')}
                                 />
                                 <label className="form-check-label text-light" htmlFor="drum2Switch">Drum 2</label>
@@ -127,7 +127,7 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                                     className="form-check-input"
                                     type="checkbox"
                                     id="drumsSwitch"
-                                    checked={tracks.drums}
+                                    //checked={tracks.drums}
                                     onChange={() => toggleTrack('drums')}
                                 />
                                 <label className="form-check-label text-light" htmlFor="drumsSwitch">Drums</label>
@@ -137,7 +137,7 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                                     className="form-check-input"
                                     type="checkbox"
                                     id="bassSwitch"
-                                    checked={tracks.bass}
+                                    //checked={tracks.bass}
                                     onChange={() => toggleTrack('bass')}
                                 />
                                 <label className="form-check-label text-light" htmlFor="bassSwitch">Bass</label>

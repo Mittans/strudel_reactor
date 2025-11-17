@@ -13,14 +13,13 @@ function D3Graph() {
         console_monkey_patch();
 
         const handleD3Data = (event) => {
-            // this is what the tutor showed us to use
             console.log("d3Data event detail:", event.detail);
 
             const rawArray = event.detail;
 
-            // turn event.detail values into numbers
+            // turn event.detail values into numbers 
             const numericData = rawArray
-                .map(v => parseFloat(String(v).split(" ")[0])) // first part as number
+                .map(v => parseFloat(String(v).split(" ")[0]))  // first part as number
                 .filter(v => !Number.isNaN(v));
 
             setDrumData(numericData);
@@ -53,25 +52,34 @@ function D3Graph() {
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
 
+
         const xScale = d3.scaleLinear()
             .domain([0, drumData.length - 1])
             .range([0, innerWidth]);
 
+        // Y = numeric value from Strudel messages
         const maxY = d3.max(drumData) || 1;
         const yScale = d3.scaleLinear()
             .domain([0, maxY])
             .range([innerHeight, 0]);
 
+        // X axis
+        const xAxis = d3.axisBottom(xScale).ticks(5);
         g.append("g")
             .attr("transform", `translate(0, ${innerHeight})`)
-            .call(d3.axisBottom(xScale));
+            .call(xAxis)
+            .selectAll("text")
+            .style("font-size", "10px");
 
-        g.append("g")
-            .call(d3.axisLeft(yScale));
+        // Y axis
+        const yAxis = d3.axisLeft(yScale).ticks(5);
+        const yAxisGroup = g.append("g").call(yAxis);
+        yAxisGroup.selectAll("text").style("font-size", "10px");
 
         const line = d3.line()
             .x((d, i) => xScale(i))
-            .y(d => yScale(d));
+            .y(d => yScale(d))
+
 
         g.append("path")
             .datum(drumData)
@@ -79,11 +87,30 @@ function D3Graph() {
             .attr("stroke", "steelblue")
             .attr("stroke-width", 2)
             .attr("d", line);
+
+        // Axis labels 
+        g.append("text")
+            .attr("x", innerWidth / 2)
+            .attr("y", innerHeight + 30)
+            .attr("text-anchor", "middle")
+            .style("font-size", "11px")
+            .style("fill", "#ffffff")
+            .text("Event Index");
+
+        g.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -innerHeight / 2)
+            .attr("y", -35)
+            .attr("text-anchor", "middle")
+            .style("font-size", "11px")
+            .style("fill", "#ffffff")
+            .text("Value from Strudel");
+
     }, [drumData]);
 
     return (
         <div className="p-3 rounded-3 glass-inner-card mt-4">
-            <h5 className="text-center text-light mb-2">D3 Graph</h5>
+            <h5 className="text-center text-light mb-2">Live Strudel Data (Line Graph)</h5>
             <svg ref={svgRef}></svg>
         </div>
     );
