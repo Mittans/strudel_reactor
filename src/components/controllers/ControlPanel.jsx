@@ -4,28 +4,15 @@ import { useState } from "react";
 import { FaPlay, FaStop } from "react-icons/fa";
 import { IoSettings } from "react-icons/io5";
 
-// import functions
-import { strudelActions } from "../../strudel/strudelSetup";
-
-export default function ControlPanel({ isPlaying, setIsPlaying }) {
+export default function ControlPanel({ handlePlay, handleStop }) {
   const [open, setOpen] = useState(false);
-
-  const handlePlay = () => {
-    setIsPlaying(true);
-    strudelActions.evaluate();
-  };
-
-  const handleStop = () => {
-    setIsPlaying(false);
-    strudelActions.stop();
-  };
 
   const handleProcess = () => {
     setOpen(false);
   };
 
-  const handleProcessAndPlay = () => {
-    handlePlay();
+  const handleProcessAndPlay = async () => {
+    await handlePlay();
     setOpen(false);
   };
 

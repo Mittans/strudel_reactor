@@ -129,6 +129,13 @@ Four drum sound banks:
 
 ## Usage Guidelines
 
+### How to run the program
+
+1. Clone the repository: `git clone https://github.com/Stefan-Phan/WebTechA2.git` and then `cd A2`
+2. Install dependencies: `npm install`
+3. Run the program: `npm start`
+4. Open the web browser and navigate to: `http://localhost:3000`
+
 ### Getting Started
 
 1. Click the green **Play** button to start with default settings

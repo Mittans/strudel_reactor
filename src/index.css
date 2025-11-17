@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+#editor .cm-content[contenteditable="true"] {
+  pointer-events: none;
+  caret-color: transparent;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

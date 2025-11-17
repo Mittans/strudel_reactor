@@ -30,11 +30,7 @@ export default function AccordionItemBody({
         {/* ---------------- Editor / Output ---------------- */}
         {section.id === "output" && (
           <div className="w-full max-h-[800px] bg-black overflow-y-auto">
-            <div id="editor" className="min-h-[100px] bg-gray-100 p-2 mb-2" />
-            <div
-              id="output"
-              className="min-h-[100px] bg-gray-100 p-2 rounded-b-lg"
-            />
+            <div id="editor"></div>
           </div>
         )}
 

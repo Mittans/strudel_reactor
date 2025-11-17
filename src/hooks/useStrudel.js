@@ -12,11 +12,6 @@ import {
   VOLUME_DEFAULT,
 } from "../config/audioDefaults";
 import { DRUM_KITS } from "../config/drumKits";
-import console_monkey_patch, {
-  getD3Data,
-  subscribe,
-  unsubscribe,
-} from "../console-monkey-patch";
 
 export function useStrudel(initialTune) {
   const [procValue, setProcValue] = useState(initialTune);
@@ -130,6 +125,7 @@ export function useStrudel(initialTune) {
   function setCodeAndPlay(code) {
     setProcValue(code);
     strudelActions.setCode(code);
+
     if (isPlaying) {
       strudelActions.evaluate();
     }
@@ -296,13 +292,44 @@ export function useStrudel(initialTune) {
       newCode = param.target.value;
     }
 
-    setCodeAndPlay(newCode);
-    updateUiFromCode(newCode);
+    try {
+      setCodeAndPlay(newCode);
+      updateUiFromCode(newCode);
+    } catch (err) {
+      console.log("An error occurs, Please check your syntax");
+      alert("An error occurs, Please check your syntax");
+    }
+  };
+
+  const handlePlay = () => {
+    if (!procValue || procValue.trim() === "") {
+      alert("Code is empty! Please enter a something before playing.");
+      return;
+    }
+
+    try {
+      strudelActions.evaluate();
+      setIsPlaying(true);
+    } catch (err) {
+      console.error("Strudel evaluation error:", err);
+      alert(
+        "There was an error while running the code. Please check your syntax."
+      );
+
+      setIsPlaying(false);
+    }
+  };
+
+  const handleStop = () => {
+    setIsPlaying(false);
+    strudelActions.stop();
   };
 
   return {
     isReady,
     isPlaying,
+    bass,
+    pattern,
     setIsPlaying,
     drumKitId,
     setDrumKitId,
@@ -327,5 +354,7 @@ export function useStrudel(initialTune) {
     isCrushValueOn,
     saveToLocalStorage,
     loadFromLocalStorage,
+    handlePlay,
+    handleStop,
   };
 }

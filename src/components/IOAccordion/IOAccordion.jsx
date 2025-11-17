@@ -2,7 +2,7 @@ import AccordionItem from "./AccordionItem";
 
 const accordionSections = [
   { id: "input", title: "Input" },
-  { id: "output", title: "Editor / Output" },
+  { id: "output", title: "Output" },
   { id: "canvas", title: "Canvas Display" },
 ];
 

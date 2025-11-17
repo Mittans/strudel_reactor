@@ -44,6 +44,8 @@ export default function App() {
     drumKitId,
     setDrumKitId,
     changeDrumKit,
+    handlePlay,
+    handleStop,
   } = useStrudel(stranger_tune);
 
   return (
@@ -54,7 +56,7 @@ export default function App() {
           saveToLocalStorage={saveToLocalStorage}
         />
         <StatusBar isPlaying={isPlaying} bpm={bpm} volume={volume} />
-        <ControlPanel isPlaying={isPlaying} setIsPlaying={setIsPlaying} />
+        <ControlPanel handlePlay={handlePlay} handleStop={handleStop} />
 
         {isReady && (
           <>
@@ -107,8 +109,6 @@ export default function App() {
           procValue={procValue}
           handleProcChange={handleProcChange}
         />
-
-        {/* <Graph isPlaying={isPlaying} volume={volume} /> */}
       </div>
     </div>
   );

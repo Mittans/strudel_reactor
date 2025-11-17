@@ -56,6 +56,12 @@ export async function initializeStrudel(intialCode) {
     },
   });
 
+  // Make the output not editable
+  const cmContent = document.querySelector("#editor .cm-content");
+  if (cmContent) {
+    cmContent.setAttribute("contenteditable", "false");
+  }
+
   if (intialCode) {
     globalEditor.setCode(intialCode);
   }
