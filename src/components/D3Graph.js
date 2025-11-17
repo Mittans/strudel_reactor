@@ -85,7 +85,7 @@ export default function D3Graph() {
 
     return (
         <div style={{ maxWidth: 330, padding: 10 }}>
-            <h3 style={{ margin: "0 0 6px 0", fontSize: "1rem" }}>Gain Graph</h3>
+            <h3 style={{ margin: "0 0 6px 0", fontSize: "1rem" }}>D3 Graph</h3>
             <svg ref={svgRef} style={{ display: "block", margin: "auto" }} />
             <div style={{ marginTop: 6, fontSize: "0.9rem" }}>
             </div>

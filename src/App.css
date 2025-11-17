@@ -1,9 +1,7 @@
 body {
-    background: linear-gradient(135deg, #f0f7fa 0%, #e9eefa 100%);
-    font-family: 'Segoe UI', Arial, sans-serif;
-    padding: 0;
-    margin: 0;
+    background-color: #000 !important;
 }
+
 
 .strudel-demo-container {
   margin: 60px auto;
