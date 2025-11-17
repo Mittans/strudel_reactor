@@ -13,6 +13,7 @@ export default function Graph({ isPlaying, volume }) {
 
   useEffect(() => {
     const interval = setInterval(() => {
+      // Gain value will be 0 if the song is not playing or volume 0
       if (!isPlaying || volume <= 0) {
         setRngNumber("gain:0");
       } else {
