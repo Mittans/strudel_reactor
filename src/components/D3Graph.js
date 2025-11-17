@@ -58,7 +58,7 @@ export default function D3Graph() {
             .attr("y", d => y(d))
             .attr("width", x.bandwidth())
             .attr("height", d => height - margin - y(d))
-            .attr("fill", "#4da3ff");
+            .attr("fill", "#C10F0F");
 
         svg.append("text")
             .attr("x", width - margin)
