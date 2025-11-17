@@ -205,46 +205,88 @@ useEffect(() => {
 return (
     <div>
         <h2>Strudel Demo</h2>
-        <main>
+        <main className="container-fluid">
 
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <PreprocessTextarea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
-                    </div>
-                    <div className="col-md-4">
+            <div className="row mb-3">
+                <div className="col-12">
+                    <nav>
+                        <JsonButtons onSaveJson={handleSaveJson} onLoadJson={handleLoadJson}/>
+                        <PlayButtons onPlay={handlePlay} onStop={handleStop} />
+                    </nav>
+                </div>
+            </div>
 
-                        <nav>
-                            {/*<ProcButtons />*/}
-                            <JsonButtons
-                                onSaveJson={handleSaveJson}
-                                onLoadJson={handleLoadJson}
-                            />
-                            <br />
-                            <PlayButtons onPlay={handlePlay} onStop={handleStop} />
+            <div className="row mb-3">
+                <div className="col-12">
+                    <DJControls cpm={cpm} onCpmChange={setCpm} keyShift={keyShift} onKeyShiftChange={setKeyShift} volume={masterVolume} onVolumeChange={setMasterVolume}
+                        tracksEnabled={tracksEnabled} onToggleTrack={handleToggleTrack} onEffectChange={handleEffectChange} />
+                </div>
+            </div>
 
-
-                        </nav>
+            {/* two D3 Graphs */}
+            <div className="row mb-4">
+                <div className="col-md-6 mb-3">
+                    <div className="card h-100">
+                        <div className="card-body">
+                            <D3Graph />
+                        </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                        <DJControls cpm={cpm} onCpmChange={(val) => setCpm(val)} keyShift={keyShift} onKeyShiftChange={(val) => setKeyShift(val)}
-                            volume={masterVolume} onVolumeChange={(val) => setMasterVolume(val)}
-                            tracksEnabled={tracksEnabled}
-                            onToggleTrack={handleToggleTrack}
-                            onEffectChange={handleEffectChange} />
-                        <D3Graph />
-                        <D3GraphScope />
+                <div className="col-md-6 mb-3">
+                    <div className="card h-100">
+                        <div className="card-body">
+                            <D3GraphScope />
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* Preprocess Area and Editor */}
+            <div className="row mt-4">
+                {/* Preprocess Textarea */}
+                <div className="col-md-6">
+                    <div className="accordion" id="bottomAccordionLeft">
+                        <div className="accordion-item">
+                            <h2 className="accordion-header" id="headingPreprocess">
+                                <button className="accordion-button" type="button"  data-bs-toggle="collapse"  data-bs-target="#collapsePreprocess" aria-expanded="true"  aria-controls="collapsePreprocess"  >
+                                    Preprocess Textarea
+                                </button>
+                            </h2>
+
+                            <div  id="collapsePreprocess"  className="accordion-collapse collapse show" aria-labelledby="headingPreprocess" data-bs-parent="#bottomAccordionLeft" >
+                                <div className="accordion-body" style={{ maxHeight: "60vh", overflowY: "auto" }} >
+                                    <PreprocessTextarea defaultValue={songText}  onChange={(e) => setSongText(e.target.value)} />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Strudel Editor */}
+                <div className="col-md-6">
+                    <div className="accordion" id="bottomAccordionRight">
+                        <div className="accordion-item">
+                            <h2 className="accordion-header" id="headingEditor">
+                                <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEditor"
+                                    aria-expanded="true" aria-controls="collapseEditor">
+                                    Strudel Editor Output
+                                </button>
+                            </h2>
+
+                            <div id="collapseEditor" className="accordion-collapse collapse show"
+                                aria-labelledby="headingEditor" data-bs-parent="#bottomAccordionRight">
+                                <div className="accordion-body" style={{ maxHeight: "60vh", overflowY: "auto" }}>
+                                    <div id="editor"></div>
+                                    <div id="output"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <canvas id="roll"></canvas>
-        </main >
+        </main>
     </div >
 );
 
