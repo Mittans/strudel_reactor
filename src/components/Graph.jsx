@@ -9,7 +9,7 @@ export default function Graph({ isPlaying, volume }) {
   const [rngArray, setRngArray] = useState([]);
   const maxItems = 20;
   const timeOut = 500;
-  const maxValue = 1;
+  const maxValue = 1.5;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -62,7 +62,7 @@ export default function Graph({ isPlaying, volume }) {
     let h = svg.node().getBoundingClientRect().height;
     h = h - 25;
     const barMargin = 10;
-    const barWidth = w / rngArray.length;
+    const barWidth = w / maxItems;
     let yScale = d3.scaleLinear().domain([0, maxValue]).range([h, 0]);
 
     let barGroups = svg.selectAll("g").data(rngArray);
@@ -94,7 +94,7 @@ export default function Graph({ isPlaying, volume }) {
   return (
     <Panel>
       <div className="row">
-        <svg ref={svgRef} width="100%" height="600px"></svg>
+        <svg ref={svgRef} width="100%"></svg>
       </div>
     </Panel>
   );

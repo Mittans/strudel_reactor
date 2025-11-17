@@ -82,6 +82,7 @@ export default function App() {
                 <InstrumentsPanel
                   onInstrumentChange={changeInstrumentsCombination}
                 />
+                <Graph isPlaying={isPlaying} volume={volume} />
               </div>
               <div className="flex flex-col flex-1">
                 <EffectPanel
@@ -107,7 +108,7 @@ export default function App() {
           handleProcChange={handleProcChange}
         />
 
-        <Graph isPlaying={isPlaying} volume={volume} />
+        {/* <Graph isPlaying={isPlaying} volume={volume} /> */}
       </div>
     </div>
   );
