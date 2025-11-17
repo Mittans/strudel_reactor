@@ -1,111 +1,89 @@
 import { useState, useEffect } from 'react';
-import tunes from '../assets/tunes.json';
+// import tunes from '../assets/tunes.json';
 import '../css/Presets.css';
-import { loadUserPresets, saveUserPreset } from "../utils/presetStorage";
+// import { loadUserPresets, saveUserPreset } from "../utils/presetStorage";
 
-function Presets({ onPresetLoad, currentCode }) {
-    const [presetsData, setPresetsData] = useState([]);
-    const [selectedPreset, setSelectedPreset] = useState("");
+function Presets({ presets, onLoad, onSave, onDelete, currentCode }) {
+  const [selected, setSelected] = useState("");
 
-    // Load presets on mount
-    useEffect(() => {
-        const builtIn = tunes.presets.map((preset) => ({
-            id: preset.name.toLowerCase().replace(/\s+/g, "_"),
-            displayName: preset.name,
-            code: preset.code
-        }));
+  const handleLoad = (id) => {
+    if (!id) return;
+    
+    const preset = presets.find(p => p.id === id);
+    if (!preset) return;
 
-        const user = loadUserPresets();
+    if (window.confirm("Load this preset? Current code will be replaced.")) {
+      setSelected(id);
+      onLoad(preset.code);
+    }
+  };
 
-        setPresetsData([...builtIn, ...user]);
-    }, []);
-
-    function loadPreset(id) {
-        const preset = presetsData.find(p => p.id === id);
-        if (!preset) return;
-
-        if (window.confirm("Overwrite current code?")) {
-            setSelectedPreset(id);
-            onPresetLoad?.(preset.code);
-        }
+  const handleSave = () => {
+    if (!currentCode?.trim()) {
+      alert("No code to save!");
+      return;
     }
 
-    function handleSavePreset() {
-        if (!currentCode?.trim()) {
-            alert("No code to save!");
-            return;
-        }
+    const name = prompt("Enter preset name:");
+    if (!name?.trim()) return;
 
-        const name = prompt("Enter preset name:");
-        if (!name) return;
+    onSave(name, currentCode);
+    alert(`Preset "${name}" saved!`);
+  };
 
-        const id = name.toLowerCase().replace(/\s+/g, "_");
-
-        // Does it already exist?
-        const existing = presetsData.find(p => p.id === id);
-
-        // Only save if changed
-        if (existing && existing.code === currentCode) {
-            alert("Preset is unchanged — nothing to save.");
-            return;
-        }
-
-        if (existing) {
-            const confirmUpdate = window.confirm(
-                `Preset "${name}" already exists. Update the code?`
-            );
-            if (!confirmUpdate) return;
-
-            // Update existing preset
-            const updated = presetsData.map(p =>
-                p.id === id ? { ...p, code: currentCode } : p
-            );
-
-            setPresetsData(updated);
-            saveUserPreset(updated);
-
-            return;
-        }
-
-        const newPreset = {
-            id,
-            displayName: name,
-            code: currentCode
-        };
-
-        const updatedList = [...presetsData, newPreset];
-
-        setPresetsData(updatedList);
-        saveUserPreset(updatedList);
+  const handleDelete = () => {
+    if (!selected) {
+      alert("No preset selected");
+      return;
     }
 
-    return (
-        <>
-            <label  id='presetLabel' htmlFor="presetSelect" className="form-label fw-bold">Load Presets?</label>
-            <select value={selectedPreset} onChange={(e) => loadPreset(e.target.value)} id='presetSelect' className="preset-select mb-3 w-50">
-                <option value="">Select a preset</option>
-                {presetsData.map((preset) => (
-                    <option key={preset.id} value={preset.id}>
-                        {preset.displayName}
-                    </option>
-                ))}
-            </select>
+    const preset = presets.find(p => p.id === selected);
+    if (preset?.builtIn) {
+      alert("Cannot delete built-in presets!");
+      return;
+    }
 
-            <button onClick={handleSavePreset} style={{ marginLeft: "10px" }} className="btn btn-success btn-md mb-1 ">
-                Add Preset
-            </button>
+    if (window.confirm(`Delete preset "${preset.name}"?`)) {
+      onDelete(selected);
+      setSelected("");
+      alert("Preset deleted!");
+    }
+  };
 
-            {/* Temporary placeholder for delete functionality */}
-            {/* <button onClick={() => {
-                if (!selectedPreset) {
-                    alert("No preset selected to delete.");
-                    return;
-                }
-            }} className="btn btn-danger btn-md mb-3">
-                Delete Preset
-            </button> */}
-        </>
-    );
+  return (
+    <div style={{ marginBottom: '1rem', maxWidth: '400px' }}>
+      <label htmlFor="presetSelect" className="form-label fw-bold">Load Presets?</label>
+      <select
+        id="presetSelect"
+        className="form-select mb-2"
+        value={selected}
+        onChange={(e) => {
+          setSelected(e.target.value);
+          handleLoad(e.target.value);
+        }}
+      >
+        <option value="">Select a preset</option>
+        {presets.map(preset => (
+          <option key={preset.id} value={preset.id}>
+            {preset.name}{preset.builtIn ? ' (Built-in)' : ''}
+          </option>
+        ))}
+      </select>
+      
+      <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <button onClick={handleSave} className="btn btn-success btn-sm">
+          Save Preset
+        </button>
+        <button
+          onClick={handleDelete}
+          className="btn btn-danger btn-sm"
+          disabled={!selected || presets.find(p => p.id === selected)?.builtIn}
+        >
+          Delete Preset
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default Presets;

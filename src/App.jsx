@@ -4,16 +4,17 @@ import Presets from './components/Presets'
 import Repl from './components/Repl'
 import Strudel from './components/Strudel'
 import Graph from './components/Graph'
+import tunes from "./assets/tunes.json";
 import { extractControlsFromCode, applyControlsToCode, CONTROL_DEFINITIONS } from './utils/controlDefinitions'
-import console_monkey_patch from './assets/console-monkey-patch' // ADD THIS
+import console_monkey_patch from './assets/console-monkey-patch'
 import './css/App.css'
 import { useState, useRef, useEffect } from 'react';
 
-// Initialize the monkey patch once
-console_monkey_patch(); // ADD THIS
+// Initialize console patch
+console_monkey_patch();
 
 function App() {
-    
+
     const [code, setCode] = useState("");
     const [processedCode, setProcessedCode] = useState("");
     const [shouldPlay, setShouldPlay] = useState(false);
@@ -25,42 +26,78 @@ function App() {
     const [activeControls, setActiveControls] = useState([]);
     const [controlValues, setControlValues] = useState({});
 
-    const replRef = useRef(null);
+    // Load built-in presets from tunes.json
+    const builtInPresets = tunes.presets.map(t => ({
+        ...t,
+        builtIn: true
+    }));
 
-    // Handle control panel
+    const [presets, setPresets] = useState(() => {
+        const saved = localStorage.getItem("userPresets");
+        const userPresets = saved ? JSON.parse(saved) : [];
+
+        return [...builtInPresets, ...userPresets];
+    });
+
+    // ===== PRESET HANDLERS =====
+
+    const handlePresetLoad = (newCode) => setCode(newCode);
+
+    const handlePresetSave = (name, newCode) => {
+        const newPreset = {
+            id: Date.now().toString(),
+            name,
+            code: newCode,
+            builtIn: false
+        };
+
+        const updated = [...presets, newPreset];
+        setPresets(updated);
+
+        // Save only user presets
+        const onlyUser = updated.filter(p => !p.builtIn);
+        localStorage.setItem("userPresets", JSON.stringify(onlyUser));
+    };
+
+    const handlePresetDelete = (id) => {
+        const updated = presets.filter(p => p.id !== id);
+        setPresets(updated);
+
+        const onlyUser = updated.filter(p => !p.builtIn);
+        localStorage.setItem("userPresets", JSON.stringify(onlyUser));
+    };
+
+
+    const replRef = useRef(null);
 
     const handleProcTextChange = (text) => setCode(text);
 
     const handleProc = () => {
         let replaced = code.replace(`<p1>`, radioValue === "hush" ? "_" : "");
-        
-        const cpsValue = bpmValue / 60 / 4; // Convert BPM to CPS
+
+        const cpsValue = bpmValue / 60 / 4;
         replaced = replaced.replace(/setcps\s*\([^)]+\)/g, `setcps(${cpsValue})`);
-        
+
         setProcessedCode(replaced);
     };
 
     const handleProcAndPlay = () => {
-
-        if(code === ""){
+        if (code === "") {
             alert("No code to process and play!");
             return;
         }
-        else{
-            handleProc();
-            setShouldPlay(true);
-        }
+        handleProc();
+        setShouldPlay(true);
     };
 
     const handlePlay = () => {
-        if(processedCode === '') {
-            alert("Process the code before playing!"); 
+        if (processedCode === '') {
+            alert("Process the code before playing!");
             return;
-        } 
-        else {
-            setShouldPlay(true)
         }
+        setShouldPlay(true);
     };
+
     const handleStop = () => setShouldStop(true);
 
     const handlePlayDone = () => {
@@ -72,16 +109,13 @@ function App() {
 
     const finalCode = applyControlsToCode(processedCode, controlValues);
 
-    // Handle preproc controls
     useEffect(() => {
         const { controls, initialValues } = extractControlsFromCode(processedCode);
         setActiveControls(controls);
 
-        // Initialize with actual values from code, not zeros!
         setControlValues(prev => {
             const updated = {};
             for (const c of controls) {
-                // Use initial value from code, or keep existing value, or use default
                 updated[c] = prev[c] ?? initialValues[c] ?? CONTROL_DEFINITIONS[c].default;
             }
             return updated;
@@ -89,28 +123,47 @@ function App() {
     }, [processedCode]);
 
     useEffect(() => {
-        // If the code is currently shown in REPL
-        // update it live when slider changes
         if (replRef.current) {
             replRef.current.setCode(finalCode);
         }
     }, [controlValues, finalCode]);
 
-
     return (
         <>
-            <ControlPanel onProc={handleProc} onProcAndPlay={handleProcAndPlay} onPlay={handlePlay} onStop={handleStop} onGraphToggle={handleGraphToggle}/>
-            <Graph showGraph={showGraph} onClose={() => setShowGraph(false)}/>
+            <ControlPanel
+                onProc={handleProc}
+                onProcAndPlay={handleProcAndPlay}
+                onPlay={handlePlay}
+                onStop={handleStop}
+                onGraphToggle={handleGraphToggle}
+            />
+
+            <Graph showGraph={showGraph} onClose={() => setShowGraph(false)} />
+
             <main className='main-content' style={{ overflowX: "hidden" }}>
                 <div className='row me-0 flex-nowrap'>
                     <div className='col-8 ms-3'>
                         <Preprocess onChange={handleProcTextChange} value={code} />
-                        <Repl ref={replRef} procText={finalCode} shouldPlay={shouldPlay} shouldStop={shouldStop} onPlayDone={handlePlayDone} />
+                        <Repl
+                            ref={replRef}
+                            procText={finalCode}
+                            shouldPlay={shouldPlay}
+                            shouldStop={shouldStop}
+                            onPlayDone={handlePlayDone}
+                        />
                     </div>
-                    <div className='vr p-0' style={{ minHeight: '100vh'}}>
-                    </div>
+
+                    <div className='vr p-0' style={{ minHeight: '100vh' }}></div>
+
                     <div className='col-4 me-0'>
-                        <Presets onPresetLoad={setCode} currentCode={code} />
+                        <Presets
+                            presets={presets}
+                            onLoad={handlePresetLoad}
+                            onSave={handlePresetSave}
+                            onDelete={handlePresetDelete}
+                            currentCode={code}
+                        />
+
                         <Strudel
                             activeControls={activeControls}
                             controlValues={controlValues}
@@ -124,7 +177,7 @@ function App() {
                 </div>
             </main>
         </>
-    )
+    );
 }
 
-export default App
+export default App;

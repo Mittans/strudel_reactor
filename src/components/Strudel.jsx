@@ -4,7 +4,7 @@ function Strudel({ activeControls, controlValues, onControlChange, bpmValue, onB
     
     return (
         <>
-            <div style={{ width: '75%' }}>
+            <div style={{ width: '67%' }}>
                 <label className="form-label fw-bold">Preprocessing Controls:</label>
 
                 {/* BPM Control */}
