@@ -15,7 +15,6 @@ function KeyShiftControls({ localShift, handleKeyShiftChange, handleQuickShift }
         <>
             {/* Key shifter */}
             <hr className="my-3" />
-            <h6>Key Shift</h6>
 
             <div className="input-group mb-3">
                 <span className="input-group-text">Semitones</span>

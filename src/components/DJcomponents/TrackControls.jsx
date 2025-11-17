@@ -4,7 +4,7 @@ function TrackControls({ muteBass, muteArp, muteDrums, muteDrums2, handleToggle 
         <>
             {/* CheckBox for select instruments */}
             <hr className="my-3" />
-            <h6>Instrument Tracks</h6>
+            <h6><strong>Instrument Tracks</strong></h6>
             <div className="mb-3">
                 <div className="form-check">
                     <input className="form-check-input" type="checkbox" id="s1" checked={!muteBass}

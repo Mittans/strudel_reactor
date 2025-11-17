@@ -11,7 +11,6 @@ function CpmControls({ cpm, localCpm, handleCpmChange, handleQuickCpm }) {
 
     return (
         <>
-            <hr className="my-3" />
             <div className="input-group mb-3">
                 <span className="input-group-text" id="cpm_label">setCPM</span>
                 <input type="number" className="form-control" id="cpm_text_input" value={cpm} onChange={handleCpmChange} min="1" max="300" step="1" />

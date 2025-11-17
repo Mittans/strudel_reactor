@@ -5,7 +5,6 @@ function EffectControls({
     return (
         <>
             {/* Effects Selector Card */}
-            <hr className="my-3" />
             <div className="card mb-3">
                 <div className="card-header d-flex align-items-center justify-content-between">
                     <span className="fw-semibold">Effects</span>

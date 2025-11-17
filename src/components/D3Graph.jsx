@@ -55,6 +55,10 @@ export default function D3Graph() {
 
         const svg = d3.select(scopeSvgRef.current);
         svg.selectAll("*").remove();
+        svg.append("rect")
+            .attr("width", "100%")
+            .attr("height", "100%")
+            .attr("fill", "black");
 
         const bounds = scopeSvgRef.current.getBoundingClientRect();
         let w = bounds.width - 40;
@@ -110,16 +114,9 @@ export default function D3Graph() {
     }, [gainHistory]);
 
     return (
-        <div className="App container">
-            <h5 className="mb-2">D3 Graph Gain</h5>
-            <div className="row">
-                <svg
-                    ref={scopeSvgRef}
-                    width="100%"
-                    height="200px"
-                    className="border border-primary rounded p-2 bg-dark"
-                />
-            </div>
+        <div className="d3-panel">
+            <h5 className="d3-title">D3 Graph Gain</h5>
+            <svg ref={scopeSvgRef} width="100%" height="200"></svg>
         </div>
     );
 }

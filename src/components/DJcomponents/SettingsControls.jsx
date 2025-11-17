@@ -188,7 +188,6 @@ function SettingsControls({ effectSetters }) {
     return (
         <>
             {/* User settings */}
-            <hr className="my-3" />
             <div className="btn-toolbar mb-3" role="toolbar" aria-label="Music Style Toolbar">
 
                 <div className="btn-group me-2" role="group" aria-label="Pop Style">

@@ -133,9 +133,9 @@ export default function D3Graph() {
     }, []);
 
     return (
-        <div className="mt-3">
-            <h5 className="mb-2">Waveform Scope</h5>
-            <svg ref={svgElementRef} width="100%" height="200" />
+        <div className="d3-panel">
+            <h5 className="d3-title">Waveform Scope</h5>
+            <svg ref={svgElementRef} width="100%" height="200"></svg>
         </div>
     );
 }

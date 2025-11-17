@@ -6,6 +6,8 @@ import TrackControls from "./DJcomponents/TrackControls";
 import KeyShiftControls from "./DJcomponents/KeyShiftControls";
 import EffectControls from "./DJcomponents/EffectControls";
 import SettingsControls from "./DJcomponents/SettingsControls";
+import D3Graph from "./D3Graph";
+import D3GraphScope from "./D3GraphScope";
 function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVolumeChange, onToggleTrack, tracksEnabled, onEffectChange }) {
     // State variable to store the current CPM value
     const [localCpm, setLocalCpm] = useState(cpm ?? 140);
@@ -217,18 +219,49 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
 
     return (
         <>
-            <CPMControls cpm={cpm} localCpm={localCpm} handleCpmChange={handleCpmChange} handleQuickCpm={handleQuickCpm}/>
+            <div className="container-fluid mt-3">
+                {/* CPM & Keyshift */}
+                <div className="row g-3 mb-3">
+                    <div className="col-md-6">
+                        <div className="card h-100">
+                            <div className="card-header fw-semibold">CPM & Keyshift</div>
+                            <div className="card-body">
+                                <CPMControls cpm={cpm} localCpm={localCpm} handleCpmChange={handleCpmChange} handleQuickCpm={handleQuickCpm}/>
+                                <KeyShiftControls localShift={localShift} handleKeyShiftChange={handleKeyShiftChange} handleQuickShift={handleQuickShift}/>
+                            </div>
+                        </div>
+                    </div>
 
-            <VolumeControls localVolume={localVolume} handleVolumeChange={handleVolumeChange} />
+                    {/* Volume & Tracks */}
+                    <div className="col-md-6">
+                        <div className="card h-100">
+                            <div className="card-header fw-semibold">Volume & Tracks</div>
+                            <div className="card-body">
+                                <VolumeControls localVolume={localVolume} handleVolumeChange={handleVolumeChange}/>
 
-            <TrackControls muteBass={muteBass} muteArp={muteArp} muteDrums={muteDrums} muteDrums2={muteDrums2} handleToggle={handleToggle}/>
+                                <TrackControls muteBass={muteBass} muteArp={muteArp} muteDrums={muteDrums}  muteDrums2={muteDrums2} handleToggle={handleToggle}/>
+                            </div>
+                        </div>
+                    </div>
 
-            <KeyShiftControls localShift={localShift} handleKeyShiftChange={handleKeyShiftChange} handleQuickShift={handleQuickShift}/>
+                </div>
 
-            <EffectControls enableMasterFx={enableMasterFx} handleMasterFxToggle={handleMasterFxToggle} effects={effects}/>
+                {/* Effect/Settings & D3 */}
+                <div className="row g-3">
 
-            <SettingsControls effectSetters={effectSetters}/>
+                    {/* Effects & Settings */}
+                    <div className="col-md-6 d-flex flex-column gap-3">
+                        <EffectControls enableMasterFx={enableMasterFx} handleMasterFxToggle={handleMasterFxToggle} effects={effects}/>
+                        <SettingsControls effectSetters={effectSetters} />
+                    </div>
 
+                    {/* D3 Graphs */}
+                    <div className="col-md-6 d-flex flex-column">
+                        <D3Graph />
+                        <D3GraphScope />
+                    </div>
+                </div>
+            </div>
       </>
   );
 }
