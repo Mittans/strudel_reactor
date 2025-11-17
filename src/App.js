@@ -26,20 +26,30 @@ const handleD3Data = (event) => {
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
+    const [error, setError] = useState(null);
 
     const handlePlay = () => {
-        let outputText = Preprocess({
-            inputText: procText,
-            volume: volume,
-            bpm,
-            effects: { reverbOn, delayOn, underwaterOn }
-        });
-        globalEditor.setCode(outputText);
-        globalEditor.evaluate();
+        try {
+            setError(null);
+            let outputText = Preprocess({
+                inputText: procText,
+                volume: volume,
+                bpm,
+                effects: { reverbOn, delayOn, underwaterOn }
+            });
+            globalEditor.setCode(outputText);
+            globalEditor.evaluate();
+        } catch (e) {
+            setError(e?.message || String(e));
+        }
     };
 
     const handleStop = () => {
-        globalEditor.stop();
+        try {
+            globalEditor.stop();
+        } catch (e) {
+            setError(e?.message || String(e));
+        }
     };
 
     const [procText, setProcText] = useState(algorave_dave_tune);
@@ -57,13 +67,11 @@ export default function StrudelDemo() {
     }, [volume, bpm, reverbOn, delayOn, underwaterOn]);
 
 useEffect(() => {
-
-    if (!hasRun.current) {
-        document.addEventListener("d3Data", handleD3Data);
-        console_monkey_patch();
-        hasRun.current = true;
-        //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
-            //init canvas
+    try {
+        if (!hasRun.current) {
+            document.addEventListener("d3Data", handleD3Data);
+            console_monkey_patch();
+            hasRun.current = true;
             const canvas = document.getElementById('roll');
             canvas.width = canvas.width * 2;
             canvas.height = canvas.height * 2;
@@ -88,12 +96,12 @@ useEffect(() => {
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
                 },
             });
-            
-        document.getElementById('proc').value = procText
-        //SetupButtons()
-        //Proc()
+            document.getElementById('proc').value = procText
+        }
+        globalEditor.setCode(procText);
+    } catch (e) {
+        setError(e?.message || String(e));
     }
-    globalEditor.setCode(procText);
 }, [procText]);
 
 
@@ -105,6 +113,12 @@ useEffect(() => {
                     <section className="vh-100 d-flex flex-column justify-content-center align-items-center bg-dark text-white">
                         <div className="row w-100 align-items-center">
                             <div className="col-8 d-flex flex-column justify-content-center align-items-center">
+                                {error && (
+                                    <div className="alert alert-danger alert-dismissible fade show w-75" role="alert">
+                                        {error}
+                                        <button type="button" className="btn-close" aria-label="Close" onClick={() => setError(null)}></button>
+                                    </div>
+                                )}
                                 <h1>Strudel Demo</h1>
                                 <div className="card shadow" style={{ width: '70%' }}>
                                     <div className="card-body">
