@@ -49,7 +49,7 @@ export default function Graph() {
 
   useEffect(() => {
     const svg = d3.select(svgRef.current);
-    svg.selectAll("*").remove(); // Clears old elements
+    svg.selectAll("*").remove();
 
     // Set the Width and Height
     let w = svg.node().getBoundingClientRect().width;
@@ -58,8 +58,6 @@ export default function Graph() {
     h = h - 25;
     const barMargin = 10;
     const barWidth = w / rngArray.length;
-
-    // Create yScale (uses original data points for domain)
     let yScale = d3.scaleLinear().domain([0, maxValue]).range([h, 0]);
 
     let barGroups = svg.selectAll("g").data(rngArray);
@@ -68,24 +66,20 @@ export default function Graph() {
     let newBarGroups = barGroups
       .enter()
       .append("g")
-      // d here is the original value from rngArray
       .attr("transform", (d, i) => {
-        // Use the transformed numeric value for positioning, or the original
         return `translate(${i * barWidth}, ${yScale(LogToNum(d))})`;
       });
 
-    // Draw me some rectangles
     newBarGroups
       .append("rect")
-      // NO .datum() call here! The data (d) is inherited from the parent <g>
       .attr("x", 0)
       .attr("height", (d) => {
-        const value = LogToNum(d); // Transform the value here
-        return h - yScale(value); // Calculate height based on numeric value
+        const value = LogToNum(d);
+        return h - yScale(value);
       })
       .attr("width", barWidth - barMargin)
       .attr("fill", (d, i) => {
-        const value = LogToNum(d); // Transform the value here
+        const value = LogToNum(d);
         return `rgb(${360 - (360 / maxValue) * value + 1}, ${
           (360 / maxValue) * value + 1
         }, 60)`;
