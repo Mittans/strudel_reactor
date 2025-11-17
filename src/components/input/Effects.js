@@ -74,7 +74,13 @@ export function Effects({updateEditor, text}){
                     type="radio" 
                     name="flexRadio" 
                     id={`flexRadio-${effect}`} 
-                    onChange={() => setSelectedEffect(effect)}/>
+                    onChange={() => {
+                        if (text.length===0) {
+                            alert("Text is empty, please add appropriate text to allow add effects");
+                        } else {
+                        setSelectedEffect(effect)}
+                    }
+                    }/>
                 <label 
                     className="block text-center cursor-pointer peer-checked:bg-yellow-400 bg-zinc-800 text-yellow-200 hover:bg-yellow-500 hover:text-black rounded-lg px-4 py-3 font-semibold transition-all duration-200" 
                     htmlFor={`flexRadio-${effect}`}>

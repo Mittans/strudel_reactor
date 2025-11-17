@@ -69,7 +69,11 @@ export function Instrument({ text, updateEditor }) {
             className="hidden peer"
             type="checkbox"
             id={`checkbox-${instrument}`}
-            onChange={() => handleCheckboxChange(instrument)}
+            onChange={() => {if (text.length === 0) {
+              alert("Text empty, please something to add instrument")
+            } else {
+              handleCheckboxChange(instrument)
+            }}}
           />
           <label
             className="block text-center cursor-pointer peer-checked:bg-yellow-400 bg-zinc-800 text-yellow-200 hover:bg-yellow-500 hover:text-black rounded-lg px-4 py-3 font-semibold transition-all duration-200"

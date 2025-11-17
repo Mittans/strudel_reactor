@@ -56,7 +56,7 @@ export function Graph({className, volume, isPlay}) {
         bottom: 30, 
         left: 40 
       };
-  
+    
       const data = rngArray.map(d => LogToNum(d));
   
       // Create x Scale
@@ -69,7 +69,7 @@ export function Graph({className, volume, isPlay}) {
       const yScale = d3.scaleLinear()
         .domain([0, 1])
         .range([height - margin.bottom, margin.top]);
-  
+      
       // Draw bars for the graph
       svg.selectAll("rect")
         .data(data)
@@ -92,7 +92,6 @@ export function Graph({className, volume, isPlay}) {
       yAxis.selectAll("text").attr("fill", "yellow"); 
       yAxis.selectAll("path,line").attr("stroke", "yellow"); 
   }
-  
     }, [rngArray]);
   
   return (
