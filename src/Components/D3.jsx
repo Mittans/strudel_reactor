@@ -13,13 +13,14 @@ function D3Graph() {
         console_monkey_patch();
 
         const handleD3Data = (event) => {
+            // this is what the tutor showed us to use
             console.log("d3Data event detail:", event.detail);
 
             const rawArray = event.detail;
 
             // turn event.detail values into numbers 
             const numericData = rawArray
-                .map(v => parseFloat(String(v).split(" ")[0]))  // first part as number
+                .map(v => parseFloat(String(v).split(" ")[0]))
                 .filter(v => !Number.isNaN(v));
 
             setDrumData(numericData);
@@ -32,13 +33,13 @@ function D3Graph() {
         };
     }, []);
 
-    // Draw / update the graph when data changes
+    // Draw and update the graph when data changes
     useEffect(() => {
         if (!svgRef.current || drumData.length === 0) return;
 
         const width = 500;
         const height = 200;
-        const margin = { top: 10, right: 10, bottom: 25, left: 30 };
+        const margin = { top: 10, right: 10, bottom: 40, left: 45 };
 
         const svg = d3.select(svgRef.current);
         svg.selectAll("*").remove();
@@ -52,7 +53,7 @@ function D3Graph() {
         const innerWidth = width - margin.left - margin.right;
         const innerHeight = height - margin.top - margin.bottom;
 
-
+        // X = event index (0, 1, 2, 3, ...)
         const xScale = d3.scaleLinear()
             .domain([0, drumData.length - 1])
             .range([0, innerWidth]);
@@ -79,7 +80,7 @@ function D3Graph() {
         const line = d3.line()
             .x((d, i) => xScale(i))
             .y(d => yScale(d))
-
+            .curve(d3.curveBasis);
 
         g.append("path")
             .datum(drumData)
@@ -88,7 +89,7 @@ function D3Graph() {
             .attr("stroke-width", 2)
             .attr("d", line);
 
-        // Axis labels 
+
         g.append("text")
             .attr("x", innerWidth / 2)
             .attr("y", innerHeight + 30)

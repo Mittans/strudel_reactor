@@ -49,7 +49,6 @@ export default function StrudelDemo() {
     };
     */
 
-
     //Safely play only if editor exists, avoid errors by checking if editorRef.current is not null
     //works even without the null check but just to be safe
     /* MOVED TO PlayButtons COMPONENT
@@ -158,21 +157,30 @@ export default function StrudelDemo() {
     }, [songData, volume, cpm]); // Runs again when songData or volume updates and the cpm
     */
 
-
     return (
         <div>
-            <h2>Strudel Demo</h2>
+            <h2></h2>
             <main>
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                        <div className="col-md-8" style={{ maxHeight: '100vh', overflowY: 'auto' }}>
                             {/*onChange={(e) => setSongText(e.target.value) as there are two preprocess component, using (e) specifies the target  */}
+
                             <Preprocess defaultValue={songData} onChange={(e) => setSongData(e.target.value)} />
-
-
                             {/* calls the Preprocess class*/}
+
+                            <div className="mt-3">
+                                <div ref={editorRootRef} />
+                                <div id="output" />
+                            </div>
+
+                            {/*by using ref={canvasRef}, we link the canvas element to the canvasRef defined earlier*/}
+                            <div className="mt-3">  <canvas id="roll" ref={canvasRef}></canvas>
+                            </div>
                         </div>
-                        <div className="col-md-4">
+
+
+                        <div className="col-md-4" style={{ maxHeight: '100vh', overflowY: 'auto' }}>
 
                             <MusicSearch /> {/* calls the MusicSearch class*/}
                             <nav>
@@ -187,8 +195,9 @@ export default function StrudelDemo() {
                                     setIsPlaying={setIsPlaying}
                                 />
 
-                                <D3>Graph</D3>
-
+                                <div className="mt-3">
+                                    <D3 /> Graph
+                                </div>
 
                                 <br />
                                 <PlayButtons
@@ -200,35 +209,24 @@ export default function StrudelDemo() {
                                     setIsPlaying={setIsPlaying}
                                 />  {/* calls the button class and the handle stop and handlePlay function created eariler*/}
                             </nav>
-                        </div>
-                    </div>
 
-                    <div className="row">
-                        <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                            <div ref={editorRootRef} />
-                            <div id="output" />
-                        </div>
-                        <div className="col-md-4">
-                            <PlayControl
-                                /* MOVED TO PlayControl COMPONENT
-                                volume={volume}
-                                onVolumeChange={setVolume}
-                                cpm={cpm}
-                                onCpmChange={setCpm}
-                                */
-                                songData={songData}
-                                editorRef={editorRef}
-                                isPlaying={isPlaying}
-                            /> {/* calls the play control class*/}
+                            <div className="mt-3">
+                                <PlayControl
+                                    /* MOVED TO PlayControl COMPONENT
+                                    volume={volume}
+                                    onVolumeChange={setVolume}
+                                    cpm={cpm}
+                                    onCpmChange={setCpm}
+                                    */
+                                    songData={songData}
+                                    editorRef={editorRef}
+                                    isPlaying={isPlaying}
+                                /> {/* calls the play control class*/}
+                            </div>
                         </div>
                     </div>
                 </div>
-                {/*by using ref={canvasRef}, we link the canvas element to the canvasRef defined earlier*/}
-                <canvas id="roll" ref={canvasRef}></canvas>
-
-
-
-            </main >
-        </div >
+            </main>
+        </div>
     );
 }

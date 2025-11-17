@@ -1,7 +1,8 @@
 function Preprocess({ defaultValue, onChange }) {
     return (
         <>
-            <label htmlFor="proc" className="form-label">Text to preprocess:</label>
+            <label for="proc" className="form-label text-light"> Text to preprocess: </label>
+
             <textarea
                 className="form-control transparent-textarea"
                 rows="15"
