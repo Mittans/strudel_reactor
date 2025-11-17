@@ -11,6 +11,7 @@ import {
   REVERB_DEFAULT,
   VOLUME_DEFAULT,
 } from "../config/audioDefaults";
+import { DRUM_KITS } from "../config/drumKits";
 
 export function useStrudel(initialTune) {
   const [procValue, setProcValue] = useState(initialTune);
@@ -27,6 +28,8 @@ export function useStrudel(initialTune) {
   const [isRandomHitsOn, setIsRandomHitsOn] = useState(false);
   const [isShapeValueOn, setIsShapeValueOn] = useState(false);
   const [isCrushValueOn, setIsCrushValueOn] = useState(false);
+
+  const [drumKitId, setDrumKitId] = useState(0);
 
   const hasInit = useRef(false);
 
@@ -61,6 +64,7 @@ export function useStrudel(initialTune) {
       /const\s+shapeValue\s*=\s*("[^"]*"|<[^>]+>|\d+(\.\d+)?)/
     );
     const newCrushValue = code.match(/const\s+crushValue\s*=\s*([\d.]+)/);
+    const newDrumKitId = code.match(/const drumKitBank\s*=\s*".*?"/);
 
     if (newBpm) {
       setBpm(Number(newBpm[1]));
@@ -80,6 +84,29 @@ export function useStrudel(initialTune) {
 
     if (newReverb) {
       setReverb(Number(newReverb[1]));
+    }
+
+    if (newDrumKitId) {
+      const match = newDrumKitId[0].match(/"(.*?)"/);
+
+      if (match) {
+        // e.g. "RolandTR606"
+        const drumKitName = match[1];
+
+        // Loop through DRUM_KITS to find its ID
+        let foundId = null;
+
+        for (const key in DRUM_KITS) {
+          if (DRUM_KITS[key] === drumKitName) {
+            foundId = Number(key);
+            break;
+          }
+        }
+
+        if (foundId !== null) {
+          setDrumKitId(foundId);
+        }
+      }
     }
 
     if (newRandomHits) {
@@ -181,6 +208,17 @@ export function useStrudel(initialTune) {
     });
   }
 
+  function changeDrumKit(newDrumKitId) {
+    setDrumKitId(newDrumKitId);
+
+    const newDrumKitName = DRUM_KITS[newDrumKitId];
+
+    return applyUpdatedCode(
+      /const drumKitBank\s*=\s*".*?"/,
+      `const drumKitBank = "${newDrumKitName}"`
+    );
+  }
+
   // ---- Toggle between effect ------------------------------------------------------
   function toggleEffect({ name, onValue, offValue, setEffect }) {
     const ON = `const ${name} = ${onValue}`;
@@ -261,6 +299,8 @@ export function useStrudel(initialTune) {
     isReady,
     isPlaying,
     setIsPlaying,
+    drumKitId,
+    setDrumKitId,
     bpm,
     volume,
     procValue,
@@ -273,6 +313,7 @@ export function useStrudel(initialTune) {
     changeReverb,
     reverb,
     changeInstrumentsCombination,
+    changeDrumKit,
     toggleRandomHits,
     toggleShapeValue,
     toggleBitReduction,

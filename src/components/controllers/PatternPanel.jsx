@@ -9,7 +9,7 @@ export default function PatternPanel({ changeGainPattern }) {
   ];
   return (
     <Panel>
-      <h2 className="text-3xl font-lilita">Gain Pattern</h2>
+      <h2 className="text-3xl font-lilita">Drum Pattern</h2>
 
       <div className="space-y-3">
         {patterns.map((p) => (

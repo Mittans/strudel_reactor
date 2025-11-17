@@ -43,6 +43,8 @@ const randomHits = 0
 const shapeValue = 0
 const crushValue = 8
 
+const drumKitBank = "RolandTR808"
+
 bassline:
 note(pick(basslines, bass))
 .sound("supersaw")
@@ -79,7 +81,7 @@ stack(
 
   s("sh").struct("[x!3 ~!2 x!10 ~]")
   .postgain(0.5).lpf(7000)
-  .bank("RolandTR808")
+  .bank(drumKitBank)
   .speed(0.8)
   .jux(rev)
   .room(reverb)
@@ -97,8 +99,8 @@ stack(
 
 drums2: 
 stack(
-  s("[~ hh]*4").bank("RolandTR808").room(0.3).speed(0.75).gain(1.2),
-  s("hh").struct("x*16").bank("RolandTR808")
+  s("[~ hh]*4").bank(drumKitBank).room(0.3).speed(0.75).gain(1.2),
+  s("hh").struct("x*16").bank(drumKitBank)
   .gain(0.6)
   .jux(rev)
   .room(reverb)

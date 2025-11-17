@@ -14,6 +14,7 @@ import PatternPanel from "./components/controllers/PatternPanel";
 import BassPanel from "./components/controllers/BassPanel";
 import InstrumentsPanel from "./components/controllers/InstrumentsPanel";
 import EffectPanel from "./components/controllers/EffectPanel";
+import DrumKitPanel from "./components/controllers/DrumKitPanel";
 
 export default function App() {
   const {
@@ -23,7 +24,6 @@ export default function App() {
     bpm,
     volume,
     procValue,
-    setProcValue,
     handleProcChange,
     changeTempo,
     changeVolume,
@@ -40,6 +40,9 @@ export default function App() {
     isCrushValueOn,
     loadFromLocalStorage,
     saveToLocalStorage,
+    drumKitId,
+    setDrumKitId,
+    changeDrumKit,
   } = useStrudel(stranger_tune);
 
   return (
@@ -73,13 +76,13 @@ export default function App() {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
+            <div className="flex flex-col md:flex-row gap-4">
+              <div className="flex flex-col flex-1">
                 <InstrumentsPanel
                   onInstrumentChange={changeInstrumentsCombination}
                 />
               </div>
-              <div>
+              <div className="flex flex-col flex-1">
                 <EffectPanel
                   toggleRandomHits={toggleRandomHits}
                   toggleShapeValue={toggleShapeValue}
@@ -87,6 +90,11 @@ export default function App() {
                   isRandomHitsOn={isRandomHitsOn}
                   isShapeValueOn={isShapeValueOn}
                   isCrushValueOn={isCrushValueOn}
+                />
+                <DrumKitPanel
+                  drumKitId={drumKitId}
+                  setDrumKitId={setDrumKitId}
+                  changeDrumKit={changeDrumKit}
                 />
               </div>
             </div>
