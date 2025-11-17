@@ -1,0 +1,62 @@
+﻿.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+    margin: 2rem;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    margin-left: -15%;
+    align-items: center;
+}
+
+#play, #stop, #process, #process_play {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: dashed;
+    background: #0e0e0e;
+    color: #00ffcc;
+    cursor: pointer;
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
+    margin: 8px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+#play:hover, #stop:hover, #process:hover, #process_play:hover {
+    transform: scale(1.08);
+    box-shadow: 0 0 60px rgba(255, 0, 0, 0.8);
+}
+
+#play:active, #stop:active, #process:active, #process_play:active {
+    transform: scale(0.95);
+}
+
+#play::before {
+    content: "▶️";
+}
+
+#stop::before {
+    content: "⏹️";
+}
+
+#process::before {
+    content: "🔄";
+}
+
+#process_play::before {
+    content: "🔁";
+}
+
+#play, #stop, #process, #process_play {
+    font-size: 0;
+}
+
+#play::before, #stop::before, #process::before, #process_play::before {
+    font-size: 28px;
+    display: inline-block;
+    line-height: 50px;
+}
