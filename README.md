@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+**Strudel Music Demo**  
+---  
+A web-based music player built with React and Strudel that provides real-time control over multiple instruments, tempo, and volume.  
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Features:**  
 
-## Available Scripts
+**Control Instruments with individual sliders**  
+Toggle each individual instruments on/off in real-time:  
 
-In the project directory, you can run:
+__Instruments include:__  
+Baseline  
+MainArp  
+Drums  
+Drums2  
 
-### `npm start`
+**Audio Controls**  
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+__Volume Slider__  
+Visual Control: Interactive D3.js slider for precise volume adjustment  
+Range: 0% (mute) to 100% (maximum volume)  
+Gain Display: Shows both percentage and decimal gain value (0.0 - 1.0)  
+Volume History Graph: Real-time line graph  
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+__Additional Feature__  
+Visual display for volume slider using d3 graph  
+Dynamically adjusts based on users volume inputs  
+Maximum 30 bars shown  
 
-### `npm test`
+__BPM Control__  
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+__Tempo Adjustment: Set beats per minute from 1 to 300 BPM__  
+Default: 140 BPM  
+Real-time Updates apply immediately during playback  
 
-### `npm run build`
+**Playback Controls**  
+__Play Button__  
+Starts audio playback with current settings  
+All instruments, volume, and BPM settings are applied  
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+__Stop Button__  
+Stops audio playback immediately  
+Settings are preserved for next playback  
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Quick Actions**  
+__Mute/Unmute All__  
+Mute All Button: Mutes all four instruments  
+Unmute All Button: Unmutes all instruments to active state  
+Active Counter: Shows how many instruments are currently active (e.g., 2 / 4)  
