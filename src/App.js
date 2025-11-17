@@ -1,5 +1,5 @@
 ﻿// main application component for Strudel demo app
-
+import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import './App.css';
 import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
@@ -9,14 +9,14 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-import console_monkey_patch from './console-monkey-patch';
-// import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+//import console_monkey_patch from './console-monkey-patch';
 
 import PreprocessorControl from './components/PreprocessorControl';
 import TrackControl from './components/TrackControl';
 import InstrumentControl from './components/InstrumentControl';
 import { stranger_tune } from './Tune/tunes';
 import { tunes2 } from './Tune/tunes2';
+import D3Graph from './components/D3Graph';
 
 export default function App() {
     //react state
@@ -163,6 +163,12 @@ export default function App() {
                                         style={{ fontSize: "18px", padding: "6px 12px", width: "120px", alignItems: "center" }} > Next </button>
                                 </div>
                                 <p style={{ marginTop: "6px", fontWeight: "bold", color: "#800000", padding: "2px 80px" }}>Now Playing: {currentTuneName}</p>
+                                {/* === Add StrudelLiveGraph here, below main controls and editor === */}
+                                <div className="row mt-2">
+                                    <div className="col-md-12">
+                                        <D3Graph />
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -180,6 +186,10 @@ export default function App() {
                             </div>
                         </div>
                     </div>
+                   
+                </div>
+                <div style={{ marginTop: "32px" }}>
+                    <canvas id="roll"></canvas>
                 </div>
                 <div style={{ marginTop: "32px" }}>
                     <canvas id="roll"></canvas>

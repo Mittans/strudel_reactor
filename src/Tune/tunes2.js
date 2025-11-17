@@ -1,5 +1,6 @@
 export const tunes2 = [
     {
+        index: 0,
         name: "Stranger Tune", // 1st tune
         code: `setcps(140/60/4)
 
@@ -92,40 +93,42 @@ stack(
   .hpf(1000)
   .speed(0.5)
   .rarely(jux(rev)),
-)`,
+)`
     },
     {
+        index: 1,
         name: "Beat 2", // 2nd tune
         code: `
 setcps(120/60/4)
 samples('github:algorave-dave/samples')
 
 bassline:
-note("[c1, e1, g1]!8").sound("supersaw").postgain(1.5)
+note("[c1, e1, g1]!8").sound("supersaw").postgain(1.5).log()
 main_arp:
-note("{c2 e2 g2 c3}%16").sound("square").lpf(500)
+note("{c2 e2 g2 c3}%16").sound("square").lpf(500).postgain(1).log()
 drums:
 stack(
-  s("bd*4").postgain(3),
-  s("sn ~ sn ~").postgain(2),
+  s("bd*4").postgain(3).log(),
+  s("sn ~ sn ~").postgain(2).log(),
 )
-`,
+`
     },
     {
+        index: 2,
         name: "Beat 3", // 3rd tune
         code: `
 setcps(100/60/4)
 samples('github:algorave-dave/samples')
 
 bassline:
-note("[g1, d2]!8").sound("sine").postgain(2)
+note("[g1, d2]!8").sound("sine").postgain(2).log()
 main_arp:
-note("{g2 d3 b2 g3}%16").sound("supersaw")
+note("{g2 d3 b2 g3}%16").sound("supersaw").postgain(1).log()
 drums:
 stack(
-  s("bd*2 ~ bd*2").postgain(2),
-  s("hh*8").postgain(1)
+  s("bd*2 ~ bd*2").postgain(2).log(),
+  s("hh*8").postgain(1).log()
 )
-`,
-    },
+`
+    }
 ];
