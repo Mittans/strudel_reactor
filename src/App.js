@@ -75,7 +75,7 @@ export default function StrudelDemo() {
   const hasRun = useRef(false);
   const [isPlay,setIsPlay] = useState(false);
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const [volume, setVolumeState] = useState(0.5); 
+  const [volume, setVolumeState] = useState(1); 
 
   useEffect(() => {
     if (!hasRun.current) {
