@@ -1,3 +1,5 @@
+
+
 export const stranger_tune = `setcps(140/60/4)
 
 samples('github:algorave-dave/samples')
@@ -62,6 +64,7 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 drums:
 stack(
   s("tech:5").log()
+
   .postgain(6)
   .pcurve(2)
   .pdec(1)

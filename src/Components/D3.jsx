@@ -26,6 +26,7 @@ function D3Graph() {
             setDrumData(numericData);
         };
 
+
         document.addEventListener("d3Data", handleD3Data);
 
         return () => {

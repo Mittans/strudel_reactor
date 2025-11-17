@@ -41,6 +41,8 @@ function Storage({ volume, tempo, tracks, setVolume, setTempo, setTracks }) {
 
 export default Storage;
 
+
+
 //give out a section/info about what other components are doing
 //bootstrap 
 

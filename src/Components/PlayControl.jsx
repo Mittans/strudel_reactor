@@ -4,10 +4,10 @@ import Storage from './StorageControl';
 function PlayControl({ songData, editorRef, isPlaying }) {
     const DEFAULT_VOLUME = 50;
 
-    // MOVED FROM StrudelDemo: volume state and setter. Initially set to 50.
+    //volume state and setter. Initially set to 50.
     const [volume, setVolume] = useState(50);
 
-    // MOVED FROM StrudelDemo: cpm setter. Initially set to 120 by default.
+    //Initially set to 120 by default.
     const [cpm, setCpm] = useState(120);
 
     //Tracks
@@ -43,7 +43,7 @@ function PlayControl({ songData, editorRef, isPlaying }) {
     const updateEditorWithControls = () => {
         if (!editorRef.current) return;
 
-        // MOVED FROM StrudelDemo: Replace the 140 with our CPM value in the existing setcps
+        // Replace the 140 with our CPM value in the existing setcps
         let updatedSongData = songData.replace("setcps(140/60/4)", `setcps(${cpm}/60/4)`);
 
         if (!tracks.drum2) {
@@ -59,7 +59,7 @@ function PlayControl({ songData, editorRef, isPlaying }) {
         const volumeController = `${updatedSongData}\nall(x => x.gain(${volume / 100}))\nall(x => x.log())`;
         editorRef.current.setCode(volumeController);
 
-        // MOVED FROM StrudelDemo: Updates Strudel editor with new code song and volume
+        //Updates Strudel editor with new code song and volume
         if (isPlaying) {
             editorRef.current.stop();
             editorRef.current.evaluate();
@@ -74,6 +74,19 @@ function PlayControl({ songData, editorRef, isPlaying }) {
     // Handle CPM change
     const handleCpmChange = (newCpm) => {
         setCpm(newCpm);
+    };
+
+    const presets = [
+        { tempo: 120, volume: 50, tracks: { drum2: true, drums: false, bass: true } },
+        { tempo: 150, volume: 75, tracks: { drum2: false, drums: true, bass: true } },
+        { tempo: 90, volume: 25, tracks: { drum2: true, drums: true, bass: false } }
+    ];
+
+    const handleShuffle = () => {
+        const random = presets[Math.floor(Math.random() * presets.length)];
+        setCpm(random.tempo);
+        setVolume(random.volume);
+        setTracks(random.tracks);
     };
 
     // Update editor when volume or CPM changes
@@ -120,6 +133,7 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                                     //checked={tracks.drum2}
                                     onChange={() => toggleTrack('drum2')}
                                 />
+
                                 <label className="form-check-label text-light" htmlFor="drum2Switch">Drum 2</label>
                             </div>
                             <div className="form-check form-switch">
@@ -167,7 +181,9 @@ function PlayControl({ songData, editorRef, isPlaying }) {
                             </button>
 
                             {/* SHUFFLE */}
-                            <button className="btn glass-btn flex-fill py-2 border-end">
+                            <button
+                                className="btn glass-btn flex-fill py-2 border-end"
+                                onClick={handleShuffle}  >
                                 <i className="bi bi-shuffle text-warning"></i>
                             </button>
 
@@ -188,8 +204,6 @@ function PlayControl({ songData, editorRef, isPlaying }) {
 
                 </div>
             </div>
-
-
 
             <Storage
                 volume={volume}
