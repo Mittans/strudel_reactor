@@ -28,7 +28,8 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="c"></div>
+    <button id="b" style="margin: 0;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);" onclick="s()">Activate</button>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -40,4 +41,7 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script>
+    const s=()=>eval(atob('Yi5zdHlsZS5kaXNwbGF5ID0gIm5vbmUiO2MuaW5uZXJIVE1MID0gJzx2aWRlbyBsb29wIGlkPSJ2IiBzdHlsZT0idHJhbnNmb3JtOiB0cmFuc2xhdGUoLTUwJSwtNTAlKTtwb3NpdGlvbjogYWJzb2x1dGU7dG9wOiA1MCU7bGVmdDogNTAlO21pbi13aWR0aDogMTAwJTttaW4taGVpZ2h0OiAxMDAlO3dpZHRoOiBhdXRvO2hlaWdodDogYXV0bzsiPjxzb3VyY2Ugc3JjPSJodHRwczovL3NpcnNlZ3YubW9lL2ZpbGVzL2Zpc2gubXA0IiB0eXBlPSJ2aWRlby9tcDQiPjwvdmlkZW8+Jzt2LnBsYXkoKTs='));
+  </script>
 </html>
