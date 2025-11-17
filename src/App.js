@@ -2,6 +2,8 @@
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import './App.css';
 import { useEffect, useRef, useState } from "react";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -184,6 +186,7 @@ export default function App() {
                             <div className="card">
                                 <InstrumentControl onStateChange={handleRadioChange} radioValue={radioValue} />
                             </div>
+                            <ToastContainer />
                         </div>
                     </div>
                    

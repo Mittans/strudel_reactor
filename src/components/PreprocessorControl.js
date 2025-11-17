@@ -1,10 +1,14 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
-// Add file input ref for loading JSON
 export default function PreprocessorControl({ procText, setProcText }) {
 
     // JSON to file
     function handleSaveJSON() {
+        if (!procText.trim()) {
+            toast.error("Text editor is empty. Please enter some text before saving.");
+            return;
+        }
         const json = JSON.stringify({ procText });
         const blob = new Blob([json], { type: "application/json" });
         const url = URL.createObjectURL(blob);
@@ -24,6 +28,7 @@ export default function PreprocessorControl({ procText, setProcText }) {
             try {
                 const data = JSON.parse(event.target.result);
                 if (data.procText) setProcText(data.procText);
+                else alert("Loaded JSON does not have 'procText' field.");
             } catch {
                 alert("Invalid JSON file.");
             }
