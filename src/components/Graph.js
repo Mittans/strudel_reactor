@@ -1,6 +1,7 @@
 ﻿import * as d3 from "d3";
 import { useEffect, useState } from "react";
 import { getD3Data } from "../console-monkey-patch";
+import '../Graph.css';
 
 export default function Graph() {
 
@@ -41,7 +42,6 @@ export default function Graph() {
     useEffect(() => {
         const svg = d3.select("#d3graph");
         svg.selectAll("*").remove();
-
 
         const w = 600;
         const h = 260;              

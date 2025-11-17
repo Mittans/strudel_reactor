@@ -1,4 +1,5 @@
-function PreprocessEditor({defaultValue, onChange}) {
+import '../Buttons.css';
+function PreprocessEditor({ defaultValue, onChange }) {
 	return (
 		<>
 			<label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>

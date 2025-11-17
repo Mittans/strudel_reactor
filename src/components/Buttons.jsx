@@ -1,3 +1,4 @@
+import '../Buttons.css';
 function Buttons({ onPlay, onStop }) {
 	return (
 		<>

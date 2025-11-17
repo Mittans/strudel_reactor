@@ -232,7 +232,21 @@ export default function StrudelDemo() {
                                 <Buttons onPlay={handlePlay} onStop={handleStop} />
                                 <br />
                             </nav>
+                            {/* PUT VOLUME RIGHT UNDER THE BUTTONS */}
+                            <div id="volume-wrapper">
+                                <label id="volume-label">Volume ({Math.round(volume * 100)}%)</label>
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="1"
+                                    step="0.01"
+                                    value={volume}
+                                    onChange={(e) => setVolume(parseFloat(e.target.value))}
+                                    id="volume-range"
+                                />
+                            </div>
                         </div>
+
                     </div>
 
                     <div className="row">
@@ -241,35 +255,32 @@ export default function StrudelDemo() {
                             <div id="output" />
                         </div>
 
-                        <div className="col-md-5">
+                        <div className="col-md-5 right-panel">
                             <div className="graph-wrapper">
                                 <Graph isPlaying={isPlaying} />
                             </div>
+                            <div className="dj-wrapper">
+                                <DJControls                               
+                                    bass={bass}
+                                    onBassChange={() => setBass(!bass)}
 
-                            <DJControls
-                                volume={volume}
-                                onChange={handleVolumeChange}
-                                cpm={cpm}
-                                onCpmChange={(e) => setCpm(e.target.value)}
+                                    melody={melody}
+                                    onMelodyChange={() => setMelody(!melody)}
 
-                                bass={bass}
-                                onBassChange={() => setBass(!bass)}
+                                    guitar={guitar}
+                                    onGuitarChange={() => setGuitar(!guitar)}
 
-                                melody={melody}
-                                onMelodyChange={() => setMelody(!melody)}
+                                    drums1={drums1}
+                                    onDrums1Change={() => setDrums1(!drums1)}
 
-                                guitar={guitar}
-                                onGuitarChange={() => setGuitar(!guitar)}
+                                    drums2={drums2}
+                                    onDrums2Change={() => setDrums2(!drums2)}
 
-                                drums1={drums1}
-                                onDrums1Change={() => setDrums1(!drums1)}
-
-                                drums2={drums2}
-                                onDrums2Change={() => setDrums2(!drums2)}
-
-                                onSave={saveSettings}
-                                onLoad={loadSettings}
-                            />
+                                    onSave={saveSettings}
+                                    onLoad={loadSettings}
+                                />
+                            </div>
+                            
                         </div>
                     </div>
                 </div>

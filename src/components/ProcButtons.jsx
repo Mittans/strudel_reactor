@@ -1,3 +1,4 @@
+import '../Buttons.css';
 function ProcButtons({ onPreprocess, onProcPlay }) {
     return (
         <>
