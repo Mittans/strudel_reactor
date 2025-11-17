@@ -4,7 +4,7 @@ import Presets from './components/Presets'
 import Repl from './components/Repl'
 import Strudel from './components/Strudel'
 import Graph from './components/Graph'
-import { extractControlsFromCode, applyControlsToCode, CONTROL_DEFINITIONS } from './utils/controlDefinitions.js'
+import { extractControlsFromCode, applyControlsToCode, CONTROL_DEFINITIONS } from './utils/controlDefinitions'
 import console_monkey_patch from './assets/console-monkey-patch' // ADD THIS
 import './css/App.css'
 import { useState, useRef, useEffect } from 'react';
