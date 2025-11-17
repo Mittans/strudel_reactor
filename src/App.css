@@ -356,3 +356,50 @@ nav {
     margin-top: 7px;
     margin-bottom: 3px;
 }
+
+.json-box {
+    background: rgba(0, 0, 0, 0.65);
+    border: 2px solid #ff4fe6;
+    color: #ff4fe6;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 0.9rem;
+    text-shadow: 0 0 5px #ff4fe6;
+}
+
+.json-toggle-btn {
+    background: #111;
+    color: #ff4fe6;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    border: 2px solid #ff4fe6;
+    cursor: pointer;
+    margin-bottom: 8px;
+    text-shadow: 0 0 4px #ff4fe6;
+}
+
+.json-toggle-btn:hover {
+    background: #ff4fe6;
+    color: black;
+    text-shadow: none;
+}
+
+.message-box {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 79, 230, 0.85);
+    padding: 8px 18px;
+    border-radius: 8px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 10px #ff4fe6;
+    z-index: 9999;
+}

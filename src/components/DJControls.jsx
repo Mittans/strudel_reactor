@@ -3,7 +3,8 @@ function DJControls({ volume, cpm, onCpmChange,
     melody, onMelodyChange,
     guitar, onGuitarChange,
     drums1, onDrums1Change,
-    drums2, onDrums2Change}) {
+    drums2, onDrums2Change,
+    onSave, onLoad}) {
     return (
         <>
             {/* --- CPM Input --- */}
@@ -22,6 +23,12 @@ function DJControls({ volume, cpm, onCpmChange,
                     max="200"
                     step="1"
                 />
+            </div>
+
+            {/* --- JSON Save and load Buttons --- */}
+            <div className="json-buttons">
+                <button onClick={onSave} className="btn btn-primary">Save Settings</button>
+                <button onClick={onLoad} className="btn btn-secondary">Load Settings</button>
             </div>
 
             {/* --- Volume Slider --- */}

@@ -30,8 +30,56 @@ export default function StrudelDemo() {
     const [guitar, setGuitar] = useState(true);
     const [drums1, setDrums1] = useState(true);
     const [drums2, setDrums2] = useState(true);
-
     const [isPlaying, setIsPlaying] = useState(false);
+
+    const [message, setMessage] = useState("");
+
+    // JSON UI toggle
+    const [showJSON, setShowJSON] = useState(false);
+    const [loadedJSON, setLoadedJSON] = useState(null);
+
+    // SAVE SETTINGS
+    function saveSettings() {
+        const settings = {
+            volume,
+            cpm,
+            drums1,
+            drums2,
+            bass,
+            melody,
+            guitar
+        };
+
+        localStorage.setItem("strudelSettings", JSON.stringify(settings));
+
+        setMessage("Settings saved!");
+        setTimeout(() => setMessage(""), 1500);
+    }
+
+    function loadSettings() {
+        const saved = localStorage.getItem("strudelSettings");
+        if (!saved) {
+            setMessage("No saved settings found.");
+            setTimeout(() => setMessage(""), 1500);
+            return;
+        }
+
+        const settings = JSON.parse(saved);
+
+        if (settings.volume !== undefined) setVolume(settings.volume);
+        if (settings.cpm !== undefined) setCpm(settings.cpm);
+        if (settings.drums1 !== undefined) setDrums1(settings.drums1);
+        if (settings.drums2 !== undefined) setDrums2(settings.drums2);
+        if (settings.bass !== undefined) setBass(settings.bass);
+        if (settings.melody !== undefined) setMelody(settings.melody);
+        if (settings.guitar !== undefined) setGuitar(settings.guitar);
+
+        setLoadedJSON(settings);
+
+        setMessage("Settings loaded.");
+        setTimeout(() => setMessage(""), 1500);
+    }
+
 
     // PLAY
     const handlePlay = () => {
@@ -90,11 +138,13 @@ export default function StrudelDemo() {
     const handleVolumeChange = (e) => {
         const newVolume = e.target.value;
         setVolume(newVolume);
-        updateStrudelCode(songText);
-        globalEditor.evaluate();
+
+        if (isPlaying) {
+            updateStrudelCode(songText);
+        }
     };
 
-    // INITIALISE STRUDEL
+    // INITIALISE STRUDEL + ONLY UPDATE WHEN PLAYING
     useEffect(() => {
         if (!hasRun.current) {
             console_monkey_patch();
@@ -130,16 +180,39 @@ export default function StrudelDemo() {
 
             document.getElementById('proc').value = stranger_tune;
             globalEditor.setCode(stranger_tune);
-
         } else {
-            updateStrudelCode(songText);
+            if (isPlaying) {
+                updateStrudelCode(songText);
+            }
         }
 
-    }, [bass, melody, guitar, drums1, drums2, volume, cpm]);
+    }, [bass, melody, guitar, drums1, drums2, volume, cpm, isPlaying]);
 
     return (
         <div>
             <h2 id="h2">Strudel Demo - Midnight in Motion</h2>
+
+            {/* JSON TOGGLE BUTTON */}
+            <button
+                className="json-toggle-btn"
+                onClick={() => setShowJSON(prev => !prev)}
+            >
+                {showJSON ? "Hide JSON" : "Show JSON"}
+            </button>
+
+            {/* ALWAYS SHOW JSON WHEN TOGGLED */}
+            {showJSON && (
+                <div className="json-box-wrapper d-flex justify-content-center">
+                    <pre className="json-box">
+                        {loadedJSON
+                            ? JSON.stringify(loadedJSON, null, 2)
+                            : "No JSON loaded yet"}
+                    </pre>
+                </div>
+            )}
+
+            {/* MESSAGE */}
+            {message && <div className="message-box">{message}</div>}
 
             <main>
                 <div className="container-fluid">
@@ -193,6 +266,9 @@ export default function StrudelDemo() {
 
                                 drums2={drums2}
                                 onDrums2Change={() => setDrums2(!drums2)}
+
+                                onSave={saveSettings}
+                                onLoad={loadSettings}
                             />
                         </div>
                     </div>
