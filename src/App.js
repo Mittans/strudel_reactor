@@ -14,8 +14,6 @@ import PlayButtons from './components/PlayButtons';
 import ProcButtons from './components/ProcButtons';
 import PreprocessTextarea from './components/PreprocessTextarea';
 import JsonButtons from "./components/JsonButtons";
-import D3Graph from "./components/D3Graph";
-import D3GraphScope from "./components/D3GraphScope";
 
 
 let globalEditor = null;
@@ -23,52 +21,6 @@ let globalEditor = null;
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
-
-//export function SetupButtons() {
-
-//    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-//    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-//    document.getElementById('process').addEventListener('click', () => {
-//        Proc()
-//    }
-//    )
-//    document.getElementById('process_play').addEventListener('click', () => {
-//        if (globalEditor != null) {
-//            Proc()
-//            globalEditor.evaluate()
-//        }
-//    }
-//    )
-//}
-
-
-
-//export function ProcAndPlay() {
-//    if (globalEditor != null && globalEditor.repl.state.started == true) {
-//        console.log(globalEditor)
-//        Proc()
-//        globalEditor.evaluate();
-//    }
-//}
-
-//export function Proc() {
-
-//    let proc_text = document.getElementById('proc').value
-//    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-//    ProcessText(proc_text);
-//    globalEditor.setCode(proc_text_replaced)
-//}
-
-//export function ProcessText(match, ...args) {
-
-//    let replace = ""
-//    //if (document.getElementById('flexRadioDefault2').checked) {
-//    //    replace = "_"
-//    //}
-
-//    return replace
-//}
-
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
@@ -204,11 +156,29 @@ useEffect(() => {
 
 return (
     <div>
-        <h2>Strudel Demo</h2>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark mb-3">
+            <div className="container-fluid">
+                <a className="navbar-brand fw-bold" href="/app">
+                    Strudel Digital Audio Workstation
+                </a>
+                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
+                <div className="collapse navbar-collapse" id="mainNavbar">
+                    <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                    </ul>
+                    <button className="btn btn-outline-light"
+                        onClick={() => {document.body.classList.toggle("light-theme");}}>
+                        Switch Theme
+                    </button>
+                </div>
+            </div>
+        </nav>
         <main className="container-fluid">
 
             <div className="row mb-3">
-                <div className="col-12 d-flex align-items-center gap-2">
+                <div className="col-12 d-flex justify-content-between align-items-center">
                     <PlayButtons onPlay={handlePlay} onStop={handleStop} />
                     <JsonButtons onSaveJson={handleSaveJson} onLoadJson={handleLoadJson} />
                 </div>
