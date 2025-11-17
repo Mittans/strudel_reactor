@@ -3,12 +3,14 @@ import React, { useState } from 'react';
 // sound files in public
 const DRUM_SOUND_URL_1 = process.env.PUBLIC_URL + "/drum1.mp3";
 const LOFI_SOUND_URL_2 = process.env.PUBLIC_URL + "/lofi.mp3";
+const BIT_SOUND_URL_3 = process.env.PUBLIC_URL + "/bit.mp3";
 
 export default function InstrumentControl({ onStateChange, radioValue }) {
     const options = ["ON", "HUSH"];
 
     const [drumCount1, setDrumCount1] = useState(0);
     const [drumCount2, setDrumCount2] = useState(0);
+    const [bitCount3, setBitCount3] = useState(0);
 
     function handleDrumClick1() {
         const audio = new Audio(DRUM_SOUND_URL_1);
@@ -27,6 +29,16 @@ export default function InstrumentControl({ onStateChange, radioValue }) {
         const newCount = drumCount2 + 1;
         setDrumCount2(newCount < 11 ? newCount : 0);
     }
+
+    function handleBitClick3() {
+        const audio = new Audio(BIT_SOUND_URL_3);
+        audio.currentTime = 0;
+        audio.play();
+
+        const newCount = bitCount3 + 1;
+        setBitCount3(newCount < 11 ? newCount : 0);
+    }
+
 
     return (
         <div style={{ padding: "10px", background: "#f7f7f7", borderRadius: "12px", width: "fit-content" }}>
@@ -90,6 +102,22 @@ export default function InstrumentControl({ onStateChange, radioValue }) {
                     }}
                 >
                     {`Base ${drumCount2 > 0 ? drumCount2 : ""}`}
+                </button>
+                <button
+                    onClick={handleBitClick3}
+                    style={{
+                        backgroundColor: "#D23B00",
+                        color: "#fff",
+                        fontWeight: "bold",
+                        padding: "8px 20px",
+                        borderRadius: "8px",
+                        border: "none",
+                        cursor: "pointer",
+                        fontSize: "15px",
+                        transition: "background 0.2s ease"
+                    }}
+                >
+                    {`Bit ${bitCount3 > 0 ? bitCount3 : ""}`}
                 </button>
             </div>
         </div>
