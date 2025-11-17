@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import Panel from "./ui/Panel";
 import { getD3Data } from "../console-monkey-patch";
 
-export default function Graph() {
+export default function Graph({ isPlaying, volume }) {
   const svgRef = useRef(null);
   const [rngNumber, setRngNumber] = useState(0);
   const [rngArray, setRngArray] = useState([]);
@@ -13,12 +13,16 @@ export default function Graph() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      let d3Data = getD3Data();
-      setRngNumber(d3Data);
+      if (!isPlaying || volume <= 0) {
+        setRngNumber("gain:0");
+      } else {
+        let d3Data = getD3Data();
+        setRngNumber(d3Data);
+      }
     }, timeOut);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [isPlaying, volume]);
 
   function LogToNum(input) {
     if (!input) {

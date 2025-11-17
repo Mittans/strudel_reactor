@@ -107,7 +107,7 @@ export default function App() {
           handleProcChange={handleProcChange}
         />
 
-        <Graph />
+        <Graph isPlaying={isPlaying} volume={volume} />
       </div>
     </div>
   );
