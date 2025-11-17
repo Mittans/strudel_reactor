@@ -200,6 +200,21 @@ function DJControls() {
                         </select>
                     </div>
                 </div>
+
+                <div className="mb-3">
+                    <div className="d-flex justify-content-between align-items-center">
+                        <span className="section-title">Presets</span>
+                        <span className="badge-subtle">JSON</span>
+                    </div>
+                    <div className="d-flex" style={{ gap: '0.5rem' }}>
+                        <button type="button" id="save_preset">
+                            Save preset
+                        </button>
+                        <button type="button" id="load_preset">
+                            Load preset
+                        </button>
+                    </div>
+                </div>
             </details>
         </div>
     );

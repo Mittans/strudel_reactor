@@ -75,7 +75,7 @@ useEffect(() => {
 return (
     <div>
         <div className="text-center">
-            <h2>Strudel Demo</h2>
+            <h1>STRUDEL</h1>
         </div>
         <main>
 
@@ -102,7 +102,9 @@ return (
                             </nav>
 
                             <DJControls />
-                            <StrudelGraph />
+                            <div className="graph-card">
+                                <StrudelGraph />
+                            </div>
                         </div>
                     </div>
                 </div>

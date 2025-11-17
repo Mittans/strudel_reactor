@@ -1,6 +1,8 @@
 
 import { getGlobalEditor } from './globalEditor';
 import { Proc } from './proc';
+import { savePreset, loadPreset } from './presets';
+
 
 export function SetupButtons() {
     const editor = getGlobalEditor();
@@ -26,6 +28,8 @@ export function SetupButtons() {
     const basslineSelect = document.getElementById('bassline_select');
     const lpf = document.getElementById('lpf_slider');
     const room = document.getElementById('room_slider');
+    const savePresetBtn = document.getElementById('save_preset');
+    const loadPresetBtn = document.getElementById('load_preset');
 
 
 
@@ -47,6 +51,8 @@ export function SetupButtons() {
     basslineSelect?.addEventListener('change', reevalIfPlaying);
     lpf?.addEventListener('input', reevalIfPlaying);
     room?.addEventListener('input', reevalIfPlaying);
+    savePresetBtn?.addEventListener('click', savePreset);
+    loadPresetBtn?.addEventListener('click', loadPreset);
 
 
 
