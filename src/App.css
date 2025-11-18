@@ -36,3 +36,188 @@
     transform: rotate(360deg);
   }
 }
+
+/* D3 Data Visualization Container */
+.d3-panel {
+    background: #1a1a1a;
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 16px;
+}
+
+    .d3-panel svg {
+        background: #000;
+        border-radius: 6px;
+        display: block;
+        width: 100%;
+        height: 226px;
+    }
+
+.d3-title {
+    text-align: center;
+    color: #ddd;
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+/* dark theme */
+body {
+    background-color: #000 !important;
+    color: #eee !important;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Main Title */
+h1, h2, h3, h4, h5 {
+    color: #eee !important;
+}
+
+/* Cards, Accordions, Panels */
+.card,
+.accordion-item,
+.accordion-button,
+.accordion-body {
+    background-color: #111 !important;
+    color: #eee !important;
+    border-color: #333 !important;
+}
+
+    .accordion-button:not(.collapsed) {
+        color: #eee !important;
+        background-color: #222 !important;
+    }
+
+/* Inputs & Textarea */
+input,
+textarea,
+select {
+    background-color: #222 !important;
+    color: #eee !important;
+    border: 1px solid #444 !important;
+}
+
+    input:focus,
+    textarea:focus {
+        background-color: #222 !important;
+        border-color: #666 !important;
+        box-shadow: none !important;
+    }
+
+/* Buttons */
+.btn {
+    color: #eee !important;
+}
+
+.btn-outline-light {
+    border-color: #ccc !important;
+}
+
+
+    .btn-outline-light:hover {
+        background-color: #fff !important;
+        color: #000 !important;
+    }
+
+/* Toggle button smooth */
+button {
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+/* D3 panels */
+.d3-panel {
+    background: #1a1a1a !important;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+    .d3-panel svg {
+        background: #000 !important;
+        border-radius: 8px;
+        width: 100%;
+        height: 226px;
+    }
+
+/* List and form interaction styles */
+.list-group-item {
+    background-color: #111 !important;
+    color: #eee !important;
+    border-color: #333 !important;
+}
+
+/* light theme */
+
+body.light-theme {
+    background-color: #f5f5f5 !important;
+    color: #000 !important;
+}
+
+    body.light-theme h1,
+    body.light-theme h2,
+    body.light-theme h3,
+    body.light-theme h4,
+    body.light-theme h5 {
+        color: #000 !important;
+    }
+
+    /* Cards / Panels */
+    body.light-theme .card,
+    body.light-theme .accordion-item,
+    body.light-theme .accordion-body {
+        background-color: #fff !important;
+        color: #000 !important;
+        border-color: #ccc !important;
+    }
+
+    body.light-theme .accordion-button {
+        background-color: #fff !important;
+        color: #000 !important;
+    }
+
+    /* Inputs */
+    body.light-theme input,
+    body.light-theme textarea,
+    body.light-theme select {
+        background-color: #fff !important;
+        color: #000 !important;
+        border-color: #aaa !important;
+    }
+
+    /* Buttons */
+    body.light-theme .btn {
+        color: #000 !important;
+    }
+
+    body.light-theme .btn-outline-light {
+        border-color: #ffffff !important;
+        color: #ffffff !important;
+        background: transparent !important;
+    }
+
+        body.light-theme .btn-outline-light:hover {
+            background-color: #ffffff !important;
+            color: #000 !important;
+        }
+
+    
+    body.light-theme .d3-panel {
+        background: #fff !important;
+    }
+
+        body.light-theme .d3-panel svg {
+            background: #1a1a1a !important;
+        }
+
+.master-fx-checkbox.form-check-input {
+    background-color: var(--bs-body-bg) !important;
+    border-color: var(--bs-border-color) !important;
+    box-shadow: none !important;
+}
+
+    .master-fx-checkbox.form-check-input:checked {
+        background-color: #0d6efd !important; /* Bootstrap default blue */
+        border-color: #0d6efd !important;
+    }
+
+#roll {
+    display: none !important;
+}

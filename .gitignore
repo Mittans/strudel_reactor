@@ -22,3 +22,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 *.vsidx
+*.wsuo
+*.suo
+/.vs/ReactAssignment/v17
+/.vs
+/ReactAssignment.esproj
+/obj/Debug/package.g.props
