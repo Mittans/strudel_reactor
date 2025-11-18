@@ -37,3 +37,16 @@ label, .form-label { color: var(--muted); font-size: .9rem; }
 
 
 
+/* d3 stuff */
+.d3-panel {
+  border: 1px solid rgba(99, 102, 241, 0.6);
+  border-radius: 8px;
+  padding: 6px;
+  background: transparent;
+}
+
+.d3-axis text { fill: var(--muted); font-size: 11px; }
+.d3-axis line, .d3-axis path { stroke: var(--border); }
+.d3-grid .tick line { stroke: rgba(255, 255, 255, 0.06); }
+.d3-title { fill: var(--muted); font-weight: 600; font-size: 12px; }
+

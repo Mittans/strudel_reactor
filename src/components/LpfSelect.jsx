@@ -14,6 +14,7 @@ export default function LpfSelect({ value, onChange }) {
     }
   };
 
+  //made into drop down to prevent negative values
   return (
     <div className="mb-3">
       <label htmlFor="lpf_select" className="form-label">LPF Cutoff</label>

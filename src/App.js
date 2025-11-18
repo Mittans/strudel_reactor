@@ -11,10 +11,11 @@ import { stranger_tune } from './tunes';
 import console_monkey_patch from './console-monkey-patch';
 import DJControls from './components/DJControls';
 import PlayControls from './components/PlayControls';
-import ProcControls from './components/ProcControls';
+//import ProcControls from './components/ProcControls';
 import PreProTextArea from './components/PreProTextArea';
 import { Preprocess } from './utils/PreprocessLogic';
-import LpfSelect from './components/LpfSelect';
+import LpfSelect from './components/LpfSelect'; 
+import D3Graph from './components/D3Graph';
 
 let globalEditor = null;
 
@@ -38,12 +39,7 @@ export default function StrudelDemo() {
     globalEditor?.stop();
   };
 
-  // react to volume changes while playing
-  useEffect(() => {
-    if (state === "play") {
-      handlePlay();
-    }
-  }, [volume]); // keep inside the component
+
 
   // bootstrap Strudel editor + push code when procText changes first time
   useEffect(() => {
@@ -80,7 +76,6 @@ export default function StrudelDemo() {
     }
 
     // Re-run whenever text or control values change
-
    if (!globalEditor) return; //editor not ready yet
 
      //Build final Strudel code w upd settings
@@ -96,7 +91,6 @@ export default function StrudelDemo() {
     globalEditor.setCode(code);
   }
 }, [procText, volume, cpm, lpf, state]);
-
 
 return (
   <div className="app-root">
@@ -117,18 +111,14 @@ return (
 
         <div className="col-md-4 panel panel-actions">
           <nav className="action-grid">
-            {/* <ProcControls
-              onProc={handlePlay}
-              onProcPlay={() => { setState("play"); handlePlay(); }}
-            /> */}
             <PlayControls
               onPlay={() => { setState("play"); handlePlay(); }}
               onStop={() => { setState("stop"); handleStop(); }}
             />
           </nav>
+          <D3Graph title="Live Level" height={240} yDomain={[0, 1]} />
         </div>
       </div>
-
     
       <div className="row section-bottom">
         <div className="col-md-8 panel panel-editor">
@@ -138,12 +128,20 @@ return (
 
         <div className="col-md-4 panel panel-controls">
           <DJControls
-            cpmValue={cpm}
-            onCpmChange={(e) => setCpm(Number(e.target.value))}
-            volumeChange={volume}
-            onVolumeChange={(e) => setVolume(Number(e.target.value))}
-          />
+          cpmValue={cpm}
+          onCpmChange={(e) => setCpm(Number(e.target.value))}
+          volumeChange={volume}
+          onVolumeChange={(e) => {
+            const val = Number(e.target.value);
+            setVolume(val);
+            //stream volume to the chart
+            window.dispatchEvent(new CustomEvent("d3Data", { detail: val }));
+    }}
+  />
+          
           <LpfSelect value={lpf} onChange={setLpf} />
+          
+          
         </div>
       </div>
 

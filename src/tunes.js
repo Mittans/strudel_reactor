@@ -78,7 +78,6 @@ stack(
   .bank("[KorgDDM110, OberheimDmx]").speed(1.2).gain(1)
   .postgain(.25),
 )
-
 drums2: 
 stack(
   s("[~ hh]*4").bank("RolandTR808").room(0.3).speed(0.75).gain(1.2),

@@ -15,22 +15,7 @@ function DJControls({ cpmValue, onCpmChange, volume, onVolumeChange }) {
 
     <div className="form-check">
 
-  <input className="form-check-input" type="checkbox" value="" id="checkDefault"/>
-  <label className="form-check-label" htmlFor="s1">
-    s1
-  </label>
-</div>
-<div className="form-check">
-  <input className="form-check-input" type="checkbox" value="" id="checkDefault" />
-  <label className="form-check-label" htmlFor="d1">
-    d1
-  </label>
-</div>
-<div className="form-check">
-  <input className="form-check-input" type="checkbox" value="" id="checkDefault" />
-  <label className="form-check-label" htmlFor="d2">
-    d2
-  </label>
+
 </div>
         
         </>
