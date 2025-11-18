@@ -22,16 +22,17 @@ To start interacting with your tune, you will first use the playback buttons bel
 ### 2. Arpeggiator Selection
 Selecting the right arpeggiator is key to defining your song’s character. Radio buttons allow you to switch between multiple arpeggiators, and the currently selected arpeggiator is applied to your tune immediately.  
 
-
-
 ![Arpeggiator selection](src/images/arpeggiator_selection.png)  
  
- If your text area is empty, a message will appear to prompt you to add content. Similarly, if no arpeggiators are defined in your text, another message guides you to include `const arpeggiatorX` entries.
+If your text area is empty, a message will appear to prompt you to add content. Similarly, if no arpeggiators are defined in your text, another message guides you to include `const arpeggiatorX` entries.
 
 ![Message when text is empty](src/images/messages_arp(1).png)  
 
 ![Message when no arpeggiators exist](src/images/messages_arp(2).png)  
 
+Besides `const arpeggiator1` and `const arpeggiator2`, you can add more arpggiator in text and display in the main. The added arpeggiator can run if there are valid code inside it.
+
+![Added Arp](src/images/add_arp.png)  
 ---
 
 ### 3. Effect Selection
@@ -117,10 +118,14 @@ To prevent errors and guide your workflow, the project displays alert messages w
   1. Attempting to play a song with an empty text area triggers a notification. 
   ![alert messages](src/images/alerts(empty&playing).png)  
 
-  2. Duplicate arpeggiators or selecting effects/instruments without proper text also generate alerts. 
+  2. Attemping to delete the text during the song is playing will trigger a notification and reload the window to avoid the errors.
+  ![alert messages](src/images/alert(delete_during_playing).png)
+
+  3. Duplicate arpeggiators or selecting effects/instruments without proper text also generate alerts. 
    ![alert messages](src/images/alert(dup_arp).png)  
    ![alert messages](src/images/alert(instrument).png)  
    ![alert messages](src/images/alert(effect).png)  
+
 
 These messages ensure a smooth and error-free user experience.
 
@@ -148,7 +153,7 @@ When using this website to create music, please follow these guidelines for a sm
 7. **Deleting song**   
    Before you deleting the other song, please ensure to save the song that you are doing if it exists or add it to the local storage as the website will be reset after you delete song. Therefore, always saving or adding the song to avoid your sadness after accidently delete the song you are working.
 
-8. **Minimum of speed**
+8. **Minimum of speed**    
    The minimum of speed was set at 0.01 to avoiding the bug from the graph when 0 can make the graph run faster instead of stopping.
 
 ## Demonstrate video
@@ -162,7 +167,7 @@ Some elements of this project use or are inspired by examples found in the Strud
 - Synth sounds and effects were inspired by bakery demos, though they have been customized for this project. 
 
 ## AI USAGE
-During this assignment, I used AI assistance from ChatGPT to help guide my coding process and debug unknown issues, significantly reducing development time. Here are some examples of how ChatGPT assisted me:
+During this assignment, I used AI assistance from ChatGPT to help guide my coding process and debug unknown issues, significantly reducing development time. As there will be many images in readme.md, I would like to send some examples of how ChatGPT assisted me and what code that help me to solve the problem:
 
 ### 1. Fixing Bugs
 Whenever I encountered errors, I provided the error messages and relevant code to ChatGPT, which helped me identify and resolve the issues quickly.

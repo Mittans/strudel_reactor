@@ -125,8 +125,14 @@ export default function StrudelDemo() {
                 },
             });
           }
+
+          if (!validateText()) {
+            alert("Please make sure the text is not empty during playing, now you have to be paid! RESET BROWSER!")
+            window.location.reload();
+          } else {
           Proc();
           ProcAndPlay();
+        }
       });
     
     // Function to handle update the editor from the other files.

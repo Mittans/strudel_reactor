@@ -27,7 +27,7 @@ export function ArpeggiatorSelection({text, handleChangeArp}) {
             </div>
             ) : arpeggiators.length === 0 ? (
             <div className="text-yellow-200 text-center">
-                No arpeggiators found, please add "const arpeggiator = []".
+                No arpeggiators found, please add "const arpeggiatorX = []". X is the integer number.
             </div>
             ) : 
             (
