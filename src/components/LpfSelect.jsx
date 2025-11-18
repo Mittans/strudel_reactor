@@ -1,4 +1,3 @@
-// components/LpfSelect.jsx
 export default function LpfSelect({ value, onChange }) {
   
     //Convert the <select> value to Number or null

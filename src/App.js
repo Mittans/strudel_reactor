@@ -16,6 +16,7 @@ import PreProTextArea from './components/PreProTextArea';
 import { Preprocess } from './utils/PreprocessLogic';
 import LpfSelect from './components/LpfSelect'; 
 import D3Graph from './components/D3Graph';
+import TextJsonControls from "./components/TextJsonControls";
 
 let globalEditor = null;
 
@@ -41,7 +42,7 @@ export default function StrudelDemo() {
 
 
 
-  // bootstrap Strudel editor + push code when procText changes first time
+  //bootstrap Strudel editor + push code when procText changes first time
   useEffect(() => {
     if (!hasRun.current) {
       document.addEventListener("d3Data", (e) => console.log(e.detail));
@@ -75,10 +76,10 @@ export default function StrudelDemo() {
       });
     }
 
-    // Re-run whenever text or control values change
+    //re-run whenever text or control values change
    if (!globalEditor) return; //editor not ready yet
 
-     //Build final Strudel code w upd settings
+     //build final Strudel code w upd settings
   const code = Preprocess({ inputText: procText, volume, cpm, lpf });
   if (state === "play") {
 
@@ -91,6 +92,54 @@ export default function StrudelDemo() {
     globalEditor.setCode(code);
   }
 }, [procText, volume, cpm, lpf, state]);
+
+const fileInputRef = useRef(null);
+
+// Save only the Strudel code text
+const handleSaveText = () => {
+  const preset = { procText };
+  const json = JSON.stringify(preset, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "strudel-text.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
+};
+
+// Trigger file input
+const handleLoadClick = () => {
+  if (fileInputRef.current) {
+    fileInputRef.current.value = ""; // allow reloading same file
+    fileInputRef.current.click();
+  }
+};
+
+//load JSON and apply text
+const handlePresetFileChange = (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    try {
+      const data = JSON.parse(event.target.result);
+
+      if (typeof data.procText === "string") {
+        setProcText(data.procText);   // <-- loads text into editor
+      } else {
+        alert("JSON missing procText");
+      }
+    } catch (err) {
+      alert("Invalid JSON file");
+    }
+  };
+
+  reader.readAsText(file);
+};
 
 return (
   <div className="app-root">
@@ -141,6 +190,10 @@ return (
           
           <LpfSelect value={lpf} onChange={setLpf} />
           
+          <TextJsonControls
+    procText={procText}           
+    onLoadText={setProcText}    
+  />
           
         </div>
       </div>
