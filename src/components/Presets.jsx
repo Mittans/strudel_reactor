@@ -25,7 +25,17 @@ function Presets({ presets, onLoad, onSave, onDelete, currentCode }) {
     }
 
     const name = prompt("Enter preset name:");
+    let confirmation = false;
     if (!name?.trim()) return;
+
+    if (presets.some(p => p.name === name)) {
+      confirmation = window.confirm("A preset with this name already exists. Overwrite?");
+      if (!confirmation) return;
+      else {
+        const existingPreset = presets.find(p => p.name === name);
+        onDelete(existingPreset.id);
+      }
+    }
 
     onSave(name, currentCode);
     alert(`Preset "${name}" saved!`);
@@ -82,6 +92,11 @@ function Presets({ presets, onLoad, onSave, onDelete, currentCode }) {
           Delete Preset
         </button>
       </div>
+        {selected && presets.find(p => p.id === selected)?.builtIn && (
+        <span style={{ alignSelf: 'center', color: 'gray' }}>
+            Note: Built-in presets cannot be deleted.
+        </span>
+        )}
     </div>
   );
 }

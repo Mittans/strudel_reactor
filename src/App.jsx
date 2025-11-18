@@ -9,6 +9,7 @@ import { extractControlsFromCode, applyControlsToCode, CONTROL_DEFINITIONS } fro
 import console_monkey_patch from './assets/console-monkey-patch'
 import './css/App.css'
 import { useState, useRef, useEffect } from 'react';
+import { repl } from '@strudel/core'
 
 // Initialize console patch
 console_monkey_patch();
@@ -39,10 +40,10 @@ function App() {
         return [...builtInPresets, ...userPresets];
     });
 
-    // ===== PRESET HANDLERS =====
-
+    // Handle preset load
     const handlePresetLoad = (newCode) => setCode(newCode);
 
+    // Handle preset save
     const handlePresetSave = (name, newCode) => {
         const newPreset = {
             id: Date.now().toString(),
@@ -59,6 +60,7 @@ function App() {
         localStorage.setItem("userPresets", JSON.stringify(onlyUser));
     };
 
+    // Handle preset delete
     const handlePresetDelete = (id) => {
         const updated = presets.filter(p => p.id !== id);
         setPresets(updated);
@@ -123,10 +125,15 @@ function App() {
     }, [processedCode]);
 
     useEffect(() => {
-        if (replRef.current) {
-            replRef.current.setCode(finalCode);
-        }
-    }, [controlValues, finalCode]);
+    if (replRef.current && finalCode !== "") {
+        // Only update the music player with the latest, pre-calculated code.
+        const cpsValue = bpmValue / 60 / 4;
+        const codeWithBpm = finalCode.replace(/setcps\s*\([^)]+\)/g, `setcps(${cpsValue})`);
+        
+        replRef.current.setCode(codeWithBpm);
+        replRef.current.evaluate();
+    }
+    }, [controlValues, bpmValue, finalCode]);
 
     return (
         <>

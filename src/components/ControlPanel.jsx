@@ -11,7 +11,7 @@ function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop, onGraphToggle }){
                     fontWeight: 'bold',
                     textShadow: '2px 2px 4px rgba(0,0,0,0.3)'
                 }}>
-                    🎵 Strudel Live Coding Studio 🎵
+                    Strudel Live Coding Studio
                 </h1>
                 <div className="d-flex justify-content-center flex-wrap gap-3 py-3">
                     <button id="process" className="btn px-4" onClick={onProc}>
@@ -30,7 +30,7 @@ function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop, onGraphToggle }){
                     </button>
 
                     <button id="graph" className="btn px-4" onClick={onGraphToggle}>
-                        👁 View Graph
+                        📊 View Graph
                     </button>
                 </div>
             </div>
