@@ -143,6 +143,7 @@ export default function StrudelDemo() {
     const handleProcPlay = () => {
         updateStrudelCode(songText);
         globalEditor.evaluate();
+        setIsPlaying(true);
     };
 
     // Initialise Strudel editor only once, and update only during playback
@@ -246,7 +247,7 @@ export default function StrudelDemo() {
                                     max="1"
                                     step="0.01"
                                     value={volume}
-                                    onChange={(e) => setVolume(parseFloat(e.target.value))}
+                                    onChange={(e) => { setVolume(parseFloat(e.target.value)); if (isPlaying) updateStrudelCode(songText) }}
                                     id="volume-range"
                                 />
                             </div>
