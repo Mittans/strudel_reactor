@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# Strudel React
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**Strudel React** is a browser-based music composition and visualization tool built with React and [Strudel](https://strudel.live/) (a live-coding music framework). It allows users to create, modify, and play musical patterns interactively with real-time control over parameters such as BPM, instrument effects, and mute/hush certain elements of the composition.
 
-## Available Scripts
+This project combines a **REPL editor, visualizations, dynamic controls, and preset management**, giving a TidalCycles/Strudel-like live coding experience directly in the browser.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Live Coding Editor (REPL)**: Write Strudel-compatible code and see the effects immediately.
+- **Preset Management**:
+  - Save, load, and delete musical presets.
+  - Overwrite existing presets by name.
+  - Presets stored locally in `localStorage`.
+- **Dynamic Controls**: Adjust sliders, numeric inputs, or other controls derived from the code to modify music parameters in real-time.
+- **BPM Adjustment**: Set the tempo with a numeric input, automatically applied to all code.
+- **Hush (Mute) Controls**: Tag code elements with `<pN>` and mute/unmute them on the fly with a Bootstrap switch.
+- **Graph/Visualization**: View the piano roll or other visual representations of your composition.
+- **Safe Playback**:
+  - Prevents playback if the code is empty.
+  - Requires code to be preprocessed before evaluation.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Installation
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. Clone the repository:
 
-### `npm run build`
+```bash
+git clone https://github.com/yourusername/strudel-react.git
+cd strudel-react
+```
+2. Install Dependencies
+```bash
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+3. Start development server
+```bash
+npm start
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+4. Open your browser and navigate to:
+```bash
+http://localhost:3000 (or different port if needed)
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Usage
 
-### `npm run eject`
+```A usage guide is available on the website for easy access.```  
+Below is another list of navigation basics for convinience:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. **Writing Music:**  
+Type Strudel-compatible code in the Preprocess panel.  
+Use <pN> tags to mark elements you might want to mute/hush later.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+2. **Hush Controls:**  
+Toggle switches to mute/unmute <pN> elements.  
+Changes are applied live to the processed code.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Controls & Sliders:**  
+Adjust dynamic parameters derived from the code using the sliders or numeric inputs.  
+Changes update the music immediately.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+4. **Presets:**  
+Save your work as a preset.  
+Load or delete presets.  
+Built-in presets are included from tunes.json.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+5. **Playback:**  
+Use the Play, Stop, or Proc & Play buttons.  
+Music cannot play unless code is present and processed.

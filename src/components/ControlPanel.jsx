@@ -71,6 +71,7 @@ function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop, onGraphToggle }){
                         <li>Try layering multiple patterns for variety</li>
                         <li>Use comments (//) to organize your code</li>
                         <li>To overwrite existing code for a saved preset, simply save again with same name</li>
+                        <li>Add (<code>&lt;pN&gt;</code>) where N is an integer, in front of any instrument to add mute switches</li>
                     </ul>
                 </div>
             </div>

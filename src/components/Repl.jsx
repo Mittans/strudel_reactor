@@ -32,6 +32,7 @@ const Repl = forwardRef(({ procText, shouldPlay, shouldStop, onPlayDone }, ref) 
         }
     }));
 
+    // Handle d3Data events
     const handleD3Data = (event) => {
         const data = event.detail;
         console.log("Received d3Data:", data);

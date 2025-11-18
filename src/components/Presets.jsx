@@ -6,6 +6,7 @@ import '../css/Presets.css';
 function Presets({ presets, onLoad, onSave, onDelete, currentCode }) {
     const [selected, setSelected] = useState("");
 
+	// Handle preset load
     const handleLoad = (id) => {
       if (!id) return;
       
@@ -18,6 +19,7 @@ function Presets({ presets, onLoad, onSave, onDelete, currentCode }) {
       }
     };
 
+	// Handle preset save
     const handleSave = () => {
         if (!currentCode?.trim()) {
             alert("No code to save!");
@@ -43,6 +45,7 @@ function Presets({ presets, onLoad, onSave, onDelete, currentCode }) {
     };
 
 
+	// Handle preset delete
 	const handleDelete = () => {
 		if (!selected) {
 		alert("No preset selected");

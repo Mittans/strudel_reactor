@@ -16,6 +16,7 @@ console_monkey_patch();
 
 function App() {
 
+    // Application states
     const [code, setCode] = useState("");
     const [processedCode, setProcessedCode] = useState("");
     const [shouldPlay, setShouldPlay] = useState(false);
@@ -27,6 +28,7 @@ function App() {
     const [activeControls, setActiveControls] = useState([]);
     const [controlValues, setControlValues] = useState({});
     
+    // Ref to REPL component
     const replRef = useRef(null);
 
     // Load built-in presets from tunes.json
@@ -35,6 +37,7 @@ function App() {
         builtIn: true
     }));
 
+    // Manage presets (built-in + user-defined)
     const [presets, setPresets] = useState(() => {
         const saved = localStorage.getItem("userPresets");
         const userPresets = saved ? JSON.parse(saved) : [];
@@ -42,6 +45,7 @@ function App() {
         return [...builtInPresets, ...userPresets];
     });
 
+    // Handle hush toggle change
     const handleHushChange = (tag, muted) => {
         setHushMap(prev => ({ ...prev, [tag]: muted }));
     };
@@ -86,8 +90,10 @@ function App() {
 
 
 
+    // Handle code change from Preprocess editor
     const handleProcTextChange = (text) => setCode(text);
 
+    // Handle preprocessing logic
     const handleProc = () => {
         let replaced = code;
 
@@ -107,6 +113,7 @@ function App() {
         setProcessedCode(replaced);
     };
 
+    // Handle Proc & Play logic
     const handleProcAndPlay = () => {
         if (code === "") {
             alert("No code to process and play!");
@@ -116,6 +123,7 @@ function App() {
         setShouldPlay(true);
     };
 
+    // Handle Play logic
     const handlePlay = () => {
         if (processedCode === '') {
             alert("Process the code before playing!");
@@ -126,6 +134,7 @@ function App() {
 
     const handleStop = () => setShouldStop(true);
 
+    // Handle play completion
     const handlePlayDone = () => {
         setShouldPlay(false);
         setShouldStop(false);
@@ -135,6 +144,8 @@ function App() {
 
     const finalCode = applyControlsToCode(processedCode, controlValues);
 
+    // Update active controls when processedCode changes
+    // Also initialize control values based on processedCode
     useEffect(() => {
         const { controls, initialValues } = extractControlsFromCode(processedCode);
         setActiveControls(controls);
@@ -148,6 +159,7 @@ function App() {
         });
     }, [processedCode]);
 
+    // Update REPL code when control values, bpm, hushMap, or finalCode changes
     useEffect(() => {
     if (replRef.current && finalCode !== "") {
         // Only update the music player with the latest, pre-calculated code.

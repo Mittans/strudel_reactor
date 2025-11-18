@@ -15,6 +15,7 @@ function Graph({ showGraph, onClose }) {
     });
 
     useEffect(() => {
+        // Setup SVG
         const svg = d3.select(svgRef.current)
             .attr("width", "100%")
             .attr("height", 300);
@@ -35,20 +36,24 @@ function Graph({ showGraph, onClose }) {
             return (octave + 1) * 12 + note + accidental;
         };
 
+        // Extract value from log line based on mode
         function extractValue(line, mode) {
             if (mode === "pitch") {
                 const noteMatch = line.match(/note:([a-g]b?\d+)/i);
                 if (noteMatch) return noteToMidi(noteMatch[1]);
-            } else if (mode === "cutoff") {
+            } 
+            else if (mode === "cutoff") {
                 const cutoffMatch = line.match(/cutoff:(\d+)/);
                 if (cutoffMatch) return parseFloat(cutoffMatch[1]);
-            } else if (mode === "attack") {
+            } 
+            else if (mode === "attack") {
                 const attackMatch = line.match(/attack:([\d.]+)/);
                 if (attackMatch) return parseFloat(attackMatch[1]);
             }
             return null;
         }
 
+        // Draw graph based on parsed data
         function drawGraph(parsed) {
             const width = svgRef.current?.clientWidth || 600;
 
@@ -91,6 +96,7 @@ function Graph({ showGraph, onClose }) {
                 .attr("color", "#444")
                 .style("font-size", "10px");
 
+            // line and area
             const line = d3.line()
                 .x((d, i) => x(i))
                 .y(d => y(d))

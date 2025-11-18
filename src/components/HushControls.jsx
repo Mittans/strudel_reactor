@@ -1,9 +1,9 @@
-import { useState } from "react";
 
 function HushControls({ code, hushMap, onHushChange }) {
     // Detect all <pN> tags in the code
     const tags = Array.from(new Set(Array.from(code.matchAll(/<p\d+>/g), m => m[0])));
 
+    // If no tags found, don't render anything
     if (tags.length === 0) return null; // No tags to hush
 
     return (
