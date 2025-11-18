@@ -1,38 +1,101 @@
-.App {
-  text-align: center;
+body {
+    background-color: #000 !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+.strudel-demo-container {
+    margin: 60px auto;
+    max-width: 1400px;
+    max-height: 1100px;
+    background: #f0f7fa;
+    border-radius: 22px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 40px 30px 30px 30px;
+    position: relative;
+    overflow: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+  /* glowing border effect */
+ .strudel-demo-container::before {
+   content: "";
+   position: absolute;
+   inset: 0;
+   border-radius: 26px;
+   padding: 8px;
+   background: linear-gradient( 135deg, 
+   #ff0000, #ff3300, #ff6600, #ff9900, #ffcc00, #ffff00, #ccff00, #66ff00, #00ff00, #00ff66, #00ffff, #00b3ff, #0066ff, #3300ff, #6600ff, #cc00ff, #ff00ff );
+   background-size: 400% 400%;
+   animation: glowMove 6s linear infinite;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+   mask-composite: exclude;
+ }
+
+@keyframes glowMove {
+    0% 
+    {
+        background-position: 0% 50%;
+    }
+    50% 
+    {
+        background-position: 100% 50%;
+    }
+    100% 
+    {
+        background-position: 0% 50%;
+    }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.card {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 6px rgb(44 62 80 / 0.04);
 }
 
-.App-link {
-  color: #61dafb;
+.form-label {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+textarea.form-control {
+  background: #f4f6f8;
+  border: 1px solid #d4dae3;
+  border-radius: 8px;
+  font-family: 'Fira Mono', monospace;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  color: #283242;
+  min-height: 260px;
+  padding: 16px;
+}
+
+nav .btn {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  font-weight: 500;
+  border-radius: 8px !important;
+}
+
+.btn-outline-primary {
+  border-color: #5b9cf0 !important;
+  color: #3573d1 !important;
+  background: #f0f6ff !important;
+  transition: background 0.15s, color 0.15s;
+}
+.btn-outline-primary:hover {
+  background: #3573d1 !important;
+  color: #fff !important;
+}
+
+.form-check-label {
+  margin-left: 8px;
+  font-weight: 500;
+  color: #27303b;
+}
+.form-check-input:checked {
+  background-color: #3573d1 !important;
+  border-color: #3573d1 !important;
 }
