@@ -1,0 +1,73 @@
+﻿#proc-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px; /* very light spacing between them */
+    margin-bottom: 0px;
+}
+
+/* Shared button style */
+#proc-buttons .btn {
+    border-radius: 6px !important;
+    font-weight: 500;
+    padding: 6px 16px;
+    letter-spacing: 0.3px;
+    transition: all 0.25s ease-in-out;
+    color: #fff;
+    border: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Hover lift and glow */
+#proc-buttons .btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.25);
+}
+
+/* Preprocess button (Blue) */
+#proc-buttons .btn-outline-primary:first-child {
+    background-color: #0d6efd;
+}
+
+#proc-buttons .btn-outline-primary:first-child:hover {
+    background-color: #338bff;
+    box-shadow: 0 0 15px #338bff;
+}
+
+#proc-buttons .btn-outline-primary:first-child:active {
+    background-color: #0a58ca;
+    box-shadow: 0 0 18px #0a58ca;
+}
+
+/* Proc & Play button (Purple) */
+#proc-buttons .btn-outline-primary:last-child {
+    background-color: #6f42c1;
+}
+
+#proc-buttons .btn-outline-primary:last-child:hover {
+    background-color: #854bff;
+    box-shadow: 0 0 15px #854bff;
+}
+
+#proc-buttons .btn-outline-primary:last-child:active {
+    background-color: #5a32a3;
+    box-shadow: 0 0 18px #5a32a3;
+}
+
+    /* === ICON-ONLY BANDAGE FIX === */
+    #proc-buttons .btn {
+        font-size: 1.8rem; /* make emoji or icon bigger */
+        width: 60px; /* fixed width */
+        height: 50px; /* equal height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0;
+        letter-spacing: 0;
+    }
+
+        /* Optional: soft hover pulse */
+        #proc-buttons .btn:hover {
+            transform: scale(1.08);
+            transition: all 0.2s ease-in-out;
+        }

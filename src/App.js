@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -9,6 +9,13 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import DJControls from './components/DJControls';
+import PlayButtons from './components/PlayButtons';
+import ProcButtons from './components/ProcButtons';
+import PreprocessTextarea from './components/PreprocessTextarea';
+import SoundGraph from './components/SoundGraph';
+
+// This file is the main brain and has all the base logic in it. 
 
 let globalEditor = null;
 
@@ -16,55 +23,81 @@ const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-export function SetupButtons() {
-
-    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-    document.getElementById('process').addEventListener('click', () => {
-        Proc()
-    }
-    )
-    document.getElementById('process_play').addEventListener('click', () => {
-        if (globalEditor != null) {
-            Proc()
-            globalEditor.evaluate()
-        }
-    }
-    )
-}
-
-
-
-export function ProcAndPlay() {
-    if (globalEditor != null && globalEditor.repl.state.started == true) {
-        console.log(globalEditor)
-        Proc()
-        globalEditor.evaluate();
-    }
-}
-
-export function Proc() {
-
-    let proc_text = document.getElementById('proc').value
-    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-    ProcessText(proc_text);
-    globalEditor.setCode(proc_text_replaced)
-}
-
-export function ProcessText(match, ...args) {
-
-    let replace = ""
-    if (document.getElementById('flexRadioDefault2').checked) {
-        replace = "_"
-    }
-
-    return replace
-}
-
 export default function StrudelDemo() {
 
-const hasRun = useRef(false);
+    const hasRun = useRef(false);
 
+    // This function controls all the replacements in the preprocessing text and then is used by proc & play
+    const processSongText = () => {
+        return songText
+            .replaceAll("<s1>", s1 ? "" : "_")
+            .replaceAll("<d1>", d1 ? "" : "_")
+            .replaceAll("<d2>", d2 ? "" : "_")
+            .replaceAll("<cpm>", cpm)
+            .replaceAll("<volume>", volume)
+            .replaceAll("{volumeD1}", d1Vol)
+            .replaceAll("{volumeD2}", d2Vol)
+            .replaceAll("{volumeS1}", s1Vol)
+            .replaceAll("<echo>", echo)
+
+    };
+
+    // Play function to start the strudel tune
+    const handlePlay = () => {
+        globalEditor.setCode(processSongText());
+        globalEditor.evaluate();
+        setIsPlaying(true);
+    }
+
+    // stop function to stop the strudel tune
+    const handleStop = () => {
+        globalEditor.stop();
+        setIsPlaying(false);
+    }
+
+    // this fucntion just sets the preprocessTextarea's text to strudel repl
+    const handlePreprocess = () => {
+        if (globalEditor) {
+            globalEditor.setCode(processSongText());
+        }
+    };
+
+    // this function adapts with changes in the textarea and evalutes it in strudel repl (basically play it)
+    const handleProcAndPlay = () => {
+        if (globalEditor) {
+            globalEditor.setCode(processSongText());
+            globalEditor.evaluate();
+            setIsPlaying(true);
+        }
+    };
+    
+    // these are all the react useState's which then each components takes in and uses these setter to change these values
+    const [songText, setSongText] = useState(stranger_tune)
+    const [s1, setS1] = useState(true);
+    const [d1, setD1] = useState(true);
+    const [d2, setD2] = useState(true);
+    const [cpm, setCpm] = useState("140");
+    const [volume, setVolume] = useState(0.5);
+    const [s1Vol, sets1Vol] = useState(10);
+    const [d2Vol, setd2Vol] = useState(0.8);
+    const [d1Vol, setd1Vol] = useState(0.2);
+    const [jsonText, setJsonText] = useState("");
+    const [echo, setEcho] = useState(0);
+    const [isPlaying, setIsPlaying] = useState(false);
+
+// this useeffect is for applying changes to the preprocessing text (stranger tune) whenever any of the component changes its state.
+useEffect(() => {
+    if (!isPlaying) return;   // only auto-update while playing
+
+    // Auto regenerate and play Strudel
+    if (globalEditor) {
+        globalEditor.setCode(processSongText());
+        globalEditor.evaluate();
+    }
+}, [cpm, volume, s1, d1, d2, s1Vol, d1Vol, d2Vol, echo]);
+
+
+// my react useeffect's purpose is to setup the website in the begin just that I can be ready to play
 useEffect(() => {
 
     if (!hasRun.current) {
@@ -99,60 +132,84 @@ useEffect(() => {
             });
             
         document.getElementById('proc').value = stranger_tune
-        SetupButtons()
-        Proc()
-    }
 
-}, []);
+        let initial = processSongText(stranger_tune);
+                                                                          
+        globalEditor.setCode(initial);
+        //SetupButtons()
+        //Proc()
+    }
+    
+}, [songText]);
 
 
 return (
     <div>
-        <h2>Strudel Demo</h2>
+        
         <main>
 
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
-                        <textarea className="form-control" rows="15" id="proc" ></textarea>
-                    </div>
-                    <div className="col-md-4">
-
-                        <nav>
-                            <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                            <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
-                            <br />
-                            <button id="play" className="btn btn-outline-primary">Play</button>
-                            <button id="stop" className="btn btn-outline-primary">Stop</button>
-                        </nav>
-                    </div>
+                    <nav className="navbar custom-navbar mb-3">
+                        <div className="container-fluid">
+                            <a className="navbar-brand" href="#">
+                                     Strudel Demo
+                            </a>
+                        </div>
+                    </nav>
                 </div>
                 <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
+                    <div className="col-md-6" >
+                        <PreprocessTextarea defaultValue={songText} onChange={(e) => setSongText(e.target.value)} />
+                    </div>
+                    <div className="col-md-6 justify-content-end">
+                        <nav className="container">
+                            <div className="row text-center">
+                                <div className="col-md-6 col-sm-12">
+                                    <ProcButtons onPreprocess={handlePreprocess} onProcAndPlay={handleProcAndPlay} songText={songText} />
+                                </div>
+                                <div className="col-md-6 col-sm-12">
+                                    <PlayButtons onPlay={handlePlay} onStop={handleStop} />
+                                </div>
+                            </div>
+                        </nav>
+                        <div className="row mb-3 me-1"><SoundGraph isPlaying={isPlaying} /></div>
+                        {/*<nav>*/}
+                        {/*    <ProcButtons onPreprocess={handlePreprocess} onProcAndPlay={handleProcAndPlay} songText={songText} />*/}
+                            
+                        {/*    <PlayButtons onPlay={handlePlay} onStop={handleStop} />*/}
+                        {/*</nav>*/}
+                    </div>
+                    
+                </div>
+                <div className="row">
+                    <div className="col-md-6" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
                         <div id="editor" />
                         <div id="output" />
                     </div>
-                    <div className="col-md-4">
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                            <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                p1: ON
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                            <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                p1: HUSH
-                            </label>
-                        </div>
+                    <div className="col-md-6">
+                        
+                        <DJControls
+                            songText={songText}
+                            s1={s1} setS1={setS1}
+                            d1={d1} setD1={setD1}
+                            d2={d2} setD2={setD2}
+                            cpm={cpm} setCpm={setCpm}
+                            onProcess={handleProcAndPlay}
+                            cleanText={processSongText}
+                            volume={volume}
+                            s1Vol={s1Vol} sets1Vol={sets1Vol}
+                            d1Vol={d1Vol} setd1Vol={setd1Vol}
+                            d2Vol={d2Vol} setd2Vol={setd2Vol}
+                            setVolume={setVolume}
+                            jsonText={jsonText} setJsonText={setJsonText}
+                            echo={echo} setEcho={setEcho}
+                        />
                     </div>
                 </div>
             </div>
             <canvas id="roll"></canvas>
         </main >
     </div >
-);
-
-
+        );
 }

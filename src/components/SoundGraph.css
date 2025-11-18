@@ -1,0 +1,48 @@
+﻿.soundgraph-container {
+    background: linear-gradient(180deg, #151515, #0a0a0a);
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    width: 100%;
+}
+
+.soundgraph-title {
+    color: white;
+    margin-bottom: 10px;
+    font-size: 1.3rem;
+}
+
+.soundgraph-svg {
+    width: 100%;
+    height: 175px;
+    display: block;
+}
+
+.y-axis text {
+    fill: #999;
+    font-size: 12px;
+}
+
+.y-axis line {
+    stroke: #444;
+}
+
+.y-axis path {
+    stroke: #666;
+}
+
+.y-grid line {
+    stroke: #333;
+}
+
+.y-grid path {
+    display: none;
+}
+
+.sound-line {
+    fill: none;
+    stroke: url(#line-gradient);
+    stroke-width: 2;
+    filter: drop-shadow(0px 0px 4px magenta);
+}

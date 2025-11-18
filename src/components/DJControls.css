@@ -1,0 +1,74 @@
+﻿/* Each square pad (label) */
+.form-check-label {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;         
+  height: 65px;
+  border-radius: 10px;
+  font-size: 36px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  margin: 10px;          
+}
+
+.form-check-input {
+  display: none;
+}
+
+#s1 + .form-check-label {
+  background-color: #f1c40f;
+  color: #1f2833;
+}
+
+#d1 + .form-check-label {
+  background-color: #3498db; 
+  color: white;
+}
+
+#d2 + .form-check-label {
+    background-color: #3498db; 
+    color: white;
+}
+
+#s1:checked + .form-check-label {
+  box-shadow: 0 0 5px 4px rgba(241, 196, 15, 0.9);
+  transform: scale(1.05);
+}
+
+#d1:checked + .form-check-label {
+  box-shadow: 0 0 5px 4px rgba(52, 152, 219, 0.9);
+  transform: scale(1.05);
+}
+
+#d2:checked + .form-check-label {
+  box-shadow: 0 0 5px 4px rgba(41, 128, 185, 0.9);
+  transform: scale(1.05);
+}
+
+.form-check-label:hover {
+  opacity: 0.9;
+}
+
+#vollabel {
+    font-weight: 600;
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+    color: #f5f5f5;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.3);
+    letter-spacing: 0.4px;
+}
+
+.vertical-slider {
+    transform: rotate(-90deg);
+    width: 120px;
+    height: 10px;
+    accent-color: #ffd700;
+    margin-top:65px;
+    margin-left:20px;
+}
+
+#settings {
+    height: 220px;
+}

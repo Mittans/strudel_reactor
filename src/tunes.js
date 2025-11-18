@@ -1,9 +1,10 @@
-export const stranger_tune = `setcps(140/60/4)
+﻿export const stranger_tune = `setcps(<cpm>/60/4)
 
 samples('github:algorave-dave/samples')
 samples('https://raw.githubusercontent.com/tidalcycles/Dirt-Samples/master/strudel.json')
 samples('https://raw.githubusercontent.com/Mittans/tidal-drum-machines/main/machines/tidal-drum-machines.json')
 
+all(x => x.postgain(<volume>))
 const gain_patterns = [
   "2",
   "{0.75 2.5}*4",
@@ -48,36 +49,51 @@ note(pick(basslines, bass))
 .room(0.4)
 .postgain(pick(gain_patterns, pattern))
 
-
-main_arp: 
+<s1>main_arp:
 note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .sound("supersaw")
-.lpf(300)
-.adsr("0:0:.5:.1")
-.room(0.6)
-.lpenv(3.3)
+.lpf(200 + ({volumeS1} * 10))         
+.hpf(50 + ({volumeS1} / 20))          
+.shape(({volumeS1} / 800))             
+.cutoff(200 + ({volumeS1} * 8))        
+.gain(0.8 + ({volumeS1} / 1200))       
+.room(({volumeS1} / 800))        
+.size(0.2 + ({volumeS1} / 1200))
+.adsr("0:0.1:0.4:0.1")
 .postgain(pick(gain_patterns, pattern))
 
 
-drums:
+<d1>drums:
 stack(
   s("tech:5")
   .postgain(6)
   .pcurve(2)
   .pdec(1)
+  .lpf(500 + ({volumeD1} * 9000))
+  .room(0.1 + ({volumeD1} * 0.3))
+  .gain(({volumeD1} * 1.2))   
   .struct(pick(drum_structure, pattern)),
 
   s("sh").struct("[x!3 ~!2 x!10 ~]")
-  .postgain(0.5).lpf(7000)
+  .postgain(0.5)
+  .lpf(1500 + ({volumeD1} * 6000))  
   .bank("RolandTR808")
-  .speed(0.8).jux(rev).room(sine.range(0.1,0.4)).gain(0.6),
+  .speed(0.8)
+  .jux(rev)
+  .room(sine.range(0.1,0.4))
+  .gain(0.6 * {volumeD1}),
 
+  // Clap layer now also brightens + opens
   s("{~ ~ rim ~ cp ~ rim cp ~!2 rim ~ cp ~ < rim ~ >!2}%8 *2")
-  .bank("[KorgDDM110, OberheimDmx]").speed(1.2)
-  .postgain(.25),
+  .bank("[KorgDDM110, OberheimDmx]")
+  .speed(1.2)
+  .lpf(500 + ({volumeD1} * 8500))      
+  .room(0.05 + ({volumeD1} * 0.4))
+  .postgain(0.15 + ({volumeD1} * 0.9))
 )
+.postgain({volumeD1})
 
-drums2: 
+<d2>drums2: 
 stack(
   s("[~ hh]*4").bank("RolandTR808").room(0.3).speed(0.75).gain(1.2),
   s("hh").struct("x*16").bank("RolandTR808")
@@ -92,9 +108,12 @@ stack(
   .hpf(1000)
   .speed(0.5)
   .rarely(jux(rev)),
-)
+).lpf(2000 + ({volumeD2} * 8000))
+.postgain({volumeD2})
+
+
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY
 // all(x => x.gain(mouseX.range(0,1)))
-// all(x => x.log())
-
+all(x => x.log())
+all(x => x.delay(<echo>))
 // @version 1.2`;

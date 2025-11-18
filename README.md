@@ -1,70 +1,66 @@
-# Getting Started with Create React App
+# **Strudel Demo – React Based Music Processor**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a Strudel-based music web-app built with **React**, which allows users to edit a Strudel tune,
+apply live effects, and control playback with an intuitive UI. It includes a JSON configuration for the setting, instrument
+toggles, sliders, live processing, and sound graph visuals using a D3 element.
 
-## Available Scripts
+## **Features**
 
-In the project directory, you can run:
+### **1. Pre-Processing & Live Editing**
+- A large editor where users can modify the base Strudel code.  
+- Changes are automatically processed and reflected in playback.  
+- *Process* and *Process & Play* buttons for manual control.
+- *Play and Stop* buttons to start and stop strudel tune.
 
-### `npm start`
+### **2. DJ Controls Panel**
+The right panel contains interactive controls:
+- **cpm (cycles per minute)** slider  
+- **Main volume** slider  
+- **Instrument toggles** for `s1`, `d1`, `d2`  
+- **Per-instrument volume(intensity) sliders**  
+- **Echo slider** for additional effects  
+- All changes auto-update while playing.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### **3. JSON Save & Load System**
+Users can:
+- **Save** their current config which stores all sliders/toggles in JSON  
+- **Load** it loads JSON config saved in the textbox under it and restores all settings  
+- Useful for presets and to experiment things or to suddenly transition to an set of effects
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### **4. Visualisation**
+A **A D3-powered gain graph that updates in real-time while the song plays.**
 
-### `npm test`
+## **How It Works (High-Level Overview)**
+1. **React state** stores musical parameters:  
+   `cpm`, `volume`, `s1`, `d1`, `d2`, `s1Vol`, `echo`, etc.
+2. `processSongText()` replaces placeholders inside the Strudel tune:  
+   ```
+   <s1>, <d1>, <d2>, <cpm>, <volume>, {volumeS1}, <echo>, etc
+   ```
+   Every time something changes, the code is regenerated, I have such options for everything that needs to change in the strudel repl
+3. StrudelMirror evaluates the processed code and plays the audio.
+4. The DJ Controls panel updates the usestates in app.js and on their change the song updates immediately using an useEffect().
+5. JSON save/load simply serialises and restores the state.
+6. The useEffect being used, uses a variable isPlaying to reflect changes when playing 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## **Project Structure**
+- all the components are in the components folder with one dedicated css styling file.
+- DJcontrols has all the control panel features like vol, toggle instrument, cpm, etc.
+- PlayButtons have the play and stop buttons.
+- ProcButtons have the preProc and Proc&Play buttons.
+- PreProcessTextarea has the text area for inputting preprocessing text.
+- SoundGraph has the d3 graph reading for log().
+- Everything runs from app.js as the main brain.
+- tunes.js has the strudel tune that we want to play around by default.
 
-### `npm run build`
+## **How to Run**
+```
+npm install
+npm start
+```
+Open:  
+**http://localhost:3000**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## **Author**
+- Hrishikesh Anjaria
+- anjhy002@mymail.unisa.edu.au
