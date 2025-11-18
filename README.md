@@ -67,7 +67,12 @@ Control the tempo of your composition with the speed slider. Adjustments are app
 
 ---
 
-### 7. CRUD Controller
+### 7. Song selector 
+The song selector allow you to view and choose any song that you have saved through the CRUD buttons including add, delete, load and save. 
+
+![alt text](src/images/song_selector.png)
+
+### 8. CRUD Controller
 The CRUD controller helps you manage your songs in local storage.
 
 ![CRUD](src/images/button_song_manager.png)
@@ -78,11 +83,11 @@ The CRUD controller helps you manage your songs in local storage.
   - **Load Song**: Load a song from local storage.  
   - **Delete Song**: Remove a song from local storage.  
   - **Save Song**: Opens the add song modal if the song doesn’t exist yet.  
-- Song selector allows the user to choose a song for saving, loading, or deletion. Duplicate names are displayed with a number indicator.  
+- Song selector allows the user to choose a song for saving, loading, or deletion. Duplicate names are displayed with a number indicator. Before clicking those buttons, you need to find your song in the song selector.
 
 ---
 
-### 8. Panels / Toggles
+### 9. Panels / Toggles
 Panels make it easier to navigate and configure your project.
  ![hidden_toggles](src/images/hidden_toggles.png) 
 
@@ -99,7 +104,7 @@ Panels make it easier to navigate and configure your project.
 - **D3 Graph Panel**: Shows a live bar graph of audio gain. The picture will show in the next section 
 ---
 
-### 9. Graph
+### 10. Graph
 - Provides a live visualization of the music output for a more engaging interface.  
 - Stops updating if the song is not playing or if the volume is muted.  
 - The bar heights change dynamically based on volume.  
@@ -107,9 +112,9 @@ Panels make it easier to navigate and configure your project.
  ![graph](src/images/D3Graph.png)  
 ---
 
-### 10. Alert Messages
+### 11. Alert Messages
 To prevent errors and guide your workflow, the project displays alert messages when necessary. Here are some cases:
-  1. attempting to play a song with an empty text area triggers a notification. 
+  1. Attempting to play a song with an empty text area triggers a notification. 
   ![alert messages](src/images/alerts(empty&playing).png)  
 
   2. Duplicate arpeggiators or selecting effects/instruments without proper text also generate alerts. 
@@ -126,7 +131,7 @@ When using this website to create music, please follow these guidelines for a sm
    Make sure the code in the text box is valid Strudel code. Invalid code will prevent the song from playing.
 
 2. **Text to Process**  
-   Ensure the "Text to Process" textarea contains content. If it’s empty, an alert will notify you to add text after clicking the playback buttons.
+   Ensure the "Text to Process" textarea contains content. If it’s empty, an alert will notify you to add text after clicking the playback buttons. In addition, you must not delete the text during playing or else you will be paid off.
 
 3. **Drums and Song Structure**  
    Avoid deleting the drums block or other essential parts of the text. To create a new drums pattern or a new song, follow the structure provided in the template.
@@ -147,6 +152,7 @@ When using this website to create music, please follow these guidelines for a sm
    The minimum of speed was set at 0.01 to avoiding the bug from the graph when 0 can make the graph run faster instead of stopping.
 
 ## Demonstrate video
+Click on the link to see the Live Demo by Dang Khoa Nguyen --> [Live Demo](https://mymailunisaedu-my.sharepoint.com/my?id=%2Fpersonal%2Fngudy131%5Fmymail%5Funisa%5Fedu%5Fau%2FDocuments%2FWeb%2FAssignment%202%20%2D%20Live%20Demo%20presentation&viewid=7add51ea%2D551f%2D4509%2Db074%2D6bae0c9b8776&source=waffle)
 
 ## Song code from strudel.cc bakery
 Some elements of this project use or are inspired by examples found in the Strudel.cc bakery. In particular:

@@ -43,6 +43,15 @@ export function validateArpeggiators(tuneText) {
     return true; 
   }
   
+// Function check if the text is empty
+export function validateText() {
+    let proc_text = document.getElementById("proc").value;
+    if (proc_text.length === 0) {
+      return false;
+    }
+    return true; 
+  }
+
 export function ProcAndPlay() {
   if (globalEditor != null && globalEditor.repl.state.started == true) {
     console.log(globalEditor)
@@ -56,6 +65,7 @@ export function Proc() {
   if (!validateArpeggiators(proc_text)){
      return;
   } 
+
   let proc_text_replaced = proc_text.replaceAll('<Radio>', currentArp);
   globalEditor.setCode(proc_text_replaced)
 }
@@ -71,7 +81,7 @@ export default function StrudelDemo() {
   const [volume, setVolumeState] = useState(1); 
 
   // Variable to handle the change of the speed.
-  const [speed, setSpeed] = useState(0.5); 
+  const [speed, setSpeed] = useState(1); 
 
   // Variable to save text, set up stranger_tune initially.
   const [text, setText] = useState(stranger_tune);

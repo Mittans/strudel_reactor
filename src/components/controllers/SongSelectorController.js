@@ -36,9 +36,9 @@ export function SongSelectorController({
 
         if (savedItem) {
         setText(JSON.parse(savedItem));
-        alert("Loaded from local storage");
+        alert("Loaded the sone from local storage");
         } else {
-        alert("No saved text found");
+        alert("No saved song found");
         }
     };
 
@@ -48,9 +48,9 @@ export function SongSelectorController({
         const deletedItem = localStorage.getItem(song);
         if (deletedItem) {
             localStorage.removeItem(song);
-            alert("remove from local storage");
+            alert("remove the song from local storage");
         } else {
-            alert("No deleted item found");
+            alert("No song is found to delete");
         }
 
         window.location.reload(); 

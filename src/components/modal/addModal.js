@@ -27,7 +27,7 @@ export default function AddModal(props){
         } else {
             localStorage.setItem(songName, JSON.stringify(props.text));
         }
-        alert("Saved to local storage");
+        alert("Saved song to local storage");
     };
 
     return (

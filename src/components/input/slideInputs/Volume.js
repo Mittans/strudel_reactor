@@ -39,7 +39,7 @@ export function Volume({text, updateEditor, volume, setVolumeState}) {
                 onChange={handleVolumeChange}
                 className="w-48 accent-yellow-500"
             />
-            <span className="ml-2 text-yellow-500">{Math.round(volume * 100)}%</span>
+            <span className="ml-2 text-yellow-500 font-bold">{Math.round(volume * 100)}%</span>
         </div>
     );
 }
