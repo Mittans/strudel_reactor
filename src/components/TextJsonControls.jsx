@@ -4,7 +4,7 @@ export default function TextJsonControls({ procText, onLoadText }) {
   //hidden file input (for loading JSON)
   const fileInputRef = useRef(null);
 
-  //save only the Strudel code text as JSON
+  //save only the strudel code text as JSON
   const handleSaveText = () => {
     const preset = { procText };
     const json = JSON.stringify(preset, null, 2);

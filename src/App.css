@@ -1,45 +1,81 @@
-
 :root {
-  --bg: #0b0e14;
+  --bg: #1a1c1f;           
   --panel: #111418;
   --panel-2: #0d1014;
   --text: #e8e9ef;
   --muted: #9da5b4;
-  --border: #1e232c;
-  --accent: #8b5cf6;   
-  --accent2:#22c55e;   
+  --border: #262a32;      
+  --accent: #a78bfa;       
+  --accent-glow: rgba(167, 139, 250, 0.5);
+  --accent2: #22c55e;
 }
 
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+}
 
-html, body { background: var(--bg); color: var(--text); margin: 0; }
 * { box-sizing: border-box; }
 
-.app-root { max-width: 1200px; margin: 0 auto; padding: 20px 26px; }
+.app-root {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 26px;
+}
 
-.app-header { text-align: center; margin-bottom: 14px; }
-.app-title  { font-size: clamp(30px,3vw,46px); font-weight: 700; color: var(--accent); margin: 0; }
+.app-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.app-title {
+  font-size: clamp(38px, 4vw, 60px);
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 1px;
+
+  /* text shadow to make it pop hehe */
+  text-shadow:
+    0 0 8px var(--accent-glow),
+    0 0 16px var(--accent-glow),
+    0 0 32px var(--accent-glow);
+}
 
 .panel {
   background: var(--panel);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px;
+  border-radius: 12px;
+  padding: 14px;
 }
 
-.control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.control-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
 
-label, .form-label { color: var(--muted); font-size: .9rem; }
+label, .form-label {
+  color: var(--muted);
+  font-size: .9rem;
+}
+
 .form-control, .form-select {
-  background: var(--panel-2); color: var(--text);
-  border: 1px solid var(--border); border-radius: 8px;
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
 }
-.form-control:focus, .form-select:focus { border-color: var(--accent); outline: none; }
 
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  outline: none;
+}
 
-
-/* d3 stuff */
+/* d3 styling stuff */
 .d3-panel {
-  border: 1px solid rgba(99, 102, 241, 0.6);
+  border: 1px solid rgba(167, 139, 250, 0.4);
   border-radius: 8px;
   padding: 6px;
   background: transparent;
@@ -49,4 +85,3 @@ label, .form-label { color: var(--muted); font-size: .9rem; }
 .d3-axis line, .d3-axis path { stroke: var(--border); }
 .d3-grid .tick line { stroke: rgba(255, 255, 255, 0.06); }
 .d3-title { fill: var(--muted); font-weight: 600; font-size: 12px; }
-

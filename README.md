@@ -69,4 +69,27 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-testing 1212
+---Controls
+Play: Starts the Strudel code
+Stop: Stops the audio
+Editor: Where you write your Strudel pattern
+CPM Slider: Changes the tempo (cycles per minute)
+Volume Slider: Controls volume and drives the live graph
+LPF Select: Applies a low-pass filter option
+Save Text: Saves your Strudel code as a JSON file
+Load Text: Loads Strudel code from a JSON file
+Live Graph: Shows real-time audio/volume activity
+
+---Some Notes
+Audio only begins after your first click due to browser rules
+Controls update instantly while the music is playing
+After loading a JSON file, press Play again to hear it
+
+---Features
+Audio-reactive D3 graph
+Real-time control updates
+JSON save/load system
+LPF filter control
+
+Unlisted Youtube Video of Demo
+https://youtu.be/saSV_3TucRY

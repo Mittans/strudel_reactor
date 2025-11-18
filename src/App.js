@@ -95,7 +95,7 @@ export default function StrudelDemo() {
 
 const fileInputRef = useRef(null);
 
-// Save only the Strudel code text
+//save only the Strudel code text
 const handleSaveText = () => {
   const preset = { procText };
   const json = JSON.stringify(preset, null, 2);
@@ -110,7 +110,7 @@ const handleSaveText = () => {
   URL.revokeObjectURL(url);
 };
 
-// Trigger file input
+//trigger file input
 const handleLoadClick = () => {
   if (fileInputRef.current) {
     fileInputRef.current.value = ""; // allow reloading same file
@@ -144,7 +144,7 @@ const handlePresetFileChange = (e) => {
 return (
   <div className="app-root">
     <header className="app-header container-fluid">
-      <h1 className="app-title">Strudel Demo</h1>
+      <h1 className="app-title">Web Tech Beats</h1>
     </header>
 
     <main className="app-main container-fluid">
