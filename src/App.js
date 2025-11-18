@@ -26,16 +26,23 @@ export default function StrudelDemo() {
     const hasRun = useRef(false);
     
     const [songText, setSongText] = useState(stranger_tune);
+    // Current CPM
     const [cpm, setCpm] = useState(140);
+    // Keyshift
     const [keyShift, setKeyShift] = useState(0);
+    // Track song playing statement
     const [isPlaying, setIsPlaying] = useState(false);
+    // Global volume 
     const [masterVolume, setMasterVolume] = useState(1);
+    // Track toggle
     const [tracksEnabled, setTracksEnabled] = useState({
         bass: true,
         arp: true,
         drums: true,
         drums2: true,
     });
+
+    // Effect chain string
     const [effectChain, setEffectChain] = useState("");
 
     const handlePlay = () => {
@@ -48,13 +55,27 @@ export default function StrudelDemo() {
         setIsPlaying(false);
     }
 
+    // Toggle a specific track 
     const handleToggleTrack = (name, enabled) => {
         setTracksEnabled((prev) => ({ ...prev, [name]: enabled }));
     };
 
+    // Export current Strudel parameters into a JSON file
     const handleSaveJson = () => {
-        const settingsObject = { cpm, keyShift, masterVolume, tracksEnabled, songText };
+        // Get real time song string
+        const processed = songText
+            .replaceAll("<cpm>", cpm.toString())
+            .replaceAll("<keyshift>", keyShift.toString())
+            .replaceAll("<volume>", masterVolume.toString())
+            .replaceAll("<gain_bass>", tracksEnabled.bass ? "1" : "0")
+            .replaceAll("<gain_arp>", tracksEnabled.arp ? "1" : "0")
+            .replaceAll("<gain_drums>", tracksEnabled.drums ? "1" : "0")
+            .replaceAll("<gain_drums2>", tracksEnabled.drums2 ? "1" : "0")
+            .replaceAll("<effect_chain>", effectChain ? `.${effectChain}` : "");
 
+        // All configurable settings
+        const settingsObject = { cpm, keyShift, masterVolume, tracksEnabled, processed };
+        // Convert obj to download file
         const jsonBlob = new Blob([JSON.stringify(settingsObject, null, 2)], {
             type: "application/json"
         });
@@ -67,6 +88,7 @@ export default function StrudelDemo() {
         URL.revokeObjectURL(jsonUrl);
     };
 
+    // Read json file and restore settings
     const handleLoadJson = (event) => {
         const selectedFile = event.target.files[0];
         if (!selectedFile) return;
@@ -90,7 +112,7 @@ export default function StrudelDemo() {
         };
         fileReader.readAsText(selectedFile);
     };
-
+    // Update effect chain string
     const handleEffectChange = (newEffectChain) => {
         setEffectChain(newEffectChain);
     };

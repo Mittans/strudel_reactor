@@ -20,6 +20,7 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
     const muteArp = !tracksEnabled?.arp;
     const muteDrums = !tracksEnabled?.drums;
     const muteDrums2 = !tracksEnabled?.drums2;
+
     // Effects State
     const [enableReverb, setEnableReverb] = useState(false);
     const [reverbAmount, setReverbAmount] = useState(0.3);
@@ -122,6 +123,8 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         }
     }, [enableReverb, enableDelay, enableDistortion, enableLowPass, enableHighPass, enableChorus, enableWow,enableMasterFx]);
 
+
+    // All handle session
     const handleCpmChange = (e) => {
         let value = e.target.valueAsNumber;
         if (Number.isNaN(value)) value = 140;
@@ -190,6 +193,8 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         setEnableMasterFx(enabled); setEnableReverb(enabled); setEnableDelay(enabled); setEnableDistortion(enabled);
         setEnableLowPass(enabled); setEnableHighPass(enabled); setEnableChorus(enabled); setEnableWow(enabled);
     };
+
+    // Effect lists for simplify
     const effects = [
         { key: "reverb", label: "Reverb", enable: enableReverb, amount: reverbAmount, min: 0, max: 1, step: 0.01,
             onToggle: handleEnableReverb, onAmountChange: handleReverbAmountChange },
@@ -207,6 +212,8 @@ function DJControls({ onCpmChange, cpm, onKeyShiftChange, keyShift, volume, onVo
         { key: "wow", label: "WOW", enable: enableWow, amount: wowAmount, min: 0, max: 10, step: 0.1,
             onToggle: handleEnableWow, onAmountChange: handleWowAmountChange}
     ];
+
+    // Effect setter list for simplify
     const effectSetters = {
         reverb: { setEnable: setEnableReverb, setAmount: setReverbAmount },
         delay: { setEnable: setEnableDelay, setAmount: setDelayAmount },

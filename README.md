@@ -1,70 +1,102 @@
-# Getting Started with Create React App
+# 25SP5 INFT2064 Web Tech React Assignment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Student: Gaogang Xing  
+ID: 110426091  
+Username: xingy001
 
-## Available Scripts
+## Controls Overview
+Below is a list of all features in this project.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+### 1. DJControls.jsx
+Global feature component. Holds all local state and central handlers, and coordinates updates for all DJ sub-components. All files in the DJcomponents folder are referenced here.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 2. CPMControls.jsx
+Controls the global CPM value. Uses a controlled input number to adjust CPM speed and pushes updates upward to the parent. Also includes quick CPM change buttons.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 3. KeyShiftControl.jsx
+Controls the bassline and ARP track key values. Updates add() in the song text to modify the key. Provides quick-select buttons to change keys.
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 4. VolumeControl.jsx
+Controls the global post-volume value. Implemented with a slider that adjusts gain and passes the updated level to Strudel output handlers.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 5. TrackControls.jsx
+Handles per-track toggles such as instrument on/off. Uses button groups and state flags mapped to tag replacements. In tunes.js, the helper method muteIf() determines whether a track is enabled.
 
-### `npm run eject`
+---
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 6. EffectControls.jsx
+Master effect panel containing Reverb, Delay, Distortion, LPF, HPF, Chorus, and Wow. Each effect uses controlled checkboxes and sliders and dispatches values upward.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### 7. SettingControls.jsx
+Uses dropdown buttons to apply sound-effect presets. Provides different preset styles to quickly change overall effect settings.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+---
 
-## Learn More
+### 8. D3Graph.jsx
+Displays a real-time D3 graph driven by Strudel log() values. Listens to the streaming data array and re-renders the chart continuously. Mainly displays drum-track gain() changes.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### 9. D3GraphScope.jsx
+Displays live track statements while the song is playing. A scoped oscilloscope-style graph focusing on waveform visualization. Updates on each audio tick via requestAnimationFrame.
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### 10. JsonSave and JsonLoad
+Saves and restores song settings as a JSON file. Implemented using JSON.stringify() and JSON.parse() tied to buttons.
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### 11. PreprocessTextarea.jsx
+Displays the preprocess text area following the course implementation structure.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### 12. PlayButton.jsx
+Controls starting and stopping of the song playback.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### 13. App.css
+Defines all UI styling rules including theme colors, layout spacing, control visuals, and responsive design. Loaded globally for consistent appearance.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 14. SwitchTheme
+Controls theme switching. Default is dark mode; can toggle between light and dark themes.
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## AI Usage Guidelines
+Declaration of AI-generated content used in this project.
+
+### 1. SettingControls Preset List
+AI was used to generate initial preset strings for sound effects.
+
+- Location: SettingsControls.jsx, line 23 to line 185  
+- Tool: OpenAI ChatGPT 5.0  
+- Input prompt: "Based on my effect functions, give me preset values that resemble realistic music styles."  
+- Output example: const PRESETS = {
+                    pop: [
+                        {
+                            name: "Bright Studio",
+                            reverb: { enable: true, amount: 0.30 },
+                            delay: { enable: true, amount: 0.18 },
+                            distortion: { enable: false, amount: 0.10 },
+                            lowpass: { enable: true, freq: 6200 },
+                            highpass: { enable: true, freq: 180 },
+                            chorus: { enable: true, amount: 0.28 },
+                            wow: { enable: false, amount: 0.5 }
+                        },......

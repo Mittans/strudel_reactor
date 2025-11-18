@@ -115,7 +115,7 @@ export default function D3Graph() {
 
     return (
         <div className="d3-panel">
-            <h5 className="d3-title">D3 Graph Gain</h5>
+            <h5 className="d3-title">Drums Gain</h5>
             <svg ref={scopeSvgRef} width="100%" height="200"></svg>
         </div>
     );

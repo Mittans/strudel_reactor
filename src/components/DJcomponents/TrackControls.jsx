@@ -6,6 +6,7 @@ function TrackControls({ muteBass, muteArp, muteDrums, muteDrums2, handleToggle 
             <hr className="my-3" />
             <h6><strong>Instrument Tracks</strong></h6>
             <div className="mb-3">
+                {/* Bassline Track */}
                 <div className="form-check">
                     <input className="form-check-input master-fx-checkbox" type="checkbox" id="s1" checked={!muteBass}
                         onChange={(e) => handleToggle("bass", e.target.checked)} />
@@ -13,6 +14,7 @@ function TrackControls({ muteBass, muteArp, muteDrums, muteDrums2, handleToggle 
                         Bassline
                     </label>
                 </div>
+                {/* Arp Track  */}
                 <div className="form-check">
                     <input className="form-check-input master-fx-checkbox" type="checkbox" id="a1" checked={!muteArp}
                         onChange={(e) => handleToggle("arp", e.target.checked)} />
@@ -20,6 +22,7 @@ function TrackControls({ muteBass, muteArp, muteDrums, muteDrums2, handleToggle 
                         Main Arp
                     </label>
                 </div>
+                {/* Drums Track */}
                 <div className="form-check">
                     <input className="form-check-input master-fx-checkbox" type="checkbox" id="d1" checked={!muteDrums}
                         onChange={(e) => handleToggle("drums", e.target.checked)} />
@@ -27,6 +30,7 @@ function TrackControls({ muteBass, muteArp, muteDrums, muteDrums2, handleToggle 
                         Drums
                     </label>
                 </div>
+                {/* Drums2 Track */}
                 <div className="form-check">
                     <input className="form-check-input master-fx-checkbox" type="checkbox" id="d1" checked={!muteDrums2}
                         onChange={(e) => handleToggle("drums2", e.target.checked)} />

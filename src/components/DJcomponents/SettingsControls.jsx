@@ -19,7 +19,7 @@ function SettingsControls({ effectSetters }) {
         });
     };
 
-
+    // Effect settings
     const PRESETS = {
         pop: [
             {
@@ -264,20 +264,6 @@ function SettingsControls({ effectSetters }) {
                         ))}
                     </ul>
                 </div>
-
-
-                {/*<div className="btn-group me-2" role="group" aria-label="Custome Style">*/}
-                {/*    <button type="button" className="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">*/}
-                {/*        Custome*/}
-                {/*    </button>*/}
-                {/*    <ul className="dropdown-menu">*/}
-                {/*        <li><button className="dropdown-item" type="button">Setting 1</button></li>*/}
-                {/*        <li><button className="dropdown-item" type="button">Setting 2</button></li>*/}
-                {/*        <li><button className="dropdown-item" type="button">Setting 3</button></li>*/}
-                {/*    </ul>*/}
-                {/*</div>*/}
-
-
             </div>
         </>
     );
