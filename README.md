@@ -1,70 +1,123 @@
-# Getting Started with Create React App
+﻿# Midnight in Motion - React + Strudel Music Visualiser
+This project showcases an interactive music performance tool built using React, Strudel, and D3.js. 
+It combines real‑time audio manipulation with a dynamic UI, JSON state handling, preprocessing logic, and a live gain visualisation graph. 
+The entire experience is designed around responsiveness, interactivity, and a stylised cyber‑aesthetic to enhance user engagement. 
+The song used in this project, titled *Midnight in Motion*, is an original composition created specifically for this assignment.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## How to Run This Project
 
-## Available Scripts
+### 1. Install all dependencies
+```bash
+npm install
+```
 
-In the project directory, you can run:
+### 2. Start the development server
+```bash
+npm start
+```
 
-### `npm start`
+http://localhost:3000
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+# Controls — What They Do
+### Volume Slider
 
-### `npm test`
+Controls the master volume of the entire track live.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Speed (CPM) Input
 
-### `npm run build`
+Accepts values 60–200.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+If the user enters an invalid value, a warning appears and it resets back to 120.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Instrument Toggles
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Each toggle directly enables or disables a section of the composition:
 
-### `npm run eject`
+Drums1 – Main 808 drum pattern
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Drums2 – Tech/industrial filler layer
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Bass – Supersaw bassline
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Melody – Arpeggiated supersaw hook
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Guitar – Plucked strumming pattern stack
 
-## Learn More
+### Playback Buttons
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Play – Plays the fully processed Strudel code
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Stop – Stops all audio instantly
 
-### Code Splitting
+Preprocess – Loads raw code into the editor
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Proc & Play – Preprocess + immediately play
 
-### Analyzing the Bundle Size
+Save & Load Settings (JSON)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Saves the full UI state (toggles, CPM, volume) as JSON
 
-### Making a Progressive Web App
+Loads those JSON settings back into the UI
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Hotkeys
 
-### Advanced Configuration
+K → Play
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+L → Stop
 
-### Deployment
+H → Toggle Drums1
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+J → Toggle Bass
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Quirks & Usage Guidelines
+- CPM validates on blur.
+- D3 updates every 400ms.
+- JSON stored locally.
+
+---
+
+# D3 Graph Feature
+Real‑time gain visualiser using Strudel `.log()`.
+
+---
+
+# JSON Handling Feature
+Used for Save/Load presets + UI JSON viewer.
+
+---
+
+# Demonstration Video
+(Add your link)
+
+---
+
+# Song Attribution
+Original composition: **Midnight in Motion**
+
+---
+
+# GIGA HD Bonus Claim
+My goal was to create a track that feels energetic, layered, and reactive to the UI controls, 
+so the song was built from the ground up with React interactivity in mind. 
+I built the beat by experimenting with sounds, rhythms, and melodies until it started feeling fun and energetic.
+
+## Creative Process
+- I started by creating my own drum pattern and adjusting it until it felt right.
+
+- Then I wrote a bassline that matched the rhythm and gave the song a smooth flow.
+
+- The melody came next, where I tried different note shapes until the hook sounded catchy.
+
+- The guitar layer was added last to give the track a warmer texture.
+
+- I kept testing everything with my React controls to make sure turning things on and off actually changed the sound in a noticeable way.
+
+
+---
+
+# Ready for Submission
+

@@ -1,8 +1,10 @@
 ﻿import '../DJControls.css';
 
-
 function DJControls({
-    cpm, onCpmChange, onMessage, setCpm,
+    cpm,
+    onCpmChange,
+    setCpm,
+    onMessage,
     bass, onBassChange,
     melody, onMelodyChange,
     guitar, onGuitarChange,
@@ -10,17 +12,19 @@ function DJControls({
     drums2, onDrums2Change,
     onSave, onLoad
 }) {
+
+    // When the user leaves the CPM box, validate the value.
+    // If it's outside 60–200, reset it to 120 and show a message.
     const handleCpmBlur = () => {
         const num = Number(cpm);
 
-        // If empty or not a number or outside range resets and shows a message
         if (!num || num < 60 || num > 200) {
             onMessage("Enter CPM value between 60 and 200");
             setCpm(120);
             return;
         }
 
-        // If valid, lock in the correct number (in case user typed "120")
+        // If valid, keep the entered number.
         setCpm(num);
     };
 
@@ -34,13 +38,11 @@ function DJControls({
                 <div id="dj-cpm-box">
                     <span id="cpm-label">setCPM</span>
                     <input
-                        type="text"
                         id="cpm-input"
+                        type="text"
                         value={cpm}
                         onChange={onCpmChange}
                         onBlur={handleCpmBlur}
-                        className="form-control"
-                        placeholder="Enter CPM (60 to 200)"
                         aria-label="cpm"
                         aria-describedby="cpm_label"
                         min="60"
@@ -51,28 +53,14 @@ function DJControls({
 
                 <button id="save-btn" onClick={onSave}>Save Settings</button>
                 <button id="load-btn" onClick={onLoad}>Load Settings</button>
-            </div>
 
-            {/* VOLUME */}
-            {/*<div id="volume-section">*/}
-            {/*    <label id="volume-label">*/}
-            {/*        Volume ({Math.round(volume * 100)}%)*/}
-            {/*    </label>*/}
-            {/*    <input*/}
-            {/*        type="range"*/}
-            {/*        id="volume-slider"*/}
-            {/*        min="0"*/}
-            {/*        max="1"*/}
-            {/*        step="0.01"*/}
-            {/*        value={volume}*/}
-            {/*        onChange={onChange}*/}
-            {/*    />*/}
-            {/*</div>*/}
+            </div>
 
             {/* --- Toggle Buttons --- */}
             <div id="dj-toggle-box">
                 <div id="dj-toggle-row">
 
+                    {/* Each item is a checkbox with a matching icon */}
                     <div className="dj-item">
                         <input type="checkbox" id="drums1" checked={drums1} onChange={onDrums1Change} />
                         <label htmlFor="drums1">Drums1</label>

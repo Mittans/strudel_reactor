@@ -1,12 +1,24 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Baloo+2:wght@600&family=Poppins:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Shojumaru&display=swap');
-/*https://i.pinimg.com/originals/43/ca/d1/43cad165e4d87e1f20747e68cf1dd6f6.gif */
 
+/* Full-screen animated cyberpunk background */
 body {
     background: url('https://i.pinimg.com/originals/43/ca/d1/43cad165e4d87e1f20747e68cf1dd6f6.gif') no-repeat center center fixed;
     background-size: cover;
 }
 
+/* Glow animation applied to the main title */
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 0 0 10px #00ffff, 0 0 40px #ff00ff;
+    }
+
+    50% {
+        text-shadow: 0 0 20px #ff8b00, 0 0 100px #00ffff;
+    }
+}
+
+/* Page layout reset + allow page scrolling */
 html, body {
     overflow-x: hidden; 
     overflow-y: auto; 
@@ -15,6 +27,7 @@ html, body {
     height: 100%;
 }
 
+/* roll canvas spacing + size */
 #roll {
     display: block;
     margin: 0 auto -3rem auto !important; 
@@ -23,16 +36,19 @@ html, body {
     overflow: hidden;
 }
 
+/* Make all core text/components readable on dark background */
 main, label, span, p, input, .volume-container, .col-md-4, .col-md-6, nav, .row {
     color: white;
 }
 
+/* Adds a subtle blur overlay behind all content */
 body::before {
     position: fixed;
     backdrop-filter: blur(1px);
     z-index: -1;
 }
 
+/* Main neon title styling */
 #h2 {
     font-family: 'Shojumaru', cursive;
     text-transform: uppercase;
@@ -45,318 +61,31 @@ body::before {
     margin-bottom: 20px;
 }
 
-/*.btn-group {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-    margin: 2rem;
-}
-
-nav {
-    display: flex;
-    justify-content: center;
-    margin-left: -15%;
-    align-items: center;
-}
-
-#play, #stop, #process, #process_play {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: dashed;
-    background: #0e0e0e;
-    color: #00ffcc;
-    cursor: pointer;
-    box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
-    margin: 8px;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-#play:hover, #stop:hover, #process:hover, #process_play:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 40px rgba(255, 0, 0, 0.8);
-}
-
-#play:active, #stop:active, #process:active, #process_play:active {
-    transform: scale(0.95);
-}
-
-#play::before {
-    content: "▶️";
-}
-
-#stop::before {
-    content: "⏹️";
-}
-
-#process::before {
-    content: "🔄";
-}
-
-#process_play::before {
-    content: "🔁";
-}
-
-#play, #stop, #process, #process_play {
-    font-size: 0;
-}
-
-#play::before, #stop::before, #process::before, #process_play::before {
-    font-size: 28px;
-    display: inline-block;
-    line-height: 50px;
-}*/
-
-/*.volume-container {
-    color: #ff4fe6 !important;
-    font-weight: 700;
-    position: relative !important;
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.4rem;
-    font-weight: 800;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    top: -28rem !important;
-    margin-bottom: 1rem !important;
-    margin-left: -2.5rem;
-    z-index: 10 !important;
-}
-
-#volume_range {
-    appearance: none;
-    width: 90%;
-    margin-left: 12%;   
-    height: 12px;
-    background: linear-gradient(90deg, #00e676 var(--fill, 100%), #e0e0e0 0%);
-    background: #00e676;
-    border-radius: 20%;
-    cursor: pointer;
-    box-shadow: 0 0 20px #00e676;
-    transition: all 0.25s ease;
-}*/
-
-/* Title Glow Animation */
-@keyframes titleGlow {
-    0%, 100% {
-        text-shadow: 0 0 10px #00ffff, 0 0 40px #ff00ff;
-    }
-
-    50% {
-        text-shadow: 0 0 20px #ff8b00, 0 0 100px #00ffff;
-    }
-}
-
+/* Apply the animated glow effect */
 h2 {
     animation: titleGlow 2s ease-in-out infinite alternate;
 }
 
+/* Editor + preprocess textbox layout */
 #proc, textarea.form-control {
     height: 40vh;
     width: 70%;
     overflow-y: auto;
 }
 
+/* Strudel editor container */
 #editor {
     max-height: 40vh;
     width: 70%;
     overflow-y: auto;
 }
 
+/* roll vertical sizing */
 #roll {
     height: 45px;
 }
 
-/*.dj-toggles {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: flex-start;
-    gap: 20px;
-    flex-wrap: nowrap;
-    margin-top: 80px;
-}
-
-.dj-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(0, 0, 0, 0.6);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 15px;
-    padding: 10px 15px;
-    width: 110px;
-    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-    backdrop-filter: blur(6px);
-    transition: all 0.3s ease;
-}
-
-.dj-item:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.8);
-}
-
-#drums1, #drums2, #bass, #melody, #guitar {
-    appearance: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 6px;
-    border: 2px solid #ff3b3b;
-    background: rgba(0, 0, 0, 0.3);
-    cursor: pointer;
-    transition: all 0.25s ease-in-out;
-    margin-bottom: 8px;
-}
-
-#drums1:checked {
-    background: radial-gradient(circle, #ff3030, #ff8080);
-    box-shadow: 0 0 12px #ff0000;
-}
-
-#drums2:checked {
-    background: radial-gradient(circle, #ff3030, #ff8080);
-    box-shadow: 0 0 12px #ff0000;
-}
-
-#bass:checked {
-    background: radial-gradient(circle, #00bfff, #66e0ff);
-    box-shadow: 0 0 12px #00ffff;
-}
-
-#melody:checked {
-    background: radial-gradient(circle, #ff69b4, #ffb6c1);
-    box-shadow: 0 0 12px #ff69b4;
-}
-
-#guitar:checked {
-    background: radial-gradient(circle, #ffaa00, #ffdd55);
-    box-shadow: 0 0 12px #ffcc00;
-}
-
-label[for="drums1"],
-label[for="drums2"],
-label[for="bass"],
-label[for="melody"],
-label[for="guitar"] {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.5rem;
-    color: lightcoral;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    margin-left: 1.5rem;
-    text-shadow: 0 0 10px #ff3b3b;
-}
-
-label[for="drums1"]::after {
-    content: "🥁";
-    font-size: 50px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    padding: 5px;
-}
-
-label[for="drums2"]::after {
-    content: "🎧";
-    font-size: 50px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    padding: 5px;
-}
-
-label[for="bass"]::after {
-    content: "🎸";
-    font-size: 50px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    padding: 5px;
-}
-
-label[for="melody"]::after {
-    content: "🎵";
-    font-size: 50px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    padding: 5px;
-}
-
-label[for="guitar"]::after {
-    content: "🎶";
-    font-size: 50px;
-    background: rgba(0,0,0,0.3);
-    border-radius: 10px;
-    padding: 5px;
-}
-
-#drums1:checked ~ label[for="drums1"]::after,
-#drums2:checked ~ label[for="drums2"]::after {
-    box-shadow: 0 0 15px #ff0000;
-}
-
-#bass:checked ~ label[for="bass"]::after {
-    box-shadow: 0 0 15px #00ffff;
-}
-
-#melody:checked ~ label[for="melody"]::after {
-    box-shadow: 0 0 15px #ff69b4;
-}
-
-#guitar:checked ~ label[for="guitar"]::after {
-    box-shadow: 0 0 15px #ffcc00;
-}
-
-nav {
-    margin-bottom: 1rem !important;
-    padding-bottom: 0 !important;
-}*/
-
-/*.graph-wrapper {
-    margin-top: -10rem;
-    transform: translateX(36px);
-    display: flex;
-}
-
-.graph-wrapper svg path {
-    stroke-width: 3.5px !important; 
-    stroke-linecap: round !important;
-    filter: drop-shadow(0 0 6px #00ffcc); 
-}*/
-
-/*.input-group {
-    margin-top: 0.5rem !important;
-    margin-bottom: 0.5rem !important;
-    transform: translateX(36px);
-    padding: 2px !important;
-}
-
-.dj-toggles {
-    margin-top: 0.5rem !important;
-    margin-bottom: 0 !important;
-    padding: 0 !important;
-    justify-content: space-evenly;
-}
-
-#setCPMBox {
-    background: rgba(0, 0, 0, 0.45);
-    color: #00ffe7;
-    font-weight: 600;
-    font-size: 1.4rem;
-    border: 3px solid #00ffe7;
-    border-radius: 5px;
-    padding: 10px 15px;}*/
-
-
-/*#graphTitle {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 1.4rem;
-    font-weight: bolder;
-    text-shadow: 0 0 20px #ff4f4f;
-    margin-top: 7px;
-    margin-bottom: 3px;
-}*/
-
+/* JSON viewer box (for saved settings) */
 .json-box {
     background: rgba(0, 0, 0, 0.65);
     border: 2px solid #ff4fe6;
@@ -371,6 +100,7 @@ nav {
     text-shadow: 0 0 5px #ff4fe6;
 }
 
+/* Toggle button for showing/hiding JSON state */
 .json-toggle-btn {
     background: #111;
     color: #ff4fe6;
@@ -383,12 +113,14 @@ nav {
     text-shadow: 0 0 4px #ff4fe6;
 }
 
+/* Hover effect for JSON toggle */
 .json-toggle-btn:hover {
     background: #ff4fe6;
     color: black;
     text-shadow: none;
 }
 
+/* Floating message box for warnings + save/load notifications */
 .message-box {
     position: fixed;
     top: 15px;

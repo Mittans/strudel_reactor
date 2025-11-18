@@ -5,11 +5,15 @@ import '../Graph.css';
 
 export default function Graph() {
 
+    // Stores the latest gain values coming from Strudel console output
     const [logArray, setLogArray] = useState([]);
+
+    // Small limits to keep the graph lightweight and responsive
     const maxItems = 50;
     const maxValue = 1.0;
-    const updateInterval = 400;
+    const updateInterval = 400; // graph refresh rate
 
+    // Extracts "gain:x" from the logged audio message and converts it to a number
     function LogToNum(input) {
         if (!input) return 0;
         const parts = input.split(/\s+/);
@@ -22,6 +26,7 @@ export default function Graph() {
         return 0;
     }
 
+    // Poll Strudel logs every ~400ms and store only the latest 50 values
     useEffect(() => {
         const timer = setInterval(() => {
             const data = getD3Data();
@@ -38,27 +43,28 @@ export default function Graph() {
         return () => clearInterval(timer);
     }, []);
 
- 
+    // Draws the D3 graph every time logArray updates
     useEffect(() => {
         const svg = d3.select("#d3graph");
-        svg.selectAll("*").remove();
+        svg.selectAll("*").remove(); // clear old render
 
         const w = 600;
         const h = 260;              
         const margin = 20;
 
+        // X axis moves left→right as new data arrives
         const xScale = d3.scaleLinear()
             .domain([0, logArray.length - 1])
             .range([margin + 30, w - margin]);
 
+        // Y axis inverted so higher gain appears higher visually
         const yScale = d3.scaleLinear()
             .domain([maxValue, 0])     
             .range([margin + 55, h - margin - 35]);
 
-
-
         const chart = svg.append("g");
 
+        // Graph title
         chart.append("text")
             .attr("x", w / 2)
             .attr("y", 32)
@@ -71,6 +77,7 @@ export default function Graph() {
             .text("Midnight in Motion – Live Gain Visualizer");
 
 
+        // Background panel with neon glow
         chart.append("rect")
             .attr("x", 10)
             .attr("y", 45)
@@ -83,11 +90,11 @@ export default function Graph() {
             .attr("stroke-width", 2.5)
             .style("filter", "drop-shadow(0 0 8px #ff3b3b)");
 
+        // Left-side Y axis (values from 0 to 1.0)
         const yAxis = d3.axisLeft(yScale)
             .ticks(5)
             .tickSize(3)
             .tickFormat(d3.format(".1f"));
-
 
         chart.append("g")
             .attr("transform", `translate(${margin + 30},0)`)
@@ -96,6 +103,7 @@ export default function Graph() {
             .call(g => g.selectAll("line").attr("stroke", "#00ffc8"))
             .call(g => g.selectAll(".domain").attr("stroke", "#00ffc8"));
 
+        // Draw audio gain curve
         const numericData = logArray.map(LogToNum);
 
         chart.append("path")

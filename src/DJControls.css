@@ -1,4 +1,5 @@
-﻿#dj-controls-container {
+﻿/* DJ CONTROLS CSS */
+#dj-controls-container {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -108,7 +109,6 @@
     margin-top: 20px;
 }
 
-
 .dj-toggle {
     text-align: center;
     font-family: 'Orbitron';
@@ -126,8 +126,7 @@
     transition: 0.2s;
 }
 
-
-/* BOX BEHIND THE 5 DJ TOGGLES */
+/* Box behind the 5 toggles */
 #dj-toggle-box {
     width: 96%;
     max-width: 900px;
@@ -140,7 +139,7 @@
     backdrop-filter: blur(6px);
 }
 
-/* KEEP THEM IN ONE HORIZONTAL ROW */
+/* Keep them in one horizontal line */
 #dj-toggle-row {
     display: flex;
     justify-content: space-evenly;
@@ -148,7 +147,7 @@
     flex-wrap: nowrap;
 }
 
-/* INDIVIDUAL TOGGLE ITEM */
+/* Individual toggle item */
 .dj-item {
     display: flex;
     flex-direction: column;
@@ -156,7 +155,7 @@
     gap: 6px;
 }
 
-/* TOGGLE BOXES */
+/* Toggle boxes */
 #drums1, #drums2, #bass, #melody, #guitar {
     appearance: none;
     width: 35px;
@@ -168,7 +167,7 @@
     transition: 0.25s ease;
 }
 
-/* GLOW COLORS */
+/* Glow colors */
 #drums1:checked,
 #drums2:checked {
     background: radial-gradient(circle, #ff3030, #ff8080);
@@ -190,7 +189,7 @@
     box-shadow: 0 0 30px orange;
 }
 
-/* LABELS — SAME FONT, COLOR, GLOW AS BEFORE */
+/* LLabels - styling font, size, color */
 .dj-item label {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.4rem;
@@ -198,7 +197,7 @@
     text-shadow: 0 0 10px #ff4fe6;
 }
 
-/* ICON SIZE FIXED */
+/* Setting icon size */
 .dj-icon {
     font-size: 45px;
     margin-top: 3px;

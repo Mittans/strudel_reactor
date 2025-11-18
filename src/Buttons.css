@@ -1,4 +1,6 @@
-﻿.btn-group {
+﻿/* BUUTONS CSS */
+/* Group all action buttons in a centred horizontal layout */
+.btn-group {
     display: flex;
     justify-content: center;
     gap: 2rem;
@@ -6,6 +8,7 @@
     margin: 2rem;
 }
 
+/* Center the nav container (Play/Stop + Preprocess buttons) */
 nav {
     display: flex;
     justify-content: center;
@@ -13,6 +16,7 @@ nav {
     align-items: center;
 }
 
+/* Circular UI buttons for Play, Stop, Preprocess, Proc&Play */
 #play, #stop, #process, #process_play {
     width: 100px;
     height: 100px;
@@ -26,11 +30,13 @@ nav {
     transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
+/* Slight enlarge + glow when hovering */
 #play:hover, #stop:hover, #process:hover, #process_play:hover {
     transform: scale(1.08);
     box-shadow: 0 0 60px rgba(255, 0, 0, 0.8);
 }
 
+/* Button press animation (slight shrink) */
 #play:active, #stop:active, #process:active, #process_play:active {
     transform: scale(0.95);
 }
@@ -51,10 +57,12 @@ nav {
     content: "🔁";
 }
 
+/* Hide original text completely (we only show icons) */
 #play, #stop, #process, #process_play {
     font-size: 0;
 }
 
+    /* Style the emoji icons so they appear centred and sized nicely */
 #play::before, #stop::before, #process::before, #process_play::before {
     font-size: 28px;
     display: inline-block;

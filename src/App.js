@@ -22,6 +22,7 @@ export default function StrudelDemo() {
 
     const hasRun = useRef(false);
 
+    // Main UI states
     const [songText, setSongText] = useState(stranger_tune);
     const [volume, setVolume] = useState(0.8);
     const [cpm, setCpm] = useState(120);       
@@ -32,18 +33,20 @@ export default function StrudelDemo() {
     const [drums2, setDrums2] = useState(true);
     const [isPlaying, setIsPlaying] = useState(false);
 
+    // Small message box for user feedback
     const [message, setMessage] = useState("");
 
     // JSON UI toggle
     const [showJSON, setShowJSON] = useState(false);
     const [loadedJSON, setLoadedJSON] = useState(null);
 
+    // Helper to show temporary messages
     function showMessage(msg) {
         setMessage(msg);
         setTimeout(() => setMessage(""), 1500);
     }
 
-    // SAVE SETTINGS
+    // Save current settings to localStorage
     function saveSettings() {
         const settings = {
             volume,
@@ -61,6 +64,7 @@ export default function StrudelDemo() {
         setTimeout(() => setMessage(""), 1500);
     }
 
+    // Load saved settings if available
     function loadSettings() {
         const saved = localStorage.getItem("strudelSettings");
         if (!saved) {
@@ -71,6 +75,7 @@ export default function StrudelDemo() {
 
         const settings = JSON.parse(saved);
 
+        // Only apply values that exist (prevents errors)
         if (settings.volume !== undefined) setVolume(settings.volume);
         if (settings.cpm !== undefined) setCpm(settings.cpm);
         if (settings.drums1 !== undefined) setDrums1(settings.drums1);
@@ -86,19 +91,19 @@ export default function StrudelDemo() {
     }
 
 
-    // PLAY
+    // Starts playback by asking Strudel to evaluate the code
     const handlePlay = () => {
         globalEditor.evaluate();
         setIsPlaying(true);
     };
 
-    // STOP
+    // Stops Strudel playback
     const handleStop = () => {
         globalEditor.stop();
         setIsPlaying(false);
     };
 
-    // HOTKEYS
+    // Keyboard shortcuts for quick control
     useEffect(() => {
         function handleKeyPress(e) {
             const key = e.key.toLowerCase();
@@ -113,8 +118,9 @@ export default function StrudelDemo() {
         return () => window.removeEventListener("keydown", handleKeyPress);
     }, []);
 
-    // UPDATE STRUDEL CODE
+    // Updates the Strudel pattern with the current UI settings
     const updateStrudelCode = (text) => {
+        // Replace placeholders inside the tune text
         const processedText = text
             .replaceAll("<volume>", volume)
             .replaceAll("<cpm>", cpm)
@@ -128,29 +134,21 @@ export default function StrudelDemo() {
         globalEditor.evaluate();
     };
 
-    // PREPROCESS ONLY
+    // Sets raw text without injecting settings
     const handlePreprocess = () => {
         globalEditor.setCode(songText);
     };
 
-    // PREPROCESS + PLAY
+    // Preprocess + immediately play
     const handleProcPlay = () => {
         updateStrudelCode(songText);
         globalEditor.evaluate();
     };
 
-    // VOLUME CHANGE
-    const handleVolumeChange = (e) => {
-        const newVolume = e.target.value;
-        setVolume(newVolume);
-
-        if (isPlaying) {
-            updateStrudelCode(songText);
-        }
-    };
-
-    // INITIALISE STRUDEL + ONLY UPDATE WHEN PLAYING
+    // Initialise Strudel editor only once, and update only during playback
     useEffect(() => {
+
+        // First-time initialisation only
         if (!hasRun.current) {
             console_monkey_patch();
             hasRun.current = true;
@@ -183,9 +181,11 @@ export default function StrudelDemo() {
                 },
             });
 
+            // Load default song into the editor panel
             document.getElementById('proc').value = stranger_tune;
             globalEditor.setCode(stranger_tune);
         } else {
+            // Whenever a setting changes WHILE playing, re-evaluate the tune
             if (isPlaying) {
                 updateStrudelCode(songText);
             }
@@ -197,7 +197,7 @@ export default function StrudelDemo() {
         <div>
             <h2 id="h2">Strudel Demo - Midnight in Motion</h2>
 
-            {/* JSON TOGGLE BUTTON */}
+            {/* JSON toggle buttons */}
             <button
                 className="json-toggle-btn"
                 onClick={() => setShowJSON(prev => !prev)}
@@ -205,7 +205,7 @@ export default function StrudelDemo() {
                 {showJSON ? "Hide JSON" : "Show JSON"}
             </button>
 
-            {/* ALWAYS SHOW JSON WHEN TOGGLED */}
+            {/* Always show json when toggled */}
             {showJSON && (
                 <div className="json-box-wrapper d-flex justify-content-center">
                     <pre className="json-box">
@@ -216,7 +216,7 @@ export default function StrudelDemo() {
                 </div>
             )}
 
-            {/* MESSAGE */}
+            {/* Message */}
             {message && <div className="message-box">{message}</div>}
 
             <main>
@@ -237,7 +237,7 @@ export default function StrudelDemo() {
                                 <Buttons onPlay={handlePlay} onStop={handleStop} />
                                 <br />
                             </nav>
-                            {/* PUT VOLUME RIGHT UNDER THE BUTTONS */}
+                            {/* Puts volume under the buttons */}
                             <div id="volume-wrapper">
                                 <label id="volume-label">Volume ({Math.round(volume * 100)}%)</label>
                                 <input
@@ -267,8 +267,8 @@ export default function StrudelDemo() {
                             <div className="dj-wrapper">
                                 <DJControls              
                                     cpm={cpm}
-                                    setCpm={setCpm}
-                                    onCpmChange={(e) => setCpm(e.target.value)}
+                                    onCpmChange={(e) => setCpm(e.target.value)}   
+                                    setCpm={setCpm}                               
                                     onMessage={showMessage}
 
                                     bass={bass}

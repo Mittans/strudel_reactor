@@ -1,15 +1,19 @@
+/* D3 GRAPH CSS */
+/* Wrapper that positions the whole D3 graph */
 .graph-wrapper {
     margin-top: -12rem;
     transform: translateX(36px);
     display: flex;
 }
 
+/* Styling for the actual graph line drawn by D3 */
 .graph-wrapper svg path {
     stroke-width: 3.5px !important;
     stroke-linecap: round !important;
     filter: drop-shadow(0 0 6px #00ffcc);
 }
 
+/* Title above the graph */
 #graphTitle {
     font-family: 'Orbitron', sans-serif;
     font-size: 1.4rem;
