@@ -4,6 +4,7 @@ import Presets from './components/Presets'
 import Repl from './components/Repl'
 import Strudel from './components/Strudel'
 import Graph from './components/Graph'
+import HushControls from './components/HushControls.jsx'
 import tunes from "./assets/tunes.json";
 import { extractControlsFromCode, applyControlsToCode, CONTROL_DEFINITIONS } from './utils/controlDefinitions'
 import console_monkey_patch from './assets/console-monkey-patch'
@@ -20,11 +21,13 @@ function App() {
     const [shouldPlay, setShouldPlay] = useState(false);
     const [shouldStop, setShouldStop] = useState(false);
     const [showGraph, setShowGraph] = useState(false);
-    const [radioValue, setRadioValue] = useState("on");
+    const [hushMap, setHushMap] = useState({});
     const [bpmValue, setBpmValue] = useState(140);
-
+    
     const [activeControls, setActiveControls] = useState([]);
     const [controlValues, setControlValues] = useState({});
+    
+    const replRef = useRef(null);
 
     // Load built-in presets from tunes.json
     const builtInPresets = tunes.presets.map(t => ({
@@ -38,6 +41,11 @@ function App() {
 
         return [...builtInPresets, ...userPresets];
     });
+
+    const handleHushChange = (tag, muted) => {
+        setHushMap(prev => ({ ...prev, [tag]: muted }));
+    };
+
 
     // Handle preset load
     const handlePresetLoad = (newCode) => setCode(newCode);
@@ -77,12 +85,21 @@ function App() {
     };
 
 
-    const replRef = useRef(null);
 
     const handleProcTextChange = (text) => setCode(text);
 
     const handleProc = () => {
-        let replaced = code.replace(`<p1>`, radioValue === "hush" ? "_" : "");
+        let replaced = code;
+
+        // Apply hush for each <pN> tag based on switch state
+        Object.entries(hushMap).forEach(([tag, muted]) => {
+            if (muted) {
+                replaced = replaced.replace(tag, `_`);
+            } else {
+                // Remove leading underscore if unmuted
+                replaced = replaced.replace(`${tag}`, " ");
+            }
+        });
 
         const cpsValue = bpmValue / 60 / 4;
         replaced = replaced.replace(/setcps\s*\([^)]+\)/g, `setcps(${cpsValue})`);
@@ -139,11 +156,11 @@ function App() {
         if(cpsValue <= 0 || cpsValue == "NaN") cpsValue = 0.1; // prevent invalid cps
 
         const codeWithBpm = finalCode.replace(/setcps\s*\([^)]+\)/g, `setcps(${cpsValue})`);
-        
+
         replRef.current.setCode(codeWithBpm);
         replRef.current.evaluate();
     }
-    }, [controlValues, bpmValue, finalCode]);
+    }, [controlValues, bpmValue, finalCode, hushMap]);
 
     return (
         <>
@@ -189,6 +206,12 @@ function App() {
                             }
                             bpmValue={bpmValue}
                             onBpmChange={setBpmValue}
+                        />
+
+                        <HushControls
+                            code={code}
+                            hushMap={hushMap}
+                            onHushChange={handleHushChange}
                         />
                     </div>
                 </div>

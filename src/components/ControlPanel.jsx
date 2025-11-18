@@ -68,7 +68,6 @@ function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop, onGraphToggle }){
 
                     <p><strong>Tips:</strong></p>
                     <ul>
-                        <li>Use Ctrl+Enter to quickly preprocess</li>
                         <li>Try layering multiple patterns for variety</li>
                         <li>Use comments (//) to organize your code</li>
                         <li>To overwrite existing code for a saved preset, simply save again with same name</li>
