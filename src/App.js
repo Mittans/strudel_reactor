@@ -1,8 +1,7 @@
 ﻿// main application component for Strudel demo app
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
 import './App.css';
 import { useEffect, useRef, useState } from "react";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
@@ -11,11 +10,12 @@ import { initAudioOnFirstClick } from '@strudel/webaudio';
 import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
-//import console_monkey_patch from './console-monkey-patch';
+import console_monkey_patch from './console-monkey-patch';
 
 import PreprocessorControl from './components/PreprocessorControl';
 import TrackControl from './components/TrackControl';
 import InstrumentControl from './components/InstrumentControl';
+import OutputControl from './components/OutputControl';
 import { stranger_tune } from './Tune/tunes';
 import { tunes2 } from './Tune/tunes2';
 import D3Graph from './components/D3Graph';
@@ -132,6 +132,19 @@ export default function App() {
         //eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        toast.success("Welcome to Jaas's Strudel!", {
+            position: "top-right",
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: false,
+            progress: undefined,
+            autoClose: 9500, // extended autoClose time
+        });
+    }, []);
+
+
     return (
         <div className="strudel-demo-container">
             <h2 style={{ fontSize: "22px", fontWeight: "600", color: "#ff0000", textTransform: "uppercase", letterSpacing: "3px", textShadow: "0 0 8px rgba(255,204,0,0.6)", marginBottom: "15px", padding: "5px 20px" }}>Strudel Demo</h2>            <main>
@@ -165,7 +178,6 @@ export default function App() {
                                         style={{ fontSize: "18px", padding: "6px 12px", width: "120px", alignItems: "center" }} > Next </button>
                                 </div>
                                 <p style={{ marginTop: "6px", fontWeight: "bold", color: "#800000", padding: "2px 80px" }}>Now Playing: {currentTuneName}</p>
-                                {/* === Add StrudelLiveGraph here, below main controls and editor === */}
                                 <div className="row mt-2">
                                     <div className="col-md-12">
                                         <D3Graph />
@@ -174,12 +186,10 @@ export default function App() {
                             </div>
                         </div>
                     </div>
-                    <div className="row mt-2">
-                        <div className="col-md-8">
-                            <div className="card" style={{ background: "#1a1b1e", color: "#e3e8ef", minHeight: "220px" }}>
-                                <div id="editor" />
-                                <div id="output" />
-                            </div>
+                    <div className="row">
+                        <div className="col-md-8" style={{ marginTop: "-120px", marginBottom: 0 }}>
+                            <h5 style={{ fontSize: "22px", fontWeight: "600", color: "#ff0000", textTransform: "uppercase", letterSpacing: "1px", textShadow: "0 0 8px rgba(255,204,0,0.6)", marginBottom: "15px", padding: "0px 20px" }}>Output Editor</h5>
+                            <OutputControl />
                         </div>
                         <div className="col-md-4">
                             <h5 style={{ fontSize: "22px", fontWeight: "600", color: "#ff0000", textTransform: "uppercase", letterSpacing: "1px", textShadow: "0 0 8px rgba(255,204,0,0.6)", marginBottom: "15px", padding: "0px 80px" }}>Instrument Control</h5>

@@ -2,8 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 
 export default function PreprocessorControl({ procText, setProcText }) {
-
-    // JSON to file
+    // Save JSON with validation
     function handleSaveJSON() {
         if (!procText.trim()) {
             toast.error("Text editor is empty. Please enter some text before saving.");
@@ -39,17 +38,32 @@ export default function PreprocessorControl({ procText, setProcText }) {
     return (
         <div>
             <p style={{ fontSize: "18px", fontWeight: "500", color: "#8b0000", textTransform: "uppercase", letterSpacing: "1px", textShadow: "0 0 8px rgba(255,204,0,0.6)", marginBottom: "15px" }}>Text Editor</p>
-            <textarea
-                className="form-control"
-                rows="15"
-                id="proc"
-                value={procText}
-                onChange={e => setProcText(e.target.value)}
-            />
+            {/* Scrollable textarea */}
+            <div style={{
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                maxHeight: "300px",      // set max height for scroll area
+                overflowY: "auto",        // enable vertical scroll
+                padding: "10px"
+            }}>
+                <textarea
+                    style={{
+                        width: "100%",
+                        height: "200px",
+                        resize: "none",          // prevent free resize
+                        border: "none",
+                        outline: "none",
+                        background: "#f4f6f8",
+                        fontFamily: "'Fira Mono', monospace",
+                        fontSize: "14px",
+                        lineHeight: "1.5",
+                    }}
+                    value={procText}
+                    onChange={e => setProcText(e.target.value)}
+                />
+            </div>
             <div style={{ marginTop: "10px" }}>
-                <button onClick={handleSaveJSON}>
-                    Save as JSON
-                </button>
+                <button onClick={handleSaveJSON}>Save as JSON</button>
                 <input
                     type="file"
                     accept="application/json"

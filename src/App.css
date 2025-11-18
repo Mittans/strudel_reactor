@@ -4,14 +4,15 @@ body {
 
 
 .strudel-demo-container {
-  margin: 60px auto;
-  max-width: 1400px;
-  background: #f0f7fa;
-  border-radius: 22px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
-  padding: 40px 30px 30px 30px;
-  position: relative;
-  overflow: hidden;
+    margin: 60px auto;
+    max-width: 1400px;
+    max-height: 1100px;
+    background: #f0f7fa;
+    border-radius: 22px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+    padding: 40px 30px 30px 30px;
+    position: relative;
+    overflow: hidden;
 }
 
   /* glowing border effect */
