@@ -8,120 +8,94 @@ function Graph({ showGraph, onClose }) {
     const [debugInfo, setDebugInfo] = useState("Waiting for data...");
     const [visualMode, setVisualMode] = useState("pitch"); // pitch, cutoff, attack
 
+    const lastDataRef = useRef({
+        pitch: [],
+        cutoff: [],
+        attack: []
+    });
+
     useEffect(() => {
         const svg = d3.select(svgRef.current)
             .attr("width", "100%")
             .attr("height", 300);
 
         const margin = { top: 20, right: 20, bottom: 30, left: 50 };
+        const height = 300;
 
         // Note to MIDI number mapping
         const noteToMidi = (noteStr) => {
             const noteMap = { c: 0, d: 2, e: 4, f: 5, g: 7, a: 9, b: 11 };
             const match = noteStr.match(/([a-g])(b|#)?(\d+)/i);
             if (!match) return null;
-            
+
             const note = noteMap[match[1].toLowerCase()];
             const accidental = match[2] === 'b' ? -1 : match[2] === '#' ? 1 : 0;
             const octave = parseInt(match[3]);
-            
+
             return (octave + 1) * 12 + note + accidental;
         };
 
         function extractValue(line, mode) {
             if (mode === "pitch") {
-                // Extract note pitch
                 const noteMatch = line.match(/note:([a-g]b?\d+)/i);
-                if (noteMatch) {
-                    return noteToMidi(noteMatch[1]);
-                }
+                if (noteMatch) return noteToMidi(noteMatch[1]);
             } else if (mode === "cutoff") {
-                // Extract cutoff
                 const cutoffMatch = line.match(/cutoff:(\d+)/);
-                if (cutoffMatch) {
-                    return parseFloat(cutoffMatch[1]);
-                }
+                if (cutoffMatch) return parseFloat(cutoffMatch[1]);
             } else if (mode === "attack") {
-                // Extract attack
                 const attackMatch = line.match(/attack:([\d.]+)/);
-                if (attackMatch) {
-                    return parseFloat(attackMatch[1]);
-                }
+                if (attackMatch) return parseFloat(attackMatch[1]);
             }
             return null;
         }
 
-        function updateGraph(logArray) {
-            console.log("Graph received data:", logArray.length, "entries");
-            
-            if (!logArray || logArray.length === 0) {
-                setDebugInfo("No data received yet");
-                return;
-            }
-
+        function drawGraph(parsed) {
             const width = svgRef.current?.clientWidth || 600;
-            const height = 300;
 
-            // Parse values based on current mode
-            const parsed = logArray
-                .map(line => extractValue(line, visualMode))
-                .filter(v => v !== null);
+            svg.selectAll("*").remove();
 
-            if (parsed.length === 0) {
-                setDebugInfo(`No ${visualMode} data found in logs`);
+            if (!parsed || parsed.length === 0) {
+                // nothing to draw
                 return;
             }
 
-            setDataPoints(parsed);
             const minVal = d3.min(parsed);
             const maxVal = d3.max(parsed);
-            setDebugInfo(
-                `${visualMode.toUpperCase()}: ${parsed.length} points | ` +
-                `Range: ${minVal?.toFixed(1)} - ${maxVal?.toFixed(1)}`
-            );
 
-            // x scale (time)
+            // scales
             const x = d3.scaleLinear()
                 .domain([0, Math.max(parsed.length - 1, 1)])
                 .range([margin.left, width - margin.right]);
 
-            // y scale
             const y = d3.scaleLinear()
                 .domain([minVal - 2, maxVal + 2])
                 .range([height - margin.bottom, margin.top]);
 
-            // Clear old content
-            svg.selectAll("*").remove();
-
-            // Add background
+            // background
             svg.append("rect")
                 .attr("width", width)
                 .attr("height", height)
                 .attr("fill", "#0a0a0a");
 
-            // Add grid lines
-            const yAxis = d3.axisLeft(y).ticks(8);
+            // Y axis
             svg.append("g")
                 .attr("transform", `translate(${margin.left},0)`)
-                .call(yAxis)
+                .call(d3.axisLeft(y).ticks(8))
                 .attr("color", "#444")
                 .style("font-size", "10px");
 
             // X axis
-            const xAxis = d3.axisBottom(x).ticks(10);
             svg.append("g")
                 .attr("transform", `translate(0,${height - margin.bottom})`)
-                .call(xAxis)
+                .call(d3.axisBottom(x).ticks(10))
                 .attr("color", "#444")
                 .style("font-size", "10px");
 
-            // Line generator
             const line = d3.line()
                 .x((d, i) => x(i))
                 .y(d => y(d))
-                .curve(d3.curveStepAfter); // Step for musical notes
+                .curve(d3.curveStepAfter);
 
-            // Area under line
             const area = d3.area()
                 .x((d, i) => x(i))
                 .y0(height - margin.bottom)
@@ -133,7 +107,6 @@ function Graph({ showGraph, onClose }) {
                 .attr("fill", "rgba(0, 255, 100, 0.15)")
                 .attr("d", area);
 
-            // Draw line
             svg.append("path")
                 .datum(parsed)
                 .attr("fill", "none")
@@ -141,7 +114,6 @@ function Graph({ showGraph, onClose }) {
                 .attr("stroke-width", 2)
                 .attr("d", line);
 
-            // Draw points
             svg.selectAll("circle")
                 .data(parsed)
                 .enter()
@@ -154,15 +126,62 @@ function Graph({ showGraph, onClose }) {
                 .attr("stroke-width", 1);
         }
 
-        // Listener for monkey-patch data
-        const listener = (e) => {
-            updateGraph(e.detail);
-        };
+        // UPDATED updateGraph to persist last state and fallback to it when logs stop
+        function updateGraph(logArray) {
+            console.log("Graph received data:", logArray?.length ?? 0, "entries");
 
+            // If no logs provided, try to show last-known data for current mode
+            if (!logArray || logArray.length === 0) {
+                const lastForMode = lastDataRef.current[visualMode] || [];
+                if (lastForMode.length > 0) {
+                    setDebugInfo(`Frozen — showing last ${visualMode} data (${lastForMode.length} points)`);
+                    // draw previously stored data for this mode
+                    drawGraph(lastForMode);
+                    setDataPoints(lastForMode);
+                } else {
+                    setDebugInfo("No data received yet");
+                }
+                return;
+            }
+
+            // parse new values based on current mode
+            const parsed = logArray
+                .map(line => extractValue(line, visualMode))
+                .filter(v => v !== null);
+
+            if (parsed.length === 0) {
+                setDebugInfo(`No ${visualMode} data found in logs`);
+                return;
+            }
+
+            // Persist parsed set for this mode
+            lastDataRef.current[visualMode] = parsed.slice(); // store a copy
+            setDataPoints(parsed);
+
+            const minVal = d3.min(parsed);
+            const maxVal = d3.max(parsed);
+            setDebugInfo(
+                `${visualMode.toUpperCase()}: ${parsed.length} points | Range: ${minVal?.toFixed(1)} - ${maxVal?.toFixed(1)}`
+            );
+
+            // Draw the new data
+            drawGraph(parsed);
+        }
+
+        // subscribe and cleanup
+        const listener = (e) => updateGraph(e.detail);
         subscribe("d3Data", listener);
 
+        // Immediately draw any cached data for the current visualMode (useful when opening the graph)
+        const cached = lastDataRef.current[visualMode];
+        if (cached && cached.length > 0) {
+            setDebugInfo(`Showing cached ${visualMode} data (${cached.length} points)`);
+            drawGraph(cached);
+            setDataPoints(cached);
+        }
+
         return () => unsubscribe("d3Data", listener);
-    }, [visualMode, showGraph]);
+    }, [visualMode, showGraph]); // re-run when mode or visibility changes
 
     if (!showGraph) return null;
 
@@ -191,7 +210,7 @@ function Graph({ showGraph, onClose }) {
                     boxShadow: "0 0 15px rgba(0, 0, 0, 0.5)",
                 }}>
                 <h2 style={{ marginTop: 0 }}>Strudel Visualizer</h2>
-                
+
                 {/* Mode selector */}
                 <div style={{ marginBottom: "1rem", display: "flex", gap: "0.5rem" }}>
                     <button
@@ -238,9 +257,9 @@ function Graph({ showGraph, onClose }) {
                     </button>
                 </div>
 
-                <div style={{ 
-                    background: "#0a0a0a", 
-                    padding: "0.5rem", 
+                <div style={{
+                    background: "#0a0a0a",
+                    padding: "0.5rem",
                     borderRadius: "4px",
                     marginBottom: "1rem",
                     fontSize: "0.85rem",
@@ -250,8 +269,8 @@ function Graph({ showGraph, onClose }) {
                     {debugInfo}
                 </div>
 
-                <svg ref={svgRef} style={{ 
-                    width: "100%", 
+                <svg ref={svgRef} style={{
+                    width: "100%",
                     height: "300px",
                     background: "#0a0a0a",
                     borderRadius: "4px"

@@ -9,7 +9,6 @@ import { extractControlsFromCode, applyControlsToCode, CONTROL_DEFINITIONS } fro
 import console_monkey_patch from './assets/console-monkey-patch'
 import './css/App.css'
 import { useState, useRef, useEffect } from 'react';
-import { repl } from '@strudel/core'
 
 // Initialize console patch
 console_monkey_patch();
@@ -128,6 +127,9 @@ function App() {
     if (replRef.current && finalCode !== "") {
         // Only update the music player with the latest, pre-calculated code.
         const cpsValue = bpmValue / 60 / 4;
+
+        if(cpsValue <= 0 || cpsValue == "NaN") cpsValue = 0.1; // prevent invalid cps
+
         const codeWithBpm = finalCode.replace(/setcps\s*\([^)]+\)/g, `setcps(${cpsValue})`);
         
         replRef.current.setCode(codeWithBpm);
