@@ -52,8 +52,10 @@ export default function Graph() {
             .range([margin + 30, w - margin]);
 
         const yScale = d3.scaleLinear()
-            .domain([0, maxValue])
-            .range([h - margin - 35, margin + 55]);
+            .domain([maxValue, 0])     
+            .range([margin + 55, h - margin - 35]);
+
+
 
         const chart = svg.append("g");
 
@@ -85,6 +87,7 @@ export default function Graph() {
             .ticks(5)
             .tickSize(3)
             .tickFormat(d3.format(".1f"));
+
 
         chart.append("g")
             .attr("transform", `translate(${margin + 30},0)`)

@@ -1,7 +1,8 @@
 ﻿import '../DJControls.css';
 
+
 function DJControls({
-    cpm, onCpmChange,
+    cpm, onCpmChange, onMessage, setCpm,
     bass, onBassChange,
     melody, onMelodyChange,
     guitar, onGuitarChange,
@@ -9,6 +10,22 @@ function DJControls({
     drums2, onDrums2Change,
     onSave, onLoad
 }) {
+    const handleCpmBlur = () => {
+        const num = Number(cpm);
+
+        // If empty or not a number or outside range resets and shows a message
+        if (!num || num < 60 || num > 200) {
+            onMessage("Enter CPM value between 60 and 200");
+            setCpm(120);
+            return;
+        }
+
+        // If valid, lock in the correct number (in case user typed "120")
+        setCpm(num);
+    };
+
+    
+
     return (
         <div id="dj-controls-container">
 
@@ -21,8 +38,14 @@ function DJControls({
                         id="cpm-input"
                         value={cpm}
                         onChange={onCpmChange}
+                        onBlur={handleCpmBlur}
+                        className="form-control"
+                        placeholder="Enter CPM (60 to 200)"
+                        aria-label="cpm"
+                        aria-describedby="cpm_label"
                         min="60"
                         max="200"
+                        step="1"
                     />
                 </div>
 

@@ -1,4 +1,4 @@
-import './App.css';
+﻿import './App.css';
 import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
@@ -24,7 +24,7 @@ export default function StrudelDemo() {
 
     const [songText, setSongText] = useState(stranger_tune);
     const [volume, setVolume] = useState(0.8);
-    const [cpm, setCpm] = useState(120);
+    const [cpm, setCpm] = useState(120);       
     const [bass, setBass] = useState(true);
     const [melody, setMelody] = useState(true);
     const [guitar, setGuitar] = useState(true);
@@ -37,6 +37,11 @@ export default function StrudelDemo() {
     // JSON UI toggle
     const [showJSON, setShowJSON] = useState(false);
     const [loadedJSON, setLoadedJSON] = useState(null);
+
+    function showMessage(msg) {
+        setMessage(msg);
+        setTimeout(() => setMessage(""), 1500);
+    }
 
     // SAVE SETTINGS
     function saveSettings() {
@@ -260,7 +265,12 @@ export default function StrudelDemo() {
                                 <Graph isPlaying={isPlaying} />
                             </div>
                             <div className="dj-wrapper">
-                                <DJControls                               
+                                <DJControls              
+                                    cpm={cpm}
+                                    setCpm={setCpm}
+                                    onCpmChange={(e) => setCpm(e.target.value)}
+                                    onMessage={showMessage}
+
                                     bass={bass}
                                     onBassChange={() => setBass(!bass)}
 
