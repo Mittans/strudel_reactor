@@ -153,4 +153,8 @@ Four drum sound banks:
 
 ## Music Video Link
 
-Video Link:
+Video Link: https://youtu.be/-L04yIpnaNU
+
+## GitHub Link
+
+GitHub Link: https://github.com/Stefan-Phan/WebTechA2
