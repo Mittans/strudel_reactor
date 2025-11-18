@@ -1,5 +1,5 @@
-import {Speed} from './slideInputs/Speed';
-import {Volume} from './slideInputs/Volume';
+import {Speed} from '../input/slideInputs/Speed'
+import {Volume} from '../input/slideInputs/Volume';
 
 export function SlideInputs({text, updateEditor, volume, setVolumeState}){
 

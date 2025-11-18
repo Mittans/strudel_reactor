@@ -1,12 +1,10 @@
-import {Effects} from '../input/Effects';
-import { Instrument } from '../input/Instrument';
-import { MainSong } from '../input/MainSong';
-import { IoIosAddCircle } from "react-icons/io";
+import {Effects} from '../input/radioInputs/EffectsSelection';
+import { Instrument } from '../input/checkboxInputs/InstrumentSelection';
+import {  ArpeggiatorSelection } from '../input/radioInputs/ArpeggiatorSelection';
 
 export function PanelToggleController({
     updateEditor,
     text,
-    ProcAndPlay,
     handleChangeArp
 }) {
     return (
@@ -21,7 +19,7 @@ export function PanelToggleController({
                     </span>
                 </div>
                 
-                <MainSong text={text} handleChangeArp={handleChangeArp}/>
+                <ArpeggiatorSelection text={text} handleChangeArp={handleChangeArp}/>
             </div>
 
             <div className={`w-full outline-2 outline-offset-2 outline-solid p-4 mx-4 bg-zinc-900 rounded-2xl border border-zinc-700 shadow-lg`}>

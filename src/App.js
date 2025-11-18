@@ -9,23 +9,26 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
 import { PlaybackController } from './components/controllers/PlaybackController';
-import { SlideInputs } from './components/input/SlideInputs';
-import SaveModal from './components/modal/saveModal';
+import { SlideInputs } from './components/controllers/SlideInputsController';
+import AddModal from './components/modal/addModal';
 import console_monkey_patch, { GetD3Data } from './console-monkey-patch';
 import { SongSelectorController } from './components/controllers/SongSelectorController';
 import { PanelToggleController } from './components/controllers/PanelToggleController';
-import { OpenShowTimeButton } from './components/buttons/OpenShowTimeButton';
-import { OpenTextToProcessButton } from './components/buttons/OpenTextToProcessButton';
-import { OpenD3GraphButton } from './components/buttons/OpenD3GraphButton';
+import { OpenShowTimeButton } from './components/buttons/open buttons/OpenShowTimeButton';
+import { OpenTextToProcessButton } from './components/buttons/open buttons/OpenTextToProcessButton';
+import { OpenD3GraphButton } from './components/buttons/open buttons/OpenD3GraphButton';
 import { Graph } from './components/graph/Graph';
 
 let globalEditor = null;
+
+// The global variable of the arpeggiator.
 let currentArp = "arpeggiator1";
 
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
+// Function check if the arpeggiator is duplicated.
 export function validateArpeggiators(tuneText) {
     const regex = /const\s+(arpeggiator\d+)\s*=/g;
     const found = [];
@@ -58,24 +61,24 @@ export function Proc() {
 }
 
 export default function StrudelDemo() {
-  function updateEditor(newText) {
-    setText(newText);
- 
-    if (globalEditor) {
-      globalEditor.setCode(newText); 
-    }
-  }
 
-  function handleChangeArp(e) {
-    currentArp = e.target.value;
-    ProcAndPlay();
-  }
-
-  
   const hasRun = useRef(false);
+
+  // Variable to check if the song is play
   const [isPlay,setIsPlay] = useState(false);
-  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  // Variable to handle the change of the volume.
   const [volume, setVolumeState] = useState(1); 
+
+  // Variable to save text, set up stranger_tune initially.
+  const [text, setText] = useState(stranger_tune);
+
+  // Variable to handle the open button.
+    const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenSetting,setIsOpenSetting] = useState(false);
+  const [isOpenShowTime, setIsOpenShowTime] = useState(false);
+  const [isOpenTextToProcess, setIsOpenTextToProcess] = useState(false);
+  const [isOpenD3Graph, setIsOpenD3Graph] = useState(false);
 
   useEffect(() => {
     if (!hasRun.current) {
@@ -112,7 +115,23 @@ export default function StrudelDemo() {
           Proc();
           ProcAndPlay();
       });
+    
+    // Function to handle update the editor from the other files.
+    function updateEditor(newText) {
+    setText(newText);
+ 
+    if (globalEditor) {
+      globalEditor.setCode(newText); 
+    }
+  }
 
+  // Function to handle changing the arppeggiator
+  function handleChangeArp(e) {
+    currentArp = e.target.value;
+    ProcAndPlay();
+  }
+
+  // Controller allow the system to play the song
   const handlePlay = () => {
     const editorValue = document.getElementById("proc").value;
     if (globalEditor != null && editorValue != "") {
@@ -123,11 +142,15 @@ export default function StrudelDemo() {
     }
   }
 
+
+  // Controller allow the system to stop the song 
   const handleStop = () => {
     setIsPlay(false);
     globalEditor.stop()
   }
 
+  // Controller allow the system to process the global taking code from the "proc" and play the song. 
+  // It will alerts if the text is empty.
   const handleProcPlay = () => {
     const editorValue = document.getElementById("proc").value;
     if (globalEditor != null && editorValue != "") {
@@ -140,23 +163,17 @@ export default function StrudelDemo() {
     }
   }
 
+  // Controller allow the system to open the modal.
   const modalOpenControl = () => {
     setIsOpenModal(true);
   }
 
+  // Controller allow the system to close the modal.
   const modalCloseControl = () => {
     setIsOpenModal(false);
   }
-  // Variable to save text.
-  const [text, setText] = useState(stranger_tune);
 
-  // Variable to handle the open button.
-  const [isOpenSetting,setIsOpenSetting] = useState(false);
-  const [isOpenShowTime, setIsOpenShowTime] = useState(false);
-  const [isOpenTextToProcess, setIsOpenTextToProcess] = useState(false);
-  const [isOpenD3Graph, setIsOpenD3Graph] = useState(false);
-
-  // Function to open the editor
+  // Controller allow the system to open the editor
   const handleOpenShowTime = () => {
     if (isOpenShowTime === false) {
       setIsOpenShowTime(true);
@@ -165,7 +182,7 @@ export default function StrudelDemo() {
     }
   };
 
-  // Function to open the text box to process
+  // Controller allow the system to open the text box to process
   const handleOpenTextToProcess = () => {
     if (isOpenTextToProcess === false) {
       setIsOpenTextToProcess(true);
@@ -174,7 +191,7 @@ export default function StrudelDemo() {
     }
   };
 
-  // Function to open the setting
+  // Controller allow the system to open the setting
   const handleOpenSetting= () => {
     if (isOpenSetting === false) {
       setIsOpenSetting(true);
@@ -183,7 +200,7 @@ export default function StrudelDemo() {
     }
   };
 
-  // Function to open the D3 Graph
+  // Controller allow the system to open the D3 Graph
   const handleOpenD3Graph = () => {
     if (isOpenD3Graph === false) {
       setIsOpenD3Graph(true);
@@ -213,7 +230,7 @@ export default function StrudelDemo() {
 
         {/* The Saving Modal appears after clicking save button */}
         {isOpenModal && (
-        <SaveModal modalCloseControl={modalCloseControl} text={text}/>
+        <AddModal modalCloseControl={modalCloseControl} text={text}/>
         )}
       </div>
 
@@ -221,6 +238,7 @@ export default function StrudelDemo() {
         <div className="container-fluid">
           <div>
             <div className='flex justify-between mb-2'>  
+              {/* Song selector */}
               <SongSelectorController
                 setText={setText} 
                 text={text}
@@ -228,10 +246,14 @@ export default function StrudelDemo() {
                 isOpenSetting={isOpenSetting}
                 modalOpenControl={modalOpenControl} 
                 />   
+
+              {/* Slider inputs includes volume and speed */}
               <SlideInputs text={text} updateEditor={updateEditor} volume={volume} setVolumeState={setVolumeState}/>      
             </div>
 
             <div>
+
+              {/* Panel toggle includes arpeggiator selection, effect selection, and instrument selection */}
               <PanelToggleController
                 text={text}
                 updateEditor={updateEditor}
@@ -241,7 +263,8 @@ export default function StrudelDemo() {
             </div>
 
             <div className='mx-10 mt-4'>
-                  <OpenTextToProcessButton handleOpenTextToProcess={handleOpenTextToProcess} isOpenTextToProcess={isOpenTextToProcess}/>
+                {/* Button to show the textarea that was hidden */}
+                <OpenTextToProcessButton handleOpenTextToProcess={handleOpenTextToProcess} isOpenTextToProcess={isOpenTextToProcess}/>
 
                 <textarea 
                   className={`w-full border border-black rounded-lg ${isOpenTextToProcess ? "" : "hidden"}`} 
@@ -259,6 +282,8 @@ export default function StrudelDemo() {
           </div>
 
           <div className='mx-10 mt-4'>
+
+             {/* Button to show the editor that was hidden */}
             <OpenShowTimeButton isOpenShowTime={isOpenShowTime} handleOpenShowTime={handleOpenShowTime}/>
     
             <div className={`${isOpenShowTime ? "" : "hidden"}`}>
@@ -269,6 +294,8 @@ export default function StrudelDemo() {
           </div>
         </div>
         <div className='mx-10 mt-4'>
+
+           {/* Button to show the graphthat was hidden */}
           <OpenD3GraphButton isOpenD3Graph={isOpenD3Graph} handleOpenD3Graph={handleOpenD3Graph}/>
 
           <canvas className={`bg-zinc-800 w-full hidden`} id="roll"></canvas>

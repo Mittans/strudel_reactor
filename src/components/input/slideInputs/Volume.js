@@ -1,6 +1,4 @@
-import { CiVolumeHigh, CiVolumeMute } from "react-icons/ci";
 import { FaVolumeDown, FaVolumeMute, FaVolumeUp } from "react-icons/fa";
-import { useEffect, useState } from "react";
 
 export function Volume({text, updateEditor, volume, setVolumeState}) {
 

@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 
-export function MainSong({text, handleChangeArp}) {
+export function ArpeggiatorSelection({text, handleChangeArp}) {
     const [arpeggiators, setArpeggiators] = useState([]);
 
     // Automatically get the arpeggiators in the text.

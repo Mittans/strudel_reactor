@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 export function duplicateNumber(songName){
     let number = 0;
@@ -14,7 +14,7 @@ export function duplicateNumber(songName){
     return number
 }
 
-export default function SaveModal(props){
+export default function AddModal(props){
     const [songName, setSongName] = useState("Untitled");
 
     // Function to save the text song based on name.
@@ -55,7 +55,7 @@ export default function SaveModal(props){
                         <button 
                             className="rounded-full font-bold w-20 mr-2 border border-black mx-2 bg-green-500 text-white" 
                             onClick={handleAdd}>
-                                Save
+                                Add
                         </button>
                     </div>
                     <div className="m-2">

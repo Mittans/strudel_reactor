@@ -2,6 +2,7 @@ import {useState, useEffect} from "react";
 import { CRUDController } from './CRUDController';
 import { IoMdSettings } from "react-icons/io";
 
+// Function allows to get all music in the local storage.
 export function getAllMusic(){
   const musicList = [];
   for (let i = 0; i < localStorage.length; i++) {
