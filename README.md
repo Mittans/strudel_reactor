@@ -157,7 +157,7 @@ When using this website to create music, please follow these guidelines for a sm
    The minimum of speed was set at 0.01 to avoiding the bug from the graph when 0 can make the graph run faster instead of stopping.
 
 ## Demonstrate video
-Click on the link to see the Live Demo by Dang Khoa Nguyen --> [Live Demo](https://mymailunisaedu-my.sharepoint.com/my?id=%2Fpersonal%2Fngudy131%5Fmymail%5Funisa%5Fedu%5Fau%2FDocuments%2FWeb%2FAssignment%202%20%2D%20Live%20Demo%20presentation&viewid=7add51ea%2D551f%2D4509%2Db074%2D6bae0c9b8776&source=waffle)
+Click on the link to see the Live Demo by Dang Khoa Nguyen --> [Live Demo](https://mymailunisaedu-my.sharepoint.com/personal/ngudy131_mymail_unisa_edu_au/_layouts/15/stream.aspx?id=%2Fpersonal%2Fngudy131%5Fmymail%5Funisa%5Fedu%5Fau%2FDocuments%2FWeb%2FAssignment%202%20%2D%20Live%20Demo%20presentation%2FAssignment%202%20%2D%20Live%20Demo%20%2D%20Dang%20Khoa%20Nguyen%2Emkv&nav=eyJyZWZlcnJhbEluZm8iOnsicmVmZXJyYWxBcHAiOiJPbmVEcml2ZUZvckJ1c2luZXNzIiwicmVmZXJyYWxBcHBQbGF0Zm9ybSI6IldlYiIsInJlZmVycmFsTW9kZSI6InZpZXciLCJyZWZlcnJhbFZpZXciOiJNeUZpbGVzTGlua0NvcHkifX0&ga=1&referrer=StreamWebApp%2EWeb&referrerScenario=AddressBarCopied%2Eview%2E334ec494%2D95f5%2D4110%2D82c6%2Dd33b8832e0c8)
 
 ## Song code from strudel.cc bakery
 Some elements of this project use or are inspired by examples found in the Strudel.cc bakery. In particular:
