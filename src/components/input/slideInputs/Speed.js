@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { IoMdSpeedometer, IoIosSpeedometer } from "react-icons/io";
 
-export function Speed({text, updateEditor}){
-    const [speed, setSpeed] = useState(0.5); 
+export function Speed({text, updateEditor, speed, setSpeed}){
 
     /* Function updated the Speed*/
     function updateSpeedInCode(newSpeed, prodvidedText) {
@@ -29,7 +28,7 @@ export function Speed({text, updateEditor}){
             </label>
             <input
                 type="range"
-                min="0"
+                min="0.01"
                 max="2"
                 step="0.01"
                 value={speed}

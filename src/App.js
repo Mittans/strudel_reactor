@@ -70,11 +70,14 @@ export default function StrudelDemo() {
   // Variable to handle the change of the volume.
   const [volume, setVolumeState] = useState(1); 
 
+  // Variable to handle the change of the speed.
+  const [speed, setSpeed] = useState(0.5); 
+
   // Variable to save text, set up stranger_tune initially.
   const [text, setText] = useState(stranger_tune);
 
   // Variable to handle the open button.
-    const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const [isOpenSetting,setIsOpenSetting] = useState(false);
   const [isOpenShowTime, setIsOpenShowTime] = useState(false);
   const [isOpenTextToProcess, setIsOpenTextToProcess] = useState(false);
@@ -248,7 +251,7 @@ export default function StrudelDemo() {
                 />   
 
               {/* Slider inputs includes volume and speed */}
-              <SlideInputs text={text} updateEditor={updateEditor} volume={volume} setVolumeState={setVolumeState}/>      
+              <SlideInputs text={text} updateEditor={updateEditor} volume={volume} setVolumeState={setVolumeState} speed={speed} setSpeed={setSpeed}/>      
             </div>
 
             <div>
@@ -299,7 +302,7 @@ export default function StrudelDemo() {
           <OpenD3GraphButton isOpenD3Graph={isOpenD3Graph} handleOpenD3Graph={handleOpenD3Graph}/>
 
           <canvas className={`bg-zinc-800 w-full hidden`} id="roll"></canvas>
-          <Graph className={`bg-zinc-800 w-full ${isOpenD3Graph ? "" : "hidden"}`} volume={volume} isPlay={isPlay}/>
+          <Graph className={`bg-zinc-800 w-full ${isOpenD3Graph ? "" : "hidden"}`} volume={volume} speed={speed} setSpeed={setSpeed} isPlay={isPlay}/>
         </div>
       </main >
     </div >

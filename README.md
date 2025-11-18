@@ -103,6 +103,7 @@ Panels make it easier to navigate and configure your project.
 - Provides a live visualization of the music output for a more engaging interface.  
 - Stops updating if the song is not playing or if the volume is muted.  
 - The bar heights change dynamically based on volume.  
+- The intervalTime of the graph can be change dynamically based on the speed.
  ![graph](src/images/D3Graph.png)  
 ---
 
@@ -140,7 +141,10 @@ When using this website to create music, please follow these guidelines for a sm
    If you make changes to the code but don’t notice an immediate effect, click the **Proc & Play** button to update the playback with your modifications.
 
 7. **Deleting song**   
-    Before you deleting the other song, please ensure to save the song that you are doing if it exists or add it to the local storage as the website will be reset after you delete song. Therefore, always saving or adding the song to avoid your sadness after accidently delete the song you are working.
+   Before you deleting the other song, please ensure to save the song that you are doing if it exists or add it to the local storage as the website will be reset after you delete song. Therefore, always saving or adding the song to avoid your sadness after accidently delete the song you are working.
+
+8. **Minimum of speed**
+   The minimum of speed was set at 0.01 to avoiding the bug from the graph when 0 can make the graph run faster instead of stopping.
 
 ## Demonstrate video
 
@@ -157,7 +161,15 @@ During this assignment, I used AI assistance from ChatGPT to help guide my codin
 ### 1. Fixing Bugs
 Whenever I encountered errors, I provided the error messages and relevant code to ChatGPT, which helped me identify and resolve the issues quickly.
 
+- UpdateEditor is the function I created to allow the system update the text from the other files.
 ![Fixing Bugs Input&Output](src/images/AI_usage/AI_input(3).png)
+
+- I want to implement the speed into the graph and then, I got a problem with intervalTime like how to dealt if the speed == 0 and why I can't stop the song when the speed go to slow. The chatGPT guide me what should I do to solve those problems. 
+![speed bugs in Graph](src/images/AI_usage/fix_graph_speed_input.png)
+![speed bugs in Graph](src/images/AI_usage/fix_graph_speed_input(2).png)
+![speed bugs in Graph](src/images/AI_usage/fix_graph_speed_output.png)
+![speed bugs in Graph](src/images/AI_usage/fix_graph_speed_output(2).png)
+
 
 ### 2. Instrument Selection
 ChatGPT guided me in implementing the instrument selection feature. Initially, I used radio buttons for selecting instruments, and later wanted to allow combining multiple instruments. ChatGPT helped me convert the inputs to checkboxes and provided guidance on detecting the drum blocks and adding the correct bank. 
@@ -181,7 +193,6 @@ The arpeggiator selection functionality works correctly thanks to ChatGPT’s gu
 ![output (6)](src/images/AI_usage/AI_output(6.2).png)
 
 ![output (6)](src/images/AI_usage/AI_output(6.3).png)
-
 
 ### 4. Code Explanation and Guidance
 Some Strudel code, especially in `App.js`, was difficult to understand at first. I used ChatGPT to explain the code and guide me on how to integrate it into React, which helped me improve and adapt the code to fit the web application logic.

@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import * as d3 from "d3";
 
-export function Graph({className, volume, isPlay}) {
+export function Graph({className, volume, speed, setSpeed, isPlay}) {
+
+    // Function to get the value gain in the text
     function LogToNum(input) {
         if (!input) return 0;
         const parts = input.split(/\s+/);
@@ -14,19 +16,25 @@ export function Graph({className, volume, isPlay}) {
     const [rngNumber, setRngNumber] = useState("");
     const [rngArray, setRngArray] = useState([]);
     const maxItems = 10;
-    const intervalTime = 500;
-  
+    const intervalTime = 500; 
+    let interval = null;
+
     // Generate random values
     useEffect(() => {
       if (!isPlay) return;
+      // Clear the previous interval
+      if (interval) clearInterval(interval);
 
-      const interval = setInterval(() => {
+      // Allow to change the interval time based on speed.
+      const intervalTimeWithSpeed = intervalTime / speed ;
+      
+      interval = setInterval(() => {
         const val = Math.random();
         setRngNumber(`gain:${val * volume}`);
         console.log(volume);
-      }, intervalTime);
+      }, intervalTimeWithSpeed);
       return () => clearInterval(interval);
-    }, [volume, isPlay]);
+    }, [volume, speed, isPlay]);
   
     // Push new value to array
     useEffect(() => {
