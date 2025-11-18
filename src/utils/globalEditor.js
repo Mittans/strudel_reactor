@@ -1,5 +1,6 @@
-let globalEditor = null;
+let globalEditor = null; // storing strudel editor instance
 
+// getter and setter for global editor
 export function setGlobalEditor(editor) {
     globalEditor = editor;
 }

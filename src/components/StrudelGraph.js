@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as d3 from "d3";
 import { getD3Data } from "../console-monkey-patch";
 
-
+// Extracts a numerical "gain" value from each log line
 function logToGain(line) {
     if (!line) return null;
 
@@ -24,6 +24,7 @@ function StrudelGraph() {
     const svgRef = useRef(null);
     const [gainArray, setGainArray] = useState([]);
 
+    // Poll Strudel logs every 300ms and extract gain values
     useEffect(() => {
         const maxItems = 80;      
         const intervalMs = 300;   
@@ -47,7 +48,7 @@ function StrudelGraph() {
         return () => clearInterval(id);
     }, []);
 
-  
+    // Redraw graph whenever gainArray updates
     useEffect(() => {
         if (!svgRef.current) return;
 
@@ -58,7 +59,7 @@ function StrudelGraph() {
             return;
         }
 
-     
+        // SVG dimensions and margins
         const width = 360;
         const height = 180;
         const margin = { top: 15, right: 10, bottom: 25, left: 40 };
@@ -70,6 +71,7 @@ function StrudelGraph() {
 
         const maxValue = 1;
 
+        // X = index, Y = gain value
         const xScale = d3
             .scaleLinear()
             .domain([0, gainArray.length - 1])
@@ -80,6 +82,7 @@ function StrudelGraph() {
             .domain([0, maxValue])
             .range([innerHeight, 0]);
 
+        // SVG group element with margins
         const g = svg
             .append("g")
             .attr("transform", `translate(${margin.left},${margin.top})`);
@@ -93,7 +96,7 @@ function StrudelGraph() {
             .attr("ry", 8)
             .attr("fill", "#10131b");
 
-      
+        // yAxis
         const yAxis = d3.axisLeft(yScale).ticks(4);
         g.append("g")
             .attr("color", "#555")
@@ -102,7 +105,7 @@ function StrudelGraph() {
             .attr("fill", "#aaa")
             .attr("font-size", "10px");
 
-   
+        // xAxis
         const xAxis = d3.axisBottom(xScale)
             .ticks(4)
             .tickFormat(() => "");
@@ -111,6 +114,7 @@ function StrudelGraph() {
             .attr("color", "#444")
             .call(xAxis);
 
+        // Horizontal gridlines
         g.append("g")
             .attr("class", "grid")
             .selectAll("line")
@@ -125,6 +129,7 @@ function StrudelGraph() {
             .attr("stroke-width", 1)
             .attr("stroke-dasharray", "2,3");
 
+        // Gradient for area & line
         const defs = svg.append("defs");
         const gradient = defs
             .append("linearGradient")
@@ -144,7 +149,7 @@ function StrudelGraph() {
             .attr("offset", "100%")
             .attr("stop-color", "#1db954"); 
 
-      
+        // Area fill under the line
         const area = d3
             .area()
             .x((d, i) => xScale(i))
@@ -157,7 +162,7 @@ function StrudelGraph() {
             .attr("opacity", 0.25)
             .attr("d", area);
 
-   
+        // Gain line
         const line = d3
             .line()
             .x((d, i) => xScale(i))
@@ -170,6 +175,7 @@ function StrudelGraph() {
             .attr("stroke-width", 2)
             .attr("d", line);
 
+        // Highlight last point
         const lastIndex = gainArray.length - 1;
         const lastValue = gainArray[lastIndex];
 
@@ -181,6 +187,7 @@ function StrudelGraph() {
             .attr("stroke", "#1db954")
             .attr("stroke-width", 1.5);
 
+        // Labels
         g.append("text")
             .attr("x", 4)
             .attr("y", 12)

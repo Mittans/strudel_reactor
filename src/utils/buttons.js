@@ -3,15 +3,17 @@ import { getGlobalEditor } from './globalEditor';
 import { Proc } from './proc';
 import { savePreset, loadPreset } from './presets';
 
-
+// Sets up all UI and its event bindings
 export function SetupButtons() {
     const editor = getGlobalEditor();
 
     document.getElementById('play')?.addEventListener('click', () => editor?.evaluate());
     document.getElementById('stop')?.addEventListener('click', () => editor?.stop());
+    // // Preprocess
     document.getElementById('process')?.addEventListener('click', () => {
         Proc()
     })
+    // Preprocess and immediately play
     document.getElementById('process_play')?.addEventListener('click', () => {
         if (editor != null) {
             Proc()
@@ -21,7 +23,7 @@ export function SetupButtons() {
     }
     )
 
-
+    // selecting elements based on their IDs
     const vol = document.getElementById('volume_slider');
     const cpm = document.getElementById('cpm_input');
     const masterVol = document.getElementById('master_volume_slider');
@@ -33,7 +35,7 @@ export function SetupButtons() {
 
 
 
-
+    // This function reevaluates the code if the REPL is currently playing
     const reevalIfPlaying = () => {
         if (editor && editor.repl?.state?.started) {
             Proc();
@@ -41,6 +43,7 @@ export function SetupButtons() {
         }
     };
 
+    // Live re-evaluation from UI changes
     vol?.addEventListener('input', reevalIfPlaying);   
     cpm?.addEventListener('change', reevalIfPlaying);
 

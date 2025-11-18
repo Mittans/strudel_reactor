@@ -4,12 +4,13 @@ import React from 'react';
 function DJControls() {
     return (
         <div>
+            {/* MIX/TEMPO SECTION */}
             <details className="control-section" open>
                 <summary>
-                    <span>🎚️ Mix & Tempo</span>
+                    <span>Mix & Tempo</span>
                     <span className="text-muted small">Volume / CPM</span>
                 </summary>
-
+                {/* Master Volume Slider */}
                 <div className="mt-3">
                     <div className="mb-3">
                         <label htmlFor="master_volume_slider" className="form-label">Master Volume</label>
@@ -29,7 +30,7 @@ function DJControls() {
                         />
                         <small>Current: <span id="master_volume_value">0.80</span></small>
                     </div>
-
+                    {/* CPM Input */}
                     <div className="mb-1">
                         <label htmlFor="cpm_input" className="form-label">Cycles per Minute (CPM)</label>
                         <input
@@ -43,6 +44,7 @@ function DJControls() {
                         />
                     </div>
                 </div>
+                {/* Low-Pass Filter control */}
                 <div className="mb-3">
                     <label htmlFor="lpf_slider" className="form-label">Low Pass Filter</label>
                     <input
@@ -61,6 +63,7 @@ function DJControls() {
                     />
                     <small>Cutoff: <span id="lpf_value">5000</span> Hz</small>
                 </div>
+                {/* Reverb / Room slider */}
                 <div className="mb-3">
                     <label htmlFor="room_slider" className="form-label">Reverb / Space</label>
                     <input
@@ -80,13 +83,13 @@ function DJControls() {
                     <small>Amount: <span id="room_value">0.60</span></small>
                 </div>
             </details>
-
+            {/* INSTRUMENTS (p1/p2/p3) */}
             <details className="control-section" open>
                 <summary>
-                    <span>🥁 Instruments</span>
+                    <span>Instruments</span>
                     <span className="text-muted small">P1 / P2 / P3</span>
                 </summary>
-
+                {/* p1 toggle */}
                 <div className="mt-3">
                     <div className="mb-2">
                         <p className="mb-1">p1</p>
@@ -114,6 +117,7 @@ function DJControls() {
                             </label>
                         </div>
                     </div>
+                    {/* p2/p3 toggles */}
                     <div className="mb-2">
                         <p className="mb-1">p2 / p3</p>
                         <div className="d-flex flex-wrap gap-2 align-items-center">
@@ -129,6 +133,7 @@ function DJControls() {
                                     p2: ON
                                 </label>
                             </div>
+                            {/* p3 controls */}
                             <div className="form-check">
                                 <input
                                     className="form-check-input"
@@ -163,6 +168,7 @@ function DJControls() {
                                     p3: Hush
                                 </label>
                             </div>
+                            {/* Bassline selection */}
                             <div className="mb-2">
                                 <p className="mb-1">Bassline</p>
                                 <select
@@ -179,13 +185,13 @@ function DJControls() {
                     </div>
                 </div>
             </details>
-
+            {/* PATTERNS/PRESETS */}
             <details className="control-section">
                 <summary>
-                    <span>🎼 Patterns</span>
+                    <span>Patterns</span>
                     <span className="text-muted small">Song variation</span>
                 </summary>
-
+                {/* Pattern selector */}
                 <div className="mt-3">
                     <div className="mb-2">
                         <label htmlFor="pattern_select" className="form-label">Pattern</label>
@@ -200,7 +206,7 @@ function DJControls() {
                         </select>
                     </div>
                 </div>
-
+                {/* JSON presets */}
                 <div className="mb-3">
                     <div className="d-flex justify-content-between align-items-center">
                         <span className="section-title">Presets</span>

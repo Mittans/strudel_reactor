@@ -1,7 +1,8 @@
 import { ProcAndPlay } from './proc';
-
+// LocalStorage key used to save and load presets
 const PRESET_KEY = 'strudel_reactor_preset_1';
 
+// saving all the UI control valuses into localStorage
 export function savePreset() {
     const preset = {
         masterVolume: document.getElementById('master_volume_slider')?.value ?? '0.8',
@@ -24,8 +25,10 @@ export function savePreset() {
     }
 }
 
+// loading the UI control values from localStorage
 export function loadPreset() {
     let raw;
+    // reading the preset from localStorage
     try {
         raw = localStorage.getItem(PRESET_KEY);
         if (!raw) {
@@ -47,6 +50,7 @@ export function loadPreset() {
             }
         };
 
+        // Restore numeric, slider controls
         setVal('master_volume_slider', preset.masterVolume);
         setVal('volume_slider', preset.volume);
         setVal('cpm_input', preset.cpm);
@@ -55,6 +59,7 @@ export function loadPreset() {
         setVal('pattern_select', preset.pattern);
         setVal('bassline_select', preset.bassline);
 
+        // Restore radio button pairs
         const setRadioPair = (onId, hushId, hush) => {
             const onEl = document.getElementById(onId);
             const hushEl = document.getElementById(hushId);
@@ -67,6 +72,7 @@ export function loadPreset() {
         setRadioPair('flexRadioDefault3', 'flexRadioDefault4', preset.p2Hush);
         setRadioPair('flexRadioDefault5', 'flexRadioDefault6', preset.p3Hush);
 
+        // Rerun preprocessing and restart playback
         ProcAndPlay();
     } catch (err) {
         console.error('Could not apply preset', err);

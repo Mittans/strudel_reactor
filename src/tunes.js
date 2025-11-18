@@ -18,7 +18,7 @@ const drum_structure = [
 
 const basslines = [
   "[[eb1, eb2]!16 [f2, f1]!16 [g2, g1]!16 [f2, f1]!8 [bb2, bb1]!8]/8",
-  "[[eb1, eb2]!16 [bb2, bb1]!16 [g2, g1]!16 [f2, f1]!4 [bb1, bb2]!4 [eb1, eb2]!4 [f1, f2]!4]/8"
+  "[bb0!2 ~!2 bb0!2 ~!2]/2"
 ]
 
 const arpeggiator1 = [
@@ -36,16 +36,14 @@ const arpeggiator2 = [
 ]
 
 
-const pattern = "<PATTERN>";
+const pattern = <PATTERN>;
 const bass = <BASSLINE>;
 
 bassline:
 note(pick(basslines, bass))
 .sound("supersaw")
 .postgain(2)
-.room(0.6)
 .lpf(700)
-.room(0.4)
 .postgain(pick(gain_patterns, pattern))
 .gain(<VOLUME>)
 .gain(<P2_GAIN>)
@@ -56,7 +54,6 @@ note(pick(arpeggiator1, "<0 1 2 3>/2"))
 .sound("supersaw")
 .lpf(300)
 .adsr("0:0:.5:.1")
-.room(0.6)
 .lpenv(3.3)
 .postgain(pick(gain_patterns, pattern))
 .gain(<VOLUME>)
@@ -89,7 +86,6 @@ stack(
   s("hh").struct("x*16").bank("RolandTR808")
   .gain(0.6)
   .jux(rev)
-  .room(sine.range(0.1,0.4))
   .postgain(0.5),
   
   s("[psr:[2|5|6|7|8|9|12|24|25]*16]?0.1")
@@ -104,7 +100,7 @@ stack(
 
 all(x => x.gain(<MASTER_VOLUME>))
 all(x => x.lpf(<LPF>))
-all(x => x.room(<ROOM>))
+all(x => x.room(<ROOM>*4 ))
 all(x => x.log())
 
 //Remixed and reproduced from Algorave Dave's code found here: https://www.youtube.com/watch?v=ZCcpWzhekEY

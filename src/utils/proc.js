@@ -1,5 +1,6 @@
 import { getGlobalEditor } from './globalEditor.js';
 
+// function running the proc and play
 export function ProcAndPlay() {
     const editor = getGlobalEditor();
     if (editor != null && editor.repl.state.started === true) {
@@ -9,6 +10,7 @@ export function ProcAndPlay() {
     }
 }
 
+// preprocerss the text in the textarea
 export function Proc() {
     const editor = getGlobalEditor();
     if (!editor) {
@@ -18,6 +20,7 @@ export function Proc() {
     }
     let proc_text = document.getElementById('proc').value
 
+    // UI elements
     const volumeEl = document.getElementById('volume_slider');
     const cpmEl = document.getElementById('cpm_input');
     const masterVolElement = document.getElementById('master_volume_slider');
@@ -26,7 +29,7 @@ export function Proc() {
     const roomElement = document.getElementById('room_slider');
     const lpfElement = document.getElementById('lpf_slider');
 
-
+    // extracting values from UI elements with defaults
     const masterVolValue = masterVolElement ? masterVolElement.value : "1.0";
     const currentVolume = volumeEl ? volumeEl.value : "0.8";
     const currentCPM = cpmEl ? cpmEl.value : "120";
@@ -35,6 +38,7 @@ export function Proc() {
     const lpfValue = lpfElement ? lpfElement.value : "5000";
     const roomValue = roomElement ? roomElement.value : "0.6";
 
+    // radio toggles
     const p1Hush = document.getElementById('flexRadioDefault2');
     const p2Hush = document.getElementById('flexRadioDefault4');
     const p3Hush = document.getElementById('flexRadioDefault6');
@@ -51,7 +55,7 @@ export function Proc() {
     let proc_text_replaced = proc_text;
 
 
-
+    // Replace placeholder tags with actual control values
     proc_text_replaced = proc_text_replaced
         .replaceAll('<MASTER_VOLUME>', masterVolValue)
         .replaceAll('<PATTERN>', patternValue)
@@ -73,6 +77,7 @@ export function Proc() {
     editor.setCode(proc_text_replaced)
 }
 
+// function to process text based on radio button selection
 export function ProcessText(match, ...args) {
 
     let replace = ""

@@ -1,3 +1,5 @@
+
+// Component for text preprocessing and playback controls
 function PauseAndPlay() {
     return (
         <>

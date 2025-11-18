@@ -1,3 +1,5 @@
+
+// This component renders a label and a textarea that will be used
 function PauseAndPlay() {
     return (
         <>

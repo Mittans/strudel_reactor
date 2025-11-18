@@ -1,3 +1,5 @@
+
+// Simple transport control component (Play / Stop)
 function PauseAndPlay() {
     return (
         <>
