@@ -19,7 +19,7 @@ function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop, onGraphToggle }){
                     data-tooltip="tooltip"
                     title="How to Use Strudel Studio"
                 >
-                    <i class="bi bi-info-circle"></i> Guide
+                    <i className="bi bi-info-circle"></i> Guide
                 </button>
                 <div className="d-flex justify-content-center flex-wrap gap-3 py-3">
                     <button id="process" className="btn px-4" onClick={onProc}>
@@ -63,6 +63,7 @@ function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop, onGraphToggle }){
                         <li>Adjust the <b>BPM slider</b> to change speed</li>
                         <li>Click <b>View Graph</b> to visualize your pattern</li>
                         <li>Click <b>Stop</b> to halt playback</li>
+                        <li>Click <b>Strudel REPL</b> to expand strudel editor</li>
                     </ul>
 
                     <p><strong>Tips:</strong></p>
@@ -70,6 +71,7 @@ function ControlPanel({ onProc, onProcAndPlay, onPlay, onStop, onGraphToggle }){
                         <li>Use Ctrl+Enter to quickly preprocess</li>
                         <li>Try layering multiple patterns for variety</li>
                         <li>Use comments (//) to organize your code</li>
+                        <li>To overwrite existing code for a saved preset, simply save again with same name</li>
                     </ul>
                 </div>
             </div>

@@ -43,25 +43,33 @@ function App() {
     const handlePresetLoad = (newCode) => setCode(newCode);
 
     // Handle preset save
-    const handlePresetSave = (name, newCode) => {
-        const newPreset = {
-            id: Date.now().toString(),
-            name,
-            code: newCode,
-            builtIn: false
-        };
+    const handlePresetSave = (name, code) => {
+        setPresets(prev => {
+            // Remove any existing preset with same name
+            const filtered = prev.filter(p => p.name !== name);
 
-        const updated = [...presets, newPreset];
-        setPresets(updated);
+            // Create new / overwritten preset
+            const newPreset = {
+                id: Date.now(),
+                name,
+                code,
+                builtIn: false
+            };
 
-        // Save only user presets
-        const onlyUser = updated.filter(p => !p.builtIn);
-        localStorage.setItem("userPresets", JSON.stringify(onlyUser));
+            const updated = [...filtered, newPreset];
+
+            // Save ONLY user presets in localStorage
+            const onlyUser = updated.filter(p => !p.builtIn);
+            localStorage.setItem("userPresets", JSON.stringify(onlyUser));
+
+            return updated;
+        });
     };
+
 
     // Handle preset delete
     const handlePresetDelete = (id) => {
-        const updated = presets.filter(p => p.id !== id);
+        const updated = presets.filter(p => p.id !== id && p.name !== id);
         setPresets(updated);
 
         const onlyUser = updated.filter(p => !p.builtIn);
