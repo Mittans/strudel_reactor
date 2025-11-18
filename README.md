@@ -75,3 +75,7 @@ Music cannot play unless code is present and processed.
 ### Website Demonstration Link
 Here is the link to the website demonstration:
 https://youtu.be/ZQlE4i06dVA
+
+### Author(s)
+Name: Raj Rathod
+EmailID: ratrk002
