@@ -52,14 +52,15 @@ function Presets({ presets, onLoad, onSave, onDelete, currentCode }) {
 		return;
 		}
 
-		const preset = presets.find(p => p.id === selected);
-		if (preset?.builtIn) {
-		alert("Cannot delete built-in presets!");
+		const preset = presets.find(p => String(p.id) === String(selected));
+
+		if (!preset) {
+		alert("Preset not found!");
 		return;
 		}
 
 		if (window.confirm(`Delete preset "${preset.name}"?`)) {
-		onDelete(selected);
+		onDelete(preset.id);
 		setSelected("");
 		alert("Preset deleted!");
 		}
