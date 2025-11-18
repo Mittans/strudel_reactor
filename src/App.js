@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -8,65 +8,92 @@ import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import { PlaybackController } from './components/controllers/PlaybackController';
+import { SlideInputs } from './components/controllers/SlideInputsController';
+import AddModal from './components/modal/addModal';
+import console_monkey_patch, { GetD3Data } from './console-monkey-patch';
+import { SongSelectorController } from './components/controllers/SongSelectorController';
+import { PanelToggleController } from './components/controllers/PanelToggleController';
+import { OpenShowTimeButton } from './components/buttons/open buttons/OpenShowTimeButton';
+import { OpenTextToProcessButton } from './components/buttons/open buttons/OpenTextToProcessButton';
+import { OpenD3GraphButton } from './components/buttons/open buttons/OpenD3GraphButton';
+import { Graph } from './components/graph/Graph';
 
 let globalEditor = null;
+
+// The global variable of the arpeggiator.
+let currentArp = "arpeggiator1";
 
 const handleD3Data = (event) => {
     console.log(event.detail);
 };
 
-export function SetupButtons() {
+// Function check if the arpeggiator is duplicated.
+export function validateArpeggiators(tuneText) {
+    const regex = /const\s+(arpeggiator\d+)\s*=/g;
+    const found = [];
+    let match;
 
-    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-    document.getElementById('process').addEventListener('click', () => {
-        Proc()
-    }
-    )
-    document.getElementById('process_play').addEventListener('click', () => {
-        if (globalEditor != null) {
-            Proc()
-            globalEditor.evaluate()
+    while ((match = regex.exec(tuneText)) !== null) {
+        if (found.includes(match[1])) {
+            return false; 
         }
+        found.push(match[1]);
     }
-    )
-}
-
-
+    return true; 
+  }
+  
+// Function check if the text is empty
+export function validateText() {
+    let proc_text = document.getElementById("proc").value;
+    if (proc_text.length === 0) {
+      return false;
+    }
+    return true; 
+  }
 
 export function ProcAndPlay() {
-    if (globalEditor != null && globalEditor.repl.state.started == true) {
-        console.log(globalEditor)
-        Proc()
-        globalEditor.evaluate();
-    }
+  if (globalEditor != null && globalEditor.repl.state.started == true) {
+    console.log(globalEditor)
+    Proc()
+    globalEditor.evaluate();
+  }
 }
 
 export function Proc() {
+  let proc_text = document.getElementById("proc").value;
+  if (!validateArpeggiators(proc_text)){
+     return;
+  } 
 
-    let proc_text = document.getElementById('proc').value
-    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-    ProcessText(proc_text);
-    globalEditor.setCode(proc_text_replaced)
-}
-
-export function ProcessText(match, ...args) {
-
-    let replace = ""
-    if (document.getElementById('flexRadioDefault2').checked) {
-        replace = "_"
-    }
-
-    return replace
+  let proc_text_replaced = proc_text.replaceAll('<Radio>', currentArp);
+  globalEditor.setCode(proc_text_replaced)
 }
 
 export default function StrudelDemo() {
 
-const hasRun = useRef(false);
+  const hasRun = useRef(false);
 
-useEffect(() => {
+  // Variable to check if the song is play
+  const [isPlay,setIsPlay] = useState(false);
 
+  // Variable to handle the change of the volume.
+  const [volume, setVolumeState] = useState(1); 
+
+  // Variable to handle the change of the speed.
+  const [speed, setSpeed] = useState(1); 
+
+  // Variable to save text, set up stranger_tune initially.
+  const [text, setText] = useState(stranger_tune);
+
+  // Variable to handle the open button.
+  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenSetting,setIsOpenSetting] = useState(false);
+  const [isOpenShowTime, setIsOpenShowTime] = useState(false);
+  const [isOpenTextToProcess, setIsOpenTextToProcess] = useState(false);
+  const [isOpenD3Graph, setIsOpenD3Graph] = useState(false);
+
+  useEffect(() => {
     if (!hasRun.current) {
         document.addEventListener("d3Data", handleD3Data);
         console_monkey_patch();
@@ -97,62 +124,204 @@ useEffect(() => {
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
                 },
             });
-            
-        document.getElementById('proc').value = stranger_tune
-        SetupButtons()
-        Proc()
+          }
+
+          if (!validateText()) {
+            alert("Please make sure the text is not empty during playing, now you have to be paid! RESET BROWSER!")
+            window.location.reload();
+          } else {
+          Proc();
+          ProcAndPlay();
+        }
+      });
+    
+    // Function to handle update the editor from the other files.
+    function updateEditor(newText) {
+    setText(newText);
+ 
+    if (globalEditor) {
+      globalEditor.setCode(newText); 
     }
+  }
 
-}, []);
+  // Function to handle changing the arppeggiator
+  function handleChangeArp(e) {
+    currentArp = e.target.value;
+    ProcAndPlay();
+  }
+
+  // Controller allow the system to play the song
+  const handlePlay = () => {
+    const editorValue = document.getElementById("proc").value;
+    if (globalEditor != null && editorValue != "") {
+      setIsPlay(true);
+      globalEditor.evaluate();
+    } else{
+      alert("You should write the code in the box to play the music")
+    }
+  }
 
 
-return (
-    <div>
-        <h2>Strudel Demo</h2>
-        <main>
+  // Controller allow the system to stop the song 
+  const handleStop = () => {
+    setIsPlay(false);
+    globalEditor.stop()
+  }
 
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
-                        <textarea className="form-control" rows="15" id="proc" ></textarea>
-                    </div>
-                    <div className="col-md-4">
+  // Controller allow the system to process the global taking code from the "proc" and play the song. 
+  // It will alerts if the text is empty.
+  const handleProcPlay = () => {
+    const editorValue = document.getElementById("proc").value;
+    if (globalEditor != null && editorValue != "") {
+      setIsPlay(true)
+      Proc()
+      globalEditor.evaluate()
+    }
+    else{
+      alert("You should write the code in the box to play the music")
+    }
+  }
 
-                        <nav>
-                            <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                            <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
-                            <br />
-                            <button id="play" className="btn btn-outline-primary">Play</button>
-                            <button id="stop" className="btn btn-outline-primary">Stop</button>
-                        </nav>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                            <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                p1: ON
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                            <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                p1: HUSH
-                            </label>
-                        </div>
-                    </div>
-                </div>
+  // Controller allow the system to open the modal.
+  const modalOpenControl = () => {
+    setIsOpenModal(true);
+  }
+
+  // Controller allow the system to close the modal.
+  const modalCloseControl = () => {
+    setIsOpenModal(false);
+  }
+
+  // Controller allow the system to open the editor
+  const handleOpenShowTime = () => {
+    if (isOpenShowTime === false) {
+      setIsOpenShowTime(true);
+    } else {
+      setIsOpenShowTime(false);
+    }
+  };
+
+  // Controller allow the system to open the text box to process
+  const handleOpenTextToProcess = () => {
+    if (isOpenTextToProcess === false) {
+      setIsOpenTextToProcess(true);
+    } else {
+      setIsOpenTextToProcess(false);
+    }
+  };
+
+  // Controller allow the system to open the setting
+  const handleOpenSetting= () => {
+    if (isOpenSetting === false) {
+      setIsOpenSetting(true);
+    } else {
+      setIsOpenSetting(false);
+    }
+  };
+
+  // Controller allow the system to open the D3 Graph
+  const handleOpenD3Graph = () => {
+    if (isOpenD3Graph === false) {
+      setIsOpenD3Graph(true);
+    } else {
+      setIsOpenD3Graph(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-yellow-500">
+      <div name="components-bar" className="bg-zinc-900 p-2 mb-2 flex justify-between">
+
+        {/* The title */}
+        <div className='flex'>
+          <span className={`text-4xl font-bold text-yellow-500 px-1 ${isPlay ? "animate-spin" : ""}`}>꩜</span>
+          <h1 className="text-4xl font-bold text-yellow-500">Strudel </h1>
+        </div>
+        
+        {/* The control buttons */}
+        <div name="buttons">
+          <PlaybackController
+          handleProcPlay={handleProcPlay}
+          handleStop={handleStop}
+          handlePlay={handlePlay}
+          isPlay={isPlay}/>
+        </div>
+
+        {/* The Saving Modal appears after clicking save button */}
+        {isOpenModal && (
+        <AddModal modalCloseControl={modalCloseControl} text={text}/>
+        )}
+      </div>
+
+      <main>
+        <div className="container-fluid">
+          <div>
+            <div className='flex justify-between mb-2'>  
+              {/* Song selector */}
+              <SongSelectorController
+                setText={setText} 
+                text={text}
+                handleOpenSetting={handleOpenSetting}
+                isOpenSetting={isOpenSetting}
+                modalOpenControl={modalOpenControl} 
+                />   
+
+              {/* Slider inputs includes volume and speed */}
+              <SlideInputs text={text} updateEditor={updateEditor} volume={volume} setVolumeState={setVolumeState} speed={speed} setSpeed={setSpeed}/>      
             </div>
-            <canvas id="roll"></canvas>
-        </main >
+
+            <div>
+
+              {/* Panel toggle includes arpeggiator selection, effect selection, and instrument selection */}
+              <PanelToggleController
+                text={text}
+                updateEditor={updateEditor}
+                ProcAndPlay={ProcAndPlay}
+                handleChangeArp={handleChangeArp}
+              />
+            </div>
+
+            <div className='mx-10 mt-4'>
+                {/* Button to show the textarea that was hidden */}
+                <OpenTextToProcessButton handleOpenTextToProcess={handleOpenTextToProcess} isOpenTextToProcess={isOpenTextToProcess}/>
+
+                <textarea 
+                  className={`w-full border border-black rounded-lg ${isOpenTextToProcess ? "" : "hidden"}`} 
+                  rows="15" 
+                  id="proc" 
+                  value={text}
+                  onChange={(e) => {
+                    if (validateArpeggiators(e.target.value)) {
+                      setText(e.target.value);
+                    } else {
+                        alert("Duplicate arpeggiator name detected! Update cancelled.");
+                    }}}
+                  ></textarea>
+            </div>
+          </div>
+
+          <div className='mx-10 mt-4'>
+
+             {/* Button to show the editor that was hidden */}
+            <OpenShowTimeButton isOpenShowTime={isOpenShowTime} handleOpenShowTime={handleOpenShowTime}/>
+    
+            <div className={`${isOpenShowTime ? "" : "hidden"}`}>
+              <div className="h-500" style={{ maxHeight: '500', overflowY: 'auto' }}>
+                <div id="editor"/>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='mx-10 mt-4'>
+
+           {/* Button to show the graphthat was hidden */}
+          <OpenD3GraphButton isOpenD3Graph={isOpenD3Graph} handleOpenD3Graph={handleOpenD3Graph}/>
+
+          <canvas className={`bg-zinc-800 w-full hidden`} id="roll"></canvas>
+          <Graph className={`bg-zinc-800 w-full ${isOpenD3Graph ? "" : "hidden"}`} volume={volume} speed={speed} setSpeed={setSpeed} isPlay={isPlay}/>
+        </div>
+      </main >
     </div >
 );
-
 
 }
