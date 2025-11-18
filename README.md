@@ -23,53 +23,53 @@ http://localhost:3000
 # Controls — What They Do
 ### Volume Slider
 
-Controls the master volume of the entire track live.
+- Controls the master volume of the entire track live.
 
 ### Speed (CPM) Input
 
-Accepts values 60–200.
+- Accepts values 60–200.
 
-If the user enters an invalid value, a warning appears and it resets back to 120.
+- If the user enters an invalid value, a warning appears and it resets back to 120.
 
 ### Instrument Toggles
 
 Each toggle directly enables or disables a section of the composition:
 
-Drums1 – Main 808 drum pattern
+- Drums1 – Main 808 drum pattern
 
-Drums2 – Tech/industrial filler layer
+- Drums2 – Tech/industrial filler layer
 
-Bass – Supersaw bassline
+- Bass – Supersaw bassline
 
-Melody – Arpeggiated supersaw hook
+- Melody – Arpeggiated supersaw hook
 
-Guitar – Plucked strumming pattern stack
+- Guitar – Plucked strumming pattern stack
 
 ### Playback Buttons
 
-Play – Plays the fully processed Strudel code
+- Play – Plays the fully processed Strudel code
 
-Stop – Stops all audio instantly
+- Stop – Stops all audio instantly
 
-Preprocess – Loads raw code into the editor
+- Preprocess – Loads raw code into the editor
 
-Proc & Play – Preprocess + immediately play
+- Proc & Play – Preprocess + immediately play
 
-Save & Load Settings (JSON)
+- Save & Load Settings (JSON)
 
-Saves the full UI state (toggles, CPM, volume) as JSON
+- Saves the full UI state (toggles, CPM, volume) as JSON
 
-Loads those JSON settings back into the UI
+- Loads those JSON settings back into the UI
 
 ### Hotkeys
 
-K → Play
+- K → Play
 
-L → Stop
+- L → Stop
 
-H → Toggle Drums1
+- H → Toggle Drums1
 
-J → Toggle Bass
+- J → Toggle Bass
 
 ---
 
