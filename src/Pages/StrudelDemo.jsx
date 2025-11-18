@@ -8,7 +8,7 @@ import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/w
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from '../Storage/tunes';
 import console_monkey_patch from '../console-monkey-patch';
-
+import MusicSearch from '../Components/SearchFunctionality';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import D3 from '../Components/D3';
 
@@ -76,19 +76,16 @@ export default function StrudelDemo() {
 
 
                     <div className="row mb-4">
-                        <div
-                            className="col-md-8"
-                            style={{ maxHeight: '50vh', overflowY: 'auto' }}
-                        >
-                            <Preprocess
-                                defaultValue={songData}
-                                onChange={(e) => setSongData(e.target.value)}
-                            />
+                        <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}  >
+                            <Preprocess defaultValue={songData} onChange={(e) => setSongData(e.target.value)} />
                         </div>
+
+
 
                         <div className="col-md-4">
                             <D3 />
-                            <nav className="mt-3 d-flex flex-column gap-3">
+
+                            <nav className="mt-1 d-flex flex-column gap-2">
                                 <ProcessButtons
                                     editorRef={editorRef}
                                     songData={songData}
@@ -100,6 +97,8 @@ export default function StrudelDemo() {
                                 />
                             </nav>
                         </div>
+
+
                     </div>
 
 

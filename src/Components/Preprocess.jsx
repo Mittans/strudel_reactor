@@ -5,7 +5,7 @@ function Preprocess({ defaultValue, onChange }) {
 
             <textarea
                 className="form-control transparent-textarea"
-                rows="15"
+                rows="35"
                 value={defaultValue}
                 onChange={onChange}
                 id="proc"
