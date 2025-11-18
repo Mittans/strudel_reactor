@@ -91,6 +91,10 @@ Pre-configured mute/solo combinations:
 - **DrumsOnly**: Drums only
 - **Drums2Only**: Secondary drum pattern only
 
+### Waveform Graph
+
+Visual representations of the song based on waveform
+
 ### Special Effects
 
 Toggle switches for additional effects:

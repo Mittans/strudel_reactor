@@ -225,19 +225,28 @@ export function useStrudel(initialTune) {
     const ON = `const ${name} = ${onValue}`;
     const OFF = `const ${name} = ${offValue}`;
 
-    setProcValue((prev) => {
-      // Check if effect is currently ON
-      const isCurrentlyOn = prev.includes(ON);
-      setEffect(!isCurrentlyOn);
+    const isCurrentlyOn = procValue.includes(ON);
+    setEffect(!isCurrentlyOn);
 
-      // replace the randomHits
-      let newCode = isCurrentlyOn
-        ? prev.replace(ON, OFF)
-        : prev.replace(OFF, ON);
+    let newCode = isCurrentlyOn
+      ? procValue.replace(ON, OFF)
+      : procValue.replace(OFF, ON);
 
-      setCodeAndPlay(newCode);
-      return newCode;
-    });
+    setCodeAndPlay(newCode);
+
+    // setProcValue((prev) => {
+    //   // Check if effect is currently ON
+    //   const isCurrentlyOn = prev.includes(ON);
+    //   setEffect(!isCurrentlyOn);
+
+    //   // replace the randomHits
+    //   let newCode = isCurrentlyOn
+    //     ? prev.replace(ON, OFF)
+    //     : prev.replace(OFF, ON);
+
+    //   setCodeAndPlay(newCode);
+    //   return newCode;
+    // });
   }
 
   function toggleRandomHits() {

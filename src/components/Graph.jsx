@@ -9,7 +9,7 @@ export default function Graph({ isPlaying, volume }) {
   const [rngArray, setRngArray] = useState([]);
   const maxItems = 20;
   const timeOut = 500;
-  const maxValue = 1.5;
+  const maxValue = 2;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -35,9 +35,14 @@ export default function Graph({ isPlaying, volume }) {
     var stringArray = inputString.split(/(\s+)/);
 
     for (const item of stringArray) {
-      if (item.startsWith("gain:")) {
-        let val = item.substring(5);
-        return Number(val);
+      // Instead of only get the one startsWith gain, i also include postgain since it also changes the volume
+      if (item.includes("gain:")) {
+        const regex = /gain:(\d+(\.\d+)?)/;
+        const match = item.match(regex);
+
+        if (match) {
+          return Number(match[1]);
+        }
       }
     }
 

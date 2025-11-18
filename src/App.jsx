@@ -21,7 +21,6 @@ export default function App() {
   const {
     isReady,
     isPlaying,
-    setIsPlaying,
     bpm,
     volume,
     procValue,
