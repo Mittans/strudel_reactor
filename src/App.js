@@ -24,7 +24,7 @@ const handleD3Data = (event) => {
 export default function StrudelDemo() {
 
     const hasRun = useRef(false);
-    
+
     const [songText, setSongText] = useState(stranger_tune);
     // Current CPM
     const [cpm, setCpm] = useState(140);
@@ -46,7 +46,9 @@ export default function StrudelDemo() {
     const [effectChain, setEffectChain] = useState("");
 
     const handlePlay = () => {
-        globalEditor.evaluate()
+
+        let outputText = Preprocess({ inputText: procText, volume: volume });
+        globalEditor.evaluate(outputText);
         setIsPlaying(true);
     }
 
@@ -151,12 +153,13 @@ useEffect(() => {
                 },
             });
             
-        document.getElementById('proc').value = stranger_tune
+        document.getElementById('proc').value = procText
+        globalEditor.setCode(procText)
         //SetupButtons()
         //Proc()
     }
 
-    const processed = songText
+    const processed = procText
         .replaceAll("<cpm>", cpm.toString())
         .replaceAll("<keyshift>", keyShift.toString())
         .replaceAll("<volume>", masterVolume.toString())
