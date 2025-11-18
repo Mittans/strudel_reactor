@@ -102,7 +102,7 @@ Load Setting Restores the saved configuration and applies it to the UI and Strud
 
 **D3 Graph Component**  
 The D3 graph shows live gain values from Strudel using a simple line graph.
-My console-monkey-patch.js sends gain data like the 0.5 gain to the component through a d3Data event.
+The console-monkey-patch.js sends gain data like the 0.5 gain to the component through a d3Data event.
 The D3.jsx file listens for this event, stores the numbers in React state, and D3 draws a real-time updating line graph as the music plays.
 
 High points = louder parts
@@ -113,3 +113,12 @@ The graph only updates when Strudel outputs gain values
 This provides a simple visual connection to the audio.
 
 **Video Link**  
+<https://www.loom.com/share/dec006e45dbd4c5899456d0e73b6b7b9>
+
+## AI Usage
+
+![alt text](<src/AI Screenshot/d3.jpg>)
+
+![alt text](<src/AI Screenshot/Curve.jpg>)
+
+![alt text](<src/AI Screenshot/tracks.jpg>)
