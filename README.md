@@ -68,3 +68,73 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ 
+# Controls Overview (What each control does)
+Transport Controls
+
+## Preprocess
+Runs the placeholder replacement system (e.g., <CPM>, <VOLUME>, <MASTER_VOLUME>, etc.) without playing.
+
+## Proc & Play
+Runs preprocessing and instantly evaluates the Strudel code.
+
+## Mix & Tempo Controls
+
+### Master Volume Slider
+Replaces <MASTER_VOLUME> with the selected value.
+
+### Volume Slider
+Controls per-pattern gain and replaces <VOLUME> in the Strudel code.
+
+### Cycles per Minute (CPM) Input
+Sets Strudel’s tempo via <CPM>.
+
+### Low Pass Filter (LPF) Slider
+Replaces <LPF> with a cutoff frequency for filtering patterns.
+
+### Reverb / Room Slider
+Replaces <ROOM> to simulate more or less spatial effect.
+
+## Instrument Toggles 
+
+### Each instrument has ON/HUSH radio buttons:
+
+ON - Inserts <P1_GAIN> = 1.0
+ON - Inserts <P2_GAIN> = 1.0
+ON - Inserts <P3_GAIN> = 1.0
+
+HUSH - Inserts <P1_GAIN> = 0.0 (mutes that pattern)
+HUSH - Inserts <P2_GAIN> = 0.0 (mutes that pattern)
+HUSH - Inserts <P3_GAIN> = 0.0 (mutes that pattern)
+
+Patterns respond immediately if playback is running.
+
+### Bassline Selector
+
+Replaces <BASSLINE> with either 0 (Bassline A) or 1 (Bassline B).
+Used to branch between bass patterns inside the Strudel composition.
+
+## Pattern Selector
+
+Replaces <PATTERN> with 0 / 1 / 2, switching between Pattern A, Pattern B, or Pattern C.
+
+## Preset Buttons
+
+### Save Preset
+Stores all UI values (sliders, selects, hush toggles) to localStorage.
+
+### Load Preset
+Restores saved values and automatically calls ProcAndPlay().
+
+## D3 Live Gain Graph
+
+A real-time SVG graph that listens to Strudel console output and displays the last approx. 80 gain values.
+Updates every 300ms and visually reflects amplitude changes over time.
+
+## Usage Notes & Quirks
+
+Preprocess is required before playback
+Proc & Play is recommended
+Some controls only take effect if playback is active
+
+

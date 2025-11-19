@@ -1,0 +1,244 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\tunes.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\utils\\buttons.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\utils\\buttons.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\utils\\proc.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\utils\\proc.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\components\\djcontrols.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\djcontrols.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\app.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\utils\\d3handler.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\utils\\d3handler.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:readme.md||{EFC0BB08-EA7D-40C6-A696-C870411A895B}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\components\\strudelgraph.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\strudelgraph.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\components\\pauseandplay.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\pauseandplay.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\components\\procbuttons.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\procbuttons.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\components\\controlstextarea.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\components\\controlstextarea.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|c:\\users\\vraj\\desktop\\documents\\web tech\\react_assignment\\src\\utils\\globaleditor.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{1C538C04-AF09-44AC-9272-6DDEAA808F25}|ReactAssignment.esproj|solutionrelative:src\\utils\\globaleditor.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 285,
+          "SelectedChildIndex": 5,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "README.md",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\README.md",
+              "RelativeDocumentMoniker": "README.md",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\README.md",
+              "RelativeToolTip": "README.md",
+              "ViewState": "AgIAADsAAAAAAAAAAAAAAEcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
+              "WhenOpened": "2025-11-17T08:46:31.974Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "StrudelGraph.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\components\\StrudelGraph.js",
+              "RelativeDocumentMoniker": "src\\components\\StrudelGraph.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\components\\StrudelGraph.js",
+              "RelativeToolTip": "src\\components\\StrudelGraph.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAM0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-16T11:57:23.314Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "App.css",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\App.css",
+              "RelativeDocumentMoniker": "src\\App.css",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\App.css",
+              "RelativeToolTip": "src\\App.css",
+              "ViewState": "AgIAAFkAAAAAAAAAAAAowHEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2025-11-05T12:44:49.944Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "tunes.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\tunes.js",
+              "RelativeDocumentMoniker": "src\\tunes.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\tunes.js",
+              "RelativeToolTip": "src\\tunes.js",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABQAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-03T07:07:48.156Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "proc.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\utils\\proc.js",
+              "RelativeDocumentMoniker": "src\\utils\\proc.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\utils\\proc.js",
+              "RelativeToolTip": "src\\utils\\proc.js",
+              "ViewState": "AgIAACsAAAAAAAAAAAAQwD0AAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-02T00:06:35.379Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "d3Handler.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\utils\\d3Handler.js",
+              "RelativeDocumentMoniker": "src\\utils\\d3Handler.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\utils\\d3Handler.js",
+              "RelativeToolTip": "src\\utils\\d3Handler.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-02T00:06:08.468Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "App.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\App.js",
+              "RelativeDocumentMoniker": "src\\App.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\App.js",
+              "RelativeToolTip": "src\\App.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAGoAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-31T05:19:36.505Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "buttons.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\utils\\buttons.js",
+              "RelativeDocumentMoniker": "src\\utils\\buttons.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\utils\\buttons.js",
+              "RelativeToolTip": "src\\utils\\buttons.js",
+              "ViewState": "AgIAABcAAAAAAAAAAAAAwDEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-02T00:11:03.319Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "globalEditor.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\utils\\globalEditor.js",
+              "RelativeDocumentMoniker": "src\\utils\\globalEditor.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\utils\\globalEditor.js",
+              "RelativeToolTip": "src\\utils\\globalEditor.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-11-01T23:54:32.758Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "ControlsTextArea.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\components\\ControlsTextArea.js",
+              "RelativeDocumentMoniker": "src\\components\\ControlsTextArea.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\components\\ControlsTextArea.js",
+              "RelativeToolTip": "src\\components\\ControlsTextArea.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAA+wAIAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-31T05:26:18.443Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "ProcButtons.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\components\\ProcButtons.js",
+              "RelativeDocumentMoniker": "src\\components\\ProcButtons.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\components\\ProcButtons.js",
+              "RelativeToolTip": "src\\components\\ProcButtons.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-31T05:22:39.429Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DJControls.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\components\\DJControls.js",
+              "RelativeDocumentMoniker": "src\\components\\DJControls.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\components\\DJControls.js",
+              "RelativeToolTip": "src\\components\\DJControls.js",
+              "ViewState": "AgIAAC8AAAAAAAAAAAAAwK8AAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-31T05:18:59.324Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "PauseAndPlay.js",
+              "DocumentMoniker": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\components\\PauseAndPlay.js",
+              "RelativeDocumentMoniker": "src\\components\\PauseAndPlay.js",
+              "ToolTip": "C:\\Users\\Vraj\\Desktop\\Documents\\Web Tech\\React_Assignment\\src\\components\\PauseAndPlay.js",
+              "RelativeToolTip": "src\\components\\PauseAndPlay.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-10-31T05:18:58.783Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
