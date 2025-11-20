@@ -1,33 +1,33 @@
-# Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# 'Project Title
 
-## Available Scripts
+Strudel Live Coding – React Application
+
+### Overview
+
+This project is a React-based application that uses React concepts to live-code music in Strudel.
+It includes components, state, event handling, and a clear UI to make the music-coding experience simple and interactive.
+
+### Getting Started
 
 In the project directory, you can run:
 
-### `npm start`
+### npm install
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Installs all required dependencies listed in package.json.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### npm start
 
-### `npm test`
+Runs the app in the development mode.
+Open <http://localhost:3000> to view it in your browser.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The page automatically reloads when you make changes.
+You may also see lint errors in the console.
 
-### `npm run build`
+### npm run build
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Builds the app for production.
+The build folder is optimised, minified, and ready for deployment.
 
 ### `npm run eject`
 
@@ -39,32 +39,86 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+## Project Components Explanation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+**Play Button**  
+Starts Strudel audio playback.  
+Activates the browser audio context so that sound can be heard.  
+Compiles and runs the current Strudel code from the editor.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Stop Button**  
+Stops any currently playing Strudel patterns.  
+Useful when testing multiple ideas quickly.
 
-### Code Splitting
+**Strudel Code Editor (StrudelMirror)**  
+Main area where Strudel code is written and edited.  
+Supports live editing of patterns such as drums, basslines, and other sequences.  
+Changes in the editor only take effect after pressing the Play button again.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+**Process Buttons**  
+Automatically insert predefined patterns
+Apply simple formatting or cleaning to the Strudel code such as spacing or structure.  
 
-### Analyzing the Bundle Size
+**Preprocess Button**  
+Runs simple text-based preprocessing on the editor content before it is sent to Strudel.  
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+**Volume Slider**
 
-### Making a Progressive Web App
+The slider controls the output gain from 0% to 100%. By default it's set to 50%
+The five preset buttons 0%, 25%, 50%, 75%, 100% instantly set the slider to common values.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+**SetTempo Input**
 
-### Advanced Configuration
+This input box lets the user set the tempo of the Strudel playback.
+The default value is 120, user can also increment by 10 steps by clicking on the top arrow.
+Entering a new number updates the pattern’s speed.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+**Track Toggles**
+These switches allow the user to turn instrument layers on or off.
+Drum 2 – Enables or disables the secondary drum pattern.
+Drums – Main drum line.
+Bass – Bassline layer.
+By default, all tracks start turned off until the user activates them.
 
-### Deployment
+**Mute/ Unmute Button**
+The mute button instantly silences all audio output.
+The icon changes to show mute/unmute state.
+When unmuted, the volume returns to the slider’s it's default value.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+**Shuffle Button (Yellow Shuffle Icon)**
+Randomises the current pattern. The Shuffle button doesn’t create completely random values.
+Instead, it only shuffles between preset patterns and values that I have been defined in the code.
+This makes sure the music still sounds controlled and musical, and it also prevents any unexpected values that could break the Strudel code.
 
-### `npm run build` fails to minify
+**Reset Button (Blue Reload Icon)**
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Restores default settings (tempo, volume, track toggles).
+Removes any randomisation applied by Shuffle.
+Useful for returning the app to the inital state.
+
+**Save / Load Settings**
+Save Settings Button Stores the current tempo, volume, and track toggle states. Helps users return to a previous configuration quickly.
+Load Setting Restores the saved configuration and applies it to the UI and Strudel patterns.
+
+**D3 Graph Component**  
+The D3 graph shows live gain values from Strudel using a simple line graph.
+The console-monkey-patch.js sends gain data like the 0.5 gain to the component through a d3Data event.
+The D3.jsx file listens for this event, stores the numbers in React state, and D3 draws a real-time updating line graph as the music plays.
+
+High points = louder parts
+Low points = quieter parts
+
+The graph only updates when Strudel outputs gain values
+
+This provides a simple visual connection to the audio.
+
+**Video Link**  
+<https://www.loom.com/share/dec006e45dbd4c5899456d0e73b6b7b9>
+
+## AI Usage
+
+![alt text](<src/AI Screenshot/d3.jpg>)
+
+![alt text](<src/AI Screenshot/Curve.jpg>)
+
+![alt text](<src/AI Screenshot/tracks.jpg>)
