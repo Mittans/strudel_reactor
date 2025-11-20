@@ -1,38 +1,87 @@
-.App {
+:root {
+  --bg: #1a1c1f;           
+  --panel: #111418;
+  --panel-2: #0d1014;
+  --text: #e8e9ef;
+  --muted: #9da5b4;
+  --border: #262a32;      
+  --accent: #a78bfa;       
+  --accent-glow: rgba(167, 139, 250, 0.5);
+  --accent2: #22c55e;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  margin: 0;
+}
+
+* { box-sizing: border-box; }
+
+.app-root {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 26px;
+}
+
+.app-header {
   text-align: center;
+  margin-bottom: 20px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-title {
+  font-size: clamp(38px, 4vw, 60px);
+  font-weight: 800;
+  color: var(--accent);
+  letter-spacing: 1px;
+
+  /* text shadow to make it pop hehe */
+  text-shadow:
+    0 0 8px var(--accent-glow),
+    0 0 16px var(--accent-glow),
+    0 0 32px var(--accent-glow);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.control-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
 }
 
-.App-link {
-  color: #61dafb;
+label, .form-label {
+  color: var(--muted);
+  font-size: .9rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.form-control, .form-select {
+  background: var(--panel-2);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
 }
+
+.form-control:focus, .form-select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  outline: none;
+}
+
+/* d3 styling stuff */
+.d3-panel {
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  border-radius: 8px;
+  padding: 6px;
+  background: transparent;
+}
+
+.d3-axis text { fill: var(--muted); font-size: 11px; }
+.d3-axis line, .d3-axis path { stroke: var(--border); }
+.d3-grid .tick line { stroke: rgba(255, 255, 255, 0.06); }
+.d3-title { fill: var(--muted); font-weight: 600; font-size: 12px; }

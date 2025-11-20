@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -8,151 +8,198 @@ import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import console_monkey_patch from './console-monkey-patch';
+import DJControls from './components/DJControls';
+import PlayControls from './components/PlayControls';
+//import ProcControls from './components/ProcControls';
+import PreProTextArea from './components/PreProTextArea';
+import { Preprocess } from './utils/PreprocessLogic';
+import LpfSelect from './components/LpfSelect'; 
+import D3Graph from './components/D3Graph';
+import TextJsonControls from "./components/TextJsonControls";
 
 let globalEditor = null;
 
-const handleD3Data = (event) => {
-    console.log(event.detail);
+export default function StrudelDemo() {
+  const hasRun = useRef(false);
+
+  const [procText, setProcText] = useState(stranger_tune);   // fixed name
+  const [volume, setVolume] = useState(1);
+  const [state, setState] = useState("stop");
+  const [cpm, setCpm] = useState(120);
+  const [lpf, setLpf] = useState(null);
+
+  const handlePlay = () => {
+    const outputText = Preprocess({ inputText: procText, volume, cpm });
+    if (!globalEditor) return;
+    globalEditor.setCode(outputText);
+    globalEditor.evaluate();
+  };
+
+  const handleStop = () => {
+    globalEditor?.stop();
+  };
+
+
+
+  //bootstrap Strudel editor + push code when procText changes first time
+  useEffect(() => {
+    if (!hasRun.current) {
+      document.addEventListener("d3Data", (e) => console.log(e.detail));
+      console_monkey_patch();
+      hasRun.current = true;
+
+      const canvas = document.getElementById('roll');
+      canvas.width *= 2;
+      canvas.height *= 2;
+      const drawContext = canvas.getContext('2d');
+      const drawTime = [-2, 2];
+
+      globalEditor = new StrudelMirror({
+        defaultOutput: webaudioOutput,
+        getTime: () => getAudioContext().currentTime,
+        transpiler,
+        root: document.getElementById('editor'),
+        drawTime,
+        onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
+        prebake: async () => {
+          initAudioOnFirstClick();
+          const loadModules = evalScope(
+            import('@strudel/core'),
+            import('@strudel/draw'),
+            import('@strudel/mini'),
+            import('@strudel/tonal'),
+            import('@strudel/webaudio'),
+          );
+          await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
+        },
+      });
+    }
+
+    //re-run whenever text or control values change
+   if (!globalEditor) return; //editor not ready yet
+
+     //build final Strudel code w upd settings
+  const code = Preprocess({ inputText: procText, volume, cpm, lpf });
+  if (state === "play") {
+
+    //realtime update while playing
+    globalEditor.setCode(code);
+    globalEditor.evaluate();
+  } else {
+
+    //update editor text
+    globalEditor.setCode(code);
+  }
+}, [procText, volume, cpm, lpf, state]);
+
+const fileInputRef = useRef(null);
+
+//save only the Strudel code text
+const handleSaveText = () => {
+  const preset = { procText };
+  const json = JSON.stringify(preset, null, 2);
+  const blob = new Blob([json], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "strudel-text.json";
+  a.click();
+
+  URL.revokeObjectURL(url);
 };
 
-export function SetupButtons() {
+//trigger file input
+const handleLoadClick = () => {
+  if (fileInputRef.current) {
+    fileInputRef.current.value = ""; // allow reloading same file
+    fileInputRef.current.click();
+  }
+};
 
-    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-    document.getElementById('process').addEventListener('click', () => {
-        Proc()
+//load JSON and apply text
+const handlePresetFileChange = (e) => {
+  const file = e.target.files?.[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    try {
+      const data = JSON.parse(event.target.result);
+
+      if (typeof data.procText === "string") {
+        setProcText(data.procText);   // <-- loads text into editor
+      } else {
+        alert("JSON missing procText");
+      }
+    } catch (err) {
+      alert("Invalid JSON file");
     }
-    )
-    document.getElementById('process_play').addEventListener('click', () => {
-        if (globalEditor != null) {
-            Proc()
-            globalEditor.evaluate()
-        }
-    }
-    )
-}
+  };
 
-
-
-export function ProcAndPlay() {
-    if (globalEditor != null && globalEditor.repl.state.started == true) {
-        console.log(globalEditor)
-        Proc()
-        globalEditor.evaluate();
-    }
-}
-
-export function Proc() {
-
-    let proc_text = document.getElementById('proc').value
-    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-    ProcessText(proc_text);
-    globalEditor.setCode(proc_text_replaced)
-}
-
-export function ProcessText(match, ...args) {
-
-    let replace = ""
-    if (document.getElementById('flexRadioDefault2').checked) {
-        replace = "_"
-    }
-
-    return replace
-}
-
-export default function StrudelDemo() {
-
-const hasRun = useRef(false);
-
-useEffect(() => {
-
-    if (!hasRun.current) {
-        document.addEventListener("d3Data", handleD3Data);
-        console_monkey_patch();
-        hasRun.current = true;
-        //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
-            //init canvas
-            const canvas = document.getElementById('roll');
-            canvas.width = canvas.width * 2;
-            canvas.height = canvas.height * 2;
-            const drawContext = canvas.getContext('2d');
-            const drawTime = [-2, 2]; // time window of drawn haps
-            globalEditor = new StrudelMirror({
-                defaultOutput: webaudioOutput,
-                getTime: () => getAudioContext().currentTime,
-                transpiler,
-                root: document.getElementById('editor'),
-                drawTime,
-                onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
-                prebake: async () => {
-                    initAudioOnFirstClick(); // needed to make the browser happy (don't await this here..)
-                    const loadModules = evalScope(
-                        import('@strudel/core'),
-                        import('@strudel/draw'),
-                        import('@strudel/mini'),
-                        import('@strudel/tonal'),
-                        import('@strudel/webaudio'),
-                    );
-                    await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
-                },
-            });
-            
-        document.getElementById('proc').value = stranger_tune
-        SetupButtons()
-        Proc()
-    }
-
-}, []);
-
+  reader.readAsText(file);
+};
 
 return (
-    <div>
-        <h2>Strudel Demo</h2>
-        <main>
+  <div className="app-root">
+    <header className="app-header container-fluid">
+      <h1 className="app-title">Web Tech Beats</h1>
+    </header>
 
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
-                        <textarea className="form-control" rows="15" id="proc" ></textarea>
-                    </div>
-                    <div className="col-md-4">
+    <main className="app-main container-fluid">
 
-                        <nav>
-                            <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                            <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
-                            <br />
-                            <button id="play" className="btn btn-outline-primary">Play</button>
-                            <button id="stop" className="btn btn-outline-primary">Stop</button>
-                        </nav>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                            <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                p1: ON
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                            <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                p1: HUSH
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <canvas id="roll"></canvas>
-        </main >
-    </div >
+
+      <div className="row section-top">
+        <div className="col-md-8 panel panel-preproc">
+          <PreProTextArea
+            value={procText}
+            onChange={(e) => setProcText(e.target.value)}
+          />
+        </div>
+
+        <div className="col-md-4 panel panel-actions">
+          <nav className="action-grid">
+            <PlayControls
+              onPlay={() => { setState("play"); handlePlay(); }}
+              onStop={() => { setState("stop"); handleStop(); }}
+            />
+          </nav>
+          <D3Graph title="Live Level" height={240} yDomain={[0, 1]} />
+        </div>
+      </div>
+    
+      <div className="row section-bottom">
+        <div className="col-md-8 panel panel-editor">
+          <div id="editor" />
+          <div id="output" />
+        </div>
+
+        <div className="col-md-4 panel panel-controls">
+          <DJControls
+          cpmValue={cpm}
+          onCpmChange={(e) => setCpm(Number(e.target.value))}
+          volumeChange={volume}
+          onVolumeChange={(e) => {
+            const val = Number(e.target.value);
+            setVolume(val);
+            //stream volume to the chart
+            window.dispatchEvent(new CustomEvent("d3Data", { detail: val }));
+    }}
+  />
+          
+          <LpfSelect value={lpf} onChange={setLpf} />
+          
+          <TextJsonControls
+    procText={procText}           
+    onLoadText={setProcText}    
+  />
+          
+        </div>
+      </div>
+
+      <canvas id="roll"></canvas>
+    </main>
+  </div>
 );
-
-
 }
