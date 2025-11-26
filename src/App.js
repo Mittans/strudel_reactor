@@ -1,5 +1,5 @@
-import './App.css';
-import { useEffect, useRef } from "react";
+﻿import './App.css';
+import { useEffect, useRef, useState } from "react";
 import { StrudelMirror } from '@strudel/codemirror';
 import { evalScope } from '@strudel/core';
 import { drawPianoroll } from '@strudel/draw';
@@ -8,85 +8,169 @@ import { transpiler } from '@strudel/transpiler';
 import { getAudioContext, webaudioOutput, registerSynthSounds } from '@strudel/webaudio';
 import { registerSoundfonts } from '@strudel/soundfonts';
 import { stranger_tune } from './tunes';
-import console_monkey_patch, { getD3Data } from './console-monkey-patch';
+import console_monkey_patch from './console-monkey-patch';
+
+import DJControls from './components/DJControls';
+import Buttons from './components/Buttons';
+import ProcButtons from './components/ProcButtons';
+import PreprocessEditor from './components/PreprocessEditor';
+import Graph from './components/Graph';
 
 let globalEditor = null;
 
-const handleD3Data = (event) => {
-    console.log(event.detail);
-};
-
-export function SetupButtons() {
-
-    document.getElementById('play').addEventListener('click', () => globalEditor.evaluate());
-    document.getElementById('stop').addEventListener('click', () => globalEditor.stop());
-    document.getElementById('process').addEventListener('click', () => {
-        Proc()
-    }
-    )
-    document.getElementById('process_play').addEventListener('click', () => {
-        if (globalEditor != null) {
-            Proc()
-            globalEditor.evaluate()
-        }
-    }
-    )
-}
-
-
-
-export function ProcAndPlay() {
-    if (globalEditor != null && globalEditor.repl.state.started == true) {
-        console.log(globalEditor)
-        Proc()
-        globalEditor.evaluate();
-    }
-}
-
-export function Proc() {
-
-    let proc_text = document.getElementById('proc').value
-    let proc_text_replaced = proc_text.replaceAll('<p1_Radio>', ProcessText);
-    ProcessText(proc_text);
-    globalEditor.setCode(proc_text_replaced)
-}
-
-export function ProcessText(match, ...args) {
-
-    let replace = ""
-    if (document.getElementById('flexRadioDefault2').checked) {
-        replace = "_"
-    }
-
-    return replace
-}
-
 export default function StrudelDemo() {
 
-const hasRun = useRef(false);
+    const hasRun = useRef(false);
 
-useEffect(() => {
+    // Main UI states
+    const [songText, setSongText] = useState(stranger_tune);
+    const [volume, setVolume] = useState(0.8);
+    const [cpm, setCpm] = useState(120);       
+    const [bass, setBass] = useState(true);
+    const [melody, setMelody] = useState(true);
+    const [guitar, setGuitar] = useState(true);
+    const [drums1, setDrums1] = useState(true);
+    const [drums2, setDrums2] = useState(true);
+    const [isPlaying, setIsPlaying] = useState(false);
 
-    if (!hasRun.current) {
-        document.addEventListener("d3Data", handleD3Data);
-        console_monkey_patch();
-        hasRun.current = true;
-        //Code copied from example: https://codeberg.org/uzu/strudel/src/branch/main/examples/codemirror-repl
-            //init canvas
+    // Small message box for user feedback
+    const [message, setMessage] = useState("");
+
+    // JSON UI toggle
+    const [showJSON, setShowJSON] = useState(false);
+    const [loadedJSON, setLoadedJSON] = useState(null);
+
+    // Helper to show temporary messages
+    function showMessage(msg) {
+        setMessage(msg);
+        setTimeout(() => setMessage(""), 1500);
+    }
+
+    // Save current settings to localStorage
+    function saveSettings() {
+        const settings = {
+            volume,
+            cpm,
+            drums1,
+            drums2,
+            bass,
+            melody,
+            guitar
+        };
+
+        localStorage.setItem("strudelSettings", JSON.stringify(settings));
+
+        setMessage("Settings saved!");
+        setTimeout(() => setMessage(""), 1500);
+    }
+
+    // Load saved settings if available
+    function loadSettings() {
+        const saved = localStorage.getItem("strudelSettings");
+        if (!saved) {
+            setMessage("No saved settings found.");
+            setTimeout(() => setMessage(""), 1500);
+            return;
+        }
+
+        const settings = JSON.parse(saved);
+
+        // Only apply values that exist (prevents errors)
+        if (settings.volume !== undefined) setVolume(settings.volume);
+        if (settings.cpm !== undefined) setCpm(settings.cpm);
+        if (settings.drums1 !== undefined) setDrums1(settings.drums1);
+        if (settings.drums2 !== undefined) setDrums2(settings.drums2);
+        if (settings.bass !== undefined) setBass(settings.bass);
+        if (settings.melody !== undefined) setMelody(settings.melody);
+        if (settings.guitar !== undefined) setGuitar(settings.guitar);
+
+        setLoadedJSON(settings);
+
+        setMessage("Settings loaded.");
+        setTimeout(() => setMessage(""), 1500);
+    }
+
+
+    // Starts playback by asking Strudel to evaluate the code
+    const handlePlay = () => {
+        globalEditor.evaluate();
+        setIsPlaying(true);
+    };
+
+    // Stops Strudel playback
+    const handleStop = () => {
+        globalEditor.stop();
+        setIsPlaying(false);
+    };
+
+    // Keyboard shortcuts for quick control
+    useEffect(() => {
+        function handleKeyPress(e) {
+            const key = e.key.toLowerCase();
+
+            if (key === "k") handlePlay();
+            if (key === "l") handleStop();
+            if (key === "h") setDrums1(prev => !prev);
+            if (key === "j") setBass(prev => !prev);
+        }
+
+        window.addEventListener("keydown", handleKeyPress);
+        return () => window.removeEventListener("keydown", handleKeyPress);
+    }, []);
+
+    // Updates the Strudel pattern with the current UI settings
+    const updateStrudelCode = (text) => {
+        // Replace placeholders inside the tune text
+        const processedText = text
+            .replaceAll("<volume>", volume)
+            .replaceAll("<cpm>", cpm)
+            .replaceAll("<bass>", bass ? "" : "_")
+            .replaceAll("<melody>", melody ? "" : "_")
+            .replaceAll("<guitar>", guitar ? "" : "_")
+            .replaceAll("<drums1>", drums1 ? "" : "_")
+            .replaceAll("<drums2>", drums2 ? "" : "_");
+
+        globalEditor.setCode(processedText);
+        globalEditor.evaluate();
+    };
+
+    // Sets raw text without injecting settings
+    const handlePreprocess = () => {
+        globalEditor.setCode(songText);
+    };
+
+    // Preprocess + immediately play
+    const handleProcPlay = () => {
+        updateStrudelCode(songText);
+        globalEditor.evaluate();
+        setIsPlaying(true);
+    };
+
+    // Initialise Strudel editor only once, and update only during playback
+    useEffect(() => {
+
+        // First-time initialisation only
+        if (!hasRun.current) {
+            console_monkey_patch();
+            hasRun.current = true;
+
             const canvas = document.getElementById('roll');
             canvas.width = canvas.width * 2;
             canvas.height = canvas.height * 2;
             const drawContext = canvas.getContext('2d');
-            const drawTime = [-2, 2]; // time window of drawn haps
+            const drawTime = [-2, 2];
+
             globalEditor = new StrudelMirror({
                 defaultOutput: webaudioOutput,
                 getTime: () => getAudioContext().currentTime,
                 transpiler,
                 root: document.getElementById('editor'),
                 drawTime,
-                onDraw: (haps, time) => drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
+                onDraw: (haps, time) =>
+                    drawPianoroll({ haps, time, ctx: drawContext, drawTime, fold: 0 }),
+
                 prebake: async () => {
-                    initAudioOnFirstClick(); // needed to make the browser happy (don't await this here..)
+                    initAudioOnFirstClick();
                     const loadModules = evalScope(
                         import('@strudel/core'),
                         import('@strudel/draw'),
@@ -97,62 +181,123 @@ useEffect(() => {
                     await Promise.all([loadModules, registerSynthSounds(), registerSoundfonts()]);
                 },
             });
-            
-        document.getElementById('proc').value = stranger_tune
-        SetupButtons()
-        Proc()
-    }
 
-}, []);
+            // Load default song into the editor panel
+            document.getElementById('proc').value = stranger_tune;
+            globalEditor.setCode(stranger_tune);
+        } else {
+            // Whenever a setting changes WHILE playing, re-evaluate the tune
+            if (isPlaying) {
+                updateStrudelCode(songText);
+            }
+        }
 
+    }, [bass, melody, guitar, drums1, drums2, volume, cpm, isPlaying]);
 
-return (
-    <div>
-        <h2>Strudel Demo</h2>
-        <main>
+    return (
+        <div>
+            <h2 id="h2">Strudel Demo - Midnight in Motion</h2>
 
-            <div className="container-fluid">
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Text to preprocess:</label>
-                        <textarea className="form-control" rows="15" id="proc" ></textarea>
+            {/* JSON toggle buttons */}
+            <button
+                className="json-toggle-btn"
+                onClick={() => setShowJSON(prev => !prev)}
+            >
+                {showJSON ? "Hide JSON" : "Show JSON"}
+            </button>
+
+            {/* Always show json when toggled */}
+            {showJSON && (
+                <div className="json-box-wrapper d-flex justify-content-center">
+                    <pre className="json-box">
+                        {loadedJSON
+                            ? JSON.stringify(loadedJSON, null, 2)
+                            : "No JSON loaded yet"}
+                    </pre>
+                </div>
+            )}
+
+            {/* Message */}
+            {message && <div className="message-box">{message}</div>}
+
+            <main>
+                <div className="container-fluid">
+
+                    <div className="row">
+                        <div className="col-md-6">
+                            <PreprocessEditor
+                                defaultValue={songText}
+                                onChange={(e) => setSongText(e.target.value)}
+                            />
+                        </div>
+
+                        <div className="col-md-6">
+                            <nav>
+                                <ProcButtons onPreprocess={handlePreprocess} onProcPlay={handleProcPlay} />
+                                <br />
+                                <Buttons onPlay={handlePlay} onStop={handleStop} />
+                                <br />
+                            </nav>
+                            {/* Puts volume under the buttons */}
+                            <div id="volume-wrapper">
+                                <label id="volume-label">Volume ({Math.round(volume * 100)}%)</label>
+                                <input
+                                    type="range"
+                                    min="0"
+                                    max="1"
+                                    step="0.01"
+                                    value={volume}
+                                    onChange={(e) => { setVolume(parseFloat(e.target.value)); if (isPlaying) updateStrudelCode(songText) }}
+                                    id="volume-range"
+                                />
+                            </div>
+                        </div>
+
                     </div>
-                    <div className="col-md-4">
 
-                        <nav>
-                            <button id="process" className="btn btn-outline-primary">Preprocess</button>
-                            <button id="process_play" className="btn btn-outline-primary">Proc & Play</button>
-                            <br />
-                            <button id="play" className="btn btn-outline-primary">Play</button>
-                            <button id="stop" className="btn btn-outline-primary">Stop</button>
-                        </nav>
+                    <div className="row">
+                        <div className="col-md-6">
+                            <div id="editor" />
+                            <div id="output" />
+                        </div>
+
+                        <div className="col-md-5 right-panel">
+                            <div className="graph-wrapper">
+                                <Graph isPlaying={isPlaying} />
+                            </div>
+                            <div className="dj-wrapper">
+                                <DJControls              
+                                    cpm={cpm}
+                                    onCpmChange={(e) => setCpm(e.target.value)}   
+                                    setCpm={setCpm}                               
+                                    onMessage={showMessage}
+
+                                    bass={bass}
+                                    onBassChange={() => setBass(!bass)}
+
+                                    melody={melody}
+                                    onMelodyChange={() => setMelody(!melody)}
+
+                                    guitar={guitar}
+                                    onGuitarChange={() => setGuitar(!guitar)}
+
+                                    drums1={drums1}
+                                    onDrums1Change={() => setDrums1(!drums1)}
+
+                                    drums2={drums2}
+                                    onDrums2Change={() => setDrums2(!drums2)}
+
+                                    onSave={saveSettings}
+                                    onLoad={loadSettings}
+                                />
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-md-8" style={{ maxHeight: '50vh', overflowY: 'auto' }}>
-                        <div id="editor" />
-                        <div id="output" />
-                    </div>
-                    <div className="col-md-4">
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" onChange={ProcAndPlay} defaultChecked />
-                            <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                p1: ON
-                            </label>
-                        </div>
-                        <div className="form-check">
-                            <input className="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" onChange={ProcAndPlay} />
-                            <label className="form-check-label" htmlFor="flexRadioDefault2">
-                                p1: HUSH
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <canvas id="roll"></canvas>
-        </main >
-    </div >
-);
 
-
+                <canvas id="roll"></canvas>
+            </main>
+        </div>
+    );
 }

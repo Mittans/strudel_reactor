@@ -1,38 +1,137 @@
-.App {
-  text-align: center;
+﻿@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Baloo+2:wght@600&family=Poppins:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Shojumaru&display=swap');
+
+/* Full-screen animated cyberpunk background */
+body {
+    background: url('https://i.pinimg.com/originals/43/ca/d1/43cad165e4d87e1f20747e68cf1dd6f6.gif') no-repeat center center fixed;
+    background-size: cover;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Glow animation applied to the main title */
+@keyframes titleGlow {
+    0%, 100% {
+        text-shadow: 0 0 10px #00ffff, 0 0 40px #ff00ff;
+    }
+
+    50% {
+        text-shadow: 0 0 20px #ff8b00, 0 0 100px #00ffff;
+    }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Page layout reset + allow page scrolling */
+html, body {
+    overflow-x: hidden; 
+    overflow-y: auto; 
+    margin: 0;
+    padding: 0;
+    height: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* roll canvas spacing + size */
+#roll {
+    display: block;
+    margin: 0 auto -3rem auto !important; 
+    max-height: 100px;
+    width: 85%;
+    overflow: hidden;
 }
 
-.App-link {
-  color: #61dafb;
+/* Make all core text/components readable on dark background */
+main, label, span, p, input, .volume-container, .col-md-4, .col-md-6, nav, .row {
+    color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Adds a subtle blur overlay behind all content */
+body::before {
+    position: fixed;
+    backdrop-filter: blur(1px);
+    z-index: -1;
+}
+
+/* Main neon title styling */
+#h2 {
+    font-family: 'Shojumaru', cursive;
+    text-transform: uppercase;
+    color: springgreen;
+    font-size: 3rem;
+    text-align: center;
+    letter-spacing: 4px;
+    text-shadow: 0 0 8px #00ffff, 0 0 18px rgba(255,255,255,0.3);
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+/* Apply the animated glow effect */
+h2 {
+    animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+/* Editor + preprocess textbox layout */
+#proc, textarea.form-control {
+    height: 40vh;
+    width: 70%;
+    overflow-y: auto;
+}
+
+/* Strudel editor container */
+#editor {
+    max-height: 40vh;
+    width: 70%;
+    overflow-y: auto;
+}
+
+/* roll vertical sizing */
+#roll {
+    height: 45px;
+}
+
+/* JSON viewer box (for saved settings) */
+.json-box {
+    background: rgba(0, 0, 0, 0.65);
+    border: 2px solid #ff4fe6;
+    color: #ff4fe6;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 0.9rem;
+    text-shadow: 0 0 5px #ff4fe6;
+}
+
+/* Toggle button for showing/hiding JSON state */
+.json-toggle-btn {
+    background: #111;
+    color: #ff4fe6;
+    padding: 6px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    border: 2px solid #ff4fe6;
+    cursor: pointer;
+    margin-bottom: 8px;
+    text-shadow: 0 0 4px #ff4fe6;
+}
+
+/* Hover effect for JSON toggle */
+.json-toggle-btn:hover {
+    background: #ff4fe6;
+    color: black;
+    text-shadow: none;
+}
+
+/* Floating message box for warnings + save/load notifications */
+.message-box {
+    position: fixed;
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 79, 230, 0.85);
+    padding: 8px 18px;
+    border-radius: 8px;
+    color: black;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    box-shadow: 0 0 10px #ff4fe6;
+    z-index: 9999;
 }
