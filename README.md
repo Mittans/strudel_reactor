@@ -1,4 +1,4 @@
-# Stefan Control Studio - README
+# StruControl
 
 ## Overview
 
